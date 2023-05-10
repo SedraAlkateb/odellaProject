@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "488432009966",
+    "project_id": "odella-f86e7",
+    "storage_bucket": "odella-f86e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488432009966:android:d1a85bdd3cf111d59fe9ff",
+        "android_client_info": {
+          "package_name": "com.example.odella_master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488432009966-3gi8ffms3hvpu6gprdrtlra1pd444fp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwR_ZmMpjY_27e7En7Oad0AXTciWOkcLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488432009966-3gi8ffms3hvpu6gprdrtlra1pd444fp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488432009966:android:d446c969654e3e3e9fe9ff",
+        "android_client_info": {
+          "package_name": "com.example.odellamobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488432009966-3gi8ffms3hvpu6gprdrtlra1pd444fp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwR_ZmMpjY_27e7En7Oad0AXTciWOkcLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488432009966-3gi8ffms3hvpu6gprdrtlra1pd444fp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
