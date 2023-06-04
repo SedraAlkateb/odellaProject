@@ -61,6 +61,11 @@ android {
         }
     }
 }
+repositories {
+    maven {
+        url "https://maven.google.com"
+    }
+}
 
 flutter {
     source '../..'

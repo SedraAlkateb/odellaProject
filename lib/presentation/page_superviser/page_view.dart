@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
+import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/page_view_model.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
@@ -11,7 +13,7 @@ class SupervisorPagesView extends StatelessWidget  {
     final mpp = Provider.of<PageSupervisorViewModel>(context);
     return Scaffold(
       appBar: (mpp.items[mpp.selectedIndex].appBar) ?? AppBar(),
-    //  drawer:  NavBar(),
+      drawer:  DrawerSupervisorView(),
       bottomNavigationBar:ClipRRect(
       borderRadius: const BorderRadius.only(
       topRight: Radius.circular(AppSize.s28),

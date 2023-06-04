@@ -42,9 +42,13 @@ class SignUpRequest{
 }
 class ConfirmStudent{
   int studentId;
-  bool confirmAttendance1;
+  bool? confirmAttendance1;
+  bool? confirmAttendance2;
 
-  ConfirmStudent(this.studentId, this.confirmAttendance1);
+  ConfirmStudent(this.studentId, {
+    this.confirmAttendance1,
+    this.confirmAttendance2
+  });
 }
 class UpdateStudentRequest{
   int studentId;
@@ -79,6 +83,44 @@ class UpdateStudentRequest{
 
       }      );
 }
+class UpdataSupervisorRequest{
+  int supervisorId;
+  String? firstName;
+  String? lastName;
+  String? phoneNumber;
+
+  UpdataSupervisorRequest(
+      this.supervisorId,
+      {
+        this.firstName,
+        this.lastName,
+        this.phoneNumber,
+      }
+      );
+}
+class ClaimRequest{
+  int trip_id;
+  String description;
+
+  ClaimRequest(
+      this.trip_id,
+      this.description,
+      );
+}
+
+class DescriptionRequest{
+  int trip_id;
+  String description;
+  File? image;
+
+  DescriptionRequest(
+      this.trip_id,
+      this.description,
+
+      {
+        this.image,
+      }      );
+}
 class UpdateImage{
   int studentId;
   File image;
@@ -88,16 +130,30 @@ class UpdateImage{
 class UpdatePasswordRequest{
 
   int studentId;
-  String newPassword_confirmation;
   String oldPassword;
   String newPassword;
+  String newPassword_confirmation;
 
   UpdatePasswordRequest(
       this.studentId,
-      this.newPassword_confirmation,
       this.oldPassword,
-      this.newPassword
-      );
+      this.newPassword,
+  this.newPassword_confirmation,
+
+  );
 
 }
 
+class RestPasswordRequest{
+  String email;
+  int code;
+  String newPassword;
+
+  RestPasswordRequest(this.email, this.code, this.newPassword);
+}
+class EvaluationRequest{
+  int tripId;
+  int review;
+
+  EvaluationRequest(this.tripId, this.review);
+}

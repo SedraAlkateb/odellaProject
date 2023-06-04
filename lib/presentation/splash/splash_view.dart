@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/constants.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -25,7 +26,11 @@ class _SplashViewState extends State<SplashView> {
   _goNext() async{
     _appPreferences.isUserLoggedIn().then((isUserLoggedIn) {
       if(isUserLoggedIn){
-        Navigator.pushReplacementNamed(context, Routes.pageScreen);
+        if (_appPreferences.getUser() ==  Constants.student) {
+          Navigator.pushReplacementNamed(context,Routes.pageScreen);
+        }else if(_appPreferences.getUser() == Constants.supervisor) {
+          Navigator.pushReplacementNamed(context,Routes.supervisorPageRoute);
+        }
   }else{
         Navigator.pushReplacementNamed(context, Routes.afterSplashRoute);
       }

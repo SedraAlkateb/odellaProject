@@ -21,7 +21,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   _goTransactionLine(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
-        Navigator.pushNamed(context, Routes.homeScreen);
+        Navigator.pushNamed(context, Routes.polyLineRoute);
       } catch (e, s) {
         print(s);
       }
@@ -29,7 +29,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   }
   _dailyReservation(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushNamed(context, Routes.mapPositionRoute);
+      Navigator.pushNamed(context, Routes.polyLineRoute);
     });
   }
   _subscription(){

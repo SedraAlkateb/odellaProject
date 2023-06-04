@@ -13,13 +13,19 @@ import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
 import 'package:untitled/domain/usecase/cities_usecase.dart';
+import 'package:untitled/domain/usecase/forget_password_usecase.dart';
+import 'package:untitled/domain/usecase/get_all_lost_usecase.dart';
+import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/login_usecase.dart';
 import 'package:untitled/domain/usecase/logout_usecase.dart';
 import 'package:untitled/domain/usecase/position_line_usecase.dart';
 import 'package:untitled/domain/usecase/posts_usecase.dart';
 import 'package:untitled/domain/usecase/profile_usecase.dart';
 import 'package:untitled/domain/usecase/programs_usecase.dart';
+import 'package:untitled/domain/usecase/reset_password_usecase.dart';
 import 'package:untitled/domain/usecase/signup_usecase.dart';
+import 'package:untitled/domain/usecase/store_claim_usecase.dart';
+import 'package:untitled/domain/usecase/store_lost_usecase.dart';
 import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
 import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
 import 'package:untitled/domain/usecase/transfer_positions_usecase.dart';
@@ -28,13 +34,24 @@ import 'package:untitled/domain/usecase/tt.dart';
 import 'package:untitled/domain/usecase/update_image_usecase.dart';
 import 'package:untitled/domain/usecase/update_password_usecase.dart';
 import 'package:untitled/domain/usecase/update_student_usecase.dart';
+import 'package:untitled/domain/usecase/update_supervisor_image_usecase.dart';
+import 'package:untitled/domain/usecase/update_supervisor_password_usecase.dart';
+import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
+import 'package:untitled/presentation/page/lost_items/view_model/lost_items_viewmodle.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_supervisor_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
+import 'package:untitled/presentation/reset_password/view_model/reset_password_viewmodel.dart';
+import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 import 'package:untitled/presentation/subscription/view_model/subscription_view_model.dart';
 
@@ -88,6 +105,36 @@ Future<void>initSubscriptionModule() async{
   }
 }
 
+Future<void>initClaimModule() async{
+  if(!GetIt.I.isRegistered<StoreClaimUseCase>()) {
+    instance.registerFactory<StoreClaimUseCase>(() =>
+        StoreClaimUseCase(instance()));
+    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance()));
+  }
+}
+Future<void>initResetPasswordModule() async{
+  if(!GetIt.I.isRegistered<ResetPasswordUseCase>()) {
+    instance.registerFactory<ResetPasswordUseCase>(() =>
+        ResetPasswordUseCase(instance()));
+    instance.registerFactory<ResetPasswordViewModel>(() =>ResetPasswordViewModel(instance()));
+  }
+}
+Future<void>initHomeSupervisorModule() async{
+  if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
+    instance.registerFactory<HomeSupervisorUseCase>(() =>
+        HomeSupervisorUseCase(instance()));
+    instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance()));
+  }
+}
+
+Future<void>initScanQrModule() async{
+  if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
+    instance.registerFactory<HomeSupervisorUseCase>(() =>
+        HomeSupervisorUseCase(instance()));
+    instance.registerFactory<ScanQrViewModel>(() =>ScanQrViewModel());
+  }
+}
+
 initHomeModule() {
   if (!GetIt.I.isRegistered<TransportationLinesUseCase>()) {
     instance.registerFactory<TransportationLinesUseCase>(() =>
@@ -111,7 +158,9 @@ initBaseHomeModule() {
 }
 initProfileModule() {
   if (!GetIt.I.isRegistered<ProfileUseCase>()) {
-    instance.registerFactory<ProfileUseCase>(() =>ProfileUseCase(instance()));
+    instance.registerFactory<ProfileUseCase>(() => ProfileUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<UpdateStudentUseCase>()) {
     instance.registerFactory<UpdateStudentUseCase>(() =>UpdateStudentUseCase(instance()));
     instance.registerFactory<UpdateStudenttUseCase>(() =>UpdateStudenttUseCase(instance()));
     instance.registerFactory<UpdatePasswordUseCase>(() =>UpdatePasswordUseCase(instance()));
@@ -119,10 +168,29 @@ initProfileModule() {
     instance.registerFactory<ProfileViewModel>(() => ProfileViewModel(instance(),instance(),instance(),instance(),instance()));
   }
 }
+initProfileSupervisorModule() {
+  if (!GetIt.I.isRegistered<ProfileUseCase>()) {
+    instance.registerFactory<ProfileUseCase>(() => ProfileUseCase(instance()));
+  }if (!GetIt.I.isRegistered<UpdateSupervisorUseCase>()) {
+      instance.registerFactory<UpdateSupervisorUseCase>(() =>UpdateSupervisorUseCase(instance()));
+    instance.registerFactory<UpdateSupervisorPasswordUseCase>(() =>UpdateSupervisorPasswordUseCase(instance()));
+    instance.registerFactory<UpdateSupervisorImageUseCase>(() =>UpdateSupervisorImageUseCase(instance()));
+    instance.registerFactory<SupervisorProfileViewModel>(() => SupervisorProfileViewModel(instance(),instance(),instance(),instance()));
+  }
+}
 initLogoutModule() {
   if (!GetIt.I.isRegistered<LogoutUseCase>()) {
-    instance.registerFactory<LogoutUseCase>(() =>LogoutUseCase(instance()));
+    instance.registerFactory<LogoutUseCase>(() => LogoutUseCase(instance()));
+  }
+  if (!GetIt.I.isRegistered<DrawerViewModel>()){
     instance.registerFactory<DrawerViewModel>(() => DrawerViewModel(instance()));
+  }
+}
+initLogoutSupervisorModule() {
+  if (!GetIt.I.isRegistered<LogoutUseCase>()) {
+    instance.registerFactory<LogoutUseCase>(() => LogoutUseCase(instance()));
+  }  if (!GetIt.I.isRegistered<DrawerSupervisorViewModel>()) {
+    instance.registerFactory<DrawerSupervisorViewModel>(() => DrawerSupervisorViewModel(instance()));
   }
 }
 initRegisterModule(){
@@ -164,5 +232,20 @@ initProgramModule() {
     instance.registerFactory<ProgramsUseCase>(() =>ProgramsUseCase(instance()));
   instance.registerFactory<StudentAttendenceUsecase>(() =>StudentAttendenceUsecase(instance()));
   instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance()));
+  }
+}
+initLostAndFoundModule() {
+  if (!GetIt.I.isRegistered<GetAllLostUseCase>()) {
+    instance.registerFactory<GetAllLostUseCase>(() =>GetAllLostUseCase(instance()));
+    instance.registerFactory<StoreLostUseCase>(() =>StoreLostUseCase(instance()));
+    instance.registerFactory<LostItemsViewModel>(() => LostItemsViewModel(instance(),instance()));
+  }
+}
+
+Future<void>initForgetPassword() async{
+  if(!GetIt.I.isRegistered<ForgetPasswordUseCase>()) {
+    instance.registerFactory<ForgetPasswordUseCase>(() =>
+        ForgetPasswordUseCase(instance()));
+    instance.registerFactory<ForgotPasswordViewModel>(() =>ForgotPasswordViewModel(instance()));
   }
 }

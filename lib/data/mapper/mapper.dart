@@ -13,15 +13,23 @@ extension PostResponseMapper on PostResponse? {
   }
 }
 
-extension RoleResponseMapper on RoleResponse? {
-  RoleModel toDomain() {
-    return RoleModel(
+//////////// time
+extension TimeResponseMapper on TimeResponse? {
+  Time toDomain() {
+    return Time(
         this?.id.orZero() ?? Constants.zero,
-        this?.name.orEmpty() ?? Constants.empty,
-        this?.guard_name.orEmpty() ?? Constants.empty);
+        this?.start.orEmpty() ?? Constants.empty,
+      this?.date.orEmpty() ?? Constants.empty
+    );
   }
 }
-
+extension LineResponseMapper on LineResponse? {
+  Line toDomain() {
+    return Line(
+        this?.name.orEmpty() ?? Constants.empty,
+    );
+  }
+}
 extension UserResponseMapper on UserResponse? {
   UserModel toDomain() {
     List<RoleModel> roleModel =
@@ -42,6 +50,51 @@ extension UserResponseMapper on UserResponse? {
         this?.transfer_position_id ?? Constants.empty,
         this?.university_id ?? Constants.empty,
         roleModel);
+  }
+}
+
+
+extension RoleResponseMapper on RoleResponse? {
+  RoleModel toDomain() {
+    return RoleModel(
+        this?.id.orZero() ?? Constants.zero,
+        this?.name.orEmpty() ?? Constants.empty,
+        this?.guard_name.orEmpty() ?? Constants.empty);
+  }
+}
+extension HomeSupervisorMapper on HomeSupervisorResponse? {
+  HomeSuperVisor toDomain() {
+    return HomeSuperVisor(
+        this?.dataHomeSupervisor.toDomain()
+    );
+  }
+}
+
+extension DataHomeSuperVisorMapper on DataHomeSupervisorResponse? {
+  DataHomeSupervisor toDomain() {
+    List<DataTransferPositions> transferPosition =
+    (this?.transferPositions?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTransferPositions>()
+        .toList();
+    List<Line> line =
+    (this?.lines?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<Line>()
+        .toList();
+    List<User> user =
+    (this?.users?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<User>()
+        .toList();
+    return DataHomeSupervisor(
+        this?.id.orZero() ?? Constants.zero,
+        this?.time.toDomain(),
+        this?.availableSeats.orZero() ?? Constants.zero,
+        transferPosition,
+      line,
+      user
+    );
   }
 }
 
@@ -86,7 +139,6 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
   Authentication toDomain() {
     return Authentication(
       this?.dataUserResponse.toDomain(),
-      this?.status.orZero() ?? Constants.zero,
     );
   }
 }
@@ -219,6 +271,8 @@ extension DataFromResponseMapper on FromResponse? {
     return From(
       this?.id.orZero() ?? Constants.zero,
       this?.name.orEmpty() ?? Constants.empty,
+      this?.lng.orEmpty() ?? Constants.empty,
+      this?.lat.orEmpty() ?? Constants.empty,
     );
   }
 }
@@ -228,6 +282,9 @@ extension DataToResponseMapper on ToResponse? {
     return To(
       this?.id.orZero() ?? Constants.zero,
       this?.name.orEmpty() ?? Constants.empty,
+      this?.lng.orEmpty() ?? Constants.empty,
+      this?.lat.orEmpty() ?? Constants.empty,
+
     );
   }
 }
@@ -294,6 +351,7 @@ extension CitiesResponseMapper on CitiesResponse? {
 extension AreaResponseMapper on AreaResponse? {
   Area toDomain() {
     return Area(
+      this?.id ?? Constants.zero,
       this?.name?? Constants.empty,
     );
   }
@@ -314,15 +372,24 @@ extension AreasResponseMapper on AreasResponse? {
 
 ////////////Location//////////////////
 
-extension LocationDataResponseMapper on LocationsResponse? {
+extension LocationDataResponseMapper on LocationDataResponse? {
   Location toDomain() {
     return Location(
-      this?.locationDataResponse?.cityResponse?.name ?? Constants.empty,
-      this?.locationDataResponse?.areaResponse?.name ?? Constants.empty,
-      this?.locationDataResponse?.street ?? Constants.empty,
+      this?.cityResponse?.toDomain(),
+      this?.areaResponse?.toDomain(),
+      this?.street ?? Constants.empty,
     );
   }
 }
+extension DataLocationResponseMapper on LocationsResponse? {
+  DataLocation toDomain() {
+    return DataLocation(
+      this?.locationDataResponse?.toDomain(),
+
+    );
+  }
+}
+
 ///////////////////////////
 extension DataProgramResponseMapper on DayProgramResponse? {
   DataProgram toDomain() {
@@ -332,8 +399,8 @@ extension DataProgramResponseMapper on DayProgramResponse? {
       this?.transfer_position.toDomain(),
       this?.start  ?? Constants.empty,
       this?.end ?? Constants.empty,
-      this?.confirmAttendance1 ?? Constants.empty,
-      this?.confirmAttendance2 ?? Constants.empty,
+      this?.confirmAttendance1 ?? true ,
+      this?.confirmAttendance2  ?? true,
 
     );
   }
@@ -347,5 +414,197 @@ extension ProgramResponseMapper on ProgramResponse? {
         .cast<DataProgram>()
         .toList();
     return Program(dataModel);
+  }
+}
+extension MetaResponseMapper on MetaResponse? {
+  Meta toDomain() {
+    return Meta(
+      this?.current_page ?? Constants.zero,
+        this?.from ?? Constants.zero,
+        this?.last_page ?? Constants.zero,
+         (this?.links?.map((dataResponse) => dataResponse.toDomain()) ??
+    const Iterable.empty())
+        .cast<LinkMeta>()
+        .toList()
+    ,
+    this?.path ??Constants.empty,
+        this?.per_page??Constants.zero,
+        this?.to??Constants.zero,
+        this?.total??Constants.zero,
+
+    );
+
+  }
+}
+extension LinkMetaResponseMapper on LinkResponse? {
+  LinkMeta toDomain() {
+    return LinkMeta(
+      this?.url ?? Constants.empty,
+      this?.label ?? Constants.empty,
+      this?.active ?? false
+    );
+  }
+}
+extension LinkResponseMapper on LinksLAFResponse? {
+  Links toDomain() {
+    return Links(
+        this?.first ?? Constants.empty,
+        this?.last ?? Constants.empty,
+      this?.prev ?? Constants.empty,
+      this?.next ?? Constants.empty,
+
+    );
+  }
+}
+extension TripResponseMapper on TripResponse? {
+  Trip toDomain() {
+    return Trip(
+      this?.id ?? Constants.zero,
+      this?.status ?? Constants.empty,
+      this?.availableSeats ?? Constants.zero,
+
+    );
+  }
+}
+extension UserLFResponseMapper on UserLAFResponse? {
+  User toDomain() {
+    return User(
+      this?.id ?? Constants.zero,
+      this?.firstName ?? Constants.empty,
+      this?.lastName ?? Constants.empty,
+      this?.email ?? Constants.empty,
+      this?.phoneNumber ?? Constants.empty,
+      this?.image ?? Constants.empty,
+      this?.expiredSubscriptionDate ?? Constants.empty,
+    );
+  }
+}
+extension LostAndFoundDataMapper on LostAndFoundDataResponse? {
+  LostAndFoundData toDomain() {
+    return LostAndFoundData(
+      this?.id ?? Constants.zero,
+      this?.description ?? Constants.empty,
+      this?.image ?? Constants.empty,
+      this?.trip.toDomain(),
+      this?.user.toDomain()
+    );
+  }
+}
+
+
+extension LostAndFoundesponseMapper on LostAndFoundsResponse? {
+  LostAndFound toDomain() {
+    return LostAndFound(
+      (this?.lostAndFoundDataResponse?.map((dataResponse) => dataResponse.toDomain()) ??
+          const Iterable.empty())
+          .cast<LostAndFoundData>()
+          .toList(),
+      this?.links.toDomain(),
+      this?.meta.toDomain(),
+
+
+    );
+  }
+}
+
+extension LostFoundesponseMapper on LostAndFoundResponse? {
+  LostFound toDomain() {
+    return LostFound(
+      this?.data.toDomain(),
+    );
+  }
+}
+extension BusMapper on BusResponse? {
+  Bus toDomain() {
+    return Bus(
+      this?.id ?? Constants.zero,
+      this?.key ?? Constants.empty,
+      this?.capacity ?? Constants.zero,
+      this?.details ?? Constants.empty,
+      this?.image ?? Constants.empty,
+    );
+  }
+}
+extension DriverMapper on DriverResponse? {
+  Driver toDomain() {
+    return Driver(
+      this?.id ?? Constants.zero,
+      this?.firstname ?? Constants.empty,
+      this?.lastname ?? Constants.empty,
+      this?.number ?? Constants.empty,
+    );
+  }
+}
+extension BusDriverMapper on BusDriverResponse? {
+  BusDriver toDomain() {
+    return BusDriver(
+      this?.bus.toDomain(),
+      this?.driver.toDomain(),
+    );
+  }
+}
+
+extension DataTripsMapper on DataTripsResponse? {
+  DataTrips toDomain() {
+    return DataTrips(
+      this?.id ?? Constants.zero,
+      this?.busDriver.toDomain(),
+      this?.time.toDomain(),
+      this?.availableSeats ?? Constants.zero,
+    );
+  }
+}
+extension TripsMapper on TripsResponse? {
+  Trips toDomain() {
+    List<DataTrips> dataModel = (this
+        ?.dataTrips
+        ?.map((dataResponse) => dataResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTrips>()
+        .toList();
+    return Trips(dataModel);
+  }
+}
+extension SuperVisorResponseMapper on DataUpdateSupervisorResponse? {
+  SupervisorUpdate toDomain() {
+    return SupervisorUpdate(
+      this?.id ?? Constants.zero,
+      this?.firstName ?? Constants.empty,
+      this?.lastName ?? Constants.empty,
+      this?.email ?? Constants.empty,
+      this?.phoneNumber ?? Constants.empty,
+      this?.image ?? Constants.empty,
+      this?.expiredSubscriptionDate ?? Constants.empty,
+      this?.locationResponse.toDomain()
+    );
+  }
+}
+extension SuperVisorMapper on UpdateSupervisorResponse? {
+  SuperVisor toDomain() {
+return SuperVisor(
+    this?.updateSupervisorResponse?.toDomain()
+);
+  }
+}
+extension DataDailyReservationResponseMapper on DataDailyReservationResponse? {
+  DailyReservationsModel toDomain() {
+    return DailyReservationsModel(
+        this?.id ?? Constants.zero,
+        this?.name ?? Constants.empty,
+        this?.phoneNumber ?? Constants.empty,
+        this?.seatsNumber ?? Constants.empty,
+        this?.position.toDomain()
+    );
+  }
+}
+extension DailyReservationResponseMapper on DailyReservationResponse? {
+  DailyReservations toDomain() {
+    List<DailyReservationsModel> dataModel = (this
+        ?.dailyReservation
+        ?.map((dataResponse) => dataResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DailyReservationsModel>()
+        .toList();
+    return DailyReservations(dataModel);
   }
 }

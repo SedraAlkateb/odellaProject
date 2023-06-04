@@ -85,6 +85,26 @@ class StudentRequest  {
       _$StudentRequestToJson(this);
 
 }
+@JsonSerializable()
+class SupervisorRequest  {
+  String? firstName;
+  String? lastName;
+  String? phoneNumber;
+  SupervisorRequest(
+      {
+        this.firstName,
+        this.lastName,
+        this.phoneNumber,
+      }
+      );//from json
+  factory SupervisorRequest.fromJson(Map<String,dynamic> json ) =>
+      _$SupervisorRequestFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$SupervisorRequestToJson(this);
+
+}
 
 @JsonSerializable()
 class PasswordRequest  {
@@ -772,7 +792,11 @@ class FromResponse {
   int? id;
   @JsonKey(name: "name")
   String? name;
-  FromResponse(this.id, this.name);
+  @JsonKey(name: "lng")
+  String? lng;
+  @JsonKey(name: "lat")
+  String? lat;
+  FromResponse(this.id, this.name,this.lng,this.lat);
 
   factory FromResponse.fromJson(Map<String,dynamic> json ) =>
       _$FromResponseFromJson(json);
@@ -788,8 +812,11 @@ class ToResponse {
   int? id;
   @JsonKey(name: "name")
   String? name;
-
-  ToResponse(this.id, this.name);
+  @JsonKey(name: "lng")
+  String? lng;
+  @JsonKey(name: "lat")
+  String? lat;
+  ToResponse(this.id, this.name,this.lng,this.lat);
 
   factory ToResponse.fromJson(Map<String,dynamic> json ) =>
       _$ToResponseFromJson(json);
@@ -1012,9 +1039,9 @@ class DayProgramResponse {
   @JsonKey(name: "end")
   String? end;
   @JsonKey(name: "confirmAttendance1")
-  String? confirmAttendance1;
+  bool? confirmAttendance1;
   @JsonKey(name: "confirmAttendance2")
-  String? confirmAttendance2;
+  bool? confirmAttendance2;
 
 
   DayProgramResponse(this.day, this.transfer_position, this.start, this.end,
@@ -1045,29 +1072,7 @@ class ProgramResponse extends BaseResponse{
 
 }
 
-@JsonSerializable()
-class BusDriverResponse {
 
-  @JsonKey(name: "id")
-  int? id;
-  @JsonKey(name: "bus_id")
-  int? bus_id;
-  @JsonKey(name: "driver_id")
-  int? driver_id;
-  @JsonKey(name: "bus")
-  BusResponse? bus;
-
-
-  BusDriverResponse(this.id, this.bus_id, this.driver_id, this.bus);
-
-  factory BusDriverResponse.fromJson(Map<String,dynamic> json ) =>
-      _$BusDriverResponseFromJson(json);
-
-//to json
-  Map<String,dynamic> toJson()=>
-      _$BusDriverResponseToJson(this);
-
-}
 
 @JsonSerializable()
 class BusResponse {
@@ -1095,35 +1100,17 @@ class BusResponse {
 }
 @JsonSerializable()
 class TripResponse {
-
   @JsonKey(name: "id")
   int? id;
-  @JsonKey(name: "supervisor_id")
-  int? supervisor_id;
-  @JsonKey(name: "bus_driver_id")
-  int? bus_driver_id;
-  @JsonKey(name: "time_id")
-  int? time_id;
   @JsonKey(name: "status")
-  int? status;
-  @JsonKey(name: "created_at")
-  String? created_at;
-  @JsonKey(name: "updated_at")
-  String? updated_at;
+  String? status;
   @JsonKey(name: "availableSeats")
   int? availableSeats;
-  @JsonKey(name: "bus_driver")
-  BusDriverResponse? bus_driver;
   TripResponse(
       this.id,
-      this.supervisor_id,
-      this.bus_driver_id,
-      this.time_id,
       this.status,
-      this.created_at,
-      this.updated_at,
       this.availableSeats,
-      this.bus_driver);
+);
 
   factory TripResponse.fromJson(Map<String,dynamic> json ) =>
       _$TripResponseFromJson(json);
@@ -1134,6 +1121,192 @@ class TripResponse {
 
 }
 
+@JsonSerializable()
+class Trip1Response {
+  @JsonKey(name: "id")
+  int? id;
+
+  @JsonKey(name: "availableSeats")
+  int? availableSeats;
+  Trip1Response(
+      this.id,
+      this.availableSeats,
+      );
+
+  factory Trip1Response.fromJson(Map<String,dynamic> json ) =>
+      _$Trip1ResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$Trip1ResponseToJson(this);
+
+}
+
+/////////////////Lost and found get all
+@JsonSerializable()
+class LostAndFoundDataResponse{
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "description")
+  String? description;
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "trip")
+  TripResponse? trip;
+  @JsonKey(name: "user")
+  UserLAFResponse? user;
+
+
+  LostAndFoundDataResponse(
+      this.id, this.description, this.image, this.trip, this.user);
+
+  factory LostAndFoundDataResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LostAndFoundDataResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LostAndFoundDataResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class LinksLAFResponse {
+
+  @JsonKey(name: "first")
+  String? first;
+  @JsonKey(name: "last")
+  String? last;
+  @JsonKey(name: "prev")
+  String? prev;
+  @JsonKey(name: "next")
+  String? next;
+
+
+  LinksLAFResponse(this.first, this.last, this.prev, this.next);
+
+  factory LinksLAFResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LinksLAFResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LinksLAFResponseToJson(this);
+
+}
+@JsonSerializable()
+class MetaResponse {
+
+  @JsonKey(name: "current_page")
+  int? current_page;
+  @JsonKey(name: "from")
+  int? from;
+  @JsonKey(name: "last_page")
+  int? last_page;
+  @JsonKey(name: "path")
+  String? path;
+  @JsonKey(name: "per_page")
+  int? per_page;
+  @JsonKey(name: "to")
+  int? to;
+  @JsonKey(name: "total")
+  int? total;
+  @JsonKey(name: "links")
+  List<LinkResponse>? links;
+
+  MetaResponse(this.current_page, this.from, this.last_page, this.path,
+      this.per_page, this.to, this.total, this.links);
+
+  factory MetaResponse.fromJson(Map<String,dynamic> json ) =>
+      _$MetaResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$MetaResponseToJson(this);
+
+}
+@JsonSerializable()
+class LostAndFoundsResponse{
+  @JsonKey(name: "data")
+  List<LostAndFoundDataResponse>? lostAndFoundDataResponse;
+  @JsonKey(name: "meta")
+  MetaResponse? meta;
+  @JsonKey(name: "links")
+  LinksLAFResponse? links;
+  LostAndFoundsResponse(
+      this.lostAndFoundDataResponse, this.meta, this.links);
+
+  factory LostAndFoundsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LostAndFoundsResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LostAndFoundsResponseToJson(this);
+ }
+@JsonSerializable()
+class LostAndFoundResponse extends BaseResponse{
+  @JsonKey(name: "data")
+  LostAndFoundsResponse? data;
+
+  LostAndFoundResponse(this.data);
+  factory LostAndFoundResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LostAndFoundResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LostAndFoundResponseToJson(this);
+
+}
+////////////Store Lost and found
+
+@JsonSerializable()
+class LostFoundStoreResponse {
+  @JsonKey(name: "data")
+  LostFoundResponse? data;
+
+  LostFoundStoreResponse(this.data);
+
+  factory LostFoundStoreResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LostFoundStoreResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LostFoundStoreResponseToJson(this);
+
+}
+@JsonSerializable()
+class LostFoundResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "description")
+  String? description;
+  @JsonKey(name: "image")
+  String? image;
+
+
+  LostFoundResponse(this.id,this.description, this.image);
+
+  factory LostFoundResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LostFoundResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LostFoundResponseToJson(this);
+
+}
+@JsonSerializable()
+class StoreLostFoundResponse extends BaseResponse{
+  @JsonKey(name: "data")
+  LostFoundResponse? lostFoundResponse;
+  StoreLostFoundResponse(this.lostFoundResponse);
+
+  factory StoreLostFoundResponse.fromJson(Map<String,dynamic> json ) =>
+      _$StoreLostFoundResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$StoreLostFoundResponseToJson(this);
+
+}
+///////////////payment/////////////
 @JsonSerializable()
 class PaymentResponse {
   @JsonKey(name: "amount")
@@ -1239,21 +1412,6 @@ class UserLAFResponse {
   @JsonKey(name: "expiredSubscriptionDate")
   String? expiredSubscriptionDate;
 
-  @JsonKey(name: "subscription")
-  DataSubscription1Response? subscription;
-  @JsonKey(name: "line")
-  DataLineResponse? line;
-  @JsonKey(name: "position")
-  DataTransferPositionsResponse? position;
-  @JsonKey(name: "location")
-  Location1DataResponse? location;
-  @JsonKey(name: "university")
-  DataUnResponse? university;
-  @JsonKey(name: "payments")
-  List<PaymentResponse>? paymentResponse;
-  @JsonKey(name: "programs")
-  List<DayProgramResponse>? programs;
-
 
   UserLAFResponse(
       this.id,
@@ -1263,13 +1421,7 @@ class UserLAFResponse {
       this.phoneNumber,
       this.image,
       this.expiredSubscriptionDate,
-      this.subscription,
-      this.line,
-      this.position,
-      this.location,
-      this.university,
-      this.paymentResponse,
-      this.programs);
+    );
 
   factory UserLAFResponse.fromJson(Map<String,dynamic> json ) =>
       _$UserLAFResponseFromJson(json);
@@ -1279,94 +1431,338 @@ class UserLAFResponse {
       _$UserLAFResponseToJson(this);
 
 }
+
 @JsonSerializable()
-class DataSubscription1Response {
+class ClaimsDataResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "trip")
+  TripResponse? trip;
+  @JsonKey(name: "user")
+  UserLAFResponse? user;
+  @JsonKey(name: "description")
+  String? description;
 
-  @JsonKey(name: "daysNumber")
-  String? daysNumber;
-  @JsonKey(name: "price")
-  String? price;
-  @JsonKey(name: "name")
-  String? name;
 
+  ClaimsDataResponse(this.id, this.trip, this.user, this.description);
 
-  DataSubscription1Response(this.daysNumber, this.price,this.name);
-
-  factory DataSubscription1Response.fromJson(Map<String,dynamic> json ) =>
-      _$DataSubscription1ResponseFromJson(json);
+  factory ClaimsDataResponse.fromJson(Map<String,dynamic> json ) =>
+      _$ClaimsDataResponseFromJson(json);
 
 //to json
   Map<String,dynamic> toJson()=>
-      _$DataSubscription1ResponseToJson(this);
+      _$ClaimsDataResponseToJson(this);
 
 }
+
+
 @JsonSerializable()
-class DataLineResponse {
+class ClaimsResponse extends BaseResponse{
+  @JsonKey(name: "data")
+  ClaimsDataResponse? claimsDataResponse;
 
-  @JsonKey(name: "name")
-  String? name;
+  ClaimsResponse(this.claimsDataResponse);
 
-  DataLineResponse(this.name);
-
-  factory DataLineResponse.fromJson(Map<String,dynamic> json ) =>
-      _$DataLineResponseFromJson(json);
+  factory ClaimsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$ClaimsResponseFromJson(json);
 
 //to json
   Map<String,dynamic> toJson()=>
-      _$DataLineResponseToJson(this);
+      _$ClaimsResponseToJson(this);
 
 }
+
+
 @JsonSerializable()
-class DataUnResponse {
+class ForgetPasswordResponse extends BaseResponse{
+  @JsonKey(name: "data")
 
-  @JsonKey(name: "name")
-  String? name;
 
-  DataUnResponse(this.name);
+  ForgetPasswordResponse();
 
-  factory DataUnResponse.fromJson(Map<String,dynamic> json ) =>
-      _$DataUnResponseFromJson(json);
+  factory ForgetPasswordResponse.fromJson(Map<String,dynamic> json ) =>
+      _$ForgetPasswordResponseFromJson(json);
 
 //to json
   Map<String,dynamic> toJson()=>
-      _$DataUnResponseToJson(this);
-
-}
-@JsonSerializable()
-class City1Response {
-
-  @JsonKey(name: "name")
-  String? name;
-
-  City1Response(this.name);
-
-  factory City1Response.fromJson(Map<String,dynamic> json ) =>
-      _$City1ResponseFromJson(json);
-
-//to json
-  Map<String,dynamic> toJson()=>
-      _$City1ResponseToJson(this);
+      _$ForgetPasswordResponseToJson(this);
 
 }
 
 @JsonSerializable()
-class Location1DataResponse {
+class HomeSupervisorResponse extends BaseResponse{
+  @JsonKey(name: "data")
+  DataHomeSupervisorResponse? dataHomeSupervisor;
 
-  @JsonKey(name: "city")
-  City1Response? cityResponse;
-  @JsonKey(name: "area")
-  AreaResponse? areaResponse;
-  @JsonKey(name: "street")
-  String? street;
+  HomeSupervisorResponse(this.dataHomeSupervisor);
 
-
-  Location1DataResponse(this.cityResponse, this.areaResponse, this.street);
-
-  factory Location1DataResponse.fromJson(Map<String,dynamic> json ) =>
-      _$Location1DataResponseFromJson(json);
+  factory HomeSupervisorResponse.fromJson(Map<String,dynamic> json ) =>
+      _$HomeSupervisorResponseFromJson(json);
 
 //to json
   Map<String,dynamic> toJson()=>
-      _$Location1DataResponseToJson(this);
+      _$HomeSupervisorResponseToJson(this);
+
+}
+@JsonSerializable()
+class DataHomeSupervisorResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "time")
+  TimeResponse? time;
+  @JsonKey(name: "availableSeats")
+  int? availableSeats;
+  @JsonKey(name: "transferPositions")
+  List<DataTransferPositionsResponse>? transferPositions;
+  @JsonKey(name: "lines")
+  List<LineResponse>? lines;
+  @JsonKey(name: "users")
+  List<UserLAFResponse>? users;
+
+
+  DataHomeSupervisorResponse(this.id, this.time, this.availableSeats,
+      this.transferPositions, this.lines, this.users);
+
+  factory DataHomeSupervisorResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataHomeSupervisorResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataHomeSupervisorResponseToJson(this);
+
+}
+@JsonSerializable()
+class TimeResponse {
+  @JsonKey(name: "id")
+  int ?id;
+  @JsonKey(name: "start")
+  String? start;
+  @JsonKey(name: "date")
+  String?date;
+
+
+  TimeResponse(this.id, this.start, this.date);
+
+  factory TimeResponse.fromJson(Map<String,dynamic> json ) =>
+      _$TimeResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$TimeResponseToJson(this);
+
+}
+@JsonSerializable()
+class LineResponse {
+  @JsonKey(name: "name")
+  String? name;
+
+
+  LineResponse(this.name);
+
+  factory LineResponse.fromJson(Map<String,dynamic> json ) =>
+      _$LineResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$LineResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class DataEvaluationResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "user")
+  UserLAFResponse? user;
+  @JsonKey(name: "trip")
+  Trip1Response? trip;
+  @JsonKey(name: "review")
+  String? review;
+
+
+  DataEvaluationResponse(this.id, this.user, this.trip, this.review);
+
+  factory DataEvaluationResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataEvaluationResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataEvaluationResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class EvaluationResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  DataEvaluationResponse? evaluationResponse;
+
+  EvaluationResponse(this.evaluationResponse);
+
+  factory EvaluationResponse.fromJson(Map<String,dynamic> json ) =>
+      _$EvaluationResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$EvaluationResponseToJson(this);
+
+}
+@JsonSerializable()
+class DriverResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "firstname")
+  String? firstname;
+  @JsonKey(name: "lastname")
+  String? lastname;
+  @JsonKey(name: "number")
+  String? number;
+
+
+  DriverResponse(this.id, this.firstname, this.lastname, this.number);
+
+  factory DriverResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DriverResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DriverResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class BusDriverResponse  {
+  @JsonKey(name: "bus")
+  BusResponse? bus;
+  @JsonKey(name: "driver")
+  DriverResponse? driver;
+
+  BusDriverResponse(this.bus,this.driver);
+
+  factory BusDriverResponse.fromJson(Map<String,dynamic> json ) =>
+      _$BusDriverResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$BusDriverResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class DataTripsResponse  {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "busDriver")
+  BusDriverResponse? busDriver;
+  @JsonKey(name: "time")
+  TimeResponse? time;
+  @JsonKey(name: "availableSeats")
+  int? availableSeats;
+
+  DataTripsResponse(this.id, this.busDriver, this.time, this.availableSeats);
+
+  factory DataTripsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataTripsResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataTripsResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class TripsResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  List<DataTripsResponse>? dataTrips;
+
+  TripsResponse(this.dataTrips);
+
+  factory TripsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$TripsResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$TripsResponseToJson(this);
+
+}
+@JsonSerializable()
+class DataUpdateSupervisorResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "firstName")
+  String? firstName;
+  @JsonKey(name: "lastName")
+  String? lastName;
+  @JsonKey(name: "email")
+  String? email;
+  @JsonKey(name: "phoneNumber")
+  String? phoneNumber;
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "expiredSubscriptionDate")
+  String? expiredSubscriptionDate;
+  @JsonKey(name: "location")
+  LocationDataResponse? locationResponse;
+
+
+  DataUpdateSupervisorResponse(this.id, this.firstName, this.lastName,
+      this.email, this.phoneNumber, this.image, this.expiredSubscriptionDate,
+      this.locationResponse);
+
+  factory DataUpdateSupervisorResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataUpdateSupervisorResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataUpdateSupervisorResponseToJson(this);
+
+}
+@JsonSerializable()
+class UpdateSupervisorResponse extends BaseResponse {
+  @JsonKey(name:"data")
+  DataUpdateSupervisorResponse? updateSupervisorResponse;
+
+  UpdateSupervisorResponse(this.updateSupervisorResponse);
+  // from json
+  factory UpdateSupervisorResponse.fromJson(Map<String,dynamic>json)=>
+      _$UpdateSupervisorResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$UpdateSupervisorResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class DataDailyReservationResponse {
+  @JsonKey(name:"position")
+  DataTransferPositionsResponse? position;
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"name")
+  String? name;
+  @JsonKey(name:"phoneNumber")
+  String? phoneNumber;
+  @JsonKey(name:"seatsNumber")
+  String? seatsNumber;
+
+
+  DataDailyReservationResponse(this.position, this.id, this.name,
+      this.phoneNumber, this.seatsNumber); // from json
+  factory DataDailyReservationResponse.fromJson(Map<String,dynamic>json)=>
+      _$DataDailyReservationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$DataDailyReservationResponseToJson(this);
+}
+@JsonSerializable()
+class DailyReservationResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  List<DataDailyReservationResponse>? dailyReservation;
+  DailyReservationResponse(this.dailyReservation);
+  // from json
+  factory DailyReservationResponse.fromJson(Map<String,dynamic>json)=>
+      _$DailyReservationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$DailyReservationResponseToJson(this);
 
 }

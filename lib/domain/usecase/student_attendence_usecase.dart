@@ -15,7 +15,8 @@ class StudentAttendenceUsecase implements BaseUseCase<StudentAttendenceUseCaseIn
     return _repository.confirmStudentAttendenceInTrip(
         ConfirmStudent(
           input.studentId,
-        input.confirmAttendance1
+            confirmAttendance1:   input.confirmAttendance1,
+          confirmAttendance2: input.confirmAttendance2
         ));
   }
 
@@ -24,7 +25,11 @@ class StudentAttendenceUsecase implements BaseUseCase<StudentAttendenceUseCaseIn
 
 class StudentAttendenceUseCaseInput {
   int studentId;
-  bool confirmAttendance1;
+  bool? confirmAttendance1;
+  bool? confirmAttendance2;
 
-  StudentAttendenceUseCaseInput(this.studentId, this.confirmAttendance1);
+
+  StudentAttendenceUseCaseInput(this.studentId, {
+    this.confirmAttendance1,this.confirmAttendance2
+  });
 }

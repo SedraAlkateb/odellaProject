@@ -23,7 +23,18 @@ abstract class RemoteDataSource{
   Future<UpdateStResponse> updateImage(UpdateImage  updateImage);
   Future<ProgramResponse> programs();
   Future<ConfirmStudentResponse> confirmStudentAttendenceInTrip(ConfirmStudent confirmStudent);
-
+  Future<ClaimsResponse> storeClaim(ClaimRequest claimRequest);
+  Future<StoreLostFoundResponse> storeLostFound(DescriptionRequest descriptionRequest);
+  Future<LostAndFoundResponse> getAllLostFound();
+  Future<ForgetPasswordResponse> forgetPassword(String email);
+  Future<ForgetPasswordResponse> resetPassword(RestPasswordRequest restPasswordRequest);
+  Future<HomeSupervisorResponse> homeSupervisor(String time);
+  Future<EvaluationResponse> evaluation(EvaluationRequest evaluationRequest );
+  Future<TripsResponse> weeklyTrips();
+  Future<UpdateSupervisorResponse> updateSuperVisor(UpdataSupervisorRequest supervisorRequest);
+  Future<UpdateSupervisorResponse> updateSupervisprPassword(UpdatePasswordRequest  updatePasswordRequest);
+  Future<UpdateSupervisorResponse> updateSupervisorImage(UpdateImage  updateImage);
+  Future<DailyReservationResponse> dailyReservations(int id);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -189,8 +200,104 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       ConfirmStudent confirmStudent) async {
     return await _appServiceClient.confirmStudentAttendenceInTrip(
         confirmStudent.studentId,
-        confirmAttendance1: confirmStudent.confirmAttendance1
+        confirmAttendance1: confirmStudent.confirmAttendance1,
+        confirmAttendance2: confirmStudent.confirmAttendance2
+
     );
   }
 
+  @override
+  Future<LostAndFoundResponse> getAllLostFound() async {
+    return await _appServiceClient.getAlllostFound();
+  }
+
+  @override
+  Future<ClaimsResponse> storeClaim(ClaimRequest claimRequest) async {
+    return await _appServiceClient.claim(
+      claimRequest.trip_id,
+      claimRequest.description,
+
+    );
+  }
+
+  @override
+  Future<StoreLostFoundResponse> storeLostFound(
+      DescriptionRequest descriptionRequest) async {
+    return await _appServiceClient.lostFound(
+      descriptionRequest.trip_id,
+      descriptionRequest.description,
+      image: descriptionRequest.image,
+
+    );
+  }
+
+  @override
+  Future<ForgetPasswordResponse> forgetPassword(String email) async {
+    return await _appServiceClient.forgetPassword(email);
+  }
+
+  @override
+  Future<ForgetPasswordResponse> resetPassword(
+      RestPasswordRequest restPasswordRequest) async {
+    return await _appServiceClient.ResetPassword(
+      restPasswordRequest.email,
+      restPasswordRequest.code,
+      restPasswordRequest.newPassword
+    );
+  }
+
+  @override
+  Future<HomeSupervisorResponse> homeSupervisor(String time)async {
+  return await _appServiceClient.homeSupervisor(time);
+  }
+
+  @override
+  Future<EvaluationResponse> evaluation(EvaluationRequest evaluationRequest) async{
+    return await _appServiceClient.evaluation(
+        evaluationRequest.tripId,
+    evaluationRequest.review
+    );
+
+  }
+
+  @override
+  Future<TripsResponse> weeklyTrips() async{
+   return await _appServiceClient.weeklyTrips();
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updateSuperVisor(UpdataSupervisorRequest supervisorRequest) async{
+return await _appServiceClient.updateSuperVisor(supervisorRequest.supervisorId, SupervisorRequest(
+  phoneNumber: supervisorRequest.phoneNumber,
+  lastName: supervisorRequest.lastName,
+  firstName: supervisorRequest.firstName,
+));
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updateSupervisprPassword (UpdatePasswordRequest updatePasswordRequest) async {
+  return await _appServiceClient.updatePasswordSupervisor(
+  updatePasswordRequest.studentId,
+  PasswordRequest(
+  oldPassword: updatePasswordRequest.oldPassword,
+  newPassword: updatePasswordRequest.newPassword,
+  newPassword_confirmation: updatePasswordRequest
+      .newPassword_confirmation
+
+  )
+  );
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updateSupervisorImage(UpdateImage updateImage) async {
+    return await _appServiceClient.updateImageSupervisor(
+        updateImage.studentId,
+        updateImage.image
+    );
+  }
+
+  @override
+  Future<DailyReservationResponse> dailyReservations(int id) async{
+  return await _appServiceClient.dailyReservations(id);
+  }
 }

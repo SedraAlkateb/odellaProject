@@ -69,6 +69,11 @@ class StringsManager{
   static  String  languageInfo=LocaleKeys.language.tr();
   static  String  inviteFriends=LocaleKeys.language.tr();
   static  String  contactUs=LocaleKeys.language.tr();
+  static  String  forgetMessage="Forgot your password? Enter your e-mail and you will receive a confirmation code";
+  static  String  forgetMessageError=   "If you do not receive the confirmation code, re-send";
+  static  String  resetPassword="Forgot your password? Enter your e-mail and you will receive a confirmation code"
+      "If you do not receive the confirmation code, re-send";
+  static  String  qrCode="Qr Code";
 
 
 

@@ -12,7 +12,11 @@ class DrawerViewModel  with ChangeNotifier{
 
   DrawerViewModel(this._logoutUseCase);
 int isSucc=0;
-
+@override
+  void dispose() {
+  isSucc=0;
+    super.dispose();
+  }
 bool isSuccess(){
     if(isSucc==1){
       return true;
@@ -33,7 +37,6 @@ bool isSuccess(){
             (data)  async{
               isSucc=data.status ?? 0;
               notifyListeners();
-        print(data.massage);
            });
 
   }

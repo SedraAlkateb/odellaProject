@@ -11,16 +11,20 @@ class LoginViewModel extends BaseViewModel
   LoginViewModel(this._loginUseCase);
   Authentication ?_authentication;
 var loginObject=LoginObject("","");
-
+int status=0;
 setAuth(Authentication authentication){
   _authentication=authentication;
   notifyListeners();
 }
 bool success(){
-  if(_authentication?.status==1){
+  if(status==1){
     return true;
   }
   return false;
+}
+setSuc(int s){
+  status=s;
+  notifyListeners();
 }
 Authentication? getAuth(){
   return _authentication;
@@ -35,12 +39,7 @@ String? getRole(){
     return  _authentication?.userData?.access_token;
   }
 
-@override
-  void dispose() {
-  _authentication=null;
-  loginObject=LoginObject("","");
-  super.dispose();
-  }
+
 /*
   init()
   async {
@@ -86,13 +85,18 @@ String? getRole(){
               inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
         },
             (data)  async{
+              setSuc(1);
               // await _appPreferences.setToken();
-            inputState.add(ContentState());
+           inputState.add(ContentState());
             setAuth(data);
 
             });
  }
-
+@override
+  void dispose() {
+    setSuc(0);
+    super.dispose();
+  }
 
 
   @override

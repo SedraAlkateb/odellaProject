@@ -60,3 +60,9 @@ class UpdateStudentObject with _$UpdateStudentObject{
 }
   ) =_UpdateStudentObject;
 }
+
+@freezed
+
+class ResetPasswordObject with _$ResetPasswordObject{
+  factory ResetPasswordObject(String email,int code,String newPassword)=_ResetPasswordObject;
+}

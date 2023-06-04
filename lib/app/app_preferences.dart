@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
@@ -8,6 +7,7 @@ import 'package:untitled/presentation/resources/language_manager.dart';
 const String PREFS_KEY_LANG="PREFS_KEY_LANG";
 const String PREFS_KEY_LS_USER_LOGGED_IN="PREFS_KEY_IS_USER_LOGGED_IN";
 const String PREFS_KEY_TOKEN="PREFS_KEY_TOKEN";
+const String PREFS_KEY_USER="PREFS_KEY_USER";
 
 class  AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -35,7 +35,7 @@ class  AppPreferences {
    await   _sharedPreferences.setString(
           PREFS_KEY_LANG, LanguageType.ARABIC.getValue());
     }
-await _sharedPreferences.reload();
+ //   reload();
   }
 
   Future<Locale> getLocal() async {
@@ -48,11 +48,15 @@ await _sharedPreferences.reload();
     }
   }
   // on board is logging
-  Future<bool> setLoggedIn(String token)async{
+  Future<bool> setLoggedIn(String token,String user)async{
     await   _sharedPreferences.setBool(PREFS_KEY_LS_USER_LOGGED_IN, true);
     await  _sharedPreferences.setString(PREFS_KEY_TOKEN,token );
-    await _sharedPreferences.reload();
+    await _sharedPreferences.setString(PREFS_KEY_USER,user );
+   // reload();
     return true;
+  }
+  String getUser(){
+    return _sharedPreferences.getString(PREFS_KEY_USER) ??"";
   }
   Future<bool> isUserLoggedIn()async{
 
@@ -68,13 +72,19 @@ await _sharedPreferences.reload();
  */
 
   Future<String> getToken()async{
+ //   reload();
     return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? "";
 
   }
   Future<void> signOut()async{
     await _sharedPreferences.remove(PREFS_KEY_TOKEN);
     await _sharedPreferences.remove(PREFS_KEY_LS_USER_LOGGED_IN);
+    await _sharedPreferences.remove(PREFS_KEY_USER);
+
+  }
+  reload()async{
     await _sharedPreferences.reload();
+
   }
 
 

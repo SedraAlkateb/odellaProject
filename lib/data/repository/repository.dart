@@ -333,7 +333,7 @@ class RepositoryImp implements Repository {
   }
 
   @override
-  Future<Either<Failure, Location>> getLocationById(int id) async {
+  Future<Either<Failure, DataLocation>> getLocationById(int id) async {
     try {
       //connect to internet,its safe to call Api
       final response = await _remoteDataSource.getLocationById(
@@ -476,4 +476,289 @@ class RepositoryImp implements Repository {
           .failure);
     }
   }
+
+  @override
+  Future<Either<Failure, LostFound>> getAllLostFound()  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.getAllLostFound();
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, Null>> storeClaim(ClaimRequest claimRequest ) async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.storeClaim(claimRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(null);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, Null>> storeLostFound(DescriptionRequest descriptionRequest)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.storeLostFound(descriptionRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(null);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> forgetPassword(String email)async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.forgetPassword(email);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.massage!);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, String>> resetPassword(RestPasswordRequest restPasswordRequest)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.resetPassword(restPasswordRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.massage!);
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, HomeSuperVisor>> homeSupervisor(String time) async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.homeSupervisor(time);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> evaluation(EvaluationRequest evaluationRequest)
+    async {
+      try {
+        //connect to internet,its safe to call Api
+        final response = await _remoteDataSource.evaluation(
+            evaluationRequest
+        );
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          //success
+          //return either right
+          //return data
+          return Right(response.massage!);
+        } else {
+          //return either left
+          //failure --business error
+          return Left(Failure(ApiInternalStatus.FAILURE,
+              response.massage ?? ResponseMassage.DEFAULT));
+        }
+      } catch (error) {
+        return Left(ErrorHandler
+            .handle(error)
+            .failure);
+      }
+    }
+
+  @override
+  Future<Either<Failure, Trips>> weeklyTrip()
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.weeklyTrips();
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuperVisor>> updateSupervisor(UpdataSupervisorRequest updataSupervisorRequest)async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.updateSuperVisor(updataSupervisorRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuperVisor>> updateSupervisorImage(UpdateImage updateImage) async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.updateSupervisorImage(updateImage);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuperVisor>> updateSupervisorPassword(UpdatePasswordRequest updatePasswordRequest) 
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.updateSupervisprPassword(updatePasswordRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, DailyReservations>> dailyReservations(int id)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.dailyReservations(id);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+
 }

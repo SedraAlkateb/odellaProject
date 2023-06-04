@@ -53,5 +53,6 @@ abstract class  LocaleKeys {
   static const signOut = 'signOut';
   static const price = 'price';
   static const language = 'language';
+  static const sedra = 'sedra';
 
 }

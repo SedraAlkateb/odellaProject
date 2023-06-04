@@ -126,9 +126,9 @@ class _SettingsViewState extends State<SettingsView> {
   isRtl(){
     return context.locale==ARABIC_LOCALE;
   }
-  _changeLanguage() {
+  _changeLanguage()async {
     // i will implement it later
-    _appPreferences.changeAppLanguage();
+  await  _appPreferences.changeAppLanguage();
 
 
     Phoenix.rebirth(context);
