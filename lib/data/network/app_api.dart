@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:retrofit/http.dart';
@@ -124,8 +125,75 @@ abstract class AppServiceClient {
   Future<ConfirmStudentResponse> confirmStudentAttendenceInTrip(
   @Path("id") int studentId,
   {
-  @Field("confirmAttendance1") bool? confirmAttendance1,
-
+    @Field("confirmAttendance1") bool? confirmAttendance1,
+    @Field("confirmAttendance2") bool? confirmAttendance2,
   }
   );
+
+  @POST("/api/claims")
+  Future<ClaimsResponse> claim(
+      @Part(name: "trip_id")  int trip_id,
+      @Part(name: "description")  String description,
+      );
+  @POST("/api/lost_found")
+  Future<StoreLostFoundResponse> lostFound(
+      @Part(name: "trip_id")  int trip_id,
+      @Part(name: "description")  String description,
+      {
+        @Part(name: "image")  File? image,
+      }
+      );
+  @GET("/api/lost_found")
+  Future<LostAndFoundResponse> getAlllostFound();
+  @POST("/api/auth/forgetPassword")
+  Future<ForgetPasswordResponse> forgetPassword(
+      @Part(name: "email")  String email,
+
+      );
+  @POST("/api/auth/ResetPassword")
+  Future<ForgetPasswordResponse> ResetPassword(
+      @Part(name: "email")  String email,
+      @Part(name: "code")  int code,
+      @Part(name: "newPassword")  String newPassword,
+
+      );
+  @POST("/api/supervisor/trip")
+  Future<HomeSupervisorResponse> homeSupervisor(@Part(name: "time")  String time);
+
+  @GET("/api/trip/weeklyTrips")
+  Future<TripsResponse> weeklyTrips();
+
+  @POST("/api/evaluation/trip/{id}")
+  Future<EvaluationResponse> evaluation(
+      @Path("id") int tripId,
+      @Part(name:"review") int review
+      );
+
+  @PUT("/api/supervisors/{id}")
+  @FormUrlEncoded()
+  Future<UpdateSupervisorResponse> updateSuperVisor(
+      @Path("id") int studentId,
+      @Body() SupervisorRequest? supervisorRequest
+      );
+
+  @PUT("/api/supervisors/{id}")
+  @FormUrlEncoded()
+  Future<UpdateSupervisorResponse> updatePasswordSupervisor(
+      @Path("id") int studentId,
+      @Body() PasswordRequest? passwordRequest
+      );
+// @MultiPart()
+  @POST("/api/supervisors/{id}?_method=PUT")
+  Future<UpdateSupervisorResponse> updateImageSupervisor(
+      @Path("id") int studentId,
+      @Part() File  image
+      );
+  @GET("/api/dailyReservations/trips/{id}")
+  Future<DailyReservationResponse> dailyReservations(
+      @Path("id") int id
+      );
+  @GET("/api/supervisor/approve/{id}")
+  Future<DailyReservationResponse> approve(
+      @Path("id") int id
+      );
 }

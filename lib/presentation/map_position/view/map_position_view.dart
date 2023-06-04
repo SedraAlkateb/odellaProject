@@ -1,11 +1,17 @@
+/*
 import 'dart:async';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
+import 'package:untitled/presentation/map_position/view_model/location_service.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/map_position/view_model/polyline_services.dart';
+import 'package:untitled/presentation/map_serves/polyline_serves.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -18,19 +24,23 @@ class MapPositionView extends StatefulWidget {
 }
 
 class _MapPositionViewState extends State<MapPositionView> {
-
-
-  static const CameraPosition _initCameraPosition=
-  CameraPosition(
-      target: LatLng(33.515343,36.289590),
-    zoom: 14.4746
-   );
+  var mapPolyLineWatch;
+  var mapPolyLineRead;
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<MapPositionViewModel>(context,listen: false).start();
-    });
+      getRoute();
+
     super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    mapPolyLineWatch  = context.watch<MapPositionViewModel>();
+    mapPolyLineRead = context.read<MapPositionViewModel>();
+    super.didChangeDependencies();
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -43,23 +53,13 @@ class _MapPositionViewState extends State<MapPositionView> {
     ;
   }
   Widget contentWidget(){
-      return FutureBuilder(
-        future: _loadMap() ,
-        builder:(BuildContext context,AsyncSnapshot<Widget> snapshot){
-          if (snapshot.hasData) {
-            return snapshot.data!;
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-
+      return   Column(
+        children: [
+          Expanded(child: getMap()),
+          screenWidget()
+        ],
       );
-  }
-  MapPositionViewModel  mapPositionViewModel=MapPositionViewModel();
-  @override
-  void dispose() {
-      mapPositionViewModel.dispose();
-    super.dispose();
+
   }
   Widget screenWidget(){
     return SingleChildScrollView(
@@ -178,27 +178,123 @@ class _MapPositionViewState extends State<MapPositionView> {
     // Load map here
     return Column(
       children: [
-        Expanded(
-          child: GoogleMap(
-            initialCameraPosition: _initCameraPosition,
-            mapType: MapType.normal,
-            onMapCreated: (GoogleMapController controller){
-              Provider.of<MapPositionViewModel>(context,listen: false).controller.complete(controller);
-            },
-          ),
-        ),
+        Expanded(child: getMap()),
         screenWidget()
       ],
     );
   }
+
+  Widget getMap() {
+       return Scaffold(
+        body: GoogleMap(
+          initialCameraPosition: mapPolyLineWatch.getInitCameraPosition(),
+          mapType: MapType.normal,
+          onMapCreated: (controller)  {
+            mapPolyLineWatch.setController(mapPolyLineWatch.getController().complete(controller));
+          },
+          onCameraMove: (e){
+            mapPolyLineWatch.setCurrentLoc(e.target);
+          },
+          markers: mapPolyLineWatch.getMarkers(),
+          polylines: mapPolyLineWatch.getPolyLines(),
+        ),
+        floatingActionButton:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () => mapPolyLineRead.drawPolyline(
+                  LatLng(38.52900208591146, -98.54919254779816), mapPolyLineWatch.currentLocation),
+              child: Icon(Icons.settings_ethernet_rounded),
+            ),
+            FloatingActionButton(
+              onPressed: () => mapPolyLineRead.setMarker(mapPolyLineWatch.currentLocation),
+              child: Icon(Icons.location_on),
+            ),
+            FloatingActionButton(
+              onPressed: () =>mapPolyLineRead.getMyLocation(),
+              child: Icon(Icons.gps_fixed),
+            ),
+          ],
+        ),
+        bottomNavigationBar: Container(
+          height: 20,
+          alignment: Alignment.center,
+          child: Text(
+              "lat: ${mapPolyLineRead.currentLocation.latitude}, long: ${mapPolyLineWatch.currentLocation.longitude}"),
+        ),
+      );
+
+
+  }
+  getRoute() async {
+    // تحديد المواقع
+    LatLng sourceLocation = LatLng(40.6782, -73.9442);
+    LatLng destinationLocation = LatLng(37.7749, -122.4194);
+
+    // الحصول على الخط بين المواقع
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyBVjBKNkA_4AKXa35f1oP7P_-HZNMRq7CQ",
+      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
+      travelMode: TravelMode.driving,
+    );
+
+    // التحقق من عدم وجود خطأ
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      errorMessage = 'لا يمكن العثور على الخط';
+    }
+  }
 }
 
-/*    StreamBuilder<FlowState>(
-              stream:
-              Provider.of<MapPositionViewModel>(context, listen: false).outputState,
-              builder: (context, snapshot) {
-                return snapshot.data?.getScreenWidget(_scaffoldKey.currentContext!,  screenWidget(), () {
-                  Provider.of<MapPositionViewModel>(context, listen: false).start();
-                }) ??
-                    screenWidget();
-              }),*/
+
+
+
+
+
+/*
+  Future<void> _showSearchDialog() async {
+    var p = await PlacesAutocomplete.show(
+        context: context,
+        apiKey: Constants.apiKey,
+        mode: Mode.fullscreen,
+        language: "ar",
+        region: "ar",
+        offset: 0,
+        hint: "Type here...",
+        radius: 1000,
+        types: [],
+        strictbounds: false,
+        components: [Component(Component.country, "ar")]);
+    _getLocationFromPlaceId(p!.placeId!);
+  }
+
+  Future<void> _getLocationFromPlaceId(String placeId) async {
+    GoogleMapsPlaces _places = GoogleMapsPlaces(
+      apiKey: Constants.apiKey,
+      apiHeaders: await GoogleApiHeaders().getHeaders(),
+    );
+
+    PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(placeId);
+
+    _animateCamera(LatLng(detail.result.geometry!.location.lat,
+        detail.result.geometry!.location.lng));
+  }
+  FutureBuilder(
+
+        future: _loadMap() ,
+        builder:(BuildContext context,AsyncSnapshot<Widget> snapshot){
+          if (snapshot.hasData) {
+            return snapshot.data!;
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+
+      );
+  */
+ */

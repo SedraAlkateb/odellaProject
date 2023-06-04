@@ -645,12 +645,16 @@ class _AppServiceClient implements AppServiceClient {
   Future<ConfirmStudentResponse> confirmStudentAttendenceInTrip(
     studentId, {
     confirmAttendance1,
+    confirmAttendance2,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'confirmAttendance1': confirmAttendance1};
+    final _data = {
+      'confirmAttendance1': confirmAttendance1,
+      'confirmAttendance2': confirmAttendance2,
+    };
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ConfirmStudentResponse>(Options(
@@ -666,6 +670,391 @@ class _AppServiceClient implements AppServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ConfirmStudentResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ClaimsResponse> claim(
+    trip_id,
+    description,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'trip_id',
+      trip_id.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'description',
+      description,
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ClaimsResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/claims',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ClaimsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<StoreLostFoundResponse> lostFound(
+    trip_id,
+    description, {
+    image,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'trip_id',
+      trip_id.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'description',
+      description,
+    ));
+    if (image != null) {
+      _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(
+          image.path,
+          filename: image.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<StoreLostFoundResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/lost_found',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = StoreLostFoundResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<LostAndFoundResponse> getAlllostFound() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<LostAndFoundResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/lost_found',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LostAndFoundResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForgetPasswordResponse> forgetPassword(email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'email',
+      email,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgetPasswordResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/auth/forgetPassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgetPasswordResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForgetPasswordResponse> ResetPassword(
+    email,
+    code,
+    newPassword,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'email',
+      email,
+    ));
+    _data.fields.add(MapEntry(
+      'code',
+      code.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'newPassword',
+      newPassword,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgetPasswordResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/auth/ResetPassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgetPasswordResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<HomeSupervisorResponse> homeSupervisor(time) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'time',
+      time,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HomeSupervisorResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisor/trip',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = HomeSupervisorResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TripsResponse> weeklyTrips() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TripsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/trip/weeklyTrips',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TripsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<EvaluationResponse> evaluation(
+    tripId,
+    review,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'review',
+      review.toString(),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<EvaluationResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/evaluation/trip/${tripId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = EvaluationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updateSuperVisor(
+    studentId,
+    supervisorRequest,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(supervisorRequest?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdateSupervisorResponse>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisors/${studentId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdateSupervisorResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updatePasswordSupervisor(
+    studentId,
+    passwordRequest,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(passwordRequest?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdateSupervisorResponse>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisors/${studentId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdateSupervisorResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdateSupervisorResponse> updateImageSupervisor(
+    studentId,
+    image,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdateSupervisorResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisors/${studentId}?_method=PUT',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdateSupervisorResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DailyReservationResponse> dailyReservations(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DailyReservationResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/dailyReservations/trips/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DailyReservationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DailyReservationResponse> approve(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DailyReservationResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisor/approve/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DailyReservationResponse.fromJson(_result.data!);
     return value;
   }
 

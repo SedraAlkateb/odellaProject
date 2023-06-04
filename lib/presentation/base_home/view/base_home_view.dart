@@ -75,7 +75,7 @@ class _BaseHomeViewState extends State<BaseHomeView> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         home.isPos=false;
         //   Provider.of<HomeViewModel>(context,listen: false).isPos=false;
-        _navigator.pushNamed(Routes.mapPositionRoute);
+        _navigator.pushNamed(Routes.polyLineRoute);
       });
     }
     return  Column(

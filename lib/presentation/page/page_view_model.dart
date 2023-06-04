@@ -4,7 +4,7 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/page/complaints/view/complaints_view.dart';
 import 'package:untitled/presentation/page/home/view/home_view.dart';
 import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart';
-import 'package:untitled/presentation/page/position/view/position_view.dart';
+import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page/profile/view/profile_view.dart';
 import 'package:untitled/presentation/page/program/view/programs_view.dart';
 import 'package:untitled/presentation/resources/conestants_manager.dart';

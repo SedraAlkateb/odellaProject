@@ -63,10 +63,8 @@ class _ProgramsViewState extends State<ProgramsView> {
                       final y = Provider.of<ProgramsViewModel>(context).getProgram()[index].start;
                       final z = Provider.of<ProgramsViewModel>(context).getProgram()[index].end;
                       final w = Provider.of<ProgramsViewModel>(context).getProgram()[index].dataTransferPositions!.name;
-                      String? myString = Provider.of<ProgramsViewModel>(context).getProgram()[index].confirmAttendance1;
-                      bool myBool = myString == "1" ? true : false;
-                      String? myString2 = Provider.of<ProgramsViewModel>(context).getProgram()[index].confirmAttendance2;
-                      bool myBool2 = myString2 == "1" ? true : false;
+                      bool myBool =  Provider.of<ProgramsViewModel>(context).getConfirm1(index);
+                      bool myBool2 = Provider.of<ProgramsViewModel>(context).getConfirm2(index);
                       final item = Provider.of<ProgramsViewModel>(context).getProgram()[index].confirmAttendance1;
                       bool select;
                       return DataRow(
@@ -87,7 +85,8 @@ class _ProgramsViewState extends State<ProgramsView> {
                               onChanged: (bool? value) {
                                 Provider.of<ProgramsViewModel>(context,listen: false).setIndex(index);
                                 myBool=value ?? false;
-                                  Provider.of<ProgramsViewModel>(context,listen: false).confirmStudent(value ?? true);
+                                Provider.of<ProgramsViewModel>(context,listen: false).setConfirm1(index, myBool);
+                                  Provider.of<ProgramsViewModel>(context,listen: false).confirmStudent();
 
                               },
                             ),
@@ -95,15 +94,11 @@ class _ProgramsViewState extends State<ProgramsView> {
                           DataCell(
                             Checkbox(
                               value: myBool2,
-                              onChanged: (bool? value) {
-                                setState(() {
-                              //    programViewModel.studentdataList[index]
-                            //          .confirmAttendance2 =
-                                      value!
-                                          .toString()
-                                          .replaceAll('true', '1')
-                                          .replaceAll('false', '0');
-                                });
+                                onChanged: (bool? value) {
+                                  Provider.of<ProgramsViewModel>(context,listen: false).setIndex(index);
+                                  myBool2=value ?? false;
+                                  Provider.of<ProgramsViewModel>(context,listen: false).setConfirm2(index, myBool2);
+                                  Provider.of<ProgramsViewModel>(context,listen: false).confirmStudent();
                               },
                             ),
                           ),

@@ -9,20 +9,30 @@ import 'package:untitled/app/constants.dart';
 //import 'package:image/image.dart' as img;
 
 class ImageDownloader {
-  static Future<Uint8List> downloadImage(String url) async {
+  static const String image="${Constants.baseUrl}storage/";
+  static Future<File> downloadImage(String url) async {
     try {
       Response response = await Dio().get(
-        "${Constants.baseUrl}storage/$url",
+        "$image$url",
         options: Options(
           responseType: ResponseType.bytes,
         ),
       );
-      return response.data;
+      Uint8List bytes= await  response.data;
+      final directory = await
+      getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/image.jpg') ;
+      await file.writeAsBytes(bytes);
+      return file;
     } catch (e) {
       throw Exception('Failed to download image: $e');
     }
   }
+ static String getUrl(String url ){
+    return  "$image$url";
+  }
 }
+
 
 
 /*class ImageUtils {

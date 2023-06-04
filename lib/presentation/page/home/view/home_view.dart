@@ -58,7 +58,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
   if(Provider.of<HomeViewModel>(context).getIsPos()){
      WidgetsBinding.instance.addPostFrameCallback((_) {
        Provider.of<HomeViewModel>(context,listen: false).setIsPos(false);
-       _navigator.pushNamed(Routes.mapPositionRoute);
+       _navigator.pushNamed(Routes.polyLineRoute);
      });
    }
    return  Column(
@@ -165,9 +165,9 @@ final  _scaffoldKey = GlobalKey<FormState>();
                                         style:Theme.of(context).textTheme.labelLarge,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(top: AppPadding.p8),
+                                        padding: const EdgeInsets.only(top: 2),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children:  [
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +175,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.gps_not_fixed,size: AppSize.s18,color: ColorManager.button,),
+                                                    Icon(Icons.gps_not_fixed,size: AppSize.s12,color: ColorManager.button,),
                                                     Text(
                                                       Provider.of<HomeViewModel>(context,listen: false).dataTransportationLinesSearch[index].from!.name,
                                                       maxLines: 1,
@@ -186,12 +186,12 @@ final  _scaffoldKey = GlobalKey<FormState>();
 
                                                   ],
                                                 ),
-                                                Icon(Icons.keyboard_arrow_down_sharp,size: AppSize.s18,color: ColorManager.button,),
-                                                Icon(Icons.keyboard_arrow_down_sharp,size: AppSize.s18,color: ColorManager.button),
+                                                Icon(Icons.keyboard_arrow_down_sharp,size: AppSize.s12,color: ColorManager.button,),
+                                                Icon(Icons.keyboard_arrow_down_sharp,size: AppSize.s12,color: ColorManager.button),
                                                 //   Icon(Icons.circle_sharp,size: AppSize.s8,color: ColorManager.grey,),
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.gps_fixed,size: AppSize.s18,color: ColorManager.button,),
+                                                    Icon(Icons.gps_fixed,size: AppSize.s12,color: ColorManager.button,),
                                                     Text(
                                                       Provider.of<HomeViewModel>(context,listen: false).dataTransportationLinesSearch[index].to!.name,
                                                       maxLines: 1,

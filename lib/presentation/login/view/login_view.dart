@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/constants.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
@@ -24,41 +25,36 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
   final _forKey = GlobalKey<FormState>();
   final AppPreferences _appPreferences =instance<AppPreferences>();
-  LoginViewModel _viewModel=instance<LoginViewModel>();
-  _bind() {
-
-       SchedulerBinding.instance.addPostFrameCallback((_) {
-
-     Provider.of<LoginViewModel>(context,listen: false).start();
-      });
+  var loginViewModelWatch;
+  var loginViewModelRead;
+  @override
+  void didChangeDependencies() {
+    loginViewModelWatch  = context.watch<LoginViewModel>();
+    loginViewModelRead = context.read<LoginViewModel>();
+    loginViewModelRead.start();
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
- //  _viewModel.setM(false);
-    _viewModel.dispose();
-    //cancelFetchData();
+    loginViewModelRead.status=0;
     super.dispose();
   }
   @override
   void initState() {
-    isobscured=true;
-    _bind();
+
+ isobscured=true;
     super.initState();
   }
  var isobscured;
-  late NavigatorState _navigator;
 
-  @override
-  void didChangeDependencies() {
-    _navigator = Navigator.of(context);
-    super.didChangeDependencies();
-  }
+
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+
 
     return Scaffold(
       key: _scaffoldKey,
@@ -68,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
         leading: IconButton(
           onPressed: () {
             SchedulerBinding.instance.addPostFrameCallback((_) {
-              _navigator.pushReplacementNamed(Routes.afterSplashRoute);
+              Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
             });
           },
           icon:
@@ -90,11 +86,11 @@ class _LoginViewState extends State<LoginView> {
       ),
       body:  StreamBuilder<FlowState>(
           stream:
-          Provider.of<LoginViewModel>(context, listen: false).outputState,
+          loginViewModelRead.outputState,
           builder: (context, snapshot) {
             return snapshot.data?.getScreenWidget(
                 _scaffoldKey.currentContext!, _getContentWidget(), () {
-              Provider.of<LoginViewModel>(context, listen: false).login();
+              loginViewModelRead.start();
             }) ??
                 _getContentWidget();
           }),
@@ -104,18 +100,18 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget _getContentWidget() {
-    if (Provider.of<LoginViewModel>(context,listen: false).success()) {
-
-      _appPreferences.setLoggedIn(Provider.of<LoginViewModel>(context).getToken() ??"").then((value) =>
+    if (loginViewModelWatch.success()) {
+      _appPreferences.setLoggedIn(loginViewModelWatch.getToken() ??"",loginViewModelRead.getRole() ??"").then((value) =>
           SchedulerBinding.instance.addPostFrameCallback((_) {
             if(_appPreferences.getToken()!=null){
-              if (Provider.of<LoginViewModel>(context,listen: false).getRole() == "Student") {
-                _navigator.pushReplacementNamed(Routes.pageScreen);
-              }else    if (Provider.of<LoginViewModel>(context,listen: false).getRole() == "Supervisor") {
-                _navigator.pushReplacementNamed(Routes.supervisorPageRoute);
+              if (_appPreferences.getUser() ==  Constants.student) {
+              //  Provider.of<LoginViewModel>(context,listen: false).setSuc(0);
+                Navigator.pushReplacementNamed(context,Routes.pageScreen);
+              }else if(_appPreferences.getUser() == Constants.supervisor) {
+                Navigator.pushReplacementNamed(context,Routes.supervisorPageRoute);
               }
             }else{
-              Provider.of<LoginViewModel>(context,listen: false).start();
+              loginViewModelRead.login();
             }
 
           })
@@ -151,7 +147,7 @@ class _LoginViewState extends State<LoginView> {
                     if (value!.isEmpty) {
                       return StringsManager.usernameError;
                     } else {
-                      Provider.of<LoginViewModel>(context,listen: false).setUserName(value);
+                      loginViewModelRead.setUserName(value);
                     }
                   },
                 ),
@@ -188,7 +184,7 @@ class _LoginViewState extends State<LoginView> {
                     if (value!.isEmpty) {
                       return StringsManager.passwordError;
                     } else {
-                      Provider.of<LoginViewModel>(context,listen: false)
+                      loginViewModelRead
                           .setPassword(value);
                     }
                   },
@@ -204,7 +200,7 @@ class _LoginViewState extends State<LoginView> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
+                      Navigator.pushNamed(
                           context, Routes.forgotPasswordRoute);
                     },
                     child: Text(
@@ -223,7 +219,7 @@ class _LoginViewState extends State<LoginView> {
                   child: ElevatedButton(
                       onPressed: () async {
                         if (_forKey.currentState!.validate()) {
-                          Provider.of<LoginViewModel>(context,listen: false).login();
+                          loginViewModelRead.login();
                         }
                       },
                       child:  Text(StringsManager.signIn)),
@@ -261,8 +257,6 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-
-
 }
 /*
       StreamBuilder<FlowState>(

@@ -4,13 +4,13 @@ import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/base_usecase.dart';
 
-class LocationUseCase implements BaseUseCase<int,Location>{
+class LocationUseCase implements BaseUseCase<int,DataLocation>{
   Repository _repository;
 
   LocationUseCase(this._repository);
 
   @override
-  Future<Either<Failure, Location>> execute(int input) async{
+  Future<Either<Failure, DataLocation>> execute(int input) async{
     return await _repository.getLocationById(input);
 
   }

@@ -271,15 +271,11 @@ notifyListeners();
           setProfile(data);
           setIsStudent(true);
           if(data.userModel?.image!=null&& data.userModel?.image!=""){
-            final bytes= await  ImageDownloader.downloadImage(data.userModel?.image ??"");
-            final directory = await
-            getApplicationDocumentsDirectory();
-            final file = File('${directory.path}/image.jpg') ;
-            await file.writeAsBytes(bytes);
+            final file= await  ImageDownloader.downloadImage(data.userModel?.image ??"");
             setIm(file);
           }
 
-          inputState.add(ContentState());
+         inputState.add(ContentState());
       notifyListeners();
     });
   }

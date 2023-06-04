@@ -4,12 +4,17 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
-import 'package:untitled/presentation/forgot_password/forgot_password_view.dart';
+import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map_position/view/map_position_view.dart';
+import 'package:untitled/presentation/mm.dart';
 import 'package:untitled/presentation/page/home/view/home_view.dart';
 import 'package:untitled/presentation/page/page_view.dart';
+import 'package:untitled/presentation/page/position/view/polyline_view.dart';
+import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
 import 'package:untitled/presentation/page_superviser/page_view.dart';
+import 'package:untitled/presentation/qrCode/view/qr_code_view.dart';
+import 'package:untitled/presentation/reset_password/view/reset_password_view.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/settings/view/settings_view.dart';
 import 'package:untitled/presentation/signup/view/signUp_view.dart';
@@ -21,13 +26,13 @@ class Routes {
   static const String onBoardingRoute = "/onBoarding";
   static const String loginRoute = "/login";
   static const String forgotPasswordRoute = "/forgotPassword";
-  static const String mapPositionRoute = "/mapPosition";
   static const String storeDetailRoute = "/storeDetail";
   static const String afterSplashRoute = "/afterSplash";
   static const String signupRoute = "/signup";
   static const String signup1Route = "/signup1";
   static const String subscriptionRoute = "/subscription";
 
+  static const String qrCodeViewRoute = "/QrCodeView";
 
   static const String afterSignUp = "/afterSignUp";
   static const String homeScreen = "/homeScreen";
@@ -38,7 +43,11 @@ class Routes {
   static const String lostItemsRoute = "/lostItems";
   static const String complaintsRoute = "/complaints";
   static const String supervisorPageRoute = "/supervisorPage";
+  static const String map = "/map";
+  static const String resetPasswordRoute = "/resetPassword";
+  static const String mmm = "/mmm";
 
+  static const String polyLineRoute = "/PolyLine";
 
 }
 
@@ -52,13 +61,10 @@ class RouteGenerator {
       case Routes.loginRoute:
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
-
       case Routes.forgotPasswordRoute:
+        initForgetPassword();
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
-      case Routes.mapPositionRoute:
-       // initMapPositionModule();
-        return MaterialPageRoute(builder: (_) => const MapPositionView());
-      case Routes.signupRoute:
+        case Routes.signupRoute:
         initRegisterModule();
         return MaterialPageRoute(builder: (_) => SignUpView());
       case Routes.afterSignUp:
@@ -66,11 +72,16 @@ class RouteGenerator {
       case Routes.subscriptionRoute:
         initSubscriptionModule();
         return MaterialPageRoute(builder: (_) => const SubscriptionView());
+      case Routes.resetPasswordRoute:
+        initResetPasswordModule();
+        return MaterialPageRoute(builder: (_) => const ResetPasswordView());
      case Routes.pageScreen:
         initHomeModule();
         initLogoutModule();
         initProfileModule();
         initProgramModule();
+        initLostAndFoundModule();
+        initClaimModule();
         return MaterialPageRoute(builder: (_) => const PagesView());
       case Routes.homeScreen:
         initHomeModule();
@@ -84,8 +95,21 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.complaintsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsView());
+      case Routes.map:
+        return MaterialPageRoute(builder: (_) =>  MapPage());
+      case Routes.qrCodeViewRoute:
+        return MaterialPageRoute(builder: (_) =>  QrCodeView());
+      case Routes.polyLineRoute:
+        return MaterialPageRoute(builder: (_) =>  PolyLineView());
+
+      case Routes.mmm:
+        return MaterialPageRoute(builder: (_) =>  mmm());
       case Routes.supervisorPageRoute:
-        initSubscriptionModule();
+        initProfileSupervisorModule();
+        initLogoutSupervisorModule();
+        initHomeSupervisorModule();
+        initProgramModule();
+
         return MaterialPageRoute(builder: (_) => const SupervisorPagesView());
       default:
         return unDefinedRoute();

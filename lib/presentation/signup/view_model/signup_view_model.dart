@@ -35,7 +35,6 @@ class SignUpViewModel extends BaseViewModel
       this._areasUseCase,
       this._citiesUseCase,
       this._signUpUseCase
-
       );
   List<DataModel> _dataModel=[];
   List<DataSubscriptions> _dataSubscriptions=[];
@@ -79,6 +78,7 @@ setNum(int n){
   }
   @override
   void dispose() {
+    _nnum=0;
      _dataModel=[];
     _dataSubscriptions=[];
     _dataTransferPositions=[];
@@ -93,7 +93,7 @@ setNum(int n){
       isUn=false;
       isCities=false;
      image1=null;
-      _nnum=0;
+
      positionValue=null;
       areaValue=null;
     super.dispose();

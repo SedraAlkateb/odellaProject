@@ -27,6 +27,7 @@ class NavBar extends StatelessWidget {
     final AppPreferences _appPreferences =instance<AppPreferences>();
 if(Provider.of<DrawerViewModel>(context).isSuccess()){
   _appPreferences.signOut().then((value) {
+
       Provider.of<DrawerViewModel>(context,listen: false).dispose();
       Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
     }
@@ -163,6 +164,22 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
+                title: Text(StringsManager.qrCode),
+                leading: Icon(Icons.qr_code,
+                  color: ColorManager.sidBarIcon,
+
+                ),
+
+                onTap: () {
+                  Navigator.pushNamed(context,Routes.qrCodeViewRoute);
+                }
+
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
                 title: Text(StringsManager.lostItems),
                 leading: Icon(Icons.storefront,
                   color: ColorManager.sidBarIcon,
@@ -174,6 +191,7 @@ backgroundColor: ColorManager.side,
                 }
 
             ),
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
