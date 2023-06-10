@@ -75,7 +75,8 @@ class _SignUpViewState extends State<SignUpView> {
                         bottomRight: Radius.circular(AppSize.s50),
                         bottomLeft: Radius.circular(AppSize.s50),
                       ),
-                      child: Container(
+                      child:
+                      Container(
                         color: ColorManager.icon,
                         width: double.infinity,
                         //    height: double.maxFinite,

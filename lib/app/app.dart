@@ -7,6 +7,7 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page/lost_items/view_model/lost_items_viewmodle.dart';
@@ -22,6 +23,7 @@ import 'package:untitled/presentation/reset_password/view_model/reset_password_v
 
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/them_manager.dart';
+import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
@@ -70,6 +72,10 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<SupervisorProfileViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DrawerSupervisorViewModel>()),
         ChangeNotifierProvider(create: (_)=>PolyLineViewModel()),
+        ChangeNotifierProvider(create: (_)=>instance<ScanQrViewModel>()),
+        ChangeNotifierProvider(create: (_)=>instance<AddLostItemViewModel>()),
+
+
 
       ],
       child: MaterialApp(

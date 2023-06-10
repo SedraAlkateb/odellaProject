@@ -692,40 +692,22 @@ Map<String, dynamic> _$PositionLineResponseToJson(
 TransportationLinesDataResponse _$TransportationLinesDataResponseFromJson(
         Map<String, dynamic> json) =>
     TransportationLinesDataResponse(
-      json['current_page'] as int?,
-      json['from'] as int?,
-      json['last_page'] as int?,
-      json['first_page_url'] as String?,
-      json['last_page_url'] as String?,
-      json['next_page_url'] as String?,
-      json['path'] as String?,
-      json['prev_page_url'] as String?,
-      json['per_page'] as int?,
-      json['to'] as int?,
-      json['total'] as int?,
-      (json['links'] as List<dynamic>?)
-          ?.map((e) => LinkResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
       (json['data'] as List<dynamic>?)
           ?.map((e) => DataTransportationLinesResponse.fromJson(
               e as Map<String, dynamic>))
           .toList(),
+      json['links'] == null
+          ? null
+          : LinksLAFResponse.fromJson(json['links'] as Map<String, dynamic>),
+      json['meta'] == null
+          ? null
+          : MetaResponse.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TransportationLinesDataResponseToJson(
         TransportationLinesDataResponse instance) =>
     <String, dynamic>{
-      'current_page': instance.current_page,
-      'from': instance.from,
-      'last_page': instance.last_page,
-      'first_page_url': instance.first_page_url,
-      'last_page_url': instance.last_page_url,
-      'next_page_url': instance.next_page_url,
-      'path': instance.path,
-      'prev_page_url': instance.prev_page_url,
-      'per_page': instance.per_page,
-      'to': instance.to,
-      'total': instance.total,
+      'meta': instance.meta,
       'links': instance.links,
       'data': instance.dataTransportationLinesResponse,
     };
@@ -1478,4 +1460,18 @@ Map<String, dynamic> _$DailyReservationResponseToJson(
       'status': instance.status,
       'message': instance.massage,
       'data': instance.dailyReservation,
+    };
+
+QrConfirmResponse _$QrConfirmResponseFromJson(Map<String, dynamic> json) =>
+    QrConfirmResponse(
+      json['data'],
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$QrConfirmResponseToJson(QrConfirmResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.data,
     };

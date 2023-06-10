@@ -9,11 +9,10 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
 
 class LostItemsViewModel extends BaseViewModel with ChangeNotifier{
-  final StoreLostUseCase _storeLostUseCase ;
   final GetAllLostUseCase _allLostUseCase;
   LostFound? lostFound;
   List<LostAndFoundData>search =[];
-  LostItemsViewModel(this._storeLostUseCase, this._allLostUseCase);
+  LostItemsViewModel(this._allLostUseCase);
   File? image;
 
   @override

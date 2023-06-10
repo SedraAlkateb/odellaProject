@@ -30,7 +30,7 @@ abstract class Repository{
   Future< Either<Failure,LogOutResponse>>logout();
   Future< Either<Failure,Program>>programs();
   Future< Either<Failure,Null>>confirmStudentAttendenceInTrip(ConfirmStudent confirmStudent);
-  Future< Either<Failure,Null>>storeLostFound(DescriptionRequest descriptionRequest);
+  Future< Either<Failure,String>>storeLostFound(DescriptionRequest descriptionRequest);
   Future< Either<Failure,Null>>storeClaim(ClaimRequest claimRequest);
   Future< Either<Failure,LostFound>>getAllLostFound();
   Future< Either<Failure,String>>forgetPassword(String email);
@@ -39,5 +39,7 @@ abstract class Repository{
   Future< Either<Failure,String>>evaluation(EvaluationRequest evaluationRequest);
   Future< Either<Failure,Trips>>weeklyTrip();
   Future< Either<Failure,DailyReservations>>dailyReservations(int id);
+  Future< Either<Failure,String>>confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest);
+
 
 }

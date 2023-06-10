@@ -66,3 +66,12 @@ class UpdateStudentObject with _$UpdateStudentObject{
 class ResetPasswordObject with _$ResetPasswordObject{
   factory ResetPasswordObject(String email,int code,String newPassword)=_ResetPasswordObject;
 }
+@freezed
+
+class LostItemObject with _$LostItemObject{
+  factory LostItemObject(
+      int tripId,
+      String description,
+      File? image,
+  )=_LostItemObject;
+}

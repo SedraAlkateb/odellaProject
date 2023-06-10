@@ -8,12 +8,12 @@ import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/base_usecase.dart';
 
-class StoreLostUseCase implements BaseUseCase<LostUseCaseInput,Null>{
+class StoreLostUseCase implements BaseUseCase<LostUseCaseInput,String>{
   Repository _repository;
   StoreLostUseCase(this._repository);
 
   @override
-  Future<Either<Failure, Null>> execute(LostUseCaseInput input) {
+  Future<Either<Failure, String>> execute(LostUseCaseInput input) {
     return _repository.storeLostFound(
         DescriptionRequest(
             input.trip_id,

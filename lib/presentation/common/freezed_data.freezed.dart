@@ -1251,3 +1251,155 @@ abstract class _ResetPasswordObject implements ResetPasswordObject {
   _$$_ResetPasswordObjectCopyWith<_$_ResetPasswordObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$LostItemObject {
+  int get tripId => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  File? get image => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $LostItemObjectCopyWith<LostItemObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LostItemObjectCopyWith<$Res> {
+  factory $LostItemObjectCopyWith(
+          LostItemObject value, $Res Function(LostItemObject) then) =
+      _$LostItemObjectCopyWithImpl<$Res, LostItemObject>;
+  @useResult
+  $Res call({int tripId, String description, File? image});
+}
+
+/// @nodoc
+class _$LostItemObjectCopyWithImpl<$Res, $Val extends LostItemObject>
+    implements $LostItemObjectCopyWith<$Res> {
+  _$LostItemObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tripId = null,
+    Object? description = null,
+    Object? image = freezed,
+  }) {
+    return _then(_value.copyWith(
+      tripId: null == tripId
+          ? _value.tripId
+          : tripId // ignore: cast_nullable_to_non_nullable
+              as int,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as File?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_LostItemObjectCopyWith<$Res>
+    implements $LostItemObjectCopyWith<$Res> {
+  factory _$$_LostItemObjectCopyWith(
+          _$_LostItemObject value, $Res Function(_$_LostItemObject) then) =
+      __$$_LostItemObjectCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int tripId, String description, File? image});
+}
+
+/// @nodoc
+class __$$_LostItemObjectCopyWithImpl<$Res>
+    extends _$LostItemObjectCopyWithImpl<$Res, _$_LostItemObject>
+    implements _$$_LostItemObjectCopyWith<$Res> {
+  __$$_LostItemObjectCopyWithImpl(
+      _$_LostItemObject _value, $Res Function(_$_LostItemObject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tripId = null,
+    Object? description = null,
+    Object? image = freezed,
+  }) {
+    return _then(_$_LostItemObject(
+      null == tripId
+          ? _value.tripId
+          : tripId // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as File?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LostItemObject implements _LostItemObject {
+  _$_LostItemObject(this.tripId, this.description, this.image);
+
+  @override
+  final int tripId;
+  @override
+  final String description;
+  @override
+  final File? image;
+
+  @override
+  String toString() {
+    return 'LostItemObject(tripId: $tripId, description: $description, image: $image)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_LostItemObject &&
+            (identical(other.tripId, tripId) || other.tripId == tripId) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.image, image) || other.image == image));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, tripId, description, image);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LostItemObjectCopyWith<_$_LostItemObject> get copyWith =>
+      __$$_LostItemObjectCopyWithImpl<_$_LostItemObject>(this, _$identity);
+}
+
+abstract class _LostItemObject implements LostItemObject {
+  factory _LostItemObject(
+          final int tripId, final String description, final File? image) =
+      _$_LostItemObject;
+
+  @override
+  int get tripId;
+  @override
+  String get description;
+  @override
+  File? get image;
+  @override
+  @JsonKey(ignore: true)
+  _$$_LostItemObjectCopyWith<_$_LostItemObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

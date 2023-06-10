@@ -45,7 +45,7 @@ abstract class  LocaleKeys {
   static const cities = 'cities';
   static const eAreas = 'eAreas';
   static const areas = 'areas';
-  static const home = 'home';
+  static const Home = 'Home';
   static const complaints = 'complaints';
   static const busSite = 'busSite';
   static const lostItems = 'lostItems';
@@ -53,6 +53,30 @@ abstract class  LocaleKeys {
   static const signOut = 'signOut';
   static const price = 'price';
   static const language = 'language';
-  static const sedra = 'sedra';
+  static const send = 'send';
+  static const Program = 'Program';
+  static const Sat = 'Sat';
+  static const Sun = 'Sun';
+  static const Mon = 'Mon';
+  static const Tus = 'Tus';
+  static const Wed = 'Wed';
+  static const Thu = 'Thu';
+  static const Gotime = 'Gotime';
+  static const Returntime = 'Returntime';
+  static const Position = 'Position';
+  static const GoingConfirm = 'GoingConfirm';
+  static const Returningconfirm = 'Returningconfirm';
+  static const Rating = 'Rating';
+  static const Searchlost = 'Searchlost';
+  static const description = 'description';
+  static const status = 'status';
+  static const showmore = 'showmore';
+  static const showless = 'showless';
+  static const noimage = 'noimage';
+  static const enterimage = 'enterimage';
+  static const Enteryourcompliaint = 'Enteryourcompliaint';
+  static const selecttrip = 'selecttrip';
+  static const descriptionlostitem = 'descriptionlostitem';
+  static const addlostitem = 'addlostitem';
 
 }
