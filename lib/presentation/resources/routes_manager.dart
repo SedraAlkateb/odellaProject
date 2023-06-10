@@ -8,6 +8,7 @@ import 'package:untitled/presentation/forget_password/view/forget_password_view.
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map_position/view/map_position_view.dart';
 import 'package:untitled/presentation/mm.dart';
+import 'package:untitled/presentation/page/add_lost_item/view/add_lost_item_view.dart';
 import 'package:untitled/presentation/page/home/view/home_view.dart';
 import 'package:untitled/presentation/page/page_view.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
@@ -46,6 +47,7 @@ class Routes {
   static const String map = "/map";
   static const String resetPasswordRoute = "/resetPassword";
   static const String mmm = "/mmm";
+  static const String addLostItemRoute = "/addLostItem";
 
   static const String polyLineRoute = "/PolyLine";
 
@@ -56,6 +58,9 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case Routes.addLostItemRoute:
+        initAddLostModule();
+        return MaterialPageRoute(builder: (_) => const AddLostItemView());
       case Routes.afterSplashRoute:
         return MaterialPageRoute(builder: (_) => const AfterSplashView());
       case Routes.loginRoute:

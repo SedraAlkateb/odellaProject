@@ -7,6 +7,11 @@ class LoginRequest{
   String fcmtoken;
   LoginRequest(this.email,this.password,this.fcmtoken);
 }
+class ConfirmQrRequest{
+  int userId ;
+  int tripID;
+  ConfirmQrRequest(this.userId,this.tripID);
+}
 class SignUpRequest{
   int city_id;
   int area_id;

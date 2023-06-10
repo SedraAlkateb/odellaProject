@@ -196,4 +196,9 @@ abstract class AppServiceClient {
   Future<DailyReservationResponse> approve(
       @Path("id") int id
       );
+  @POST("/api/supervisor/qrcode/confirm/trip/{trip_id}/user/{id}")
+  Future<QrConfirmResponse> confirmStudentByQrCode(
+      @Path("id") int id,
+      @Path("trip_id") int tripId
+  );
 }

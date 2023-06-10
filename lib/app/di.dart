@@ -13,6 +13,8 @@ import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
 import 'package:untitled/domain/usecase/cities_usecase.dart';
+import 'package:untitled/domain/usecase/confirm_qr_usecase.dart';
+import 'package:untitled/domain/usecase/evaluation_usecase.dart';
 import 'package:untitled/domain/usecase/forget_password_usecase.dart';
 import 'package:untitled/domain/usecase/get_all_lost_usecase.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
@@ -37,10 +39,12 @@ import 'package:untitled/domain/usecase/update_student_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_image_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_password_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
+import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
@@ -109,7 +113,20 @@ Future<void>initClaimModule() async{
   if(!GetIt.I.isRegistered<StoreClaimUseCase>()) {
     instance.registerFactory<StoreClaimUseCase>(() =>
         StoreClaimUseCase(instance()));
-    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance()));
+    instance.registerFactory<WeeklyTripUsecase>(() =>
+        WeeklyTripUsecase(instance()));
+    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance(),instance()));
+  }
+}
+Future<void>initAddLostModule() async{
+  if(!GetIt.I.isRegistered<StoreLostUseCase>()) {
+    instance.registerFactory<StoreLostUseCase>(() =>
+        StoreLostUseCase(instance()));
+    if(!GetIt.I.isRegistered<WeeklyTripUsecase>()) {
+      instance.registerFactory<WeeklyTripUsecase>(() =>
+          WeeklyTripUsecase(instance()));
+    }
+    instance.registerFactory<AddLostItemViewModel>(() =>AddLostItemViewModel(instance(),instance()));
   }
 }
 Future<void>initResetPasswordModule() async{
@@ -128,10 +145,10 @@ Future<void>initHomeSupervisorModule() async{
 }
 
 Future<void>initScanQrModule() async{
-  if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
-    instance.registerFactory<HomeSupervisorUseCase>(() =>
-        HomeSupervisorUseCase(instance()));
-    instance.registerFactory<ScanQrViewModel>(() =>ScanQrViewModel());
+  if(!GetIt.I.isRegistered<ConfirmQrUseCase>()) {
+    instance.registerFactory<ConfirmQrUseCase>(() =>
+        ConfirmQrUseCase(instance()));
+    instance.registerFactory<ScanQrViewModel>(() =>ScanQrViewModel(instance()));
   }
 }
 
@@ -230,15 +247,15 @@ initRegisterModule(){
 initProgramModule() {
   if (!GetIt.I.isRegistered<ProgramsUseCase>()) {
     instance.registerFactory<ProgramsUseCase>(() =>ProgramsUseCase(instance()));
-  instance.registerFactory<StudentAttendenceUsecase>(() =>StudentAttendenceUsecase(instance()));
-  instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance()));
-  }
+    instance.registerFactory<StudentAttendenceUsecase>(() =>StudentAttendenceUsecase(instance()));
+    instance.registerFactory<EvaluationUseCase>(() =>EvaluationUseCase(instance()));
+    instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance(),instance()));
+    }
 }
 initLostAndFoundModule() {
   if (!GetIt.I.isRegistered<GetAllLostUseCase>()) {
     instance.registerFactory<GetAllLostUseCase>(() =>GetAllLostUseCase(instance()));
-    instance.registerFactory<StoreLostUseCase>(() =>StoreLostUseCase(instance()));
-    instance.registerFactory<LostItemsViewModel>(() => LostItemsViewModel(instance(),instance()));
+    instance.registerFactory<LostItemsViewModel>(() => LostItemsViewModel(instance()));
   }
 }
 

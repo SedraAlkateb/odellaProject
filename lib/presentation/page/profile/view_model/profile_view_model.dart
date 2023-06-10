@@ -61,6 +61,7 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
 
  int? getId(){
+    print(_profile?.userModel?.id);
     return _profile?.userModel?.id;
   }
   ///////////////////color

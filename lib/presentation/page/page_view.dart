@@ -19,9 +19,6 @@ class PagesView extends StatelessWidget  {
       topLeft: Radius.circular(AppSize.s28),
       ),child:
     Container(
-
-
-
        color: Colors.black,
       child: BottomNavigationBar(
         selectedItemColor: ColorManager.black,

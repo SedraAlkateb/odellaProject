@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
@@ -16,7 +17,14 @@ String _time="";
  String getTime(){
     return _time;
   }
-
+ late HomeSuperVisor _homeSuperVisor;
+ setHomeSuperVisor(HomeSuperVisor h){
+   _homeSuperVisor=h;
+   notifyListeners();
+ }
+  HomeSuperVisor getHomeSuperVisor(){
+   return _homeSuperVisor;
+ }
   Future<String> getLocalTime() async {
     String _time = await FlutterNativeTimezone.getLocalTimezone();
     DateTime now = DateTime.now().toUtc().add(Duration(hours: getTimezoneOffset(_time)));
@@ -42,8 +50,7 @@ String _time="";
               print(failure.massage);
             },
             (data)  async{
-              print(data.dataHomeSupervisor?.id);
-
+              setHomeSuperVisor(data);
         });
   }
 }

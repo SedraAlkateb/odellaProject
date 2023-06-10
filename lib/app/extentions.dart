@@ -1,3 +1,4 @@
+import 'package:sizer/sizer.dart';
 import 'package:untitled/app/constants.dart';
 extension NonNullString on String?{
   String orEmpty(){
@@ -16,4 +17,11 @@ extension NonNullInt on int?{
       return this!;
     }
   }
+}
+extension SizerExt on num
+{
+  double get h =>
+      this * SizerUtil.height / 100;
+  double get w =>
+      this * SizerUtil.width / 100;
 }

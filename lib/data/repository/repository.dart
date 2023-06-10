@@ -522,7 +522,7 @@ class RepositoryImp implements Repository {
     }
   }
   @override
-  Future<Either<Failure, Null>> storeLostFound(DescriptionRequest descriptionRequest)
+  Future<Either<Failure, String>> storeLostFound(DescriptionRequest descriptionRequest)
   async {
     try {
       //connect to internet,its safe to call Api
@@ -531,7 +531,7 @@ class RepositoryImp implements Repository {
         //success
         //return either right
         //return data
-        return Right(null);
+        return Right(response.massage!);
       } else {
         //return either left
         //failure --business error
@@ -747,6 +747,30 @@ class RepositoryImp implements Repository {
         //return either right
         //return data
         return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.confirmStudentByQrCode(confirmQrRequest);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.massage??"");
       } else {
         //return either left
         //failure --business error

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 class QRScanScreen extends StatefulWidget {
   @override
   _QRScanScreenState createState() => _QRScanScreenState();
@@ -8,31 +9,33 @@ class QRScanScreen extends StatefulWidget {
 class _QRScanScreenState extends State<QRScanScreen> {
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  late QRViewController controller;
-  String qrText = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
+
+      body:  GestureDetector(
+        onTap: () async {
+          final viewModel = Provider.of<ScanQrViewModel>(context, listen: false);
+          await viewModel.scanBarcode();
+
+        },
+        child: Center(
+          child: Text(
+            'Scan QR Code',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
       ),
     );
   }
+}
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        qrText = scanData as String;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+AppBar getAppBarScannerQrCode() {
+  return AppBar(
+    title: Text(
+      'Scan QR Code',
+      style: TextStyle(color: Colors.black),
+    ),
+  );
 }

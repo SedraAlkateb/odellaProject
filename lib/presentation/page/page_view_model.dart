@@ -12,8 +12,8 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 
 class NavbarProvider  with ChangeNotifier {
   List<NavbarDTO> items = [
-    NavbarDTO(label: StringsManager.lostItems,widget: LostItemsView(),iconData: Icons.storefront_outlined),
-    NavbarDTO(label: StringsManager.complaints,widget: ComplaintsView(),iconData: Icons.call),
+    NavbarDTO(label: StringsManager.lostItems,widget: LostItemsView(),iconData: Icons.storefront_outlined,appBar: getAppBarLostItem()),
+    NavbarDTO(label: StringsManager.complaints,widget: ComplaintsView(),iconData: Icons.call,appBar: getAppBarComplaint()),
     NavbarDTO(label: StringsManager.home,widget: HomeView(),iconData: Icons.home,appBar: getHomeAppBar()),
     NavbarDTO(label: StringsManager.profile,widget: ProfileView(),iconData: Icons.account_box_rounded,appBar:getAppBar()),
     NavbarDTO(label: StringsManager.programmer,widget: ProgramsView(),iconData: Icons.chrome_reader_mode,appBar: getAppBarProgram()),

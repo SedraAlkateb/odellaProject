@@ -757,7 +757,7 @@ class DataTransportationLinesResponse {
 
   @JsonKey(name: "to")
   ToResponse? to;
-
+////// TODO ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   DataTransportationLinesResponse(this.id, this.name, this.from, this.to);
 
   factory DataTransportationLinesResponse.fromJson(Map<String,dynamic> json ) =>
@@ -846,48 +846,15 @@ class PositionLineResponse  extends BaseResponse{
 }
 @JsonSerializable()
 class TransportationLinesDataResponse {
-  @JsonKey(name:"current_page")
-  int? current_page;
-  @JsonKey(name:"from")
-  int? from;
-  @JsonKey(name:"last_page")
-  int? last_page;
-  @JsonKey(name:"first_page_url")
-  String? first_page_url;
-  @JsonKey(name:"last_page_url")
-  String? last_page_url;
-  @JsonKey(name:"next_page_url")
-  String? next_page_url;
-  @JsonKey(name:"path")
-  String? path;
-  @JsonKey(name:"prev_page_url")
-  String? prev_page_url;
-  @JsonKey(name:"per_page")
-  int? per_page;
-  @JsonKey(name:"to")
-  int? to;
-  @JsonKey(name:"total")
-  int? total;
+  @JsonKey(name:"meta")
+  MetaResponse? meta;
+
   @JsonKey(name:"links")
-  List<LinkResponse>? links;
+  LinksLAFResponse? links;
   @JsonKey(name:"data")
   List<DataTransportationLinesResponse>? dataTransportationLinesResponse;
-
-
   TransportationLinesDataResponse(
-      this.current_page,
-      this.from,
-      this.last_page,
-      this.first_page_url,
-      this.last_page_url,
-      this.next_page_url,
-      this.path,
-      this.prev_page_url,
-      this.per_page,
-      this.to,
-      this.total,
-      this.links,
-      this.dataTransportationLinesResponse); // from json
+      this.dataTransportationLinesResponse,this.links,this.meta); // from json
   factory TransportationLinesDataResponse.fromJson(Map<String,dynamic>json)=>
       _$TransportationLinesDataResponseFromJson(json);
 
@@ -1764,5 +1731,20 @@ class DailyReservationResponse  extends BaseResponse {
   // to json
   Map<String,dynamic>toJson()=>
       _$DailyReservationResponseToJson(this);
+
+}
+
+
+@JsonSerializable()
+class QrConfirmResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  dynamic data;
+  QrConfirmResponse(this.data);
+  // from json
+  factory QrConfirmResponse.fromJson(Map<String,dynamic>json)=>
+      _$QrConfirmResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$QrConfirmResponseToJson(this);
 
 }

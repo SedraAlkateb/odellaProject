@@ -10,7 +10,7 @@ class CodegenLoader extends AssetLoader{
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -59,7 +59,7 @@ class CodegenLoader extends AssetLoader{
   "cities": "المدينة",
   "eAreas": "يرجى ادخال منطقتك",
   "areas": "المنطقة",
-  "home": "الصفحة الرئيسية",
+  "Home": "الصفحة الرئيسية",
   "complaints": "الشكاوى",
   "busSite": "موقع الباص",
   "lostItems": "المفقودات",
@@ -67,7 +67,31 @@ class CodegenLoader extends AssetLoader{
   "signOut": "تسجيل الخروج",
   "price": "السعر",
   "language": "اللغة",
-  "sedra": "سيدرا"
+  "send": "إرسال",
+  "Program": "البرنامج",
+  "Sat": "السبت",
+  "Sun": "الأحد",
+  "Mon": "الاثنين",
+  "Tus": "الثلاثاء",
+  "Wed": "الأربعاء",
+  "Thu": "الخميس",
+  "Gotime": "وقت الذهاب: ",
+  "Returntime": "وقت العودة: ",
+  "Position": "الموقف: ",
+  "GoingConfirm": "تأكيد الذهاب",
+  "Returningconfirm": "تأكيد العودة",
+  "Rating": "تقييم الرحلة",
+  "Searchlost": "البحث عن العنصلر المفقود",
+  "description": "وصف العنصر المفقود",
+  "status": "مكان",
+  "showmore": "عرض المزيد",
+  "showless": "عرض أقل",
+  "noimage": "لا يوجد صورة",
+  "enterimage": "الرجاء ادخال صورة",
+  "Enteryourcompliaint": "الرجاء ادخال الشكوى",
+  "selecttrip": "الرجاء اختيار رحلة",
+  "descriptionlostitem": "الرجاء ادخال وصف عن العنصر المفقود",
+  "addlostitem": "اضافة العنصر المفقود"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -114,7 +138,7 @@ static const Map<String,dynamic> en = {
   "cities": "Cities",
   "eAreas": "Please inter your Areas",
   "areas": "Areas",
-  "home": "home",
+  "Home": "Home",
   "complaints": "complaints",
   "busSite": "busSite",
   "lostItems": "lostItems",
@@ -122,7 +146,31 @@ static const Map<String,dynamic> en = {
   "signOut": "sign Out",
   "price": "price",
   "language": "language",
-  "sedra": "sedra"
+  "send": "send",
+  "Program": "Program",
+  "Sat": "Sat",
+  "Sun": "Sun",
+  "Mon": "Mon",
+  "Tus": "Tus",
+  "Wed": "Wed",
+  "Thu": "Thu",
+  "Gotime": "Go time: ",
+  "Returntime": "Return time: ",
+  "Position": "Position: ",
+  "GoingConfirm": "Going confirm",
+  "Returningconfirm": "Returning confirm",
+  "Rating": "Rating",
+  "Searchlost": "Search for lost item",
+  "description": "description",
+  "status": "status",
+  "showmore": "show more",
+  "showless": "show less",
+  "noimage": "No Image",
+  "enterimage": "enter image",
+  "Enteryourcompliaint": "Enter your complaint",
+  "selecttrip": "select trip",
+  "descriptionlostitem": "Enter description for your lost item",
+  "addlostitem": "add lost item"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }
