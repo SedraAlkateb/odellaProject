@@ -73,7 +73,7 @@ class _ProgramsViewState extends State<ProgramsView>
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                Provider.of<ProgramsViewModel>(context)
+                                Provider.of<ProgramsViewModel>(context,listen: false)
                                     .setPos(index);
                                 setState(() {
                                   selectedDay = weekDays[index];
@@ -433,7 +433,7 @@ class _ProgramsViewState extends State<ProgramsView>
     if (Provider
         .of<ProgramsViewModel>(context)
         .getProgram()
-        .length != 0) {
+        .length == 0) {
 
       return Sizer(builder: (context, orientation, deviceType) {
         return LoadingState(stateRendererType: StateRendererType.fullScreenEmptyState).getScreenWidget(context, Scaffold(

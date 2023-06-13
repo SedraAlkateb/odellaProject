@@ -40,7 +40,7 @@ class SignUpViewModel extends BaseViewModel
   List<DataSubscriptions> _dataSubscriptions=[];
   List<DataTransferPositions> _dataTransferPositions=[];
   List<DataTransportationLines> _dataTransportationLines=[];
-  List<From> _position=[];
+  List<DataTransferPositions> _position=[];
   List<City> _cities=[];
   List<Area> _areas=[];
 
@@ -127,7 +127,7 @@ setNum(int n){
   List<DataTransportationLines> getDataTransportationLines(){
     return _dataTransportationLines;
   }
-  List<From> getPosition(){
+  List<DataTransferPositions> getPosition(){
     return _position;
   }
   List<City> getCities(){
@@ -167,7 +167,7 @@ setNum(int n){
  setDataTransportationLines( List<DataTransportationLines> transportationLines){
      _dataTransportationLines=transportationLines;
   }
-   setPosition( List<From> posit){
+   setPosition( List<DataTransferPositions> posit){
      _position=posit;
   }
   setAreas( List <Area> ListAreas){

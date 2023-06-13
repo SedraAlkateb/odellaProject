@@ -7,13 +7,13 @@ import 'package:untitled/domain/usecase/base_usecase.dart';
 
 import '../../data/network/failure.dart';
 
-class ProfileUseCase implements BaseUseCase<Null,Profile>{
+class ProfileUseCase implements BaseUseCase<Null,UserProfile>{
   Repository _repository;
 
   ProfileUseCase(this._repository);
 
   @override
-  Future<Either<Failure, Profile>> execute(Null input) async{
+  Future<Either<Failure, UserProfile>> execute(Null input) async{
  return await _repository.profile();
   }
 

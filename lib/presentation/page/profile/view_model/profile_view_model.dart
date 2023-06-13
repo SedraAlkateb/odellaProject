@@ -5,7 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:untitled/app/constants.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/domain/usecase/Universities_usecase.dart';
+import 'package:untitled/domain/usecase/areas_usecase.dart';
+import 'package:untitled/domain/usecase/cities_usecase.dart';
 import 'package:untitled/domain/usecase/profile_usecase.dart';
+import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
 import 'package:untitled/domain/usecase/tt.dart';
 import 'package:untitled/domain/usecase/update_image_usecase.dart';
 import 'package:untitled/domain/usecase/update_password_usecase.dart';
@@ -20,13 +24,25 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   final ProfileUseCase _profileUseCase;
   final UpdateImageUseCase _updateImageUseCase;
-
   final UpdateStudentUseCase _updateStudentUseCase;
   final UpdateStudenttUseCase _studenttUseCase;
   final UpdatePasswordUseCase _updatePasswordUseCase;
-
-  ProfileViewModel(this._profileUseCase,this._updateStudentUseCase,this._studenttUseCase,this._updatePasswordUseCase,this._updateImageUseCase);
-  Profile? _profile;
+  final CitiesUseCase _citiesUseCase;
+  final AreasUseCase _areasUseCase;
+  final SubscriptionsUseCase _subscriptionsUseCase;
+  final UniversitiesUsecase _universitiesUsecase;
+  ProfileViewModel(
+      this._profileUseCase,
+      this._updateStudentUseCase,
+      this._studenttUseCase,
+      this._updatePasswordUseCase,
+      this._updateImageUseCase,
+  this._citiesUseCase,
+  this._areasUseCase,
+  this._subscriptionsUseCase,
+  this._universitiesUsecase
+      );
+  UserProfile? _profile;
   var studentUpdate=UpdateStudentObject(0,area_id: 1,street: "asddassad",city_id:2 );
   File? imm;
   Color color1=ColorManager.darkGray;
@@ -34,6 +50,11 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   Color color3=ColorManager.darkGray;
   Color color4=ColorManager.darkGray;
   bool _isStudent=false;
+  List<City> _cities=[];
+  List<Area> _areas=[];
+  List<DataSubscriptions> _dataSubscriptions=[];
+  List<DataModel> _dataModel=[];
+
   setIsStudent(bool st){
     _isStudent=st;
     notifyListeners();
@@ -52,7 +73,12 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
 
   @override
   void start() {
-   student();
+    student().then((value) =>
+        getAreasByIdCity(_profile?.location?.city?.id ??0)
+    );
+    getUniversitiesData();
+    getSubscriptionsData();
+    getCitiesData();
   }
 
   @override
@@ -61,8 +87,8 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
 
  int? getId(){
-    print(_profile?.userModel?.id);
-    return _profile?.userModel?.id;
+    print(_profile?.id);
+    return _profile?.id;
   }
   ///////////////////color
  Color getColor1(){
@@ -100,63 +126,70 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
     if(studentUpdate.subscription_id!=null){
       return studentUpdate.subscription_id.toString();
     }else{
-      return _profile?.userModel?.subscription_id ??"";
+      return _profile?.subscription?.id.toString() ??"";
     }
   }
   String getFirstName(){
     if(studentUpdate.firstName!=null){
       return studentUpdate.firstName.toString();
     }else{
-      return _profile?.userModel?.firstName ??"";
+      return _profile?.firstName ??"";
     }
   }
   String getLastName(){
     if(studentUpdate.lastName!=null){
       return studentUpdate.lastName.toString();
     }else{
-      return _profile?.userModel?.lastName ??"";
+      return _profile?.lastName ??"";
     }
   }
   String getEmail(){
     if(studentUpdate.email!=null){
       return studentUpdate.email.toString();
     }else{
-      return _profile?.userModel?.email ??"";
+      return _profile?.email ??"";
     }
   }
   String getPhone(){
     if(studentUpdate.phoneNumber!=null){
       return studentUpdate.phoneNumber.toString();
     }else{
-      return _profile?.userModel?.phoneNumber ??"";
+      return _profile?.phoneNumber ??"";
+    }
+  }
+  String getStreet(){
+    if(studentUpdate.street!=null){
+      return studentUpdate.street.toString();
+    }else{
+      return _profile?.location?.street ??"";
     }
   }
   String getTransportationLineId(){
     if(studentUpdate.transportation_line_id!=null){
       return studentUpdate.transportation_line_id.toString();
     }else{
-      return _profile?.userModel?.transportation_line_id ??"";
+      return _profile?.line?.id.toString() ??"";
     }
   }
   String getTransferPositionId(){
     if(studentUpdate.transfer_position_id!=null){
       return studentUpdate.transfer_position_id.toString();
     }else{
-      return _profile?.userModel?.transfer_position_id ??"";
+      return _profile?.position?.id.toString() ??"";
     }
   }
-  String getUniversityId(){
+  String? getUniversityId(){
     if(studentUpdate.university_id!=null){
       return studentUpdate.university_id.toString();
     }else{
-      return _profile?.userModel?.university_id ??"";
+      return _profile?.university?.id.toString() ;
     }
   }
 
   ////////////////////////////////////////////////////UpdateProfile
   setIdStudent(int id){
     studentUpdate=studentUpdate.copyWith(studentId: id);
-    _profile?.userModel?.id=id;
+    _profile?.id=id;
   }
   updateCityId(int string){
     studentUpdate=studentUpdate.copyWith(city_id: string);
@@ -166,7 +199,7 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
   updateSubscriptionsId(int string){
     studentUpdate=studentUpdate.copyWith(subscription_id: string);
-    _profile?.userModel?.subscription_id=string as String;
+    _profile?.subscription?.id = string ;
 notifyListeners();
   }
   updateStreetId(String string){
@@ -175,22 +208,22 @@ notifyListeners();
   updateFirstName(String string){
     studentUpdate=studentUpdate.copyWith(firstName: string);
   //  setFirstName(string);
-    _profile!.userModel!.firstName=studentUpdate.firstName!;
+    _profile!.firstName=studentUpdate.firstName!;
     notifyListeners();
   }
   updateLastName(String string){
     studentUpdate=studentUpdate.copyWith(lastName: string);
-    _profile!.userModel!.lastName=studentUpdate.lastName!;
+    _profile!.lastName=studentUpdate.lastName!;
     notifyListeners();
   }
   updateEmail(String string){
     studentUpdate=studentUpdate.copyWith(email: string);
-    _profile!.userModel!.email=studentUpdate.email!;
+    _profile!.email=studentUpdate.email!;
     notifyListeners();
   }
   updatePhone(String string){
     studentUpdate=studentUpdate.copyWith(phoneNumber: string);
-    _profile!.userModel!.phoneNumber=studentUpdate.phoneNumber!;
+    _profile!.phoneNumber=studentUpdate.phoneNumber!;
     notifyListeners();
   }
   setNewPassword(String string){
@@ -204,19 +237,21 @@ notifyListeners();
   }
   updateTransportationLineId(int string){
     studentUpdate=studentUpdate.copyWith(transportation_line_id: string);
-    _profile?.userModel?.transportation_line_id=string as String ;
+    _profile?.line?.id=string  ;
     notifyListeners();
   }
   updateTransferPositionId(int string){
     studentUpdate=studentUpdate.copyWith(transfer_position_id: string);
-    _profile?.userModel?.transfer_position_id=string as String;
+    _profile?.position?.id=string ;
     notifyListeners();
   }
-  updateUniversityId(int string){
+/*
+  updateUniversity(int string){
     studentUpdate=studentUpdate.copyWith(university_id: string);
-    _profile?.userModel?.university_id=string as String;
+    _profile?.university =string ;
 notifyListeners();
   }
+ */
   updateImageFromGallory()async{
     studentUpdate= studentUpdate.copyWith(image: await pickImage());
     setIm(studentUpdate.image!);
@@ -235,20 +270,20 @@ notifyListeners();
   }
 
     setFirstName(String firstName){
-    _profile?.userModel?.firstName
+    _profile?.firstName
     =firstName;
     notifyListeners();
   }
     setEmail(String email){
-     _profile?.userModel?.email=email;
+     _profile?.email=email;
      notifyListeners();
   }
     setPhone(String phone){
-    _profile?.userModel?.phoneNumber=phone;
+    _profile?.phoneNumber=phone;
     notifyListeners();
   }
     setLastName(String lastName){
-    _profile?.userModel?.lastName=lastName;
+    _profile?.lastName=lastName;
     notifyListeners();
   }
 
@@ -256,7 +291,7 @@ notifyListeners();
     return Image.memory(base64Decode(base64String));
   }
 
-  setProfile(Profile profile){
+  setProfile(UserProfile profile){
     _profile=profile;
     notifyListeners();
   }
@@ -271,8 +306,8 @@ notifyListeners();
     }, (data)async {
           setProfile(data);
           setIsStudent(true);
-          if(data.userModel?.image!=null&& data.userModel?.image!=""){
-            final file= await  ImageDownloader.downloadImage(data.userModel?.image ??"");
+          if(data.image!=null&& data.image!=""){
+            final file= await  ImageDownloader.downloadImage(data.image);
             setIm(file);
           }
 
@@ -282,12 +317,10 @@ notifyListeners();
   }
   //////////////////////////////
   UpdateStudent() async {
-  //  inputState.add(
-  //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _studenttUseCase.execute(UpdateStudenttUseCaseInput(
+     (await _studenttUseCase.execute(UpdateStudenttUseCaseInput(
       getId()?? 0,
-      area_id: studentUpdate.area_id,
-      city_id: studentUpdate.city_id,
+      area_id:  getArea() ,
+      city_id: getCity(),
       firstName: getFirstName(),
       lastName: getLastName(),
  //     newPassword: studentUpdate.newPassword,
@@ -370,5 +403,109 @@ notifyListeners();
       notifyListeners();
     });
   }
+  setUniversities(List<DataModel>universities ){
+    _dataModel=universities;
+  }
+  setCities(List<City>cities ){
+    _cities=cities;
+  }
+  setDataSubscriptions(  List<DataSubscriptions> subscription){
+    _dataSubscriptions=subscription;
+  }
+  setAreas( List <Area> ListAreas){
+    _areas=ListAreas;
+  }
+  List<City> getCities(){
+    return _cities;
+  }
+  List<Area> getAreas(){
+    return _areas;
+  }
+  List<DataModel> getUniversities(){
+    return _dataModel;
+  }
+  List<DataSubscriptions> getDataSubscriptions(){
+    return _dataSubscriptions;
+  }
+  setUniversityId(int universityId){
+    studentUpdate= studentUpdate.copyWith(university_id: universityId);
+  }
+  setCityId(int cityId){
+    studentUpdate= studentUpdate.copyWith(city_id: cityId);
+  }
+  getUniversitiesData()async{
+    ( await _universitiesUsecase.execute(null))
+        .fold(
+            (failure)  {
+          //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+          setUniversities(data.dataModel);
+        });
+
+  }
+
+  getSubscriptionsData()async{
+    ( await _subscriptionsUseCase.execute(null))
+        .fold(
+            (failure)  {
+          //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+
+          setDataSubscriptions(data.dataSubscriptions);
+        });
+
+  }
+  getCitiesData()async{
+    ( await _citiesUseCase.execute(null))
+        .fold(
+            (failure)  {
+          //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+          setCities(data.cities!);
+        });
+
+  }
+  String getProfileCity(){
+    return _profile?.location?.city?.name ??" Cities";
+  }
+  String getProfileArea(){
+    return _profile?.location?.area?.name ??" Areas";
+  }
+  String getProfileUni(){
+    return _profile?.university?.name ??" Universities";
+  }
+  int getCity(){
+    if(studentUpdate.city_id!=null){
+      return studentUpdate.city_id ??0;
+    }else{
+      return _profile?.location?.city?.id ??0  ;
+    }
+  }
+  int getArea(){
+    if(studentUpdate.area_id!=null){
+      return studentUpdate.area_id ??0;
+    }else{
+      return _profile?.location?.area?.id ??0;
+    }
+  }
+
+  getAreasByIdCity(int id)async{
+    ( await _areasUseCase.execute(id))
+        .fold(
+            (failure)  {
+        },
+            (data)  {
+          setAreas(data.areas!);
+          notifyListeners();
+        });
+
+  }
+  setAreaId(int areaId){
+    studentUpdate= studentUpdate.copyWith(area_id: areaId);
+  }
+
 
 }

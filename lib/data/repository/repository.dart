@@ -166,7 +166,7 @@ class RepositoryImp implements Repository {
   }
 
   @override
-  Future<Either<Failure, Profile>> profile() async {
+  Future<Either<Failure, UserProfile>> profile() async {
     try {
       //connect to internet,its safe to call Api
       final response = await _remoteDataSource.profile();
@@ -783,6 +783,54 @@ class RepositoryImp implements Repository {
           .failure);
     }
   }
+
+  @override
+  Future<Either<Failure, AcceptDenyModel>> approve(int id)  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.approve(id);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, AcceptDenyModel>> deny(int id)   async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.deny(id);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
 
 
 }

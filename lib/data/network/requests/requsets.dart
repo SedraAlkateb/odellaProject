@@ -93,6 +93,9 @@ class UpdataSupervisorRequest{
   String? firstName;
   String? lastName;
   String? phoneNumber;
+  int? cityId;
+  int? areaId;
+  String? street;
 
   UpdataSupervisorRequest(
       this.supervisorId,
@@ -100,6 +103,9 @@ class UpdataSupervisorRequest{
         this.firstName,
         this.lastName,
         this.phoneNumber,
+        this.cityId,
+        this.areaId,
+        this.street
       }
       );
 }

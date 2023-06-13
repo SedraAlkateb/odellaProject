@@ -78,5 +78,15 @@ abstract class  LocaleKeys {
   static const selecttrip = 'selecttrip';
   static const descriptionlostitem = 'descriptionlostitem';
   static const addlostitem = 'addlostitem';
+  static const searchstudent = 'searchstudent';
+  static const tripinformation = 'tripinformation';
+  static const seat = 'seat';
+  static const accept = 'accept';
+  static const reject = 'reject';
+  static const dailyrecieve = 'dailyrecieve';
+  static const notrip = 'notrip';
+  static const linename = 'linename';
+  static const date = 'date';
+  static const availableseats = 'availableseats';
 
 }

@@ -19,6 +19,9 @@ class UpdateSupervisorUseCase implements BaseUseCase<UpdateSupervisorUseCaseInpu
           firstName:   input.firstName,
           lastName:   input.lastName,
           phoneNumber:  input.phoneNumber,
+          cityId: input.cityId,
+          areaId:input.areaId,
+            street: input.street
            ));
   }
 
@@ -30,11 +33,18 @@ class UpdateSupervisorUseCaseInput {
   String? firstName;
   String? lastName;
   String? phoneNumber;
+  int? cityId;
+  int? areaId;
+  String? street;
+
   UpdateSupervisorUseCaseInput(
       this.studentId,
       {
         this.firstName,
         this.lastName,
         this.phoneNumber,
+        this.cityId,
+        this.areaId,
+        this.street
       });
 }

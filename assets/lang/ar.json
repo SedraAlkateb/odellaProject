@@ -74,5 +74,16 @@
   "Enteryourcompliaint": "الرجاء ادخال الشكوى",
   "selecttrip": "الرجاء اختيار رحلة",
   "descriptionlostitem": "الرجاء ادخال وصف عن العنصر المفقود",
-  "addlostitem": "اضافة العنصر المفقود"
+  "addlostitem": "اضافة العنصر المفقود",
+  "searchstudent": "البحث عن طالب",
+  "tripinformation": "معلومات الرحلات",
+  "seat": "مقعد",
+  "accept": "موافقة",
+  "reject": "رفض",
+  "dailyrecieve": "الحجز اليومي",
+  "notrip": "لايوجد رحلات",
+  "linename": "اسم الخط",
+  "date": "تاريخ الرحلة",
+  "availableseats": "المقاعد المتاحة"
+
 }

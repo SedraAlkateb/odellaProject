@@ -6,6 +6,7 @@ import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
+import 'package:untitled/presentation/map/view_model/polyLine_map_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
 import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
@@ -15,8 +16,9 @@ import 'package:untitled/presentation/page/page_view_model.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/page/position/view_model/polyline_view_model.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
-import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_supervisor_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/page_view_model.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/reset_password/view_model/reset_password_viewmodel.dart';
@@ -32,7 +34,7 @@ import 'package:untitled/presentation/subscription/view_model/subscription_view_
 
 class MyApp extends StatefulWidget {
   //name constructor
-  MyApp._internal();
+  const MyApp._internal();
 
   static final MyApp _instance=
 
@@ -74,6 +76,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>PolyLineViewModel()),
         ChangeNotifierProvider(create: (_)=>instance<ScanQrViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<AddLostItemViewModel>()),
+        ChangeNotifierProvider(create: (_)=>PolyLineMapViewModel()),
+        ChangeNotifierProvider(create: (_)=>instance<DailyReservationsViewModel>()),
+
 
 
 

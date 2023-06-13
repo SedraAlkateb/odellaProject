@@ -8,23 +8,34 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
 
   HomeSupervisorUseCase _homeSupervisorUseCase;
   HomeSuperVisorViewModel(this._homeSupervisorUseCase);
+  List<User>search =[];
+  bool _succ=false;
+ bool getSucc(){
+    return _succ;
+  }
+  setSucc(bool s){
+   _succ=s;
+  }
   @override
   void start() async{
 //   await setTime();
     homeSupervisor();
   }
-String _time="";
- String getTime(){
+  String _time="";
+  String getTime(){
     return _time;
   }
- late HomeSuperVisor _homeSuperVisor;
- setHomeSuperVisor(HomeSuperVisor h){
-   _homeSuperVisor=h;
-   notifyListeners();
- }
-  HomeSuperVisor getHomeSuperVisor(){
-   return _homeSuperVisor;
- }
+
+  late DataHomeSupervisor _homeSuperVisor;
+  setHomeSuperVisor(DataHomeSupervisor h) async{
+    _homeSuperVisor=h;
+    search=h.users!;
+    setSucc(true);
+    notifyListeners();
+  }
+  DataHomeSupervisor getHomeSuperVisor(){
+    return _homeSuperVisor;
+  }
   Future<String> getLocalTime() async {
     String _time = await FlutterNativeTimezone.getLocalTimezone();
     DateTime now = DateTime.now().toUtc().add(Duration(hours: getTimezoneOffset(_time)));
@@ -33,7 +44,25 @@ String _time="";
 
     return formatted;
   }
+  setSearch( String value){
+    search= _homeSuperVisor.users?.where(
+            (element){
+          final fName=element.lastName.toLowerCase();
+          final lName=element.firstName.toLowerCase();
+          final phone=element.phoneNumber.toLowerCase();
+          final email =element.email.toLowerCase();
+          final sear=value.toLowerCase();
+          return fName.contains(sear) ||
+              lName.contains(sear)  ||
+              phone.contains(sear) ||
+              email.contains(sear) ;
+        }).toList()??[];
+    notifyListeners();
 
+  }
+  List<User> getUser(){
+    return search;
+  }
   int getTimezoneOffset(String timezone) {
     DateTime now = DateTime.now();
     Duration offset = DateTime.parse(now.toString()).timeZoneOffset;
@@ -42,15 +71,14 @@ String _time="";
   }
   //////////////////////////input////////////////////////
   homeSupervisor() async{
-
+    setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
-
             (failure)  {
-
-              print(failure.massage);
-            },
+              setSucc(false);
+          print(failure.massage);
+        },
             (data)  async{
-              setHomeSuperVisor(data);
+          setHomeSuperVisor(data.dataHomeSupervisor!);
         });
   }
 }

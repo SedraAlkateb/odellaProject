@@ -16,7 +16,7 @@ class AfterSignUpView extends StatefulWidget {
 class _AfterSignUpViewState extends State<AfterSignUpView> {
   _goToSignup(){
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Navigator.pop(context, Routes.signupRoute);
+      Navigator.pop(context, Routes.loginRoute);
     });
   }
 

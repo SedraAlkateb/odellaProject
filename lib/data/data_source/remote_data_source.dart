@@ -36,7 +36,8 @@ abstract class RemoteDataSource{
   Future<UpdateSupervisorResponse> updateSupervisorImage(UpdateImage  updateImage);
   Future<DailyReservationResponse> dailyReservations(int id);
   Future<QrConfirmResponse> confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest);
-
+  Future<AcceptAndDenyResponse> approve(int id);
+  Future<AcceptAndDenyResponse> deny(int id);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -273,6 +274,9 @@ return await _appServiceClient.updateSuperVisor(supervisorRequest.supervisorId, 
   phoneNumber: supervisorRequest.phoneNumber,
   lastName: supervisorRequest.lastName,
   firstName: supervisorRequest.firstName,
+  city_id: supervisorRequest.cityId,
+  area_id: supervisorRequest.areaId,
+street: supervisorRequest.street
 ));
   }
 
@@ -306,6 +310,16 @@ return await _appServiceClient.updateSuperVisor(supervisorRequest.supervisorId, 
   @override
   Future<QrConfirmResponse> confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest) async{
     return await _appServiceClient.confirmStudentByQrCode(confirmQrRequest.userId,confirmQrRequest.tripID);
+  }
+
+  @override
+  Future<AcceptAndDenyResponse> approve(int id) async{
+    return await _appServiceClient.approve(id);
+  }
+
+  @override
+  Future<AcceptAndDenyResponse> deny(int id) async{
+    return await _appServiceClient.deny(id);
   }
 
 }

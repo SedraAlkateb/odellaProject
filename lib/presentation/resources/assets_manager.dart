@@ -7,7 +7,7 @@ class ImageAssets{
   static const String logo1 = "$imagePath/logo.svg";
   static const String logo2 = "$imagePath/logo2.svg";
   static const String logo4 = "$imagePath/splash_screen.png";
-
+  static const String gray = "$imagePath/gray.png";
 
   static const String odella = "$imagePath/odella.svg";
 

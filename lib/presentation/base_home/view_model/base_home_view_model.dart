@@ -11,7 +11,7 @@ class BaseHomeViewModel extends BaseViewModel with ChangeNotifier{
   BaseHomeViewModel(this._transportationLinesUseCase,this._positionLineUseCase);
   List<DataTransportationLines> dataTransportationLines=[];
   List<DataTransportationLines> dataTransportationLinesSearch=[];
-  List<From> _position=[];
+  List<DataTransferPositions> _position=[];
   var _line;
   bool _isLog=false;
   bool isPos=false;
@@ -64,12 +64,12 @@ class BaseHomeViewModel extends BaseViewModel with ChangeNotifier{
     //  inputState.add(ContentState());
   }
 /////////////////set/////////
-  setPosition( List<From> posit){
+  setPosition( List<DataTransferPositions> posit){
     _position=posit;
     notifyListeners();
   }
   ////////////////get/////////////
-  List<From> getPosition(){
+  List<DataTransferPositions> getPosition(){
     return _position;
   }
   /////////////////////////async

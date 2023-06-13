@@ -91,7 +91,17 @@ class CodegenLoader extends AssetLoader{
   "Enteryourcompliaint": "الرجاء ادخال الشكوى",
   "selecttrip": "الرجاء اختيار رحلة",
   "descriptionlostitem": "الرجاء ادخال وصف عن العنصر المفقود",
-  "addlostitem": "اضافة العنصر المفقود"
+  "addlostitem": "اضافة العنصر المفقود",
+  "searchstudent": "البحث عن طالب",
+  "tripinformation": "معلومات الرحلات",
+  "seat": "مقعد",
+  "accept": "موافقة",
+  "reject": "رفض",
+  "dailyrecieve": "الحجز اليومي",
+  "notrip": "لايوجد رحلات",
+  "linename": "اسم الخط",
+  "date": "تاريخ الرحلة",
+  "availableseats": "المقاعد المتاحة"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -114,7 +124,7 @@ static const Map<String,dynamic> en = {
   "search": "  Search for transmission lines ",
   "eFirstName": "   First name ",
   "eLastName": "   Last name ",
-  " ePhoneNumber": "   Phone number",
+  "ePhoneNumber": "Phone number",
   "errorFirstName": "  Please inter your first name ",
   "errorLastName": "   Please inter your last name ",
   "errorEmail": "   Please inter your email ",
@@ -123,7 +133,7 @@ static const Map<String,dynamic> en = {
   "transferPositions": " TransferPositions",
   "daysNumber": " Days number",
   "universities": " Universities",
-  "name": " Name",
+  "name": "Name",
   "programmer": " Program",
   "profile": " Profile",
   "confirmPassword": "confirm password",
@@ -170,7 +180,18 @@ static const Map<String,dynamic> en = {
   "Enteryourcompliaint": "Enter your complaint",
   "selecttrip": "select trip",
   "descriptionlostitem": "Enter description for your lost item",
-  "addlostitem": "add lost item"
+  "addlostitem": "add lost item",
+  "searchstudent": "Search for student",
+  "tripinformation": "trip information",
+  "homeSuper": "Home Supervisor",
+  "seat": "Seat",
+  "accept": "Accept",
+  "reject": "Reject",
+  "dailyrecieve": "Daily Recieve",
+  "notrip": "No trips found",
+  "linename": "Line name",
+  "date": "Trip date",
+  "availableseats": "Available seats"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

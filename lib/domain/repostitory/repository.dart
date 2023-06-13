@@ -11,7 +11,7 @@ abstract class Repository{
   Future< Either<Failure,TransferPositions>>getTransferPositions();
   Future< Either<Failure,TransportationLines>>getTransportationLines();
   Future< Either<Failure,Subscriptions>>getSubscriptions();
-  Future< Either<Failure,Profile>>profile();
+  Future< Either<Failure,UserProfile>>profile();
   Future< Either<Failure,PositionLine>>positionLine(int id);
   Future< Either<Failure,Areas>>getAreasByCityId(int id);
   Future< Either<Failure,DataLocation>>getLocationById(int id);
@@ -27,6 +27,7 @@ abstract class Repository{
   Future< Either<Failure,SuperVisor>>updateSupervisorPassword(UpdatePasswordRequest updatePasswordRequest);
   Future< Either<Failure,SuperVisor>>updateSupervisorImage(UpdateImage updateImage);
 
+
   Future< Either<Failure,LogOutResponse>>logout();
   Future< Either<Failure,Program>>programs();
   Future< Either<Failure,Null>>confirmStudentAttendenceInTrip(ConfirmStudent confirmStudent);
@@ -40,6 +41,8 @@ abstract class Repository{
   Future< Either<Failure,Trips>>weeklyTrip();
   Future< Either<Failure,DailyReservations>>dailyReservations(int id);
   Future< Either<Failure,String>>confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest);
+  Future< Either<Failure,AcceptDenyModel>>approve(int id);
+  Future< Either<Failure,AcceptDenyModel>>deny(int id);
 
 
 }
