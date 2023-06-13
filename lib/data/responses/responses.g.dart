@@ -84,6 +84,9 @@ SupervisorRequest _$SupervisorRequestFromJson(Map<String, dynamic> json) =>
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
+      city_id: json['city_id'] as int?,
+      area_id: json['area_id'] as int?,
+      street: json['street'] as String?,
     );
 
 Map<String, dynamic> _$SupervisorRequestToJson(SupervisorRequest instance) =>
@@ -91,6 +94,9 @@ Map<String, dynamic> _$SupervisorRequestToJson(SupervisorRequest instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'phoneNumber': instance.phoneNumber,
+      'area_id': instance.area_id,
+      'city_id': instance.city_id,
+      'street': instance.street,
     };
 
 PasswordRequest _$PasswordRequestFromJson(Map<String, dynamic> json) =>
@@ -123,6 +129,66 @@ Map<String, dynamic> _$UserDataResponseToJson(UserDataResponse instance) =>
       'token_type': instance.token_type,
       'expires_in': instance.expires_in,
       'user': instance.userResponse,
+    };
+
+UniversityResponse _$UniversityResponseFromJson(Map<String, dynamic> json) =>
+    UniversityResponse(
+      json['id'] as int?,
+      json['name'] as String?,
+    );
+
+Map<String, dynamic> _$UniversityResponseToJson(UniversityResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+DataProfileResponse _$DataProfileResponseFromJson(Map<String, dynamic> json) =>
+    DataProfileResponse(
+      json['id'] as int?,
+      json['firstName'] as String?,
+      json['lastName'] as String?,
+      json['email'] as String?,
+      json['phoneNumber'] as String?,
+      json['image'] as String?,
+      json['expiredSubscriptionDate'] as String?,
+      json['line'] == null
+          ? null
+          : DataTransportationLinesResponse.fromJson(
+              json['line'] as Map<String, dynamic>),
+      json['position'] == null
+          ? null
+          : DataTransferPositionsResponse.fromJson(
+              json['position'] as Map<String, dynamic>),
+      json['location'] == null
+          ? null
+          : LocationDataResponse.fromJson(
+              json['location'] as Map<String, dynamic>),
+      json['university'] == null
+          ? null
+          : UniversityResponse.fromJson(
+              json['university'] as Map<String, dynamic>),
+      json['subscription'] == null
+          ? null
+          : DataSubscriptionResponse.fromJson(
+              json['subscription'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$DataProfileResponseToJson(
+        DataProfileResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'email': instance.email,
+      'phoneNumber': instance.phoneNumber,
+      'image': instance.image,
+      'expiredSubscriptionDate': instance.expiredSubscriptionDate,
+      'line': instance.line,
+      'position': instance.position,
+      'location': instance.location,
+      'university': instance.university,
+      'subscription': instance.subscription,
     };
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
@@ -473,7 +539,7 @@ ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
     ProfileResponse(
       json['data'] == null
           ? null
-          : UserResponse.fromJson(json['data'] as Map<String, dynamic>),
+          : DataProfileResponse.fromJson(json['data'] as Map<String, dynamic>),
     )
       ..status = json['status'] as int?
       ..massage = json['message'] as String?;
@@ -675,7 +741,8 @@ PositionLineResponse _$PositionLineResponseFromJson(
         Map<String, dynamic> json) =>
     PositionLineResponse(
       (json['data'] as List<dynamic>?)
-          ?.map((e) => FromResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) =>
+              DataTransferPositionsResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     )
       ..status = json['status'] as int?
@@ -736,6 +803,8 @@ DataTransferPositionsResponse _$DataTransferPositionsResponseFromJson(
     DataTransferPositionsResponse(
       json['id'] as int?,
       json['name'] as String?,
+      json['lng'] as String?,
+      json['lat'] as String?,
     );
 
 Map<String, dynamic> _$DataTransferPositionsResponseToJson(
@@ -743,6 +812,8 @@ Map<String, dynamic> _$DataTransferPositionsResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'lat': instance.lat,
+      'lng': instance.lng,
     };
 
 TransferPositionsDataMainResponse _$TransferPositionsDataMainResponseFromJson(
@@ -1420,13 +1491,28 @@ Map<String, dynamic> _$UpdateSupervisorResponseToJson(
       'data': instance.updateSupervisorResponse,
     };
 
+AcceptAndDenyResponse _$AcceptAndDenyResponseFromJson(
+        Map<String, dynamic> json) =>
+    AcceptAndDenyResponse(
+      json['data'] == null
+          ? null
+          : DataDailyReservationResponse.fromJson(
+              json['data'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$AcceptAndDenyResponseToJson(
+        AcceptAndDenyResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.dailyReservationResponse,
+    };
+
 DataDailyReservationResponse _$DataDailyReservationResponseFromJson(
         Map<String, dynamic> json) =>
     DataDailyReservationResponse(
-      json['position'] == null
-          ? null
-          : DataTransferPositionsResponse.fromJson(
-              json['position'] as Map<String, dynamic>),
       json['id'] as int?,
       json['name'] as String?,
       json['phoneNumber'] as String?,
@@ -1436,7 +1522,6 @@ DataDailyReservationResponse _$DataDailyReservationResponseFromJson(
 Map<String, dynamic> _$DataDailyReservationResponseToJson(
         DataDailyReservationResponse instance) =>
     <String, dynamic>{
-      'position': instance.position,
       'id': instance.id,
       'name': instance.name,
       'phoneNumber': instance.phoneNumber,

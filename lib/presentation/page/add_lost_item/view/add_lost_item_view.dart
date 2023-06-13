@@ -18,8 +18,14 @@ class AddLostItemView extends StatefulWidget {
 
 class _AddLostItemViewState extends State<AddLostItemView> {
   TextEditingController textEditingController = TextEditingController();
-  String dropdownTransportationLine = 't1';
-
+  int dropdownTransportationLine = 0;
+  var viewModel;
+@override
+  void initState() {
+  viewModel=Provider.of<AddLostItemViewModel>(context,listen: false);
+  viewModel.start();
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     String imageURL = 'assets/images/Screenshot 2023-05-20 100205.png';
@@ -138,31 +144,22 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         width: 10.w,
                       ),
                       DropdownButton(
-                        value: dropdownTransportationLine,
-                        items: <String>[
-                          't1',
-                          't2',
-                          't3',
-                          't4'
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: SizedBox(
-                              width: 8.w,
-                              child: Text(
-                                value,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: AppSize.s15),
-                              ),
+                          value: dropdownTransportationLine,
+                          items:Provider.of<AddLostItemViewModel>(context).getTrip()
+                              .map((e) => DropdownMenuItem(
+                            value: e.id,
+                            child: Text(
+                              "${e.time!.date} ${e.time!.start}",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: AppSize.s15),
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownTransportationLine = newValue!;
-                          });
-                        },
+                          )).toList(),
+                          onChanged: (val) {
+                            Provider.of<AddLostItemViewModel>(context,
+                                listen: false)
+                                .setTripId(val!);
+                          }
                       ),
                     ],
                   ),
@@ -281,28 +278,22 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                               width: 3.w,
                             ),
                             DropdownButton(
-                              value: dropdownTransportationLine,
-                              items: <String>['t1', 't2', 't3', 't4']
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: SizedBox(
-                                        width: 8.w,
-                                        child: Text(
-                                          value,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontSize: AppSize.s15),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownTransportationLine = newValue!;
-                                });
-                              },
+                                value: dropdownTransportationLine,
+                                items:Provider.of<AddLostItemViewModel>(context).getTrip()
+                                    .map((e) => DropdownMenuItem(
+                                  value: e.id,
+                                  child: Text(
+                                    "${e.time!.date} ${e.time!.start}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontSize: AppSize.s15),
+                                  ),
+                                )).toList(),
+                                onChanged: (val) {
+                                  Provider.of<AddLostItemViewModel>(context,
+                                      listen: false)
+                                      .setTripId(val!);
+                                }
                             ),
                           ],
                         ),

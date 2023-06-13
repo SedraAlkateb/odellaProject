@@ -57,7 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
     if (Provider.of<SignUpViewModel>(context).isLog == true) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Provider.of<SignUpViewModel>(context, listen: false).isLog = false;
-        Navigator.pushNamed(context, Routes.afterSignUp);
+        Navigator.pushReplacementNamed(context, Routes.afterSignUp);
       });
     }
     return Form(

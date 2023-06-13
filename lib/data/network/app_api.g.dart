@@ -1036,13 +1036,13 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<DailyReservationResponse> approve(id) async {
+  Future<AcceptAndDenyResponse> approve(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<DailyReservationResponse>(Options(
+        _setStreamType<AcceptAndDenyResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -1054,7 +1054,30 @@ class _AppServiceClient implements AppServiceClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DailyReservationResponse.fromJson(_result.data!);
+    final value = AcceptAndDenyResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AcceptAndDenyResponse> deny(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AcceptAndDenyResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/supervisor/deny/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AcceptAndDenyResponse.fromJson(_result.data!);
     return value;
   }
 

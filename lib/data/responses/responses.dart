@@ -90,11 +90,17 @@ class SupervisorRequest  {
   String? firstName;
   String? lastName;
   String? phoneNumber;
+  int? area_id;
+  int? city_id;
+  String? street;
   SupervisorRequest(
       {
         this.firstName,
         this.lastName,
         this.phoneNumber,
+        this.city_id,
+        this.area_id,
+        this.street
       }
       );//from json
   factory SupervisorRequest.fromJson(Map<String,dynamic> json ) =>
@@ -150,7 +156,72 @@ class UserDataResponse {
   Map<String,dynamic> toJson()=>
       _$UserDataResponseToJson(this);
 }
+@JsonSerializable()
+class UniversityResponse  {
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"name")
+  String? name;
 
+  UniversityResponse(this.id, this.name); //from json
+  factory UniversityResponse.fromJson(Map<String,dynamic> json ) =>
+      _$UniversityResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$UniversityResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class DataProfileResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "firstName")
+  String? firstName;
+  @JsonKey(name: "lastName")
+  String? lastName;
+  @JsonKey(name: "email")
+  String? email;
+  @JsonKey(name: "phoneNumber")
+  String? phoneNumber;
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "expiredSubscriptionDate")
+  String? expiredSubscriptionDate;
+  @JsonKey(name: "line")
+  DataTransportationLinesResponse? line;
+  @JsonKey(name: "position")
+  DataTransferPositionsResponse? position;
+  @JsonKey(name: "location")
+  LocationDataResponse? location;
+  @JsonKey(name: "university")
+  UniversityResponse? university;
+  @JsonKey(name: "subscription")
+  DataSubscriptionResponse? subscription;
+
+  DataProfileResponse(
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.image,
+      this.expiredSubscriptionDate,
+      this.line,
+      this.position,
+      this.location,
+      this.university,
+      this.subscription);
+
+  factory DataProfileResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataProfileResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataProfileResponseToJson(this);
+
+}
 @JsonSerializable()
 class UserResponse {
   @JsonKey(name: "id")
@@ -582,7 +653,7 @@ class RegisterAResponse extends BaseResponse {
 @JsonSerializable()
 class ProfileResponse  extends BaseResponse{
   @JsonKey(name:"data")
-  UserResponse? userResponse;
+  DataProfileResponse? userResponse;
   ProfileResponse(this.userResponse);
 
   // from json
@@ -831,7 +902,7 @@ class ToResponse {
 @JsonSerializable()
 class PositionLineResponse  extends BaseResponse{
   @JsonKey(name:"data")
-  List<FromResponse>? positionLineResponse;
+  List<DataTransferPositionsResponse>? positionLineResponse;
 
   PositionLineResponse(this.positionLineResponse);
 
@@ -889,9 +960,11 @@ class DataTransferPositionsResponse {
   int? id;
   @JsonKey(name: "name")
   String? name;
-
-
-  DataTransferPositionsResponse(this.id, this.name);
+  @JsonKey(name: "lat")
+  String? lat;
+  @JsonKey(name: "lng")
+  String? lng;
+  DataTransferPositionsResponse(this.id, this.name,this.lng,this.lat);
 
   factory DataTransferPositionsResponse.fromJson(Map<String,dynamic> json ) =>
       _$DataTransferPositionsResponseFromJson(json);
@@ -1697,11 +1770,25 @@ class UpdateSupervisorResponse extends BaseResponse {
       _$UpdateSupervisorResponseToJson(this);
 
 }
+@JsonSerializable()
+class AcceptAndDenyResponse extends BaseResponse {
+  @JsonKey(name:"data")
+  DataDailyReservationResponse? dailyReservationResponse;
+
+  AcceptAndDenyResponse(this.dailyReservationResponse);
+  // from json
+  factory AcceptAndDenyResponse.fromJson(Map<String,dynamic>json)=>
+      _$AcceptAndDenyResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$AcceptAndDenyResponseToJson(this);
+
+}
 
 @JsonSerializable()
 class DataDailyReservationResponse {
-  @JsonKey(name:"position")
-  DataTransferPositionsResponse? position;
+ // @JsonKey(name:"position")
+ // DataTransferPositionsResponse? position;
   @JsonKey(name:"id")
   int? id;
   @JsonKey(name:"name")
@@ -1712,7 +1799,7 @@ class DataDailyReservationResponse {
   String? seatsNumber;
 
 
-  DataDailyReservationResponse(this.position, this.id, this.name,
+  DataDailyReservationResponse(this.id, this.name,
       this.phoneNumber, this.seatsNumber); // from json
   factory DataDailyReservationResponse.fromJson(Map<String,dynamic>json)=>
       _$DataDailyReservationResponseFromJson(json);

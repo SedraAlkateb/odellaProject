@@ -39,7 +39,7 @@ return image! ;
 
   }
 
-  getSearch(){
+  List<LostAndFoundData> getSearch(){
     return search;
   }
 

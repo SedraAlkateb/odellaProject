@@ -121,6 +121,39 @@ class Profile{
   UserModel? userModel;
   Profile(this.userModel);
 }
+class UniversityModel{
+  int id;
+  String name;
+
+  UniversityModel( this.id,this.name);
+}
+class UserProfile{
+  int id;
+  String firstName;
+  String lastName;
+  String email;
+  String phoneNumber;
+  String image;
+  String expiredSubscriptionDate;
+  DataTransportationLines? line;
+  DataTransferPositions? position;
+  Location? location;
+  UniversityModel? university;
+  DataSubscriptions? subscription;
+  UserProfile(
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.image,
+      this.expiredSubscriptionDate,
+      this.line,
+      this.position,
+      this.location,
+      this.university,
+      this.subscription);
+}
 
 class DataModel{
   int id;
@@ -150,12 +183,13 @@ class TransferPositions {
 class DataTransferPositions{
   int id;
   String name;
-
-  DataTransferPositions(this.id, this.name);
+String lat;
+String lng;
+  DataTransferPositions(this.id, this.name,this.lng,this.lat);
 }
 
 class PositionLine{
-  List<From> positionLine;
+  List<DataTransferPositions> positionLine;
   PositionLine(this.positionLine);
 }
 
@@ -398,15 +432,22 @@ class SuperVisor{
 
   SuperVisor(this.supervisorUpdate);
 }
+class AcceptDenyModel{
+  DailyReservationsModel? dailyReservationsModel;
+
+  AcceptDenyModel(this.dailyReservationsModel);
+}
 class DailyReservationsModel{
   int id;
   String name;
   String phoneNumber;
   String seatsNumber;
-  DataTransferPositions? dataTransferPositions;
+ // DataTransferPositions? dataTransferPositions;
 
-  DailyReservationsModel(this.id, this.name, this.phoneNumber, this.seatsNumber,
-      this.dataTransferPositions);
+  DailyReservationsModel(
+      this.id, this.name, this.phoneNumber, this.seatsNumber,
+     // { this.dataTransferPositions}
+      );
 }
 class DailyReservations{
   List<DailyReservationsModel>? dailyReservationsModel;

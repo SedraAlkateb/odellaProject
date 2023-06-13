@@ -193,7 +193,11 @@ abstract class AppServiceClient {
       @Path("id") int id
       );
   @GET("/api/supervisor/approve/{id}")
-  Future<DailyReservationResponse> approve(
+  Future<AcceptAndDenyResponse> approve(
+      @Path("id") int id
+      );
+  @GET("/api/supervisor/deny/{id}")
+  Future<AcceptAndDenyResponse> deny(
       @Path("id") int id
       );
   @POST("/api/supervisor/qrcode/confirm/trip/{trip_id}/user/{id}")

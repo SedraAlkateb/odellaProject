@@ -142,11 +142,32 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
     );
   }
 }
+extension UniversityResponseMapper on UniversityResponse? {
+  UniversityModel toDomain() {
+    return UniversityModel(
+      this?.id.orZero() ??Constants.zero,
+      this?.name.orEmpty() ??Constants.empty,
+    );
+  }
+}
 
 extension ProfileResponseMapper on ProfileResponse? {
-  Profile toDomain() {
-    return Profile(
-      this?.userResponse.toDomain(),
+  UserProfile toDomain() {
+    return UserProfile(
+        this?.userResponse!.id.orZero() ??Constants.zero,
+        this?.userResponse!.firstName.orEmpty() ??Constants.empty,
+        this?.userResponse!.lastName.orEmpty() ??Constants.empty,
+    this?.userResponse!.email.orEmpty() ??Constants.empty,
+      this?.userResponse!.phoneNumber.orEmpty() ??Constants.empty,
+      this?.userResponse!.image.orEmpty() ??Constants.empty,
+      this?.userResponse!.expiredSubscriptionDate.orEmpty() ??Constants.empty,
+
+      this?.userResponse!.line.toDomain(),
+      this?.userResponse!.position.toDomain(),
+      this?.userResponse!.location.toDomain(),
+      this?.userResponse!.university.toDomain(),
+      this?.userResponse!.subscription.toDomain(),
+
     );
   }
 }
@@ -218,6 +239,8 @@ on DataTransferPositionsResponse? {
     return DataTransferPositions(
       this?.id.orZero() ?? Constants.zero,
       this?.name.orEmpty() ?? Constants.empty,
+      this?.lng.orEmpty() ??Constants.empty,
+      this?.lat.orEmpty() ??Constants.empty
     );
   }
 }
@@ -292,11 +315,11 @@ extension DataToResponseMapper on ToResponse? {
 ////////////PositionLine
 extension PositionLineResponseMapper on PositionLineResponse? {
   PositionLine toDomain() {
-    List<From> dataModel = (this
+    List<DataTransferPositions> dataModel = (this
         ?.positionLineResponse
         ?.map((dataResponse) => dataResponse.toDomain()) ??
         const Iterable.empty())
-        .cast<From>()
+        .cast<DataTransferPositions>()
         .toList();
     return PositionLine(dataModel);
   }
@@ -593,7 +616,7 @@ extension DataDailyReservationResponseMapper on DataDailyReservationResponse? {
         this?.name ?? Constants.empty,
         this?.phoneNumber ?? Constants.empty,
         this?.seatsNumber ?? Constants.empty,
-        this?.position.toDomain()
+   //     dataTransferPositions:this?.position.toDomain() ,
     );
   }
 }
@@ -606,5 +629,11 @@ extension DailyReservationResponseMapper on DailyReservationResponse? {
         .cast<DailyReservationsModel>()
         .toList();
     return DailyReservations(dataModel);
+  }
+}
+extension AcceptAndDenyResponseMapper on  AcceptAndDenyResponse? {
+  AcceptDenyModel toDomain() {
+  return  AcceptDenyModel(this?.dailyReservationResponse.toDomain()
+  );
   }
 }

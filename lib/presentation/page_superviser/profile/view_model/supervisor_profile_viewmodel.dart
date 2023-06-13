@@ -3,7 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/domain/usecase/Universities_usecase.dart';
+import 'package:untitled/domain/usecase/areas_usecase.dart';
+import 'package:untitled/domain/usecase/cities_usecase.dart';
 import 'package:untitled/domain/usecase/profile_usecase.dart';
+import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_image_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_password_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
@@ -19,9 +23,26 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   final UpdateSupervisorImageUseCase _updateImageUseCase;
   final UpdateSupervisorUseCase _updateSupervisorUseCase;
   final UpdateSupervisorPasswordUseCase _updatePasswordUseCase;
+  final CitiesUseCase _citiesUseCase;
+  final AreasUseCase _areasUseCase;
+  final SubscriptionsUseCase _subscriptionsUseCase;
+  final UniversitiesUsecase _universitiesUsecase;
+  SupervisorProfileViewModel(
+      this._profileUseCase,
+      this._updateSupervisorUseCase,
+      this._updatePasswordUseCase,
+      this._updateImageUseCase,
+      this._citiesUseCase,
+      this._areasUseCase,
+      this._subscriptionsUseCase,
+      this._universitiesUsecase
+      );
+  List<City> _cities=[];
+  List<Area> _areas=[];
+  List<DataSubscriptions> _dataSubscriptions=[];
+  List<DataModel> _dataModel=[];
 
-  SupervisorProfileViewModel(this._profileUseCase,this._updateSupervisorUseCase,this._updatePasswordUseCase,this._updateImageUseCase);
-  Profile? _profile;
+  UserProfile? _profile;
   var studentUpdate=UpdateStudentObject(0);
   File? imm;
   Color color1=ColorManager.darkGray;
@@ -47,16 +68,27 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
 
   @override
   void start() {
-    student();
+    student().then((value) =>
+        getAreasByIdCity(_profile?.location?.city?.id ??0)
+    );
+     getUniversitiesData();
+     getSubscriptionsData();
+     getCitiesData();
+    ;
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
+  String getProfileCity(){
+    return _profile?.location?.city?.name ??" Cities";
+  }
+  String getProfileArea(){
+    return _profile?.location?.area?.name ??" Areas";
+  }
   int? getId(){
-    return _profile?.userModel?.id;
+    return _profile?.id;
   }
   ///////////////////color
   Color getColor1(){
@@ -90,67 +122,81 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     notifyListeners();
   }
   ///////////////////////////
-  String getSubscriptionsId(){
+  String? getSubscriptionsId(){
     if(studentUpdate.subscription_id!=null){
       return studentUpdate.subscription_id.toString();
     }else{
-      return _profile?.userModel?.subscription_id ??"";
+      return _profile?.subscription?.id.toString() ;
     }
   }
   String getFirstName(){
     if(studentUpdate.firstName!=null){
       return studentUpdate.firstName.toString();
     }else{
-      return _profile?.userModel?.firstName ??"";
+      return _profile?.firstName ??"";
     }
   }
   String getLastName(){
     if(studentUpdate.lastName!=null){
       return studentUpdate.lastName.toString();
     }else{
-      return _profile?.userModel?.lastName ??"";
+      return _profile?.lastName ??"";
     }
   }
   String getEmail(){
     if(studentUpdate.email!=null){
       return studentUpdate.email.toString();
     }else{
-      return _profile?.userModel?.email ??"";
+      return _profile?.email ??"";
     }
   }
   String getPhone(){
     if(studentUpdate.phoneNumber!=null){
       return studentUpdate.phoneNumber.toString();
     }else{
-      return _profile?.userModel?.phoneNumber ??"";
+      return _profile?.phoneNumber ??"";
+    }
+  }
+  int getCity(){
+    if(studentUpdate.city_id!=null){
+      return studentUpdate.city_id ??0;
+    }else{
+      return _profile?.location?.city?.id ??0  ;
+    }
+  }
+  int getArea(){
+    if(studentUpdate.area_id!=null){
+      return studentUpdate.area_id ??0;
+    }else{
+      return _profile?.location?.area?.id ??0;
     }
   }
   String getTransportationLineId(){
     if(studentUpdate.transportation_line_id!=null){
       return studentUpdate.transportation_line_id.toString();
     }else{
-      return _profile?.userModel?.transportation_line_id ??"";
+      return _profile?.line?.id.toString() ??"";
     }
   }
   String getTransferPositionId(){
     if(studentUpdate.transfer_position_id!=null){
       return studentUpdate.transfer_position_id.toString();
     }else{
-      return _profile?.userModel?.transfer_position_id ??"";
+      return _profile?.position?.id.toString() ??"";
     }
   }
   String getUniversityId(){
     if(studentUpdate.university_id!=null){
       return studentUpdate.university_id.toString();
     }else{
-      return _profile?.userModel?.university_id ??"";
+      return _profile?.university?.id.toString() ??"";
     }
   }
 
   ////////////////////////////////////////////////////UpdateProfile
   setIdStudent(int id){
     studentUpdate=studentUpdate.copyWith(studentId: id);
-    _profile?.userModel?.id=id;
+    _profile?.id=id;
   }
   updateCityId(int string){
     studentUpdate=studentUpdate.copyWith(city_id: string);
@@ -160,7 +206,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
   updateSubscriptionsId(int string){
     studentUpdate=studentUpdate.copyWith(subscription_id: string);
-    _profile?.userModel?.subscription_id=string as String;
+    _profile?.subscription?.id=string ;
     notifyListeners();
   }
   updateStreetId(String string){
@@ -169,22 +215,22 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   updateFirstName(String string){
     studentUpdate=studentUpdate.copyWith(firstName: string);
     //  setFirstName(string);
-    _profile!.userModel!.firstName=studentUpdate.firstName!;
+    _profile!.firstName=studentUpdate.firstName!;
     notifyListeners();
   }
   updateLastName(String string){
     studentUpdate=studentUpdate.copyWith(lastName: string);
-    _profile!.userModel!.lastName=studentUpdate.lastName!;
+    _profile!.lastName=studentUpdate.lastName!;
     notifyListeners();
   }
   updateEmail(String string){
     studentUpdate=studentUpdate.copyWith(email: string);
-    _profile!.userModel!.email=studentUpdate.email!;
+    _profile!.email=studentUpdate.email!;
     notifyListeners();
   }
   updatePhone(String string){
     studentUpdate=studentUpdate.copyWith(phoneNumber: string);
-    _profile!.userModel!.phoneNumber=studentUpdate.phoneNumber!;
+    _profile!.phoneNumber=studentUpdate.phoneNumber!;
     notifyListeners();
   }
   setNewPassword(String string){
@@ -198,17 +244,17 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
   updateTransportationLineId(int string){
     studentUpdate=studentUpdate.copyWith(transportation_line_id: string);
-    _profile?.userModel?.transportation_line_id=string as String ;
+    _profile?.line?.id=string  ;
     notifyListeners();
   }
   updateTransferPositionId(int string){
     studentUpdate=studentUpdate.copyWith(transfer_position_id: string);
-    _profile?.userModel?.transfer_position_id=string as String;
+    _profile?.position?.id=string ;
     notifyListeners();
   }
   updateUniversityId(int string){
     studentUpdate=studentUpdate.copyWith(university_id: string);
-    _profile?.userModel?.university_id=string as String;
+    _profile?.university?.id=string ;
     notifyListeners();
   }
   updateImageFromGallory()async{
@@ -229,20 +275,20 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   }
 
   setFirstName(String firstName){
-    _profile?.userModel?.firstName
+    _profile?.firstName
     =firstName;
     notifyListeners();
   }
   setEmail(String email){
-    _profile?.userModel?.email=email;
+    _profile?.email=email;
     notifyListeners();
   }
   setPhone(String phone){
-    _profile?.userModel?.phoneNumber=phone;
+    _profile?.phoneNumber=phone;
     notifyListeners();
   }
   setLastName(String lastName){
-    _profile?.userModel?.lastName=lastName;
+    _profile?.lastName=lastName;
     notifyListeners();
   }
 
@@ -250,29 +296,33 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     return Image.memory(base64Decode(base64String));
   }
 
-  setProfile(Profile profile){
+  setProfile(UserProfile profile){
     _profile=profile;
     notifyListeners();
   }
 
 //////////////////////////////////////
-  student() async {
-    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+  Future student() async {
 
     (await _profileUseCase.execute(null))
         .fold((failure) {
-      inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
       setProfile(data);
       setIsStudent(true);
-      if(data.userModel?.image!=null&& data.userModel?.image!=""){
-        final file= await  ImageDownloader.downloadImage(data.userModel?.image ??"");
+      if(data.image!=null&& data.image!=""){
+        final file= await  ImageDownloader.downloadImage(data.image );
         setIm(file);
       }
-
       inputState.add(ContentState());
       notifyListeners();
     });
+  }
+  String getStreet(){
+    if(studentUpdate.street!=null){
+      return studentUpdate.street.toString();
+    }else{
+      return _profile?.location?.street ??"";
+    }
   }
   //////////////////////////////
   updateSupervisor() async {
@@ -282,7 +332,10 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
         getId()?? 0,
         firstName: getFirstName(),
         lastName: getLastName(),
-          phoneNumber: getPhone(),
+        phoneNumber: getPhone(),
+        cityId:getCity(),
+        areaId: getArea(),
+      street: getStreet()
          )))
         .fold((failure) {
       // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
@@ -327,5 +380,85 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
       notifyListeners();
     });
   }
+  setUniversities(List<DataModel>universities ){
+    _dataModel=universities;
+  }
+  setCities(List<City>cities ){
+    _cities=cities;
+  }
+  setDataSubscriptions(  List<DataSubscriptions> subscription){
+    _dataSubscriptions=subscription;
+  }
+  setAreas( List <Area> ListAreas){
+    _areas=ListAreas;
+  }
+  List<City> getCities(){
+    return _cities;
+  }
+  List<Area> getAreas(){
+    return _areas;
+  }
+  List<DataModel> getUniversities(){
+    return _dataModel;
+  }
+  List<DataSubscriptions> getDataSubscriptions(){
+    return _dataSubscriptions;
+  }
+  setUniversityId(int universityId){
+    studentUpdate= studentUpdate.copyWith(university_id: universityId);
+  }
+  setCityId(int cityId){
+    studentUpdate= studentUpdate.copyWith(city_id: cityId);
+  }
+  getUniversitiesData()async{
+    ( await _universitiesUsecase.execute(null))
+        .fold(
+            (failure)  {
+          //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+          setUniversities(data.dataModel);
+        });
+
+  }
+
+  getSubscriptionsData()async{
+    ( await _subscriptionsUseCase.execute(null))
+        .fold(
+            (failure)  {
+          //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+
+          setDataSubscriptions(data.dataSubscriptions);
+        });
+
+  }
+  getCitiesData()async{
+    ( await _citiesUseCase.execute(null))
+        .fold(
+            (failure)  {
+          //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+        },
+            (data)  {
+          setCities(data.cities!);
+        });
+
+  }
+  getAreasByIdCity(int id)async{
+    ( await _areasUseCase.execute(id))
+        .fold(
+            (failure)  {
+        },
+            (data)  {
+          setAreas(data.areas!);
+          notifyListeners();
+        });
+
+  }
+  setAreaId(int areaId){
+    studentUpdate= studentUpdate.copyWith(area_id: areaId);
+  }
+
 
 }

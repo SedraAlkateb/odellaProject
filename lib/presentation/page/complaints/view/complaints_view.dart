@@ -17,7 +17,7 @@ class ComplaintsView extends StatefulWidget {
 
 class _ComplaintsViewState extends State<ComplaintsView> {
   TextEditingController textEditingController = TextEditingController();
-  String dropdownTransportationLine = 't1';
+  int dropdownTransportationLine = 0;
   var viewModel;
 @override
   void initState() {
@@ -65,26 +65,25 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                     width: 10.w,
                   ),
                   DropdownButton(
-                    value: dropdownTransportationLine,
-                    items: <String>['t1', 't2', 't3', 't4']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: SizedBox(
-                          width: 8.w,
-                          child: Text(
-                            value,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: AppSize.s15),
-                          ),
+                      icon:
+                      const Icon(Icons.keyboard_arrow_down),
+                      hint: Text(
+                          StringsManager.transportationLines),
+                      items:Provider.of<ComplaintsViewModel>(context).getTrip()
+                          .map((e) => DropdownMenuItem(
+                        value: e.id,
+                        child: Text(
+                          "${e.time!.date} ${e.time!.start}",
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontSize: AppSize.s15),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownTransportationLine = newValue!;
-                      });
-                    },
+                      )).toList(),
+                      onChanged: (val) {
+                        Provider.of<ComplaintsViewModel>(context,
+                            listen: false)
+                            .setTripId(val!);
+                      }
                   ),
                 ],
               ),
@@ -131,31 +130,25 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                           width: 3.w,
                         ),
                         DropdownButton(
-                          value: dropdownTransportationLine,
-                          items: <String>[
-                            't1',
-                            't2',
-                            't3',
-                            't4'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: SizedBox(
-                                width: 8.w,
-                                child: Text(
-                                  value,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontSize: AppSize.s15),
-                                ),
+                            icon:
+                            const Icon(Icons.keyboard_arrow_down),
+                            hint: Text(
+                                StringsManager.transportationLines),
+                            items:Provider.of<ComplaintsViewModel>(context).getTrip()
+                                .map((e) => DropdownMenuItem(
+                              value: e.id,
+                              child: Text(
+                                "${e.time!.date} ${e.time!.start}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: AppSize.s15),
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownTransportationLine = newValue!;
-                            });
-                          },
+                            )).toList(),
+                            onChanged: (val) {
+                              Provider.of<ComplaintsViewModel>(context,
+                                  listen: false)
+                                  .setTripId(val!);
+                            }
                         ),
                       ],
                     ),

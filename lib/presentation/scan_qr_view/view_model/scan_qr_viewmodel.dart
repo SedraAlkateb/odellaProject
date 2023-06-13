@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
 import 'package:untitled/domain/usecase/confirm_qr_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 
@@ -30,11 +31,11 @@ Future<String> scanBarcode() async {
   }
   return _barcodeValue;
 }
-confirmQr() async{
+confirmQr(int id) async{
 
   ( await _confirmQrUseCase.execute(
       ConfirmQrUseCaseInput(
-          int.parse(_barcodeValue),0
+          int.parse(_barcodeValue),id
       ))).fold(
 
           (failure)  {
