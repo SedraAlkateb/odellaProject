@@ -55,6 +55,11 @@ class  AppPreferences {
    // reload();
     return true;
   }
+  Future<bool> setToken(String token)async{
+    await  _sharedPreferences.setString(PREFS_KEY_TOKEN,token );
+    // reload();
+    return true;
+  }
   String getUser(){
     return _sharedPreferences.getString(PREFS_KEY_USER) ??"";
   }

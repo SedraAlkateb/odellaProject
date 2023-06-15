@@ -888,6 +888,7 @@ Map<String, dynamic> _$DataDayResponseToJson(DataDayResponse instance) =>
 
 DayProgramResponse _$DayProgramResponseFromJson(Map<String, dynamic> json) =>
     DayProgramResponse(
+      json['id'] as int?,
       json['day'] == null
           ? null
           : DataDayResponse.fromJson(json['day'] as Map<String, dynamic>),
@@ -895,11 +896,12 @@ DayProgramResponse _$DayProgramResponseFromJson(Map<String, dynamic> json) =>
           ? null
           : DataTransferPositionsResponse.fromJson(
               json['transfer_position'] as Map<String, dynamic>),
+      (json['line'] as List<dynamic>?)?.map((e) => e as String).toList(),
       json['start'] as String?,
       json['end'] as String?,
       json['confirmAttendance1'] as bool?,
       json['confirmAttendance2'] as bool?,
-    )..id = json['id'] as int?;
+    );
 
 Map<String, dynamic> _$DayProgramResponseToJson(DayProgramResponse instance) =>
     <String, dynamic>{
@@ -907,6 +909,7 @@ Map<String, dynamic> _$DayProgramResponseToJson(DayProgramResponse instance) =>
       'day': instance.day,
       'transfer_position': instance.transfer_position,
       'start': instance.start,
+      'line': instance.line,
       'end': instance.end,
       'confirmAttendance1': instance.confirmAttendance1,
       'confirmAttendance2': instance.confirmAttendance2,
@@ -931,7 +934,7 @@ Map<String, dynamic> _$ProgramResponseToJson(ProgramResponse instance) =>
 BusResponse _$BusResponseFromJson(Map<String, dynamic> json) => BusResponse(
       json['id'] as int?,
       json['key'] as String?,
-      json['capacity'] as int?,
+      json['capacity'] as String?,
       json['details'] as String?,
       json['image'] as String?,
     );

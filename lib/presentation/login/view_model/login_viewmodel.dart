@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/login_usecase.dart';
+import 'package:untitled/domain/usecase/refresh_usecase.dart';
+
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/common/freezed_data.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
@@ -8,7 +14,8 @@ import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.d
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs ,LoginViewModelOutputs , ChangeNotifier{
   final LoginUseCase _loginUseCase ;
-  LoginViewModel(this._loginUseCase);
+  final RefreshUseCase _refreshUseCase;
+  LoginViewModel(this._loginUseCase,this._refreshUseCase);
   Authentication ?_authentication;
 var loginObject=LoginObject("","");
 int status=0;
@@ -92,6 +99,24 @@ String? getRole(){
 
             });
  }
+ Future<String?> refresh() async{
+
+    ( await _refreshUseCase.execute(null)).fold(
+            (failure)  {
+        },
+            (data)  async{
+              return await data.userData?.access_token;
+        });
+  }
+  void scheduleTokenRefresh() {
+    final AppPreferences _appPreferences =instance<AppPreferences>();
+
+    String token="";
+    Timer.periodic(Duration(hours: 1), (timer) async {
+    token =(await refresh())!;
+    _appPreferences.setToken(token);
+    });
+  }
 @override
   void dispose() {
     setSuc(0);

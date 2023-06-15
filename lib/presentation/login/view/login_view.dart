@@ -220,6 +220,7 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () async {
                         if (_forKey.currentState!.validate()) {
                           loginViewModelRead.login();
+                          loginViewModelRead.scheduleTokenRefresh();
                         }
                       },
                       child:  Text(StringsManager.signIn)),

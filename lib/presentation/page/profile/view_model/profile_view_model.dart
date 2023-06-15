@@ -202,7 +202,7 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
     _profile?.subscription?.id = string ;
 notifyListeners();
   }
-  updateStreetId(String string){
+  updateStreet(String string){
     studentUpdate=studentUpdate.copyWith(street: string);
   }
   updateFirstName(String string){

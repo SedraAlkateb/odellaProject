@@ -14,14 +14,14 @@ class AddLostItemViewModel extends BaseViewModel with ChangeNotifier{
   WeeklyTripUsecase _weeklyTripUsecase;
   AddLostItemViewModel(this._storeLostUseCase,this._weeklyTripUsecase);
   String massage="";
-  var signUpObject=LostItemObject(3,"asddassad",null);
+  var lostItem=LostItemObject(0,"",null);
   List<DataTrips> _trip=[];
   setImageFromGallory()async{
-    signUpObject= signUpObject.copyWith(image: await pickImage());
+    lostItem= lostItem.copyWith(image: await pickImage());
     notifyListeners();
   }
   File? getImage(){
-    return signUpObject.image;
+    return lostItem.image;
   }
 setTrip(List<DataTrips> trip){
     _trip=trip;
@@ -31,18 +31,18 @@ setTrip(List<DataTrips> trip){
     return _trip;
 }
   String getDescription(){
-    return signUpObject.description;
+    return lostItem.description;
   }
   setDescription(String d){
-    signUpObject= signUpObject.copyWith(description:d);
+    lostItem= lostItem.copyWith(description:d);
     notifyListeners();
   }
 
   int getTripId(){
-    return signUpObject.tripId;
+    return lostItem.tripId;
   }
   setTripId(int d){
-    signUpObject= signUpObject.copyWith(tripId:d);
+    lostItem= lostItem.copyWith(tripId:d);
     notifyListeners();
   }
   setMasege(String m){
@@ -56,12 +56,12 @@ setTrip(List<DataTrips> trip){
     // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
     setMasege("Loading...");
     (await _storeLostUseCase.execute(LostUseCaseInput(
-//signUpObject.tripId
-        3, signUpObject.description,image:  signUpObject.image)))
+        lostItem.tripId, lostItem.description,image:  lostItem.image)))
         .fold((failure) {
       setMasege(failure.massage);
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
+
           setMasege(data);
       notifyListeners();
     });

@@ -109,8 +109,8 @@ abstract class AppServiceClient {
       @Path("id") int studentId,
       @Part() File  image
       );
-
-
+  @POST(" /api/auth/refresh/api/auth/refresh")
+  Future<AuthenticationResponse> refresh();
   /*
   @GET('')
   @DioResponseType(ResponseType.bytes)
