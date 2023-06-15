@@ -1,8 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/store_claim_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
+import 'package:untitled/presentation/resources/language_manager.dart';
 
 class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
   @override
@@ -12,7 +16,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
   int tripId=0;
   ComplaintsViewModel(this._claimUseCase,this._weeklyTripUsecase);
   List<DataTrips> _trip=[];
-
+  AppPreferences _appPreferences =instance<AppPreferences>();
   setTrip(List<DataTrips> trip){
     _trip=trip;
     notifyListeners();
@@ -23,6 +27,33 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
   setTripId(int id){
     tripId=id;
     notifyListeners();
+  }
+ Future<String> date(String d)async{
+    String lang =await _appPreferences.getAppLanguage();
+    if(lang== LanguageType.ENGLISH.getValue()){
+      DateTime date = DateTime.parse(d);
+      String formattedDate = DateFormat('EEEE, MMMM d, y', 'en_US').format(date);
+      return formattedDate;
+    }else{
+      DateTime date = DateTime.parse(d);
+      String formattedDate = DateFormat('EEEE, d MMMM, y', 'ar').format(date);
+      return formattedDate;
+    }
+
+  }
+  time(String d){
+    if(_appPreferences.getAppLanguage()==LanguageType.ENGLISH.getValue()){
+// تحويل النص إلى كائن DateTime
+      DateTime time = DateFormat('HH:mm:ss').parse(d);
+// تنسيق الوقت باللغة الإنجليزية
+      String formattedTime = DateFormat('HH:mm:ss', 'en_US').format(time);
+      return formattedTime;
+
+    }else {
+      DateTime time = DateFormat('HH:mm:ss').parse(d);
+      String formattedTime = DateFormat('HH:mm:ss', 'ar').format(time);
+      return formattedTime;
+    }
   }
  int getTripId(){
     return tripId;
@@ -37,7 +68,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
 Future  storeClaim() async {
    // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _claimUseCase.execute(ClaimUseCaseInput(28, getDescription())))
+    (await _claimUseCase.execute(ClaimUseCaseInput(tripId, getDescription())))
         .fold((failure) {
    //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
@@ -49,7 +80,9 @@ Future  storeClaim() async {
     // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
     (await _weeklyTripUsecase.execute(null))
-        .fold((failure) {
+        .fold((failure) 
+    {
+      print("failer");
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
       setTrip(data.dataTrips!);

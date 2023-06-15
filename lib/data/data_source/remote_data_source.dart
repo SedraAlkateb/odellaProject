@@ -38,6 +38,8 @@ abstract class RemoteDataSource{
   Future<QrConfirmResponse> confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest);
   Future<AcceptAndDenyResponse> approve(int id);
   Future<AcceptAndDenyResponse> deny(int id);
+  Future<AuthenticationResponse> refresh();
+
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -320,6 +322,11 @@ street: supervisorRequest.street
   @override
   Future<AcceptAndDenyResponse> deny(int id) async{
     return await _appServiceClient.deny(id);
+  }
+
+  @override
+  Future<AuthenticationResponse> refresh()  async{
+    return await _appServiceClient.refresh();
   }
 
 }

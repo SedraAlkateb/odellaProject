@@ -137,7 +137,8 @@ class _LostItemsViewState extends State<LostItemsView> {
                                   margin:
                                       EdgeInsets.symmetric(horizontal: 20.sp),
                                   padding: EdgeInsets.all(4.sp),
-                                  child: Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].image!=null &&Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].image!=""
+                                  child: Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index]
+                                      .user?.image!=null &&Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].user?.image!=""
                                       ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -164,7 +165,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                                                       context)
                                                                   .getListFound()?[
                                                                       index]
-                                                                  .image ??
+                                                                  .user?.image ??
                                                               ""), // الصورة الفعلية
                                                       fit: BoxFit.cover,
                                                       imageErrorBuilder:
@@ -309,7 +310,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                                                       context)
                                                                   .getListFound()?[
                                                                       index]
-                                                                  .image ??
+                                                                  .user?.image ??
                                                               ""), // الصورة الفعلية
                                                       fit: BoxFit.cover,
                                                       imageErrorBuilder:
@@ -418,7 +419,9 @@ class _LostItemsViewState extends State<LostItemsView> {
                       child: TextFormField(
                         onChanged: (value) {
                           try {
-                            // Provider.of<HomeViewModel>(context,listen: false).setSearch(value);
+                            Provider.of<LostItemsViewModel>(context,
+                                listen: false)
+                                .setSearch(value);
                           } catch (e, s) {
                             print(s);
                           }
@@ -487,7 +490,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                           ),
                           margin: EdgeInsets.symmetric(horizontal: 42.sp),
                           child:
-                          Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].image!=null &&Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].image!=""
+                          Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].user?.image!=null &&Provider.of<LostItemsViewModel>(context, listen: false).getSearch()[index].user?.image!=""
                               ?
                           Row(
                             children: [

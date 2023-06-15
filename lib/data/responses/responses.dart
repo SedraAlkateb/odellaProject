@@ -1076,6 +1076,8 @@ class DayProgramResponse {
   DataTransferPositionsResponse? transfer_position;
   @JsonKey(name: "start")
   String? start;
+  @JsonKey(name: "line")
+  List<String>? line;
   @JsonKey(name: "end")
   String? end;
   @JsonKey(name: "confirmAttendance1")
@@ -1084,7 +1086,7 @@ class DayProgramResponse {
   bool? confirmAttendance2;
 
 
-  DayProgramResponse(this.day, this.transfer_position, this.start, this.end,
+  DayProgramResponse(this.id,this.day, this.transfer_position,this.line, this.start, this.end,
       this.confirmAttendance1, this.confirmAttendance2);
 
   factory DayProgramResponse.fromJson(Map<String,dynamic> json ) =>
@@ -1121,7 +1123,7 @@ class BusResponse {
   @JsonKey(name: "key")
   String? key;
   @JsonKey(name: "capacity")
-  int? capacity;
+  String? capacity;
   @JsonKey(name: "details")
   String? details;
   @JsonKey(name: "image")

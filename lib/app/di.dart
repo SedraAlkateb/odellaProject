@@ -27,6 +27,7 @@ import 'package:untitled/domain/usecase/position_line_usecase.dart';
 import 'package:untitled/domain/usecase/posts_usecase.dart';
 import 'package:untitled/domain/usecase/profile_usecase.dart';
 import 'package:untitled/domain/usecase/programs_usecase.dart';
+import 'package:untitled/domain/usecase/refresh_usecase.dart';
 import 'package:untitled/domain/usecase/reset_password_usecase.dart';
 import 'package:untitled/domain/usecase/signup_usecase.dart';
 import 'package:untitled/domain/usecase/store_claim_usecase.dart';
@@ -96,7 +97,8 @@ Future<void>initAppModule()async{
 Future<void>initLoginModule() async{
   if(!GetIt.I.isRegistered<LoginUseCase>()){
     instance.registerFactory<LoginUseCase>(() =>LoginUseCase(instance()));
-    instance.registerFactory<LoginViewModel>(() =>LoginViewModel(instance()));
+    instance.registerFactory<RefreshUseCase>(() =>RefreshUseCase(instance()));
+    instance.registerFactory<LoginViewModel>(() =>LoginViewModel(instance(),instance()));
 
   }
 

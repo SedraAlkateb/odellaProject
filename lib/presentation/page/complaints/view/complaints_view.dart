@@ -50,7 +50,9 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                       BorderSide(width: 0.5.w, color: Colors.grey),
                     ),
                   ),
-                    onChanged: (value)=>Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value),
+                    onChanged: (value){Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value);
+                    textEditingController.text=value;
+                  }
                 ),
               ),
               SizedBox(height: 2.h),
@@ -73,7 +75,8 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                           .map((e) => DropdownMenuItem(
                         value: e.id,
                         child: Text(
-                          "${e.time!.date} ${e.time!.start}",
+                          "${Provider.of<ComplaintsViewModel>(context,
+                              listen: false).date(e.time!.date)} ${e.time!.start} ",
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                               fontSize: AppSize.s15),

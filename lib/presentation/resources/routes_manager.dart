@@ -14,6 +14,7 @@ import 'package:untitled/presentation/page/page_view.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
 import 'package:untitled/presentation/page_superviser/page_view.dart';
+import 'package:untitled/presentation/page_superviser/supervisor_gps/supervisor_gps.dart';
 import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/qrCode/view/qr_code_view.dart';
 import 'package:untitled/presentation/reset_password/view/reset_password_view.dart';
@@ -24,6 +25,8 @@ import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
 
 class Routes {
+  static const String sedra = "/sedra";
+
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onBoarding";
   static const String loginRoute = "/login";
@@ -60,6 +63,7 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+
       case Routes.informationTrip:
         return MaterialPageRoute(builder: (_) => const TripInformationView());
       case Routes.addLostItemRoute:

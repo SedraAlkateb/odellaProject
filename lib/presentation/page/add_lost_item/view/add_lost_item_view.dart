@@ -33,297 +33,24 @@ class _AddLostItemViewState extends State<AddLostItemView> {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              title:  Text(
-                StringsManager.add_lost_item,
-                style: TextStyle(
-                    color: ColorManager.sidBarIcon,
-                    fontSize: FontSize.s18
+          child: Consumer<AddLostItemViewModel>(
+            builder: (context, model, child) =>
+             Scaffold(
+              appBar: AppBar(
+                title:  Text(
+                  StringsManager.add_lost_item,
+                  style: TextStyle(
+                      color: ColorManager.sidBarIcon,
+                      fontSize: FontSize.s18
+                  ),
                 ),
               ),
-            ),
-            body: SingleChildScrollView(
-              child: orientation == Orientation.portrait
-                  ? Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(16.sp),
-                    child: TextField(
-                      controller: textEditingController,
-                      maxLines: 10,
-                      decoration: InputDecoration(
-                        hintText: StringsManager.enter_description_lostitem,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 1.w, color: ColorManager.sidBar),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 0.5.w, color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('${StringsManager.enter_image}'':' ,
-                        style: TextStyle(fontSize: AppSize.s18),),
-                      SizedBox(
-                        width: 3.w,
-                      ),
-                      Container(
-                        child:
-                        Provider.of<AddLostItemViewModel>(context).getImage() !=
-                            null
-                            ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: AppPadding.p50),
-                          child: InkWell(
-                            onTap: () => Provider.of<AddLostItemViewModel>(
-                                context,
-                                listen: false)
-                                .setImageFromGallory(),
-                            child: Container(
-                                width: 160.0,
-                                height: 160.0,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    color: Colors.grey[300],
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                        Provider.of<AddLostItemViewModel>(
-                                            context)
-                                            .getImage()!,
-                                      ),
-                                    ))),
-                          ),
-                        )
-                            : Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: AppPadding.p50),
-                          child: InkWell(
-                            onTap: () => Provider.of<AddLostItemViewModel>(
-                                context,
-                                listen: false)
-                                .setImageFromGallory(),
-                            child:
-                            Container(
-                              width: 20.w,
-                              height: 20.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[300],
-                              ),
-                              child: const Icon(
-                                Icons.add,
-                                size: AppSize.s50,
-                                color: Color(0xFFFFFFFF),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //  profile1.getDownload()
-                        //:profile1.getLocalPath()!=null?
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 2.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${StringsManager.select_trip}'':',
-                        style: TextStyle(fontSize: AppSize.s20),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      DropdownButton(
-                          value: dropdownTransportationLine,
-                          items:Provider.of<AddLostItemViewModel>(context).getTrip()
-                              .map((e) => DropdownMenuItem(
-                            value: e.id,
-                            child: Text(
-                              "${e.time!.date} ${e.time!.start}",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontSize: AppSize.s15),
-                            ),
-                          )).toList(),
-                          onChanged: (val) {
-                            Provider.of<AddLostItemViewModel>(context,
-                                listen: false)
-                                .setTripId(val!);
-                          }
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 2.h),
-                  const Text(
-                    "data 1",
-                    style: TextStyle(
-                        fontSize: AppSize.s15, color: Colors.grey),
-                  ),
-                  SizedBox(height: 2.h),
-                  const Text(
-                    "data 2",
-                    style: TextStyle(
-                        fontSize: AppSize.s15, color: Colors.grey),
-                  ),
-                  SizedBox(height: 2.h),
-                  ElevatedButton(
-                    onPressed: () {
-                      Provider.of<AddLostItemViewModel>(context,listen: false).storeClaim();
-                    },
-                    child: Text(
-                      StringsManager.send,
-                    ),
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                      Provider.of<AddLostItemViewModel>(context).getMasege()
-                  ),
-                  SizedBox(height: 5.h),
-                ],
-              )
-                  : Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('${StringsManager.enter_image}'':' ,
-                              style: TextStyle(fontSize: AppSize.s18),),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            Container(
-                              child:
-                                Provider.of<AddLostItemViewModel>(context).getImage() !=
-                                null
-                                ? Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: AppPadding.p50),
-                              child: InkWell(
-                                onTap: () => Provider.of<AddLostItemViewModel>(
-                                    context,
-                                    listen: false)
-                                    .setImageFromGallory(),
-                                child: Container(
-                                    width: 160.0,
-                                    height: 160.0,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Colors.grey[300],
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: FileImage(
-                                            Provider.of<AddLostItemViewModel>(
-                                                context)
-                                                .getImage()!,
-                                          ),
-                                        ))),
-                              ),
-                            )
-                                : Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: AppPadding.p50),
-                              child: InkWell(
-                                onTap: () => Provider.of<AddLostItemViewModel>(
-                                    context,
-                                    listen: false)
-                                    .setImageFromGallory(),
-                                  child:
-                                  Container(
-                                    width: 20.w,
-                                    height: 20.w,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey[300],
-                                    ),
-                                    child: const Icon(
-                                      Icons.add,
-                                      size: AppSize.s50,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                  ),
-                              ),
-                            ),
-                              //  profile1.getDownload()
-                              //:profile1.getLocalPath()!=null?
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${StringsManager.select_trip}'':',
-                              style: TextStyle(fontSize: AppSize.s20),
-                            ),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            DropdownButton(
-                                value: dropdownTransportationLine,
-                                items:Provider.of<AddLostItemViewModel>(context).getTrip()
-                                    .map((e) => DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(
-                                    "${e.time!.date} ${e.time!.start}",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontSize: AppSize.s15),
-                                  ),
-                                )).toList(),
-                                onChanged: (val) {
-                                  Provider.of<AddLostItemViewModel>(context,
-                                      listen: false)
-                                      .setTripId(val!);
-                                }
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        const Text(
-                          "data 1",
-                          style: TextStyle(
-                              fontSize: AppSize.s15, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        const Text("data 2",
-                            style: TextStyle(
-                                fontSize: AppSize.s15,
-                                color: Colors.grey)),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Text(StringsManager.send)),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(10.sp),
+              body: SingleChildScrollView(
+                child: orientation == Orientation.portrait
+                    ? Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(16.sp),
                       child: TextField(
                         controller: textEditingController,
                         maxLines: 10,
@@ -335,16 +62,284 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                width: 0.5.w, color: Colors.grey
-                            ),
+                                width: 0.5.w, color: Colors.grey),
                           ),
-
                         ),
-                        onChanged:(value)=>Provider.of<AddLostItemViewModel>(context).setDescription(value),
+                        onChanged: (value)=>{
+                          model.setDescription(value),
+                        textEditingController.text=value
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${StringsManager.enter_image}'':' ,
+                          style: TextStyle(fontSize: AppSize.s18),),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        Container(
+                          child:
+                          model.getImage() !=
+                              null
+                              ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppPadding.p50),
+                            child: InkWell(
+                              onTap: () => model
+                                  .setImageFromGallory(),
+                              child: Container(
+                                  width: 160.0,
+                                  height: 160.0,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Colors.grey[300],
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: FileImage(
+                                         model
+                                              .getImage()!,
+                                        ),
+                                      ))),
+                            ),
+                          )
+                              : Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppPadding.p50),
+                            child: InkWell(
+                              onTap: () => model
+                                  .setImageFromGallory(),
+                              child:
+                              Container(
+                                width: 20.w,
+                                height: 20.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[300],
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  size: AppSize.s50,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                            ),
+                          ),
+                          //  profile1.getDownload()
+                          //:profile1.getLocalPath()!=null?
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${StringsManager.select_trip}'':',
+                          style: TextStyle(fontSize: AppSize.s20),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        DropdownButton(
+                          hint:Text("date trip") ,
+                            items:model.getTrip()
+                                .map((e) => DropdownMenuItem(
+                              value: e.id,
+                              child: Text(
+                                "${e.time!.date} ${e.time!.start}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: AppSize.s15),
+                              ),
+                            )).toList(),
+                            onChanged: (val) {
+                              model.setTripId(val!);
+                            }
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 2.h),
+                    const Text(
+                      "data 1",
+                      style: TextStyle(
+                          fontSize: AppSize.s15, color: Colors.grey),
+                    ),
+                    SizedBox(height: 2.h),
+                    const Text(
+                      "data 2",
+                      style: TextStyle(
+                          fontSize: AppSize.s15, color: Colors.grey),
+                    ),
+                    SizedBox(height: 2.h),
+                    ElevatedButton(
+                      onPressed: () {
+                        model.storeClaim();
+                      },
+                      child: Text(
+                        StringsManager.send,
+                      ),
+                    ),
+                    SizedBox(height: 5.h),
+                    Text(
+                        model.getMasege()
+                    ),
+                    SizedBox(height: 5.h),
+                  ],
+                )
+                    : Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('${StringsManager.enter_image}'':' ,
+                                style: TextStyle(fontSize: AppSize.s18),),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Container(
+                                child:
+                                model.getImage() !=
+                                  null
+                                  ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p50),
+                                child: InkWell(
+                                  onTap: () => model
+                                      .setImageFromGallory(),
+                                  child: Container(
+                                      width: 160.0,
+                                      height: 160.0,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          color: Colors.grey[300],
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(
+                                              model
+                                                  .getImage()!,
+                                            ),
+                                          ))),
+                                ),
+                              )
+                                  : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p50),
+                                child: InkWell(
+                                  onTap: () => model
+                                      .setImageFromGallory(),
+                                    child:
+                                    Container(
+                                      width: 20.w,
+                                      height: 20.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey[300],
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        size: AppSize.s50,
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                    ),
+                                ),
+                              ),
+                                //  profile1.getDownload()
+                                //:profile1.getLocalPath()!=null?
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${StringsManager.select_trip}'':',
+                                style: TextStyle(fontSize: AppSize.s20),
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              DropdownButton(
+                                  value: dropdownTransportationLine,
+                                  items:model.getTrip()
+                                      .map((e) => DropdownMenuItem(
+                                    value: e.id,
+                                    child: Text(
+                                      "${e.time!.date} ${e.time!.start}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontSize: AppSize.s15),
+                                    ),
+                                  )).toList(),
+                                  onChanged: (val) {
+                                    model
+                                        .setTripId(val!);
+                                  }
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          const Text(
+                            "data 1",
+                            style: TextStyle(
+                                fontSize: AppSize.s15, color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          const Text("data 2",
+                              style: TextStyle(
+                                  fontSize: AppSize.s15,
+                                  color: Colors.grey)),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {},
+                              child: Text(StringsManager.send)),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(10.sp),
+                        child: TextField(
+                          controller: textEditingController,
+                          maxLines: 10,
+                          decoration: InputDecoration(
+                            hintText: StringsManager.enter_description_lostitem,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1.w, color: ColorManager.sidBar),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 0.5.w, color: Colors.grey
+                              ),
+                            ),
+
+                          ),
+                            onChanged: (value){Provider.of<AddLostItemViewModel>(context,listen: false).setDescription(value);
+                            textEditingController.text=value;
+                            }                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

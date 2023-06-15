@@ -542,7 +542,7 @@ extension BusMapper on BusResponse? {
     return Bus(
       this?.id ?? Constants.zero,
       this?.key ?? Constants.empty,
-      this?.capacity ?? Constants.zero,
+      this?.capacity ?? Constants.empty,
       this?.details ?? Constants.empty,
       this?.image ?? Constants.empty,
     );

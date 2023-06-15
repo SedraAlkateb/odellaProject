@@ -376,7 +376,7 @@ class LostFound{
 class Bus{
   int id;
   String key;
-  int capacity;
+  String capacity;
   String details;
   String image;
 
