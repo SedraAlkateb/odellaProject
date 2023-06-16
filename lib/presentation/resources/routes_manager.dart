@@ -6,6 +6,7 @@ import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
+import 'package:untitled/presentation/map/mapline.dart';
 import 'package:untitled/presentation/map_position/view/map_position_view.dart';
 import 'package:untitled/presentation/mm.dart';
 import 'package:untitled/presentation/page/add_lost_item/view/add_lost_item_view.dart';
@@ -58,6 +59,8 @@ class Routes {
   static const String polyLineRoute = "/PolyLine";
   static const String informationTrip = "/informationTripRoute";
   static const String notification = "/notification";
+  static const String mapline = "/mapline";
+
 
 
 }
@@ -120,6 +123,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
+      // case Routes.mapline:
+      //   return MaterialPageRoute(builder: (_) => MapLine());
 
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());

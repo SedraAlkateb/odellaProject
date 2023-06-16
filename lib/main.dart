@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +20,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:untitled/config-firebase.dart';
+import 'package:untitled/presentation/resources/values_manager.dart';
 import 'notification_details.dart';
 import 'notification_list.dart';
 
@@ -216,7 +219,15 @@ Widget build(BuildContext context) {
     appBar: AppBar(
       title: const Text('Notifications'),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_none))
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Badge(
+            badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+            child: Icon(Icons.notifications,size: AppSize.s30),
+            badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+          ),
+        ),
       ],
     ),
     body: SingleChildScrollView(

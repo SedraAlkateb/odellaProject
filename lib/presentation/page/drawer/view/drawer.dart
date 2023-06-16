@@ -193,14 +193,31 @@ backgroundColor: ColorManager.side,
             ),
 
 
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
             ),
+            ListTile(
+                title: Text(StringsManager.lostItems),
+                leading: Icon(Icons.storefront,
+                  color: ColorManager.sidBarIcon,
+
+                ),
+
+                onTap: () async{
+                  Navigator.pushNamed(context, Routes.mapline);
+                }
+
+            ),
+
+
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
             ),
+
             ListTile(
                 title: Text("notification"),
                 leading: Icon(Icons.notifications,
@@ -212,6 +229,10 @@ backgroundColor: ColorManager.side,
                   Navigator.pushNamed(context,Routes.notification);
                 }
 
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
             ),
             ListTile(
                 title: Text(StringsManager.settings),
