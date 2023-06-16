@@ -112,6 +112,7 @@ class StringsManager{
   static String line_name=LocaleKeys.linename.tr();
   static String date=LocaleKeys.date.tr();
   static String available_seats=LocaleKeys.availableseats.tr();
+  static String fri=LocaleKeys.fri.tr();
 
 
 

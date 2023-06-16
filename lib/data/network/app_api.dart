@@ -111,6 +111,9 @@ abstract class AppServiceClient {
       );
   @POST(" /api/auth/refresh/api/auth/refresh")
   Future<AuthenticationResponse> refresh();
+
+  @GET(" /api/user/notification")
+  Future<NotificationResponse> notification();
   /*
   @GET('')
   @DioResponseType(ResponseType.bytes)

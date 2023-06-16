@@ -12,14 +12,43 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   StudentAttendenceUsecase _studentAttendenceUsecase;
   EvaluationUseCase _evaluationUseCase;
   ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase,this._evaluationUseCase);
+ late Map<int, List<DataProgram>> program2;
   List<DataProgram> _program=[];
   List<String> _weekDays =[];
+  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}', ];
   // ["StringsManager.Friday",StringsManager.sat, StringsManager.sun, StringsManager.mon, StringsManager.tus, StringsManager.wed, StringsManager.thu];
   int _line=1;
   bool? b1=null;
   bool? b2=null;
   double _rating=0;
   int pos=0;
+  setMap(List<DataProgram> p){
+    p.map((e) {
+      if (e.day?.id == 1) {
+       program2[1]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 2) {
+        program2[2]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 3) {
+        program2[3]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 4) {
+        program2[4]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 5) {
+        program2[5]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 6) {
+        program2[6]=e as List<DataProgram> ;
+      }
+      if (e.day?.id == 7) {
+        program2[7]=e as List<DataProgram> ;
+      }
+
+    }
+    );
+  }
   String selectedDay= StringsManager.sat;
   setPos(int p){
     pos=p;
@@ -37,7 +66,7 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
 }
 setWeekDays(List<DataProgram> program){
    for(int i=0;i<program.length;i++){
-     _weekDays.add(program[i].day);
+     _weekDays.add(program[i].day!.day);
    }
    notifyListeners();
 }
@@ -112,6 +141,8 @@ program();
     //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
           setProgram(data.dataProgram);
+          setMap(data.dataProgram);
+          print(program2[4]);
     //  inputState.add(ContentState());
       notifyListeners();
     });

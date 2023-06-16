@@ -1050,13 +1050,11 @@ class TransferPositionsResponse  extends BaseResponse{
 
 @JsonSerializable()
 class DataDayResponse {
-
+  @JsonKey(name: "id")
+  int? id;
   @JsonKey(name: "name")
   String? name;
-
-
-  DataDayResponse (this.name);
-
+  DataDayResponse (this.id,this.name);
   factory DataDayResponse.fromJson(Map<String,dynamic> json ) =>
       _$DataDayResponseFromJson(json);
 
@@ -1835,5 +1833,44 @@ class QrConfirmResponse  extends BaseResponse {
   // to json
   Map<String,dynamic>toJson()=>
       _$QrConfirmResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class NotificationDataResponse {
+  // @JsonKey(name:"position")
+  // DataTransferPositionsResponse? position;
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"title")
+  String? title;
+  @JsonKey(name:"type")
+  String? type;
+  @JsonKey(name:"body")
+  String? body;
+  @JsonKey(name:"is_read")
+  String? isRead;
+
+
+  NotificationDataResponse(this.id, this.title, this.type, this.body, this.isRead);
+
+  factory NotificationDataResponse.fromJson(Map<String,dynamic>json)=>
+      _$NotificationDataResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$NotificationDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class NotificationResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  List<NotificationDataResponse>? data;
+  NotificationResponse(this.data);
+  // from json
+  factory NotificationResponse.fromJson(Map<String,dynamic>json)=>
+      _$NotificationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$NotificationResponseToJson(this);
 
 }
