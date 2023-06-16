@@ -286,9 +286,14 @@ class Program {
 
   Program(this.dataProgram);
 }
-class DataProgram{
+class Day{
   int id;
   String day;
+  Day(this.id,this.day);
+}
+class DataProgram{
+  int id;
+  Day? day;
   DataTransferPositions? dataTransferPositions;
   String start ;
   String end ;
@@ -381,6 +386,19 @@ class Bus{
   String image;
 
   Bus(this.id, this.key, this.capacity, this.details, this.image);
+}
+class NotificationModel{
+  int id;
+  String title;
+  String type;
+  String body;
+  String isRead;
+
+  NotificationModel(this.id, this.title, this.type, this.body, this.isRead);
+}
+class Notification{
+  List<NotificationModel>? notification;
+  Notification(this.notification);
 }
 class Driver {
   int id;

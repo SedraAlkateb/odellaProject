@@ -412,13 +412,21 @@ extension DataLocationResponseMapper on LocationsResponse? {
     );
   }
 }
-
 ///////////////////////////
+extension DayResponseMapper on DataDayResponse? {
+  Day toDomain() {
+    return Day(
+      this?.id ?? Constants.zero,
+      this?.name ?? Constants.empty,
+    );
+  }
+}
+
 extension DataProgramResponseMapper on DayProgramResponse? {
   DataProgram toDomain() {
     return DataProgram(
       this?.id ?? Constants.zero,
-      this?.day?.name ?? Constants.empty,
+      this?.day.toDomain(),
       this?.transfer_position.toDomain(),
       this?.start  ?? Constants.empty,
       this?.end ?? Constants.empty,
@@ -548,6 +556,7 @@ extension BusMapper on BusResponse? {
     );
   }
 }
+
 extension DriverMapper on DriverResponse? {
   Driver toDomain() {
     return Driver(
@@ -588,6 +597,7 @@ extension TripsMapper on TripsResponse? {
     return Trips(dataModel);
   }
 }
+
 extension SuperVisorResponseMapper on DataUpdateSupervisorResponse? {
   SupervisorUpdate toDomain() {
     return SupervisorUpdate(
@@ -635,5 +645,27 @@ extension AcceptAndDenyResponseMapper on  AcceptAndDenyResponse? {
   AcceptDenyModel toDomain() {
   return  AcceptDenyModel(this?.dailyReservationResponse.toDomain()
   );
+  }
+}
+extension NotificationMapper on NotificationResponse? {
+  Notification toDomain() {
+    List<NotificationModel> dataModel = (this
+        ?.data
+        ?.map((dataResponse) => dataResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<NotificationModel>()
+        .toList();
+    return Notification(dataModel);
+  }
+}
+extension NotificatioDataMapper on NotificationDataResponse? {
+  NotificationModel toDomain() {
+    return NotificationModel(
+      this?.id ?? Constants.zero,
+      this?.title ?? Constants.empty,
+      this?.type ?? Constants.empty,
+      this?.body ?? Constants.empty,
+      this?.isRead ?? Constants.empty,
+    );
   }
 }

@@ -17,7 +17,7 @@ class SupervisorProgramView extends StatefulWidget {
 
 class _SupervisorProgramViewState extends State<SupervisorProgramView> {
 
-  List<String> weekDays = ['${StringsManager.sat}', '${StringsManager.sun}', '${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}'];
+  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}', ];
   Map<String, List<Trip>> trips = {
     'Sat': [
       Trip(

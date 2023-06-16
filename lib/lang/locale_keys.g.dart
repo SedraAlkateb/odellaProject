@@ -61,6 +61,7 @@ abstract class  LocaleKeys {
   static const Tus = 'Tus';
   static const Wed = 'Wed';
   static const Thu = 'Thu';
+  static const fri = 'fri';
   static const Gotime = 'Gotime';
   static const Returntime = 'Returntime';
   static const Position = 'Position';

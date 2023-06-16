@@ -1,40 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/map_position/view_model/location_service.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:pusher_client/pusher_client.dart';
 
-void main() async {
-  PusherClient pusher;
-  Channel channel;
+void main() => runApp(MyApp());
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+class _MyAppState extends State<MyApp> {
+  late  PusherClient pusherClient;
+ late Channel channel;
+  @override
+  void initState() {
+    PusherOptions options = PusherOptions(
+       // wsPort: 6001,
+      //  encrypted: true,
+     //   host:'yaamen1.com',
+        cluster:  PusherConfigration.cluster,
+       // wssPort: 6001
 
-  String pusherKey = 'your-pusher-key';
-  String pusherSecret = 'your-pusher-secret';
-  String pusherCluster = 'your-pusher-cluster';
-  String channelName = 'test_channel';
+    );
+    pusherClient = PusherClient(
+      PusherConfigration.key,
+      options,
+      autoConnect:true,
+      enableLogging: true,
 
-  try{
-    await PusherClient.init(pusherKey, PusherOptions(
-      cluster: pusherCluster,
-      encrypted: false,
-      disableStats: true,
-      authEndpoint: 'http://localhost:8000/broadcasting/auth',
-      auth: PusherAuth('http://localhost:8000/csrf'),
-      activityTimeout: 2000,
-    ));
-  } on Exception catch (e) {
-    print(e.toString());
+    );
+    pusherClient.connect();
+    pusherClient.onConnectionStateChange((state) {
+      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
+    });
+    print(pusherClient.getSocketId());
+    print("pusherClient.getSocketId( )");
+
+    pusherClient.onConnectionError((error) {
+      print("error: ${error?.message}");
+    });
+    //      channel = pusherClient.subscribe("tracking.1");
+     channel = pusherClient.subscribe("name_channel");
+
+// Bind to listen for events called "order-status-updated" sent to "private-orders" channel
+    channel.bind("name_event", (PusherEvent? event) {
+      print(event?.data);
+      print("object");
+    });
+
+// Unsubscribe from channel
+   // pusherClient.unsubscribe("tracking.1");
+
+// Disconnect from pusher service
+    //pusherClient.disconnect();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
-  pusher = PusherClient(instanceLocator, options);
-  channel = pusher.subscribe('test_channel');
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(
+        body: Center(
+          child: TextButton(onPressed: () async {
+  //    final state = await pusherClient.onConnectionStateChange.asStream().first;
+    //  print("State changed to ${state.currentState}");
+    },
+    child: Text("Test"),
+        ))
+    )
 
-  channel.bind('new-message', (data) {
-    print('New message received: $data');
-  });
-}/*
+    );
+
+  }
+}
+
+
+/*
 void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   @override

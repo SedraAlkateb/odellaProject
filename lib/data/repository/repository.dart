@@ -854,6 +854,30 @@ class RepositoryImp implements Repository {
     }
   }
 
+  @override
+  Future<Either<Failure, Notification>> notification()
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.notification();
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
 
 
 }

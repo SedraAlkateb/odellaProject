@@ -44,6 +44,7 @@ abstract class Repository{
   Future< Either<Failure,AcceptDenyModel>>approve(int id);
   Future< Either<Failure,AcceptDenyModel>>deny(int id);
   Future<  Either<Failure,Authentication>>refresh();
+  Future<  Either<Failure,Notification>>notification();
 
 
 }

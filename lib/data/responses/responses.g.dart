@@ -878,11 +878,13 @@ Map<String, dynamic> _$TransferPositionsResponseToJson(
 
 DataDayResponse _$DataDayResponseFromJson(Map<String, dynamic> json) =>
     DataDayResponse(
+      json['id'] as int?,
       json['name'] as String?,
     );
 
 Map<String, dynamic> _$DataDayResponseToJson(DataDayResponse instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
     };
 
@@ -1558,6 +1560,45 @@ QrConfirmResponse _$QrConfirmResponseFromJson(Map<String, dynamic> json) =>
       ..massage = json['message'] as String?;
 
 Map<String, dynamic> _$QrConfirmResponseToJson(QrConfirmResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.data,
+    };
+
+NotificationDataResponse _$NotificationDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    NotificationDataResponse(
+      json['id'] as int?,
+      json['title'] as String?,
+      json['type'] as String?,
+      json['body'] as String?,
+      json['is_read'] as String?,
+    );
+
+Map<String, dynamic> _$NotificationDataResponseToJson(
+        NotificationDataResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'type': instance.type,
+      'body': instance.body,
+      'is_read': instance.isRead,
+    };
+
+NotificationResponse _$NotificationResponseFromJson(
+        Map<String, dynamic> json) =>
+    NotificationResponse(
+      (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+              NotificationDataResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$NotificationResponseToJson(
+        NotificationResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'message': instance.massage,

@@ -39,6 +39,7 @@ abstract class RemoteDataSource{
   Future<AcceptAndDenyResponse> approve(int id);
   Future<AcceptAndDenyResponse> deny(int id);
   Future<AuthenticationResponse> refresh();
+  Future<NotificationResponse> notification();
 
 }
 
@@ -327,6 +328,11 @@ street: supervisorRequest.street
   @override
   Future<AuthenticationResponse> refresh()  async{
     return await _appServiceClient.refresh();
+  }
+
+  @override
+  Future<NotificationResponse> notification() async{
+    return await _appServiceClient.notification();
   }
 
 }
