@@ -18,6 +18,7 @@ abstract class AppServiceClient {
   Future<PostResponse> posts();
   @POST("/api/auth/login")
   Future<AuthenticationResponse> login(
+      @Field("fcm_token") String fcmToken,
       @Field("email") String email,
       @Field("password") String password);
   @MultiPart()

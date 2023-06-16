@@ -32,19 +32,23 @@ class _LoginViewState extends State<LoginView> {
     loginViewModelWatch  = context.watch<LoginViewModel>();
     loginViewModelRead = context.read<LoginViewModel>();
     loginViewModelRead.start();
+
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     loginViewModelRead.status=0;
+
     super.dispose();
   }
   @override
   void initState() {
-
  isobscured=true;
-    super.initState();
+ SchedulerBinding.instance.addPostFrameCallback((_) {
+   Provider.of<LoginViewModel>(context, listen: false).init();
+ });
+ super.initState();
   }
  var isobscured;
 

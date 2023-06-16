@@ -24,6 +24,8 @@ import 'package:untitled/presentation/signup/view/signUp_view.dart';
 import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
 
+import '../../main.dart';
+
 class Routes {
   static const String sedra = "/sedra";
 
@@ -55,6 +57,8 @@ class Routes {
 
   static const String polyLineRoute = "/PolyLine";
   static const String informationTrip = "/informationTripRoute";
+  static const String notification = "/notification";
+
 
 }
 
@@ -112,6 +116,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  MapPage());
       case Routes.qrCodeViewRoute:
         return MaterialPageRoute(builder: (_) =>  QrCodeView());
+      case Routes.notification:
+        return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
 

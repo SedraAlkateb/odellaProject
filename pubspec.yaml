@@ -53,12 +53,15 @@ dependencies:
   qr_flutter: ^4.0.0
   geocoding: ^2.1.0
   rxdart: ^0.26.0
-  flutter_google_places: ^0.3.0
+  #flutter_google_places: ^0.3.0
   flutter_barcode_scanner: ^2.0.0
   flutter_rating_bar: ^4.0.1
   expandable_text: ^2.3.0
   firebase_messaging: ^14.6.3
   firebase_core: ^2.14.0
+  firebase_analytics: ^10.4.3
+  flutter_local_notifications: ^14.1.1
+  badges: ^3.1.1
   #pusher_client: ^2.0.0
   laravel_echo:
     git:

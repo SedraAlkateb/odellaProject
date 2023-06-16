@@ -192,9 +192,26 @@ backgroundColor: ColorManager.side,
 
             ),
 
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+                title: Text("notification"),
+                leading: Icon(Icons.notifications,
+                  color: ColorManager.sidBarIcon,
+
+                ),
+
+                onTap: () {
+                  Navigator.pushNamed(context,Routes.notification);
+                }
+
             ),
             ListTile(
                 title: Text(StringsManager.settings),
