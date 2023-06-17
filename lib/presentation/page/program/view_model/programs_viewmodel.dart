@@ -12,106 +12,82 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   StudentAttendenceUsecase _studentAttendenceUsecase;
   EvaluationUseCase _evaluationUseCase;
   ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase,this._evaluationUseCase);
- late Map<int, List<DataProgram>> program2;
-  List<DataProgram> _program=[];
-  List<String> _weekDays =[];
-  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}', ];
-  // ["StringsManager.Friday",StringsManager.sat, StringsManager.sun, StringsManager.mon, StringsManager.tus, StringsManager.wed, StringsManager.thu];
-  int _line=1;
+  Map<int, List<DataProgram> > program2={};
+  String selectedDay = 'Sat';
+  int indexDay=0;
+  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}'];
   bool? b1=null;
   bool? b2=null;
   double _rating=0;
-  int pos=0;
-  setMap(List<DataProgram> p){
-    p.map((e) {
-      if (e.day?.id == 1) {
-       program2[1]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 2) {
-        program2[2]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 3) {
-        program2[3]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 4) {
-        program2[4]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 5) {
-        program2[5]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 6) {
-        program2[6]=e as List<DataProgram> ;
-      }
-      if (e.day?.id == 7) {
-        program2[7]=e as List<DataProgram> ;
-      }
-
-    }
-    );
+  List<String>getWeekDays(){
+    return weekDays;
   }
-  String selectedDay= StringsManager.sat;
-  setPos(int p){
-    pos=p;
-    selectedDay=_weekDays[pos];
+  getDay(int i){
+    return weekDays[i];
+  }
+  setSelectedDay(int i){
+    selectedDay=weekDays[i];
+    indexDay=i;
     notifyListeners();
   }
-  getSelectedDay(){
+ String getSelectedDay(){
     return selectedDay;
   }
-  getPos(){
-    return pos;
+ int getIndexDay(){
+    return indexDay;
   }
-  List<DataProgram> getProgram(){
-  return _program;
-}
-setWeekDays(List<DataProgram> program){
-   for(int i=0;i<program.length;i++){
-     _weekDays.add(program[i].day!.day);
-   }
-   notifyListeners();
-}
-getWeekDays(){
-return _weekDays;
-}
+  setMap(List<DataProgram> p){
+    for(int i=0;i<7;i++){
+      program2[i] = [];
+    }
+    p.forEach((e) {
+      if (e.day?.id == 1) {
+        program2[0]?.add(e);
+      }
+      else if (e.day?.id == 2) {
+        program2[1]?.add(e) ;
+      }
+      else if (e.day?.id == 3) {
+        program2[2]?.add(e)  ;
+      }
+      else if (e.day?.id == 4) {
+        program2[3]?.add(e)  ;
+      }
+      else if (e.day?.id == 5) {
+        program2[4]?.add(e)  ;
+      }
+      else if (e.day?.id == 6) {
+        program2[5]?.add(e) ;
+      }
+      else if (e.day?.id == 7) {
+        program2[6]?.add(e) ;
+      }
+    }
+    );
+    notifyListeners();
+  }
   bool getConfirm1(int index){
-    return _program[index].confirmAttendance1 ;
+    return program2[index]![0].confirmAttendance1 ;
   }
-
+List<DataProgram> getProgramDay(){
+    return program2[indexDay] ??[] ;
+}
    setConfirm1(int index,bool b){
-    _program[index].confirmAttendance1=b;
+    program2[index]![0].confirmAttendance1=b;
      b1=b;
-     b2= _program[index].confirmAttendance2;
+     b2= program2[index]![0].confirmAttendance2;
     notifyListeners();
   }
   bool getConfirm2(int index){
-    return _program[index].confirmAttendance2 ;
+    return program2[index]![0].confirmAttendance2 ;
 
   }
   setConfirm2(int index,bool b){
-    _program[index].confirmAttendance2=b;
+    program2[index]![0].confirmAttendance2=b;
     b2=b;
-    b1= _program[index].confirmAttendance1;
+    b1= program2[index]![0].confirmAttendance1;
     notifyListeners();
   }
-setProgram(List<DataProgram> program1){
-    _program=program1;
-    _line=_program.length;
-    setWeekDays(_program);
-    notifyListeners();
-}
-getLine(){
-    return _line;
-}
-
-int index=0;
-  setIndex(int id){
-    index=id;
-    notifyListeners();
-  }
- int getIndex(){
-    return index;
-  }
-
   bool b=true;
   setBool(bool id){
     b=id;
@@ -140,9 +116,8 @@ program();
         .fold((failure) {
     //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
-          setProgram(data.dataProgram);
-          setMap(data.dataProgram);
-          print(program2[4]);
+         setMap(data.dataProgram);
+         setSelectedDay(5);
     //  inputState.add(ContentState());
       notifyListeners();
     });
@@ -162,7 +137,7 @@ program();
 
     (await _studentAttendenceUsecase.execute(
         StudentAttendenceUseCaseInput(
-            _program[getIndex()].id,
+            program2[indexDay]![0].id,
             confirmAttendance1: b1,
             confirmAttendance2: b2 )))
         .fold((failure) {

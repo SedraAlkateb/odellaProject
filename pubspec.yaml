@@ -59,7 +59,6 @@ dependencies:
   expandable_text: ^2.3.0
   firebase_messaging: ^14.6.3
   firebase_core: ^2.14.0
-  #pusher_client: ^2.0.0
   laravel_echo:
     git:
       url: https://github.com/kakajansh/echo.git
@@ -68,7 +67,8 @@ dependencies:
     git:
       url: https://github.com/DumbDev168/pusher_client.git
       ref: master
-  web_socket_channel: ^2.4.0
+  #web_socket_channel: ^2.4.0
+  #pusher_channels_flutter: ^2.1.2
 
 dev_dependencies:
   flutter_test:

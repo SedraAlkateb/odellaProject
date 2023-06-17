@@ -66,21 +66,26 @@ PusherClient createPusherClient(String token) {
       wsPort: PusherConfigration.port,
       encrypted: true,
       host: PusherConfigration.hostEndPoint,
-     // cluster: PusherConfigration.cluster,
-    /*  auth: PusherAuth(PusherConfigration.hostAuthEndPoint, headers: {
+      cluster: PusherConfigration.cluster,
+      auth: PusherAuth(PusherConfigration.hostAuthEndPoint
+          , headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
         "Accept": "application/json"
-      })
+      },
 
-     */
+      )
+
+
   );
   PusherClient pusherClient = PusherClient(
     PusherConfigration.key,
+
     options,
     autoConnect: false,
     enableLogging: true,
   );
+
 
   return pusherClient;
 }
