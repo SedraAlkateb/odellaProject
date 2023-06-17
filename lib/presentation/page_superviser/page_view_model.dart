@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view/daily_recieve_view.dart';
@@ -9,6 +10,7 @@ import 'package:untitled/presentation/resources/conestants_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 
 class PageSupervisorViewModel  with ChangeNotifier {
+ late BuildContext context;
   List<NavbarDTO> items = [
 
     NavbarDTO(label: StringsManager.daily_recieve,widget: DailyReceiveView(),iconData: Icons.chrome_reader_mode,appBar: getAppBarDailyRecieve()),
