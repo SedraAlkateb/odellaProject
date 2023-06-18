@@ -5,7 +5,7 @@ class LoginRequest{
   String email;
   String password;
   String fcmtoken;
-  LoginRequest(this.email,this.password,this.fcmtoken);
+  LoginRequest(this.fcmtoken,this.email,this.password);
 }
 class ConfirmQrRequest{
   int userId ;

@@ -8,6 +8,7 @@ import 'package:untitled/presentation/base_home/view_model/base_home_view_model.
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/map/view_model/polyLine_map_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<AddLostItemViewModel>()),
         ChangeNotifierProvider(create: (_)=>PolyLineMapViewModel()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationsViewModel>()),
+        ChangeNotifierProvider(create: (_)=>Not()),
 
 
 

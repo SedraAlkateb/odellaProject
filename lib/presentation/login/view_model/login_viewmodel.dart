@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
@@ -47,13 +48,13 @@ String? getRole(){
   }
 
 
-/*
+
   init()
   async {
     String deviceToken = await getDeviceToken();
-    setFcmToken(deviceToken);
-    print("//////////////////////////////////////////////////////");
-    print(deviceToken);
+    fcmToken=deviceToken;
+    print("***********************************************");
+    print(fcmToken);
     print("//////////////////////////////////////////////////////");
   }
   Future getDeviceToken() async
@@ -62,12 +63,11 @@ String? getRole(){
     String? deviceToken = await firebaseMessaging.getToken();
     return (deviceToken == null) ? "" : deviceToken;
   }
- */
+
   @override
   void start() {
     // view model should tell view please show content state
     inputState.add(ContentState());
-  //  init();
   }
   String fcmToken="";
   setFcmToken(String fcmToken1){
@@ -85,7 +85,7 @@ String? getRole(){
 
  ( await _loginUseCase.execute(
         LoginUseCaseInput(
-            loginObject.userName, loginObject.password,getFcmToken()
+            loginObject.userName, loginObject.password,fcmToken
         ))).fold(
 
             (failure)  {
