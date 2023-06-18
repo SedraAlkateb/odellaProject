@@ -221,13 +221,22 @@ Widget build(BuildContext context) {
     appBar: AppBar(
       title: const Text('Notifications'),
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Badge(
-            badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-            child: Icon(Icons.notifications,size: AppSize.s30),
-            badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+       // Provider.of<Not>(context).getCount()==0
+       //    ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+       // :
+       Padding(
+          padding: const EdgeInsets.all(20),
+          child: InkWell(
+            child: Badge(
+              badgeContent: Text("${ Provider.of<Not>(context,listen: false).getCount()}",style: TextStyle(color: Colors.white),),
+//${ Provider.of<Not>(context).getCount()}
+              child: Icon(Icons.notifications,size: AppSize.s30),
+              badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+            ),
+            onTap: ()
+            {
+              print("kkkkkk");
+            },
           ),
         ),
       ],

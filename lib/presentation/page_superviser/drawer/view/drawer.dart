@@ -88,7 +88,7 @@ backgroundColor: ColorManager.side,
             ListTile(
 
               title: Text(
-                StringsManager.home,
+                LocaleKeys.Home.tr(),
                 style: TextStyle(color: ColorManager.sidBarIcon),
               ),
               leading: Icon(
@@ -122,7 +122,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.programmer),
+              title: Text(LocaleKeys.programmer.tr()),
               leading: Icon(Icons.calendar_today,color: ColorManager.sidBarIcon,
               ),
 
@@ -135,7 +135,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.busSite),
+              title: Text(LocaleKeys.busSite.tr()),
               leading: Icon(Icons.location_on_outlined, color: ColorManager.sidBarIcon,
               ),
 
@@ -148,7 +148,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.complaints),
+              title: Text(LocaleKeys.complaints.tr()),
               leading: Icon(Icons.call,
                 color: ColorManager.sidBarIcon,
 
@@ -179,7 +179,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-                title: Text(StringsManager.lostItems),
+                title: Text(LocaleKeys.lostItems.tr()),
                 leading: Icon(Icons.storefront,
                   color: ColorManager.sidBarIcon,
 
@@ -196,7 +196,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-                title: Text(StringsManager.settings),
+                title: Text(LocaleKeys.settings.tr()),
                 leading: Icon(Icons.settings,
                   color: ColorManager.sidBarIcon,
 
@@ -212,7 +212,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.signOut),
+              title: Text(LocaleKeys.signOut.tr()),
               leading: Icon(Icons.logout,
                 color: ColorManager.sidBarIcon,
 

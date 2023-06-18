@@ -1,9 +1,11 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/notification_list.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
@@ -15,6 +17,7 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 
+import '../../../../lang/locale_keys.g.dart';
 import '../../../not_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
@@ -53,23 +56,30 @@ final  _scaffoldKey = GlobalKey<FormState>();
     return Scaffold(
         drawer:  NavBar(),
         appBar: AppBar(
-          title: Text( StringsManager.home,style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
+          title: Text( LocaleKeys.Home.tr(),style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: InkWell(
-                onTap: (){
-                  Navigator.pushNamed(context, Routes.message);
-                },
-                child: Badge(
-                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                  child: Icon(Icons.notifications,size: AppSize.s30),
-                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+              Provider.of<Not>(context,listen: true).getCount()==0
+                  ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                  : Padding(
+                padding: const EdgeInsets.all(20),
+                child: InkWell(
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                  onTap: ()
+                  {
+                    print("kkkkkk");
+                  Navigator.pushNamed(context, Routes.message);
+                  },
+
                 ),
               ),
-            )
+            ],
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: IconButton(
@@ -91,7 +101,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
             //     ),
             //   ),
             // ),
-          ],
+
 
         ),
         key: _scaffoldKey,
@@ -137,7 +147,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
                 borderSide: BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
               ),
               hintStyle: getRegularStyle(color: ColorManager.icon,fontSize: FontSize.s16),
-              hintText: StringsManager.search,
+              hintText: LocaleKeys.search.tr(),
               //       hintStyle:Theme.of(context).textTheme.bodySmall,
               prefixIcon:  Padding(
                 padding: const EdgeInsets.only(left: AppPadding.p8),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+import '../../../lang/locale_keys.g.dart';
 import '../../resources/assets_manager.dart';
 
 class LoginView extends StatefulWidget {
@@ -227,7 +229,7 @@ class _LoginViewState extends State<LoginView> {
                           loginViewModelRead.scheduleTokenRefresh();
                         }
                       },
-                      child:  Text(StringsManager.signIn)),
+                      child:  Text(LocaleKeys.signIn.tr())),
                 ),
               ),
               const SizedBox(
@@ -242,13 +244,13 @@ class _LoginViewState extends State<LoginView> {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                       Text(StringsManager.registerText),
+                       Text(LocaleKeys.registerText.tr()),
                       TextButton(
                         onPressed: () {
                             Navigator.pushNamed(context, Routes.signupRoute);
                         },
                         child: Text(
-                          StringsManager.signUp,
+                          LocaleKeys.signUp.tr(),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),

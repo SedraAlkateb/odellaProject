@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,8 @@ import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+
+import '../../../lang/locale_keys.g.dart';
 
 class BaseHomeView extends StatefulWidget {
   const BaseHomeView({Key? key}) : super(key: key);
@@ -49,7 +52,7 @@ class _BaseHomeViewState extends State<BaseHomeView> {
       appBar: AppBar(
         title:
         Text(
-          StringsManager.home,style: Theme.of(context).textTheme.labelLarge,),
+          LocaleKeys.Home.tr(),style: Theme.of(context).textTheme.labelLarge,),
         leading: IconButton(
           onPressed: () {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -106,7 +109,7 @@ class _BaseHomeViewState extends State<BaseHomeView> {
                   borderSide: BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
                 ),
                 hintStyle: getRegularStyle(color: ColorManager.icon,fontSize: FontSize.s16),
-                hintText: StringsManager.search,
+                hintText: LocaleKeys.search.tr(),
                 //       hintStyle:Theme.of(context).textTheme.bodySmall,
                 prefixIcon:  Padding(
                   padding: const EdgeInsets.only(left: AppPadding.p8),

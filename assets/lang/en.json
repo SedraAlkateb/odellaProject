@@ -86,5 +86,6 @@
   "notrip": "No trips found",
   "linename": "Line name",
   "date": "Trip date",
-  "availableseats": "Available seats"
+  "availableseats": "Available seats",
+  "code": "code"
 }

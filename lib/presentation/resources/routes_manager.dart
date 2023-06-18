@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/notification_list.dart';
 import 'package:untitled/notification_details.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
@@ -12,7 +13,9 @@ import 'package:untitled/presentation/map/mapline.dart';
 import 'package:untitled/presentation/map_position/view/map_position_view.dart';
 import 'package:untitled/presentation/mm.dart';
 import 'package:untitled/presentation/page/add_lost_item/view/add_lost_item_view.dart';
+import 'package:untitled/presentation/page/complaints/view/complaints_view.dart';
 import 'package:untitled/presentation/page/home/view/home_view.dart';
+import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart';
 import 'package:untitled/presentation/page/page_view.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
@@ -61,6 +64,8 @@ class Routes {
   static const String polyLineRoute = "/PolyLine";
   static const String informationTrip = "/informationTripRoute";
   static const String notification = "/notification";
+  static const String notification_message = "/notificationMessage";
+
   static const String mapline = "/mapline";
 
   static const String message = "/message";
@@ -119,22 +124,24 @@ class RouteGenerator {
       case Routes.baseHomeScreen:
         initBaseHomeModule();
         return MaterialPageRoute(builder: (_) => const BaseHomeView());
-      case Routes.settingRoute:
-        return MaterialPageRoute(builder: (_) => const SettingsView());
+      // case Routes.settingRoute:
+      //   return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.lostItemsRoute:
-        return MaterialPageRoute(builder: (_) => const SettingsView());
+        return MaterialPageRoute(builder: (_) => const LostItemsView());
       case Routes.complaintsRoute:
-        return MaterialPageRoute(builder: (_) => const SettingsView());
+        return MaterialPageRoute(builder: (_) => const ComplaintsView());
       case Routes.map:
         return MaterialPageRoute(builder: (_) =>  MapPage());
       case Routes.qrCodeViewRoute:
         return MaterialPageRoute(builder: (_) =>  QrCodeView());
       case Routes.notification:
         return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
+      case Routes.notification_message:
+        return MaterialPageRoute(builder: (_) =>  MessageList());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
-      case Routes.mapline:
-        //return MaterialPageRoute(builder: (_) => MapboxMapPage());
+      // case Routes.mapline:
+      //   //return MaterialPageRoute(builder: (_) => MapboxMapPage());
 
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());

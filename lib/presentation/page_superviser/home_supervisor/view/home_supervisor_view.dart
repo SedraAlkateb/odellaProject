@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -13,6 +14,7 @@ import 'package:untitled/presentation/page_superviser/home_supervisor/view_model
 import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/strings_manager.dart';
@@ -46,17 +48,26 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
            drawer:  DrawerSupervisorView(),
           appBar: AppBar(
             actions: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Badge(
-                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+              Provider.of<Not>(context).getCount()==0
+                  ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                  : Padding(
+                padding: const EdgeInsets.all(20),
+                child: InkWell(
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                  child: Icon(Icons.notifications,size: AppSize.s30),
-                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                  onTap: ()
+                  {
+                    print("kkkkkk");
+                    Navigator.pushNamed(context,Routes.notification);
+                  },
                 ),
               ),
             ],
-             title: Text(StringsManager.home,
+             title: Text(LocaleKeys.Home.tr(),
                  style: getBoldStyle(
                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
            ),
@@ -97,7 +108,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         hintStyle: getRegularStyle(
                             color: ColorManager.icon,
                             fontSize: FontSize.s16),
-                        hintText: StringsManager.search_stud,
+                        hintText: LocaleKeys.searchstudent.tr(),
                         //       hintStyle:Theme.of(context).textTheme.bodySmall,
                         prefixIcon: Padding(
                           padding:
@@ -119,7 +130,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         Routes.informationTrip
                     );
                   },
-                  child:  Text('${StringsManager.trip_information}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
+                  child:  Text('${LocaleKeys.tripinformation.tr()}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
                 ),
                 SizedBox(height: 4.h),
                 Column(
@@ -264,7 +275,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         hintStyle: getRegularStyle(
                             color: ColorManager.icon,
                             fontSize: FontSize.s16),
-                        hintText: StringsManager.search_stud,
+                        hintText: LocaleKeys.searchstudent.tr(),
                         //       hintStyle:Theme.of(context).textTheme.bodySmall,
                         prefixIcon: Padding(
                           padding:

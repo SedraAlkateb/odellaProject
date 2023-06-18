@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untitled/data/network/failure.dart';
@@ -8,6 +9,8 @@ import 'package:untitled/presentation/resources/font_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+
+import '../../../lang/locale_keys.g.dart';
 enum StateRendererType{
 ///popup states (dialog)
 
@@ -47,7 +50,7 @@ class StateRenderer extends StatelessWidget {
         return _getPopupDialog(context,[
             _getAnimatedImage(JsonAssets.error),
             _getMessage(message),
-            _getRetryButton(StringsManager.ok,context)
+            _getRetryButton(LocaleKeys.ok.tr(),context)
 
         ]);
 
@@ -59,7 +62,7 @@ class StateRenderer extends StatelessWidget {
             [
               _getAnimatedImage(JsonAssets.error),
               _getMessage(message),
-              _getRetryButton(StringsManager.retryAgain,context)
+              _getRetryButton(LocaleKeys.retryAgain.tr(),context)
             ]
         );
       case StateRendererType.fullScreenEmptyState:
@@ -74,7 +77,7 @@ class StateRenderer extends StatelessWidget {
           _getAnimatedImage(JsonAssets.loading1),
           _getMessage(title),
           _getMessage(message),
-          _getRetryButton(StringsManager.ok, context)
+          _getRetryButton(LocaleKeys.ok.tr(), context)
         ]);
       default:
         return Container();

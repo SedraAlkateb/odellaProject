@@ -15,12 +15,13 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 
 class NavbarProvider  with ChangeNotifier {
   List<NavbarDTO> items = [
-    NavbarDTO(label: StringsManager.lostItems,widget: LostItemsView(),iconData: Icons.storefront_outlined),
-    NavbarDTO(label: StringsManager.complaints,widget: ComplaintsView(),iconData: Icons.call),
-    NavbarDTO(label: StringsManager.home,widget: HomeView(),iconData: Icons.home),
+    NavbarDTO(label: LocaleKeys.lostItems.tr(),widget: LostItemsView(),iconData: Icons.storefront_outlined),
+    NavbarDTO(label: LocaleKeys.complaints.tr(),widget: ComplaintsView(),iconData: Icons.call),
+    NavbarDTO(label: LocaleKeys.Home.tr(),widget: HomeView(),iconData: Icons.home),
     NavbarDTO(label: LocaleKeys.profile.tr(),widget: ProfileView(),iconData: Icons.account_box_rounded),
-    NavbarDTO(label: StringsManager.programmer,widget: ProgramsView(),iconData: Icons.chrome_reader_mode),
-    NavbarDTO(label: StringsManager.programmer,widget: TripSupervisor(),iconData: Icons.chrome_reader_mode),
+
+    NavbarDTO(label:LocaleKeys.programmer.tr(),widget: ProgramsView(),iconData: Icons.chrome_reader_mode),
+    NavbarDTO(label: LocaleKeys.programmer.tr(),widget: TripSupervisor(),iconData: Icons.chrome_reader_mode),
   ];
   int _selectedIndex = AppConstants.home;
   int get selectedIndex => _selectedIndex;

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -6,6 +7,7 @@ import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/values_manager.dart';
 
 class TripInformationView extends StatefulWidget {
@@ -29,7 +31,7 @@ class _TripInformationViewState extends State<TripInformationView> {
                 color: ColorManager.sidBarIcon,
               ),
               title: Text(
-                StringsManager.trip_information,
+                LocaleKeys.tripinformation.tr(),
                 style: TextStyle(
                   color: ColorManager.sidBarIcon,
                 ),
@@ -49,18 +51,18 @@ class _TripInformationViewState extends State<TripInformationView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${StringsManager.line_name}: ${model.getHomeSuperVisor().lines![0].name}'),
+                          Text('${LocaleKeys.linename.tr()}: ${model.getHomeSuperVisor().lines![0].name}'),
                           SizedBox(height: 1.5.h),
-                          Text('${StringsManager.go_time}: ${model.getHomeSuperVisor().time!.start}'),
+                          Text('${LocaleKeys.Gotime.tr()}: ${model.getHomeSuperVisor().time!.start}'),
                           SizedBox(height: 1.5.h),
-                          Text('${StringsManager.return_time}: ${model.getHomeSuperVisor().time!.date}'),
+                          Text('${LocaleKeys.Returntime.tr()}: ${model.getHomeSuperVisor().time!.date}'),
                           SizedBox(height: 1.5.h),
-                          Text('${StringsManager.available_seats}: ${model.getHomeSuperVisor().availableSeats}'),
+                          Text('${LocaleKeys.availableseats.tr()}: ${model.getHomeSuperVisor().availableSeats}'),
                           SizedBox(height:1.5.h),
                         /*
                           Row(
                             children: [
-                              Text('${StringsManager.available_seats} '),
+                              Text('${LocaleKeys.availableseats.tr()} '),
                               Expanded(
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -104,18 +106,18 @@ class _TripInformationViewState extends State<TripInformationView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${StringsManager.line_name}: ${model.getHomeSuperVisor().lines![0].name}'),
+                          Text('${LocaleKeys.linename.tr()}: ${model.getHomeSuperVisor().lines![0].name}'),
                           const SizedBox(height: 10),
-                          Text('${StringsManager.go_time}: ${model.getHomeSuperVisor().time!.start}'),
+                          Text('${LocaleKeys.Gotime.tr()}: ${model.getHomeSuperVisor().time!.start}'),
                           const SizedBox(height: 10),
-                          Text('${StringsManager.return_time}: ${model.getHomeSuperVisor().time!.date}'),
+                          Text('${LocaleKeys.Returntime.tr()}: ${model.getHomeSuperVisor().time!.date}'),
                           const SizedBox(height: 10),
-                          Text('${StringsManager.available_seats}: ${model.getHomeSuperVisor().availableSeats}'),
+                          Text('${LocaleKeys.availableseats.tr()}: ${model.getHomeSuperVisor().availableSeats}'),
                          /*
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              Text('${StringsManager.available_seats} '),
+                              Text('${LocaleKeys.availableseats.tr()} '),
                               Expanded(
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,

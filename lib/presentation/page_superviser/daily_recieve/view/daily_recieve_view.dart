@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +10,10 @@ import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
+import '../../../resources/routes_manager.dart';
 import '../../../resources/strings_manager.dart';
 import '../../../resources/style_manage.dart';
 import '../../../resources/values_manager.dart';
@@ -40,18 +43,27 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
             drawer:  DrawerSupervisorView(),
             appBar: AppBar(
               actions: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Badge(
-                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+                Provider.of<Not>(context).getCount()==0
+                    ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                    : Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: InkWell(
+                    child: Badge(
+                      badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                    child: Icon(Icons.notifications,size: AppSize.s30),
-                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                      child: Icon(Icons.notifications,size: AppSize.s30),
+                      badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                    ),
+                    onTap: ()
+                    {
+                      print("kkkkkk");
+                      Navigator.pushNamed(context,Routes.notification);
+                    },
                   ),
                 ),
               ],
 
-              title: Text(StringsManager.daily_recieve,
+              title: Text(LocaleKeys.dailyrecieve.tr(),
                   style: getBoldStyle(
                       color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
             ),
@@ -91,7 +103,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                           hintStyle: getRegularStyle(
                               color: ColorManager.icon,
                               fontSize: FontSize.s16),
-                          hintText: StringsManager.search_stud,
+                          hintText: LocaleKeys.searchstudent.tr(),
                           //       hintStyle:Theme.of(context).textTheme.bodySmall,
                           prefixIcon: Padding(
                             padding:
@@ -136,22 +148,14 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${StringsManager.name}: ${model.getDailyReservations()[index].name}',
+                                      '${LocaleKeys.name.tr()}: ${model.getDailyReservations()[index].name}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      '${StringsManager.ePhoneNumber}: ${model.getDailyReservations()[index].phoneNumber}',
-                                      style: const TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${StringsManager.postion}: {model.getDailyReservations()[index].dataTransferPositions?.name}',
+                                      '${LocaleKeys.ePhoneNumber.tr()}: ${model.getDailyReservations()[index].phoneNumber}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 12,
@@ -159,7 +163,15 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                       ),
                                     ),
                                     Text(
-                                      '${StringsManager.seat}: ${model.getDailyReservations()[index].seatsNumber}',
+                                      '${LocaleKeys.Position.tr()}: {model.getDailyReservations()[index].dataTransferPositions?.name}',
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${LocaleKeys.seat.tr()}: ${model.getDailyReservations()[index].seatsNumber}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 12,
@@ -189,7 +201,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
                                       child: Text(
-                                        '${StringsManager.accept}',
+                                        '${LocaleKeys.accept.tr()}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -214,7 +226,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
                                       child:  Text(
-                                        '${StringsManager.reject}',
+                                        '${LocaleKeys.reject.tr()}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -270,7 +282,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                           hintStyle: getRegularStyle(
                               color: ColorManager.icon,
                               fontSize: FontSize.s16),
-                          hintText: StringsManager.search_stud,
+                          hintText: LocaleKeys.searchstudent.tr(),
                           //       hintStyle:Theme.of(context).textTheme.bodySmall,
                           prefixIcon: Padding(
                             padding:
@@ -305,22 +317,14 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${StringsManager.name}: ${model.getDailyReservations()[index].name}',
+                                      '${LocaleKeys.name.tr()}: ${model.getDailyReservations()[index].name}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      '${StringsManager.ePhoneNumber}: ${model.getDailyReservations()[index].phoneNumber}',
-                                      style: const TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${StringsManager.postion}: {modelgetDailyReservations()[index].dataTransferPositions?.name}',
+                                      '${LocaleKeys.ePhoneNumber.tr()}: ${model.getDailyReservations()[index].phoneNumber}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 12,
@@ -328,7 +332,15 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                       ),
                                     ),
                                     Text(
-                                      '${StringsManager.seat}:${ model.getDailyReservations()[index].seatsNumber}',
+                                      '${LocaleKeys.Position.tr()}: {modelgetDailyReservations()[index].dataTransferPositions?.name}',
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${LocaleKeys.seat.tr()}:${ model.getDailyReservations()[index].seatsNumber}',
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 12,
@@ -358,7 +370,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
                                       child: Text(
-                                        '${StringsManager.accept}',
+                                        '${LocaleKeys.accept.tr()}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -383,7 +395,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
                                       child: Text(
-                                        '${StringsManager.reject}',
+                                        '${LocaleKeys.reject.tr()}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
