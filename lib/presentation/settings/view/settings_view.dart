@@ -85,11 +85,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    StringsManager.inviteFriends,
+                    "StringsManager.inviteFriends",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.changePassword,
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -106,11 +106,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    StringsManager.contactUs,
+                   " StringsManager.contactUs",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.changePassword,
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -126,7 +126,7 @@ class _SettingsViewState extends State<SettingsView> {
                   height: 15,
                 ),
                 ListTile(
-                    title: Text(StringsManager.signOut),
+                    title: Text(LocaleKeys.signOut.tr()),
                     leading: Icon(
                       Icons.logout,
                       color: ColorManager.sidBarIcon,
@@ -142,7 +142,7 @@ class _SettingsViewState extends State<SettingsView> {
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.language,
+                    LocaleKeys.language.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -166,7 +166,7 @@ class _SettingsViewState extends State<SettingsView> {
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.changePassword,
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -184,11 +184,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    StringsManager.inviteFriends,
+                    "StringsManager.inviteFriends",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.changePassword,
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -205,11 +205,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    StringsManager.contactUs,
+                   " LocaleKeys.contactUs.tr()",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    StringsManager.changePassword,
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -225,7 +225,7 @@ class _SettingsViewState extends State<SettingsView> {
                   height: 15,
                 ),
                 ListTile(
-                    title: Text(StringsManager.signOut),
+                    title: Text(LocaleKeys.signOut.tr()),
                     leading: Icon(
                       Icons.logout,
                       color: ColorManager.sidBarIcon,

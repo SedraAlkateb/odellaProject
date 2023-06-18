@@ -47,126 +47,125 @@ class _ProgramsViewState extends State<ProgramsView>
     return Sizer(builder: (context, orientation, deviceType) {
       return Consumer<ProgramsViewModel>(
         builder: (context, model, child) =>
-         Scaffold(
-           appBar: AppBar(
-             actions: [
-               Provider.of<Not>(context).getCount()==0
-                   ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
-                   : Padding(
-                 padding: const EdgeInsets.all(20),
-                 child: InkWell(
-                   child: Badge(
-                     badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+            Scaffold(
+              appBar: AppBar(
+                actions: [
+                  Provider.of<Not>(context).getCount()==0
+                      ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                      : Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: InkWell(
+                      child: Badge(
+                        badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                     child: Icon(Icons.notifications,size: AppSize.s30),
-                     badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                   ),
-                   onTap: ()
-                   {
-                     print("kkkkkk");
-                     Navigator.pushNamed(context,Routes.notification);
-                   },
-                 ),
-               ),
-             ],
-             title: Text(LocaleKeys.Program.tr(),
-                 style: getBoldStyle(
-                     color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-           ),
-           drawer:  NavBar(),
-           body: SafeArea(child:
-          orientation == Orientation.portrait
-              ? Column(
-            children: [
-              Container(
-                height: 10.h,
-                color: ColorManager.sidBar,
-                child: Row(
-                  children: List.generate(
-                    model.getWeekDays().length,
-                        (index) => Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          model.setSelectedDay(index);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                color: index == model.getWeekDays().length - 1
-                                    ? Colors.transparent
-                                    : ColorManager.sidBar,
+                        child: Icon(Icons.notifications,size: AppSize.s30),
+                        badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                      ),
+                      onTap: ()
+                      {
+                        print("kkkkkk");
+                        Navigator.pushNamed(context,Routes.notification);
+                      },
+                    ),
+                  ),
+                ],
+                title: Text(LocaleKeys.Program.tr(),
+                    style: getBoldStyle(
+                        color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+              ),
+              drawer:  NavBar(),
+              body: SafeArea(child:
+              orientation == Orientation.portrait
+                  ? Column(
+                children: [
+                  Container(
+                    height: 10.h,
+                    color: ColorManager.sidBar,
+                    child: Row(
+                      children: List.generate(
+                        model.getWeekDays().length,
+                            (index) => Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              model.setSelectedDay(index);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: index == model.getWeekDays().length - 1
+                                        ? Colors.transparent
+                                        : ColorManager.sidBar,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            model.getDay(index),
-                            style: TextStyle(
-                              color: model.getSelectedDay() == model.getDay(index)
-                                  ? Colors.white
-                                  : ColorManager.sidBar,
-                              fontWeight: FontWeight.bold,
+                              alignment: Alignment.center,
+                              child: Text(
+                                model.getDay(index),
+                                style: TextStyle(
+                                  color: model.getSelectedDay() == model.getDay(index)
+                                      ? Colors.white
+                                      : ColorManager.sidBar,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 10.h),
+                  SizedBox(height: 10.h),
 
-              Expanded(
-                child: model.getProgramDay().isEmpty
-                    ? Center(
-                  child: Text(
-                    '${LocaleKeys.notrip.tr()}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: model.getProgramDay().isEmpty
+                        ? Center(
+                      child: Text(
+                        '${LocaleKeys.notrip.tr()}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                        : Padding(
+                      padding:  EdgeInsets.symmetric(vertical: 15.sp),
+                      child: ListView(
+                        children: List.generate(
+                            model.getProgramDay().length,
+                                (index) =>
+                                TripStudentWidget(trip: model.getProgramDay()[index])),
+                      ),
                     ),
                   ),
-                )
-                    : Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 15.sp),
-                  child: ListView(
-                    children: List.generate(
-                        model.getProgramDay().length,
-                            (index) =>
-                                TripStudentWidget(trip: model.getProgramDay()[index])),
+                  Text(
+                    LocaleKeys.Rating.tr(),
+                    style:
+                    const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ),
-              Text(
-                LocaleKeys.Rating.tr(),
-                style:
-                const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              RatingBar.builder(
-                initialRating: 0,
-                minRating: 1,
-                direction: Axis.horizontal,
-                //   allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(
-                    horizontal: AppPadding.p2),
-                itemBuilder: (context, _) =>
-                const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  Provider.of<ProgramsViewModel>(context,
-                      listen: false)
-                      .evaluation(rating.toInt());
-                },
-              ),
-              SizedBox(height: 14.h),
-            ],
-          )
-              : SingleChildScrollView(
-
+                  RatingBar.builder(
+                    initialRating: 0,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    //   allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(
+                        horizontal: AppPadding.p2),
+                    itemBuilder: (context, _) =>
+                    const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      Provider.of<ProgramsViewModel>(context,
+                          listen: false)
+                          .evaluation(rating.toInt());
+                    },
+                  ),
+                  SizedBox(height: 14.h),
+                ],
+              )
+                  : SingleChildScrollView(
                 child: Column(
                   children: [
                     Container(
@@ -199,7 +198,6 @@ class _ProgramsViewState extends State<ProgramsView>
                                         : ColorManager.sidBar,
                                     fontWeight: FontWeight.bold,
                                   ),
-
                                 ),
                               ),
                             ),
@@ -227,7 +225,7 @@ class _ProgramsViewState extends State<ProgramsView>
                             children: List.generate(
                                 model.getProgramDay().length,
                                     (index) =>
-                                        TripStudentWidget(trip: model.getProgramDay()[index])),
+                                    TripStudentWidget(trip: model.getProgramDay()[index])),
                           ),
                         ),
                       ),
@@ -259,16 +257,16 @@ class _ProgramsViewState extends State<ProgramsView>
                   ],
                 ),
               ),
-          ),
-        ),
-      )!;
+              ),
+            ),
+      );
     }
     );
   }
 
 
 
-  }
+}
 class TripStudentWidget extends StatelessWidget {
   final DataProgram trip;
 
@@ -355,7 +353,7 @@ class TripStudentWidget extends StatelessWidget {
             children: [
               Text(LocaleKeys.GoingConfirm.tr()),
               Checkbox(
-                value: trip.confirmAttendance1,
+                value: Provider.of<ProgramsViewModel>(context).b1,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
@@ -373,7 +371,7 @@ class TripStudentWidget extends StatelessWidget {
                 LocaleKeys.Returningconfirm.tr(),
               ),
               Checkbox(
-                value: trip.confirmAttendance2,
+                value: Provider.of<ProgramsViewModel>(context).b2,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
