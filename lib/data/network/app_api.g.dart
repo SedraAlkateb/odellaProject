@@ -611,7 +611,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              ' /api/auth/refresh/api/auth/refresh',
+              '/api/auth/refresh/api/auth/refresh',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -634,7 +634,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              ' /api/user/notification',
+              '/api/user/notification',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -1152,6 +1152,45 @@ class _AppServiceClient implements AppServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = QrConfirmResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdatePositionResponse> supervisorPositionUpdate(
+    tripId,
+    lng,
+    lat,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'trip_id',
+      tripId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'lng',
+      lng.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'lat',
+      lat.toString(),
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdatePositionResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/update/position',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdatePositionResponse.fromJson(_result.data!);
     return value;
   }
 

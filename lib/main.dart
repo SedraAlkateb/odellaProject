@@ -120,7 +120,6 @@ Future<void> main() async {
       sound: true,
     );
   }
-
    //runApp(const MessagingExampleApp());
   runApp(
     EasyLocalization(

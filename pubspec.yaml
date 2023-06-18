@@ -43,7 +43,7 @@ dependencies:
   sizer: ^2.0.15
   mime: ^1.0.4
   path_provider: ^2.0.14
-  reflectable: ^4.0.4
+  #reflectable: ^4.0.4
   image: ^4.0.16
   easy_localization: ^3.0.1
   flutter_phoenix: ^1.1.0

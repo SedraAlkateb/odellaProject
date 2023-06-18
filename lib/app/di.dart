@@ -23,6 +23,7 @@ import 'package:untitled/domain/usecase/get_all_lost_usecase.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/login_usecase.dart';
 import 'package:untitled/domain/usecase/logout_usecase.dart';
+import 'package:untitled/domain/usecase/notification_usecase.dart';
 import 'package:untitled/domain/usecase/position_line_usecase.dart';
 import 'package:untitled/domain/usecase/posts_usecase.dart';
 import 'package:untitled/domain/usecase/profile_usecase.dart';
@@ -34,6 +35,7 @@ import 'package:untitled/domain/usecase/store_claim_usecase.dart';
 import 'package:untitled/domain/usecase/store_lost_usecase.dart';
 import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
 import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
+import 'package:untitled/domain/usecase/supervisor_update_position_usecase.dart';
 import 'package:untitled/domain/usecase/transfer_positions_usecase.dart';
 import 'package:untitled/domain/usecase/transportation_lines_usecase.dart';
 import 'package:untitled/domain/usecase/tt.dart';
@@ -48,6 +50,8 @@ import 'package:untitled/presentation/base_home/view_model/base_home_view_model.
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/notification/view_model/notification_viewmodel.dart';
 import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
@@ -55,6 +59,7 @@ import 'package:untitled/presentation/page/home/view_model/home_view_model.dart'
 import 'package:untitled/presentation/page/lost_items/view_model/lost_items_viewmodle.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
+import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
@@ -158,7 +163,23 @@ Future<void>initHomeSupervisorModule() async{
   if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
     instance.registerFactory<HomeSupervisorUseCase>(() =>
         HomeSupervisorUseCase(instance()));
-    instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance()));
+    instance.registerFactory<SupervisorUpdatePositionUseCase>(() =>
+        SupervisorUpdatePositionUseCase(instance()));
+    instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance(),instance()));
+  }
+}
+Future<void>initTripSupervisorModule() async{
+  if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
+    instance.registerFactory<HomeSupervisorUseCase>(() =>
+        HomeSupervisorUseCase(instance()));
+    instance.registerFactory<SupervisorTripViewModel>(() =>SupervisorTripViewModel(instance()));
+  }
+}
+Future<void>initNotificationModule() async{
+  if(!GetIt.I.isRegistered<NotificationUseCase>()) {
+    instance.registerFactory<NotificationUseCase>(() =>
+        NotificationUseCase(instance()));
+    instance.registerFactory<Not>(() =>Not(instance()));
   }
 }
 

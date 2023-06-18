@@ -1,21 +1,33 @@
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/notification_usecase.dart';
+import 'package:untitled/presentation/base/base_view_model.dart';
 
-class Not extends ChangeNotifier {
-  //NotificationUseCase _notificationUseCase;
-  //Not(this._notificationUseCase,this.count);
+class Not extends BaseViewModel with ChangeNotifier {
+  NotificationUseCase _notificationUseCase;
+  Not(this._notificationUseCase);
   int count = 0;
   late String title;
   late String body;
+  int index=0;
+  List<NotificationModel> _notifications=[];
   setCount(int i) {
     count = i;
     notifyListeners();
   }
-
+ setIndex(int i){
+    index=i;
+    notifyListeners();
+}
+int getIndex(){
+    return index;
+}
   int getCount() {
     return count;
   }
-
+NotificationModel getMessage(){
+   return _notifications[index];
+}
   updateInc() {
     count = count + 1;
   }
@@ -23,14 +35,15 @@ class Not extends ChangeNotifier {
   updateDec() {
     count = count - 1;
   }
-  setTitle(String i) {
-    title = i;
+  setNotification(List<NotificationModel> notifications) {
+    _notifications=notifications;
     notifyListeners();
   }
 
-  String getTitle() {
-    return title;
+  List<NotificationModel>  getNotification() {
+    return _notifications;
   }
+
   setBody(String i) {
     body = i;
     //notifyListeners();
@@ -40,19 +53,22 @@ class Not extends ChangeNotifier {
     return body;
   }
 
-  // getAllNotificationsLogin()
-  // async{
-  //   //   inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-  //
-  //   ( await _notificationUseCase.execute(null)).fold(
-  //           (failure)  {
-  //         //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-  //       },
-  //           (data)  async{
-  //         // await _appPreferences.setToken();
-  //         //    inputState.add(ContentState());
-  //         setLost(data);
-  //       });
+   getAllNotificationsLogin()
+   async{
+
+     ( await _notificationUseCase.execute(null)).fold(
+             (failure)  {
+         },
+             (data)  async{
+     setNotification(data.notification!);
+     });
+
+         }
+
+  @override
+  void start() {
+    getAllNotificationsLogin();
+  }
   }
 
 

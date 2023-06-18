@@ -110,10 +110,10 @@ abstract class AppServiceClient {
       @Path("id") int studentId,
       @Part() File  image
       );
-  @POST(" /api/auth/refresh/api/auth/refresh")
+  @POST("/api/auth/refresh/api/auth/refresh")
   Future<AuthenticationResponse> refresh();
 
-  @GET(" /api/user/notification")
+  @GET("/api/user/notification")
   Future<NotificationResponse> notification();
   /*
   @GET('')
@@ -209,4 +209,10 @@ abstract class AppServiceClient {
       @Path("id") int id,
       @Path("trip_id") int tripId
   );
+  @POST("/api/update/position")
+  Future<UpdatePositionResponse> supervisorPositionUpdate(
+      @Part(name:"trip_id") int tripId,
+      @Part(name:"lng") double lng,
+      @Part(name:"lat") double lat
+      );
 }

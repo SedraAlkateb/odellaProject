@@ -16,8 +16,8 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   String selectedDay = 'Sat';
   int indexDay=0;
   List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}'];
-  bool? b1=null;
-  bool? b2=null;
+  bool? b1=false;
+  bool? b2=false;
   double _rating=0;
   List<String>getWeekDays(){
     return weekDays;

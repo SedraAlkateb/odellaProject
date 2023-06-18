@@ -45,6 +45,8 @@ abstract class Repository{
   Future< Either<Failure,AcceptDenyModel>>deny(int id);
   Future<  Either<Failure,Authentication>>refresh();
   Future<  Either<Failure,Notification>>notification();
+  Future<  Either<Failure,String>>supervisorPositionUpdate(PositionMap PositionMap);
+
 
 
 }
