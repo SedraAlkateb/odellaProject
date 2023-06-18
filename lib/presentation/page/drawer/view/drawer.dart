@@ -206,7 +206,7 @@ backgroundColor: ColorManager.side,
                 ),
 
                 onTap: () async{
-                  Navigator.pushNamed(context, Routes.mapline);
+                  //Navigator.pushNamed(context, Routes.mapline);
                 }
 
             ),

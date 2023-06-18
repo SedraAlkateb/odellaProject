@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +13,8 @@ import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+
+import '../../../not_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -235,21 +238,27 @@ AppBar getHomeAppBar(){
     title: Text( StringsManager.home,style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
     ),
     actions: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: IconButton(
-          onPressed: () {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              //    Provider.of<LoginViewModel>(context,listen: false).isLog=false;
-              //      Navigator.pop(context,Routes.afterSplashRoute);
-            });
-          },
-          icon: SvgPicture.asset(
-            ImageAssets.note,
-            //     semanticsLabel: 'Acme Logo'
-          ),
-        ),
-      ),
+      // Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: IconButton(
+      //     onPressed: () {
+      //       SchedulerBinding.instance.addPostFrameCallback((_) {
+      //         //    Provider.of<LoginViewModel>(context,listen: false).isLog=false;
+      //         //      Navigator.pop(context,Routes.afterSplashRoute);
+      //       });
+      //     },
+      //     icon: Padding(
+      //       padding: const EdgeInsets.all(10),
+      //       child: Badge(
+      //         badgeContent: Text("//"),
+      //         //Text("${ Provider.of<Not>(buildContext).getCount()}",style: TextStyle(color: Colors.white),),
+      //
+      //         child: Icon(Icons.notifications,size: AppSize.s30),
+      //         badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     ],
 
   );

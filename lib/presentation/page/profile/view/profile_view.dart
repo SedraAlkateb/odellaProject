@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
+import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
@@ -92,7 +93,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(AppPadding.p20),
                     child: Column(
@@ -174,90 +175,20 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 4.h,),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: DropdownButtonFormField(
-                                    icon:
-                                    const Icon(Icons.keyboard_arrow_down),
-                                    hint: Text(model.getProfileCity()),
-                                    items: model
-                                        .getCities()
-                                        .map((e) => DropdownMenuItem(
-                                      value: e.id,
-                                      child: Text(" ${e.name}"),
-                                    ))
-                                        .toList(),
-                                    onChanged: (val) {
-                                      model.setCityId(val!);
-                                    model
-                                          .getAreasByIdCity(val);
-                                    }),
-                              ),
-                              Expanded(
-                                child: DropdownButtonFormField(
-                                    icon:
-                                    const Icon(Icons.keyboard_arrow_down),
-                                    hint: Text(model.getProfileArea()),
-                                    items: model
-                                        .getAreas()
-                                        .map((e) => DropdownMenuItem(
-                                      value: e.id,
-                                      child: Text(" ${e.name}"),
-                                    ))
-                                        .toList(),
-                                    onChanged: (val) {
-                                      model.setAreaId(val!);
-                                    }),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        Expanded(child:
-                        Row(
-                          children: [
-                            Expanded(
-                              child: DropdownButtonFormField(
-                                  icon:
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  hint: Text(model.getProfileUni()),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return StringsManager.universities;
-                                    }
-                                    return null;
-                                  },
-                                  items: model
-                                      .getUniversities()
-                                      .map((e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(" ${e.name}"),
-                                  ))
-                                      .toList(),
-                                  onChanged: (val) {
-                                    model.setUniversityId(val!);
-                                  }),
-                            ),
-                          ],
-                        )
-                        )
-
+                        SizedBox(height: 2.h,),
+                        Divider(height: 3.h,color: ColorManager.sidBar,thickness: 2,),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 5.h,
+                          height: 1.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +266,7 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         SizedBox(height: 5.h),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
                               Icons.streetview,
@@ -349,7 +280,7 @@ class _ProfileViewState extends State<ProfileView> {
                               CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("StringsManager.street",
+                                Text("  Street",
                                     style: Theme
                                         .of(context)
                                         .textTheme
@@ -408,13 +339,76 @@ class _ProfileViewState extends State<ProfileView> {
                           ],
                         ),
                         SizedBox(
-                          height: 5.h,
+                          height: 8.h,
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                           width: 55.w,
+                          child: DropdownButtonFormField(
+                              icon:
+                              const Icon(Icons.keyboard_arrow_down),
+                              hint: Text(model.getProfileCity()),
+                              items: model
+                                  .getCities()
+                                  .map((e) => DropdownMenuItem(
+                                value: e.id,
+                                child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
+                              ))
+                                  .toList(),
+                              onChanged: (val) {
+                                model.setCityId(val!);
+                                model.getAreasByIdCity(val);
+                              }),
+                        ),
+
+                        SizedBox(
+                          height: 15.h,
+                          width: 55.w,
+                            child: DropdownButtonFormField(
+                                icon:
+                                const Icon(Icons.keyboard_arrow_down),
+                                hint: Text(model.getProfileUni()),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return StringsManager.universities;
+                                  }
+                                  return null;
+                                },
+                                items: model
+                                    .getUniversities()
+                                    .map((e) => DropdownMenuItem(
+                                  value: e.id,
+                                  child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
+                                ))
+                                    .toList(),
+                                onChanged: (val) {
+                                  model.setUniversityId(val!);
+                                }),
+                          ),
+
+                        SizedBox(
+                          height: 15.h,
+                          width: 55.w,
+                          child: DropdownButtonFormField(
+                              icon:
+                              const Icon(Icons.keyboard_arrow_down),
+                              hint: Text(model.getProfileArea()),
+                              items: model
+                                  .getAreas()
+                                  .map((e) => DropdownMenuItem(
+                                value: e.id,
+                                child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
+                              ))
+                                  .toList(),
+                              onChanged: (val) {
+                                model.setAreaId(val!);
+                              }),
                         ),
 
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: AppPadding.p28,
-                              horizontal: AppPadding.p50),
+                              horizontal: AppPadding.p28),
                           child: ElevatedButton(
                             onPressed: () {
                               profile.UpdateStudent();
@@ -423,9 +417,12 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
 
+
                         SizedBox(
                           height: 5.h,
                         ),
+
+
                       ],
                     ),
                   ),
@@ -435,7 +432,7 @@ class _ProfileViewState extends State<ProfileView> {
                 : Row(
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -520,6 +517,12 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           ],
                         ),
+                      ),
+                      Container(
+                        width: 200.w,
+                        child: Divider(height: 2.h,
+                          color: ColorManager.sidBar ,
+                        thickness: 2,),
                       ),
                       Expanded(
                         child: SingleChildScrollView(
@@ -680,30 +683,6 @@ class _ProfileViewState extends State<ProfileView> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      width: 12.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("StringsManager.street",
-                                            style: Theme
-                                                .of(context)
-                                                .textTheme
-                                                .bodySmall),
-                                        SizedBox(
-                                          width: 100.w,
-                                          child: TextField(
-                                            controller: _streetController,
-                                            onSubmitted: (value) {
-                                              _streetController.text = value;
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   ],
                                 ),
                                 SizedBox(
@@ -733,15 +712,20 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  flex: 2,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
+                            SizedBox(
+                              width: 80.w,
+                              height: 10.h,
                               child: DropdownButtonFormField(
                                   icon:
                                   const Icon(Icons.keyboard_arrow_down),
@@ -759,57 +743,67 @@ class _ProfileViewState extends State<ProfileView> {
                                         .getAreasByIdCity(val);
                                   }),
                             ),
-                            Expanded(
-                              child: DropdownButtonFormField(
-                                  icon:
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  hint: Text(model.getProfileArea()),
-                                  items: model
-                                      .getAreas()
-                                      .map((e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(" ${e.name}"),
-                                  ))
-                                      .toList(),
-                                  onChanged: (val) {
-                                    model.setAreaId(val!);
-                                  }),
+                            ],
                             ),
-
-                          ],
-                        ),
-                      ),
-                      Expanded(child:
-                      Row(
-                        children: [
-                          Expanded(
-                            child: DropdownButtonFormField(
-                                icon:
-                                const Icon(Icons.keyboard_arrow_down),
-                                hint: Text(model.getProfileUni()),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return StringsManager.universities;
-                                  }
-                                  return null;
-                                },
-                                items: model
-                                    .getUniversities()
-                                    .map((e) => DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(" ${e.name}"),
-                                ))
-                                    .toList(),
-                                onChanged: (val) {
-                                  model.setUniversityId(val!);
-                                }),
-                          ),
-                        ],
-                      )
-                      ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                              SizedBox(
+                              width: 80.w,
+                              height: 10.h,
+                                child: DropdownButtonFormField(
+                                    icon:
+                                    const Icon(Icons.keyboard_arrow_down),
+                                    hint: Text(model.getProfileArea()),
+                                    items: model
+                                        .getAreas()
+                                        .map((e) => DropdownMenuItem(
+                                      value: e.id,
+                                      child: Text(" ${e.name}"),
+                                    ))
+                                        .toList(),
+                                    onChanged: (val) {
+                                      model.setAreaId(val!);
+                                    }),
+                              ),
                     ],
-                  ),
                 ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    height: 10.h,
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                        const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(model.getProfileUni()),
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return StringsManager.universities;
+                                          }
+                                          return null;
+                                        },
+                                        items: model
+                                            .getUniversities()
+                                            .map((e) => DropdownMenuItem(
+                                          value: e.id,
+                                          child: Text(" ${e.name}"),
+                                        ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          model.setUniversityId(val!);
+                                        }),
+                                  ),
+                                ],
+                              ),
+                          ],
+                            ),
+                  ),
+
+                  ),
               ],
             ),
           );

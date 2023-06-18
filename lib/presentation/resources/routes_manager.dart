@@ -123,8 +123,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
-      // case Routes.mapline:
-      //   return MaterialPageRoute(builder: (_) => MapLine());
+      case Routes.mapline:
+        //return MaterialPageRoute(builder: (_) => MapboxMapPage());
 
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());
