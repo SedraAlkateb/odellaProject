@@ -128,9 +128,11 @@ class _SettingsViewState extends State<SettingsView> {
   }
   _changeLanguage()async {
     // i will implement it later
-  await  _appPreferences.changeAppLanguage();
+  await  _appPreferences.changeAppLanguage().then((value) =>
+
+      Phoenix.rebirth(context)
+  );
 
 
-    Phoenix.rebirth(context);
   }
 }

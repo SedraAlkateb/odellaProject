@@ -92,6 +92,7 @@ class _MyAppState extends State<MyApp> {
         theme: getApplicationTheme(),
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+
         locale: context.locale,
       ),
 

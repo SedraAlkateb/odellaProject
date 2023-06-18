@@ -1,11 +1,14 @@
 import 'dart:io';
 //import 'package:cached_network_image/cached_network_image.dart';
+import 'package:badges/badges.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
 import 'package:untitled/presentation/detail_screen/view/detail_screen_view.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/lost_items/view_model/lost_items_viewmodle.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -45,6 +48,24 @@ class _LostItemsViewState extends State<LostItemsView> {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return Scaffold(
+        drawer:  NavBar(),
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Badge(
+                badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                child: Icon(Icons.notifications,size: AppSize.s30),
+                badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+              ),
+            ),
+          ],
+
+          title: Text(StringsManager.lostItems,
+              style: getBoldStyle(
+                  color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, Routes.addLostItemRoute);
@@ -831,10 +852,4 @@ class _LostItemsViewState extends State<LostItemsView> {
 
 }
 
-AppBar getAppBarLostItem() {
-  return AppBar(
-    title: Text(StringsManager.lostItems,
-        style: getBoldStyle(
-            color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-  );
-}
+

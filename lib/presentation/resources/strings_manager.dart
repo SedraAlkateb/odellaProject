@@ -44,7 +44,7 @@ class StringsManager{
   static String name=LocaleKeys.name.tr();
   static String programmer=LocaleKeys.programmer.tr();
 
-  static String profile=LocaleKeys.profile.tr();
+//  static String profile=LocaleKeys.profile.tr();
   static String confirmPassword=LocaleKeys.confirmPassword.tr();
   static String eConfirmPassword=LocaleKeys.eConfirmPassword.tr();
   static String oldPassword=LocaleKeys.oldPassword.tr();

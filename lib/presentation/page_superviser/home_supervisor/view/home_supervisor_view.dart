@@ -1,9 +1,12 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
@@ -38,7 +41,24 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
       return Consumer<HomeSuperVisorViewModel>(
         builder: (context, model, child) =>
          Scaffold(
-          body: SafeArea(
+           drawer:  DrawerSupervisorView(),
+          appBar: AppBar(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Badge(
+                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                  child: Icon(Icons.notifications,size: AppSize.s30),
+                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                ),
+              ),
+            ],
+             title: Text(StringsManager.home,
+                 style: getBoldStyle(
+                     color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+           ),
+           body: SafeArea(
             child: orientation == Orientation.portrait
                 ? Column(
               children: [
@@ -362,10 +382,4 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
     );
   }
 }
-AppBar getAppBarHomeSuper() {
-  return AppBar(
-    title: Text(StringsManager.home,
-        style: getBoldStyle(
-            color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-  );
-}
+

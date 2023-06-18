@@ -1,8 +1,13 @@
 import 'dart:io';
+import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
@@ -42,6 +47,25 @@ class _SupervisorProfileView1State extends State<SupervisorProfileView1> {
     return Sizer(
       builder: (context, orientation, deviceType) =>
           Scaffold(
+            appBar: AppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                ),
+              ],
+              title: Text(LocaleKeys.profile.tr(),
+                  style: getBoldStyle(
+                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+
+            ),
+            drawer:  DrawerSupervisorView(),
+
             body: contentWidget(),
           ),
     );
@@ -745,11 +769,3 @@ class _SupervisorProfileView1State extends State<SupervisorProfileView1> {
   }
 }
 
-AppBar getAppBarProfile2() {
-  return AppBar(
-    title: Text(StringsManager.profile,
-        style: getBoldStyle(
-            color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-
-  );
-}

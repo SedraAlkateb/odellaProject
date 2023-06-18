@@ -11,8 +11,6 @@ class PagesView extends StatelessWidget  {
   Widget build(BuildContext context) {
     final mp = Provider.of<NavbarProvider>(context);
     return Scaffold(
-      appBar: (mp.items[mp.selectedIndex].appBar) ?? AppBar(),
-      drawer:  NavBar(),
       bottomNavigationBar:ClipRRect(
       borderRadius: const BorderRadius.only(
       topRight: Radius.circular(AppSize.s28),

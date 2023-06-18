@@ -2,11 +2,14 @@
 
 import 'dart:io';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -14,30 +17,6 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
 import '../../../resources/font_manager.dart';
-
-AppBar getAppBar(){
-  return AppBar(
-
-    actions: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: IconButton(
-          onPressed: () {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              //    Provider.of<LoginViewModel>(context,listen: false).isLog=false;
-              //      Navigator.pop(context,Routes.afterSplashRoute);
-            });
-          },
-          icon: SvgPicture.asset(
-            ImageAssets.note,
-            //     semanticsLabel: 'Acme Logo'
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
 
 
 class ProfileView extends StatefulWidget {
@@ -67,6 +46,21 @@ class _ProfileViewState extends State<ProfileView> {
     return Sizer(
       builder: (context, orientation, deviceType) =>
           Scaffold(
+            drawer:  NavBar(),
+            appBar:  AppBar(
+
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                ),
+              ],
+            ),
             body: contentWidget(),
           ),
     );

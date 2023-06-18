@@ -9,6 +9,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/lang/codegen_loader.g.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -125,6 +126,8 @@ Future<void> main() async {
     EasyLocalization(
       child: Phoenix(child: MyApp()),
       supportedLocales: const [ARABIC_LOCALE, ENGLISH_LOCALE],
+      assetLoader:const CodegenLoader(),
+      fallbackLocale: ENGLISH_LOCALE,
       path: ASSET_PATH_LOCALISATION),
   );
 }
