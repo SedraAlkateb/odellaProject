@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/map_position/view_model/location_service.dart';
@@ -13,20 +14,19 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 class _MyAppState extends State<MyApp> {
-  late  PusherClient pusherClient;
- late Channel channel;
+
+
   @override
   void initState() {
+    PusherClient pusherClient;
+    Channel channel;
     PusherOptions options = PusherOptions(
-       // wsPort: 6001,
-      //  encrypted: true,
-     //   host:'yaamen1.com',
-        cluster:  PusherConfigration.cluster,
-       // wssPort: 6001
 
+      cluster:  PusherConfigration.cluster,
     );
     pusherClient = PusherClient(
       PusherConfigration.key,
+
       options,
       autoConnect:true,
       enableLogging: true,
@@ -36,20 +36,22 @@ class _MyAppState extends State<MyApp> {
     pusherClient.onConnectionStateChange((state) {
       print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
     });
-    print(pusherClient.getSocketId());
-    print("pusherClient.getSocketId( )");
 
     pusherClient.onConnectionError((error) {
-      print("error: ${error?.message}");
+      print("error: ${error?.message} ${error?.code}${error?.exception}");
     });
-    //      channel = pusherClient.subscribe("tracking.1");
-     channel = pusherClient.subscribe("name_channel");
 
-// Bind to listen for events called "order-status-updated" sent to "private-orders" channel
-    channel.bind("name_event", (PusherEvent? event) {
+    channel = pusherClient.subscribe("private-tracking.1");
+    channel.bind("tracking", (PusherEvent? event) {
       print(event?.data);
-      print("object");
     });
+    try {
+       channel.trigger ("tracking",{"longitude":"3333","latitude":"333333333"});
+    } on PlatformException catch (e) {
+      print('Error triggering event: ${e.message}');
+    }
+
+
 
 // Unsubscribe from channel
    // pusherClient.unsubscribe("tracking.1");
@@ -68,8 +70,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(home: Scaffold(
         body: Center(
           child: TextButton(onPressed: () async {
-  //    final state = await pusherClient.onConnectionStateChange.asStream().first;
-    //  print("State changed to ${state.currentState}");
+
     },
     child: Text("Test"),
         ))
@@ -291,4 +292,6 @@ on LocationPermissionException catch (e) {
         );
       }
     }
+        print(pusherClient.getSocketId());
+    print("pusherClient.getSocketId( )");
  */

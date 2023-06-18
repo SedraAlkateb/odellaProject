@@ -1,0 +1,1 @@
+export 'package:laravel_echo/laravel_echo.dart';

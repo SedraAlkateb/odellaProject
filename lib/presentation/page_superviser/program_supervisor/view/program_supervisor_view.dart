@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
@@ -17,58 +18,6 @@ class SupervisorProgramView extends StatefulWidget {
 
 class _SupervisorProgramViewState extends State<SupervisorProgramView> {
 
-  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}', ];
-  Map<String, List<Trip>> trips = {
-    'Sat': [
-      Trip(
-        tripLine: 'tripLine',
-        tripStartTime: 'tripStartTime',
-        tripEndTime: 'tripEndTime',
-        tripDate: 'tripDate',
-        tripSeats: ['1', '5', '6'],
-        tripPosition: 'tripPosition',
-      ),
-      Trip(
-        tripLine: 'tripLine',
-        tripStartTime: 'tripStartTime',
-        tripEndTime: 'tripEndTime',
-        tripDate: 'tripDate',
-        tripSeats: ['1', '5', '6'],
-        tripPosition: 'tripPosition',
-      ),
-    ],
-    'Sun': [],
-    'Mon': [],
-    'Tus': [
-      Trip(
-        tripLine: 'tripLine',
-        tripStartTime: 'tripStartTime',
-        tripEndTime: 'tripEndTime',
-        tripDate: 'tripDate',
-        tripSeats: ['1', '5', '6'],
-        tripPosition: 'tripPosition',
-      ),
-      Trip(
-        tripLine: 'tripLine',
-        tripStartTime: 'tripStartTime',
-        tripEndTime: 'tripEndTime',
-        tripDate: 'tripDate',
-        tripSeats: ['1', '5', '6'],
-        tripPosition: 'tripPosition',
-      ),
-      Trip(
-        tripLine: 'tripLine',
-        tripStartTime: 'tripStartTime',
-        tripEndTime: 'tripEndTime',
-        tripDate: 'tripDate',
-        tripSeats: ['1', '5', '6'],
-        tripPosition: 'tripPosition',
-      ),
-    ],
-    'Wed': [],
-    'Thu': [],
-  };
-  String selectedDay = 'Sat';
   var viewModel;
 @override
   void initState() {
@@ -79,42 +28,43 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      return Scaffold(
-        body: SafeArea(
-          child: orientation == Orientation.portrait
-              ?Column(
-            children: [
-              Container(
-                height: 10.h,
-                color: ColorManager.sidBar,
-                child: Row(
-                  children: List.generate(
-                    weekDays.length,
-                        (index) => Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedDay = weekDays[index];
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                color: index == weekDays.length - 1
-                                    ? Colors.transparent
-                                    : ColorManager.sidBar,
+      return Consumer<ProgramsViewModel>(
+        builder: (context, model, child) =>
+         Scaffold(
+          body: SafeArea(
+            child: orientation == Orientation.portrait
+                ?Column(
+              children: [
+                Container(
+                  height: 10.h,
+                  color: ColorManager.sidBar,
+                  child: Row(
+                    children: List.generate(
+                      model.getWeekDays().length,
+                          (index) => Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            model.setSelectedDay(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                  color: index == model.getWeekDays().length - 1
+                                      ? Colors.transparent
+                                      : ColorManager.sidBar,
+                                ),
                               ),
                             ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            weekDays[index],
-                            style: TextStyle(
-                              color: selectedDay == weekDays[index]
-                                  ? Colors.white
-                                  : ColorManager.sidBar,
-                              fontWeight: FontWeight.bold,
+                            alignment: Alignment.center,
+                            child: Text(
+                              model.getDay(index),
+                              style: TextStyle(
+                                color: model.getSelectedDay() == model.getDay(index)
+                                    ? Colors.white
+                                    : ColorManager.sidBar,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -122,63 +72,62 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: trips[selectedDay]!.isEmpty
-                    ? Center(
-                  child: Text(
-                    '${StringsManager.no_trip}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                Expanded(
+                  child: model.getProgramDay().isEmpty
+                      ? Center(
+                    child: Text(
+                      '${StringsManager.no_trip}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                      : Padding(
+                    padding:  EdgeInsets.symmetric(vertical: 15.sp),
+                    child: ListView(
+                      children: List.generate(
+                          model.getProgramDay().length,
+                              (index) =>
+                              TripWidget(trip: model.getProgramDay()[index])),
                     ),
                   ),
-                )
-                    : Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 15.sp),
-                  child: ListView(
-                    children: List.generate(
-                        trips[selectedDay]!.length,
-                            (index) =>
-                            TripWidget(trip: trips[selectedDay]![index])),
-                  ),
                 ),
-              ),
-            ],
-          )
-              :Column(
-            children: [
-              Container(
-                height: 7.h,
-                color: ColorManager.sidBar,
-                child: Row(
-                  children: List.generate(
-                    weekDays.length,
-                        (index) => Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedDay = weekDays[index];
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                color: index == weekDays.length - 1
-                                    ? Colors.transparent
-                                    : ColorManager.sidBar,
+
+              ],
+            )
+                :Column(
+              children: [
+                Container(
+                  height: 7.h,
+                  color: ColorManager.sidBar,
+                  child: Row(
+                    children: List.generate(
+                      model.getWeekDays().length,
+                          (index) => Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            model.setSelectedDay(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                  color: index == model.getWeekDays().length - 1
+                                      ? Colors.transparent
+                                      : ColorManager.sidBar,
+                                ),
                               ),
                             ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            weekDays[index],
-                            style: TextStyle(
-                              color: selectedDay == weekDays[index]
-                                  ? Colors.white
-                                  : ColorManager.sidBar,
-                              fontWeight: FontWeight.bold,
+                            alignment: Alignment.center,
+                            child: Text(
+                              model.getDay(index),
+                              style: TextStyle(
+                                color: model.getSelectedDay() == model.getDay(index)
+                                    ? Colors.white
+                                    : ColorManager.sidBar,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -186,29 +135,29 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: trips[selectedDay]!.isEmpty
-                    ?  Center(
-                  child: Text(
-                    '${StringsManager.no_trip}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                Expanded(
+                  child: model.getProgramDay().isEmpty
+                      ?  Center(
+                    child: Text(
+                      '${StringsManager.no_trip}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                      : Padding(
+                    padding:  EdgeInsets.symmetric(vertical: 16.sp),
+                    child: ListView(
+                      children: List.generate(
+                          model.getProgramDay().length,
+                              (index) =>
+                              TripWidget(trip: model.getProgramDay()[index])),
                     ),
                   ),
-                )
-                    : Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 16.sp),
-                  child: ListView(
-                    children: List.generate(
-                        trips[selectedDay]!.length,
-                            (index) =>
-                            TripWidget(trip: trips[selectedDay]![index])),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -218,7 +167,7 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
 }
 
 class TripWidget extends StatelessWidget {
-  final Trip trip;
+  final DataProgram trip;
 
   const TripWidget({Key? key, required this.trip}) : super(key: key);
 
@@ -247,7 +196,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.go_time} ${trip.tripStartTime}',
+                  '${StringsManager.go_time} ${trip.start}',
                   style:  TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,
@@ -268,7 +217,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.return_time} ${trip.tripEndTime}',
+                  '${StringsManager.return_time} ${trip.end}',
                   style:  TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,
@@ -289,7 +238,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.postion} ${trip.tripPosition}',
+                  '${StringsManager.postion} ${trip.dataTransferPositions?.name}',
                   style: TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,
