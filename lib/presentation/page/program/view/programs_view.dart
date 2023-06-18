@@ -166,6 +166,7 @@ class _ProgramsViewState extends State<ProgramsView>
             ],
           )
               : SingleChildScrollView(
+<<<<<<< HEAD
                 child: Column(
                   children: [
                     Container(
@@ -198,6 +199,28 @@ class _ProgramsViewState extends State<ProgramsView>
                                         : ColorManager.sidBar,
                                     fontWeight: FontWeight.bold,
                                   ),
+=======
+            child: Column(
+              children: [
+                Container(
+                  height: 7.h,
+                  color: ColorManager.sidBar,
+                  child: Row(
+                    children: List.generate(
+                      model.getWeekDays().length,
+                          (index) => Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Provider.of<ProgramsViewModel>(context,listen: false).setSelectedDay(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                  color: index == model.getWeekDays().length - 1
+                                      ? Colors.transparent
+                                      : ColorManager.sidBar,
+>>>>>>> ea6fdb8c86f07470ee4c96e446b26b39d80313ea
                                 ),
                               ),
                             ),
@@ -353,7 +376,7 @@ class TripStudentWidget extends StatelessWidget {
             children: [
               Text(LocaleKeys.GoingConfirm.tr()),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b1,
+                value: trip.confirmAttendance1,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
@@ -371,7 +394,7 @@ class TripStudentWidget extends StatelessWidget {
                 LocaleKeys.Returningconfirm.tr(),
               ),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b2,
+                value: trip.confirmAttendance2,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
