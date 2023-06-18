@@ -61,8 +61,6 @@ dependencies:
   firebase_analytics: ^10.4.3
   flutter_local_notifications: ^14.1.1
   badges: ^3.1.1
-
-  #pusher_client: ^2.0.0
   laravel_echo:
     git:
       url: https://github.com/kakajansh/echo.git
@@ -71,8 +69,10 @@ dependencies:
     git:
       url: https://github.com/DumbDev168/pusher_client.git
       ref: master
-  web_socket_channel: ^2.4.0
+  #web_socket_channel: ^2.4.0
+  #pusher_channels_flutter: ^2.1.2
 
+  #pusher_client: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -41,6 +41,7 @@ class _LostItemsViewState extends State<LostItemsView> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return Scaffold(
