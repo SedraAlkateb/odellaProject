@@ -54,6 +54,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                       child: TextField(
                         controller: textEditingController,
                         maxLines: 10,
+                        //textDirection: TextDirection.,
                         decoration: InputDecoration(
                           hintText: StringsManager.enter_description_lostitem,
                           focusedBorder: OutlineInputBorder(
@@ -65,10 +66,13 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                                 width: 0.5.w, color: Colors.grey),
                           ),
                         ),
-                        onChanged: (value)=>{
-                          model.setDescription(value),
-                        textEditingController.text=value
-                        },
+                        onChanged: (value){
+                          if (value.isEmpty) {
+                            textEditingController.value = TextEditingValue.empty;
+                          }
+                      model.setDescription(value);
+                      textEditingController.text=value;
+                      },
                       ),
                     ),
                     SizedBox(height: 2.h),
