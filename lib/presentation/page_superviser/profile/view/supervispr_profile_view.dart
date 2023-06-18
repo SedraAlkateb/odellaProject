@@ -56,13 +56,25 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
           Scaffold(
             appBar: AppBar(
               actions: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Badge(
-                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+                Provider.of<Not>(context).getCount()==0
+                    ? IconButton(onPressed: () {
+                  Navigator.pushNamed(context,Routes.notification);
 
-                    child: Icon(Icons.notifications,size: AppSize.s30),
-                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                }, icon: const Icon(Icons.notifications))
+                    : Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: InkWell(
+                    child: Badge(
+                      badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                      child: Icon(Icons.notifications,size: AppSize.s30),
+                      badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                    ),
+                    onTap: ()
+                    {
+                      print("kkkkkk");
+                      Navigator.pushNamed(context,Routes.notification);
+                    },
                   ),
                 ),
               ],
