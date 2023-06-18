@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -50,7 +51,45 @@ final  _scaffoldKey = GlobalKey<FormState>();
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+        drawer:  NavBar(),
+        appBar: AppBar(
+          title: Text( StringsManager.home,style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Badge(
+                badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                child: Icon(Icons.notifications,size: AppSize.s30),
+                badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+              ),
+            )
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: IconButton(
+            //     onPressed: () {
+            //       SchedulerBinding.instance.addPostFrameCallback((_) {
+            //         //    Provider.of<LoginViewModel>(context,listen: false).isLog=false;
+            //         //      Navigator.pop(context,Routes.afterSplashRoute);
+            //       });
+            //     },
+            //     icon: Padding(
+            //       padding: const EdgeInsets.all(10),
+            //       child: Badge(
+            //         badgeContent: Text("//"),
+            //         //Text("${ Provider.of<Not>(buildContext).getCount()}",style: TextStyle(color: Colors.white),),
+            //
+            //         child: Icon(Icons.notifications,size: AppSize.s30),
+            //         badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+          ],
+
+        ),
+        key: _scaffoldKey,
       body:
      contentWidget()
     );
@@ -233,36 +272,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
 
   }
 
-AppBar getHomeAppBar(){
-  return  AppBar(
-    title: Text( StringsManager.home,style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
-    ),
-    actions: [
-      // Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: IconButton(
-      //     onPressed: () {
-      //       SchedulerBinding.instance.addPostFrameCallback((_) {
-      //         //    Provider.of<LoginViewModel>(context,listen: false).isLog=false;
-      //         //      Navigator.pop(context,Routes.afterSplashRoute);
-      //       });
-      //     },
-      //     icon: Padding(
-      //       padding: const EdgeInsets.all(10),
-      //       child: Badge(
-      //         badgeContent: Text("//"),
-      //         //Text("${ Provider.of<Not>(buildContext).getCount()}",style: TextStyle(color: Colors.white),),
-      //
-      //         child: Icon(Icons.notifications,size: AppSize.s30),
-      //         badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-      //       ),
-      //     ),
-      //   ),
-      // ),
-    ],
 
-  );
-}
 /*
 StreamBuilder<FlowState>(
           stream:

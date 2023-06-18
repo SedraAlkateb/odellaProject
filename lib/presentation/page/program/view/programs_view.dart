@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,8 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
@@ -41,7 +44,24 @@ class _ProgramsViewState extends State<ProgramsView>
       return Consumer<ProgramsViewModel>(
         builder: (context, model, child) =>
          Scaffold(
-          body: SafeArea(child:
+           appBar: AppBar(
+             actions: [
+               Padding(
+                 padding: const EdgeInsets.all(10),
+                 child: Badge(
+                   badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                   child: Icon(Icons.notifications,size: AppSize.s30),
+                   badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                 ),
+               )
+             ],
+             title: Text(StringsManager.program,
+                 style: getBoldStyle(
+                     color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+           ),
+           drawer:  NavBar(),
+           body: SafeArea(child:
           orientation == Orientation.portrait
               ? Column(
             children: [
@@ -359,13 +379,6 @@ class TripStudentWidget extends StatelessWidget {
 }
 
 
-  AppBar getAppBarProgram() {
-    return AppBar(
-      title: Text(StringsManager.program,
-          style: getBoldStyle(
-              color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-    );
-  }
 
 /*
  Container(

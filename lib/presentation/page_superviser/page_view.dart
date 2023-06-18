@@ -11,8 +11,6 @@ class SupervisorPagesView extends StatelessWidget  {
   Widget build(BuildContext context) {
     final mpp = Provider.of<PageSupervisorViewModel>(context);
     return Scaffold(
-      appBar: (mpp.items[mpp.selectedIndex].appBar) ?? AppBar(),
-      drawer:  DrawerSupervisorView(),
       bottomNavigationBar:ClipRRect(
       borderRadius: const BorderRadius.only(
       topRight: Radius.circular(AppSize.s28),

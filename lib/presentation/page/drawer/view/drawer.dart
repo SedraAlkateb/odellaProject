@@ -2,11 +2,13 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
 import 'package:untitled/presentation/page/page_view_model.dart';
@@ -109,7 +111,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.profile),
+              title: Text(LocaleKeys.profile.tr()),
               leading: Icon(Icons.person,color: ColorManager.sidBarIcon,),
 
               onTap: () {

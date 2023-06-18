@@ -1,10 +1,12 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/page/page_view_model.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
@@ -106,7 +108,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(StringsManager.profile),
+              title: Text(LocaleKeys.profile.tr()),
               leading: Icon(Icons.person,color: ColorManager.sidBarIcon,),
 
               onTap: () {

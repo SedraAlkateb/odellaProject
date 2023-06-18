@@ -1,10 +1,13 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
@@ -34,6 +37,24 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
        return  Consumer<DailyReservationsViewModel>(
          builder: (context, model, child) =>
           Scaffold(
+            drawer:  DrawerSupervisorView(),
+            appBar: AppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                ),
+              ],
+
+              title: Text(StringsManager.daily_recieve,
+                  style: getBoldStyle(
+                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+            ),
             body: SafeArea(
               child: orientation == Orientation.portrait
                   ? Column(
@@ -391,11 +412,4 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
     }
     );
   }
-}
-AppBar getAppBarDailyRecieve() {
-  return AppBar(
-    title: Text(StringsManager.daily_recieve,
-        style: getBoldStyle(
-            color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-  );
 }

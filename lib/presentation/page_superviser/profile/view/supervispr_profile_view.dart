@@ -2,11 +2,13 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -161,7 +163,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                        StringsManager.profile,
+                        LocaleKeys.profile.tr(),
                         style: Theme.of(context).textTheme.labelLarge
                     ),
                     const SizedBox(
