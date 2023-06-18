@@ -45,6 +45,7 @@ class _AppServiceClient implements AppServiceClient {
 
   @override
   Future<AuthenticationResponse> login(
+    fcmToken,
     email,
     password,
   ) async {
@@ -52,6 +53,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {
+      'fcm_token': fcmToken,
       'email': email,
       'password': password,
     };

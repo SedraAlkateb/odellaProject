@@ -5,10 +5,10 @@ import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/base_usecase.dart';
 
-class LogoutUseCase extends BaseUseCase<Null,Notification> {
+class NotificationUseCase extends BaseUseCase<Null,Notification> {
   Repository _repository;
 
-  LogoutUseCase(this._repository);
+  NotificationUseCase(this._repository);
 
   @override
   Future<Either<Failure, Notification>> execute(Null input)async {
