@@ -342,8 +342,8 @@ class _ProfileViewState extends State<ProfileView> {
                           height: 8.h,
                         ),
                         SizedBox(
-                          height: 15.h,
-                           width: 55.w,
+                          height: 14.h,
+                           width: 70.w,
                           child: DropdownButtonFormField(
                               icon:
                               const Icon(Icons.keyboard_arrow_down),
@@ -362,33 +362,8 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
 
                         SizedBox(
-                          height: 15.h,
-                          width: 55.w,
-                            child: DropdownButtonFormField(
-                                icon:
-                                const Icon(Icons.keyboard_arrow_down),
-                                hint: Text(model.getProfileUni()),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return StringsManager.universities;
-                                  }
-                                  return null;
-                                },
-                                items: model
-                                    .getUniversities()
-                                    .map((e) => DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
-                                ))
-                                    .toList(),
-                                onChanged: (val) {
-                                  model.setUniversityId(val!);
-                                }),
-                          ),
-
-                        SizedBox(
-                          height: 15.h,
-                          width: 55.w,
+                          height: 14.h,
+                          width: 70.w,
                           child: DropdownButtonFormField(
                               icon:
                               const Icon(Icons.keyboard_arrow_down),
@@ -402,6 +377,30 @@ class _ProfileViewState extends State<ProfileView> {
                                   .toList(),
                               onChanged: (val) {
                                 model.setAreaId(val!);
+                              }),
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                          width: 70.w,
+                          child: DropdownButtonFormField(
+                              icon:
+                              const Icon(Icons.keyboard_arrow_down),
+                              hint: Text(model.getProfileUni()),
+                              validator: (value) {
+                                if (value == null) {
+                                  return StringsManager.universities;
+                                }
+                                return null;
+                              },
+                              items: model
+                                  .getUniversities()
+                                  .map((e) => DropdownMenuItem(
+                                value: e.id,
+                                child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
+                              ))
+                                  .toList(),
+                              onChanged: (val) {
+                                model.setUniversityId(val!);
                               }),
                         ),
 
@@ -724,7 +723,7 @@ class _ProfileViewState extends State<ProfileView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 80.w,
+                              width: 120.w,
                               height: 10.h,
                               child: DropdownButtonFormField(
                                   icon:
@@ -750,7 +749,7 @@ class _ProfileViewState extends State<ProfileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                               SizedBox(
-                              width: 80.w,
+                              width: 120.w,
                               height: 10.h,
                                 child: DropdownButtonFormField(
                                     icon:
@@ -774,7 +773,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    width: 80.w,
+                                    width: 120.w,
                                     height: 10.h,
                                     child: DropdownButtonFormField(
                                         icon:

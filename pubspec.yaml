@@ -53,7 +53,6 @@ dependencies:
   qr_flutter: ^4.0.0
   geocoding: ^2.1.0
   rxdart: ^0.26.0
-
   flutter_barcode_scanner: ^2.0.0
   flutter_rating_bar: ^4.0.1
   expandable_text: ^2.3.0

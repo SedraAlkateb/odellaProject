@@ -151,40 +151,42 @@ class _LostItemsViewState extends State<LostItemsView> {
                                                 Padding(
                                                   padding: EdgeInsets.all(2.sp),
                                                   child: Container(
-                                                    width: 14.w,
-                                                    height: 10.h,
+                                                    width: 15.w,
+                                                    height: 15.w,
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: FadeInImage
-                                                        .assetNetwork(
-                                                      placeholder: ImageAssets
-                                                          .gray, // الصورة المؤقتة
-                                                      image: ImageDownloader.getUrl(
-                                                          Provider.of<LostItemsViewModel>(
-                                                                      context)
-                                                                  .getListFound()?[
-                                                                      index]
-                                                                  .user?.image ??
-                                                              ""), // الصورة الفعلية
-                                                      fit: BoxFit.cover,
-                                                      imageErrorBuilder:
-                                                          (BuildContext context,
-                                                              Object exception,
-                                                              StackTrace?
-                                                                  stackTrace) {
-                                                        return Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .grey, // الخلفية البديلة
-                                                          ),
-                                                        );
-                                                      },
-                                                      fadeInDuration: Duration(
-                                                          milliseconds: 500),
-                                                      fadeOutDuration: Duration(
-                                                          milliseconds: 500),
+                                                    child: ClipOval(
+                                                      child: FadeInImage
+                                                          .assetNetwork(
+                                                        placeholder: ImageAssets
+                                                            .gray, // الصورة المؤقتة
+                                                        image: ImageDownloader.getUrl(
+                                                            Provider.of<LostItemsViewModel>(
+                                                                        context)
+                                                                    .getListFound()?[
+                                                                        index]
+                                                                    .user?.image ??
+                                                                ""), // الصورة الفعلية
+                                                        fit: BoxFit.cover,
+                                                        imageErrorBuilder:
+                                                            (BuildContext context,
+                                                                Object exception,
+                                                                StackTrace?
+                                                                    stackTrace) {
+                                                          return Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .grey, // الخلفية البديلة
+                                                            ),
+                                                          );
+                                                        },
+                                                        fadeInDuration: Duration(
+                                                            milliseconds: 500),
+                                                        fadeOutDuration: Duration(
+                                                            milliseconds: 500),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -255,26 +257,30 @@ class _LostItemsViewState extends State<LostItemsView> {
                                               height: 4.h,
                                             ),
                                             Center(
-                                              child: FadeInImage.assetNetwork(
-                                                placeholder:
-                                                ImageAssets.gray, // الصورة المؤقتة
-                                                image: ImageDownloader.getUrl(
-                                                    Provider.of<LostItemsViewModel>(context)
-                                                        .getListFound()?[index]
-                                                        .image ??
-                                                        ""), // الصورة الفعلية
-                                                fit: BoxFit.cover,
-                                                imageErrorBuilder: (BuildContext context,
-                                                    Object exception, StackTrace? stackTrace) {
-                                                  return Container(
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey, // الخلفية البديلة
-                                                    ),
-                                                  );
-                                                },
-                                                fadeInDuration: Duration(milliseconds: 500),
-                                                fadeOutDuration: Duration(milliseconds: 500),
+                                              child: Container(
+                                                width: 80.w,
+                                                height: 80.w,
+                                                child: FadeInImage.assetNetwork(
+                                                  placeholder:
+                                                  ImageAssets.gray, // الصورة المؤقتة
+                                                  image: ImageDownloader.getUrl(
+                                                      Provider.of<LostItemsViewModel>(context)
+                                                          .getListFound()?[index]
+                                                          .image ??
+                                                          ""), // الصورة الفعلية
+                                                  fit: BoxFit.cover,
+                                                  imageErrorBuilder: (BuildContext context,
+                                                      Object exception, StackTrace? stackTrace) {
+                                                    return Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey, // الخلفية البديلة
+                                                      ),
+                                                    );
+                                                  },
+                                                  fadeInDuration: Duration(milliseconds: 500),
+                                                  fadeOutDuration: Duration(milliseconds: 500),
+                                                ),
                                               ),
                                             ),
                                             SizedBox(
@@ -294,8 +300,8 @@ class _LostItemsViewState extends State<LostItemsView> {
                                                 Padding(
                                                   padding: EdgeInsets.all(2.sp),
                                                   child: Container(
-                                                    width: 14.w,
-                                                    height: 10.h,
+                                                    // width: 14.w,
+                                                    // height: 10.h,
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
@@ -507,54 +513,45 @@ class _LostItemsViewState extends State<LostItemsView> {
                                       Row(
                                         children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 2.w),
+                                            padding: EdgeInsets.all(2.sp),
                                             child: Container(
-                                              child:
-                                                  Provider.of<ProfileViewModel>(
-                                                                  context)
-                                                              .getIm() !=
-                                                          null
-                                                      //  profile1.getDownload()
-                                                      ? InkWell(
-                                                          onTap: () async {
-                                                            //await profile.updateImageFromGallory();
-                                                            //await profile.updateImage();
-                                                          },
-                                                          child: Container(
-                                                            width: 25.w,
-                                                            height: 8.h,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    image: DecorationImage(
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                        image: FileImage(Provider.of<ProfileViewModel>(context).getIm() ??
-                                                                            File("")))),
-                                                          ),
-                                                        )
-                                                      : InkWell(
-                                                          onTap: () async {},
-                                                          child: Container(
-                                                              width: 25.w,
-                                                              height: 8.h,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .grey[300],
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                              ),
-                                                              child: const Icon(
-                                                                  Icons.add,
-                                                                  size: 50,
-                                                                  color: Color(
-                                                                      0xFFFFFFFF))),
-                                                        )
-                                              //:profile1.getLocalPath()!=null?
-                                              ,
+                                              width: 20.w,
+                                              height: 20.w,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: ClipOval(
+                                                child: FadeInImage
+                                                    .assetNetwork(
+                                                  placeholder: ImageAssets
+                                                      .gray, // الصورة المؤقتة
+                                                  image: ImageDownloader.getUrl(
+                                                      Provider.of<LostItemsViewModel>(
+                                                          context)
+                                                          .getListFound()?[
+                                                        index]
+                                                          .user?.image ??
+                                                          ""), // الصورة الفعلية
+                                                  fit: BoxFit.cover,
+                                                  imageErrorBuilder:
+                                                      (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace?
+                                                      stackTrace) {
+                                                    return Container(
+                                                      decoration:
+                                                      BoxDecoration(
+                                                        color: Colors
+                                                            .grey, // الخلفية البديلة
+                                                      ),
+                                                    );
+                                                  },
+                                                  fadeInDuration: Duration(
+                                                      milliseconds: 500),
+                                                  fadeOutDuration: Duration(
+                                                      milliseconds: 500),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
