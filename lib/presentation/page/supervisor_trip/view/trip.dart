@@ -1,81 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:pusher_client/pusher_client.dart';
-import 'package:untitled/data/network/pusher.dart';
-import 'package:web_socket_channel/io.dart';
-import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
+import 'package:untitled/presentation/resources/strings_manager.dart';
 
-void main() => runApp(MyApp());
+class TripSupervisor extends StatefulWidget {
+  const TripSupervisor({super.key});
 
-class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _TripSupervisorState createState() => _TripSupervisorState();
 }
 
-class _MyAppState extends State<MyApp> {
-  late  PusherClient pusherClient;
-  late Channel channel;
+class _TripSupervisorState extends State<TripSupervisor> {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  late GoogleMapController _controller;
- late
- Marker _marker;
- late LatLng _center;
   double _zoom = 14.0;
-
+ late GoogleMapController _mapController;
+  void onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+  }
   @override
   void initState() {
     super.initState();
-    PusherOptions options = PusherOptions(
-      cluster:  PusherConfigration.cluster,
-    );
-    pusherClient = PusherClient(
-      PusherConfigration.key,
-      options,
-      autoConnect:true,
-      enableLogging: true,
-
-    );
-    pusherClient.connect();
-    pusherClient.onConnectionStateChange((state) {
-      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
-    });
-    pusherClient.onConnectionError((error) {
-      print("error: ${error?.message}");
-    });
-    channel = pusherClient.subscribe("tracking.1");
-    channel.trigger("tracking", {"longitude":"3333","latitude":"333333333"});
-// Bind to listen for events called "order-status-updated" sent to "private-orders" channel
-
+    Provider.of<SupervisorTripViewModel>(context, listen: false).start();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('Live Location Tracking'),
-        ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(40.712776, -74.005974),
-            zoom: _zoom,
+    return Consumer<SupervisorTripViewModel>(
+      builder: (context, model, child) =>
+       Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            title: Text('Live Location Tracking'),
           ),
-       ///   markers: Set.of((_marker != null) ? [_marker] : []),
+          body:
+          /*
+          (model.getTripId()==0) ?
+             Center(
+              child: Text(StringsManager.no_trip),
+             ) :
+          */
+               GoogleMap(
+            onMapCreated: onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: model.getLatLng(),
+              zoom: _zoom,
+            ),
+            markers: Set.of((model.getMarker() != null) ? [model.getMarker()] : []),
+          ),
         ),
-      ),
     );
+
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    _controller = controller;
-    setState(() {
-      _center = LatLng(40.712776, -74.005974);
-      _zoom = 14.0;
-    });
-  }
 
   @override
   void dispose() {

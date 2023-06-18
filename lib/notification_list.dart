@@ -4,7 +4,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 
 import 'notification_details.dart';
@@ -23,6 +25,7 @@ class _MessageList extends State<MessageList> {
   @override
   void initState() {
     super.initState();
+    Provider.of<Not>(context,listen: false).start();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       setState(() {
         _messages = [..._messages, message];
@@ -34,9 +37,6 @@ class _MessageList extends State<MessageList> {
 
   @override
   Widget build(BuildContext context) {
-    if (_messages.isEmpty) {
-      return const Text('No messages received');
-    }
 
     return Column(
       children: [
@@ -68,11 +68,10 @@ class _MessageList extends State<MessageList> {
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
                 trailing: const Icon(Icons.notifications_active,color: Colors.red,),
                 onTap: () {
-                  setState(() {
-                    if( Provider.of<Not>(context,listen: false).getCount()==0)
-                      return;
-                    Provider.of<Not>(context,listen: false).updateDec();
-                  });
+
+                    if( Provider.of<Not>(context).getCount()!=0) {
+                      Provider.of<Not>(context, listen: false).updateDec();
+                    }
 
                   Navigator.pushNamed(context, '/message',
                     arguments: MessageArguments(message, false),);
@@ -80,6 +79,31 @@ class _MessageList extends State<MessageList> {
                 }
               );
             }),
+        Consumer<Not>(
+          builder: (context, model, child) =>
+           ListView.separated(
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const SizedBox(
+                width: double.infinity,
+                height: AppSize.s20,
+                // color: Color,
+              ),
+              itemCount: model.getNotification().length,
+              itemBuilder: (context, index) {
+                NotificationModel message = model.getNotification()[index];
+                return ListTile(
+                    title: Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
+                    subtitle:
+                    Text(message.body),
+                    trailing: const Icon(Icons.notifications_active,color: Colors.red,),
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.messageDetail1);
+
+                    }
+                );
+              }),
+        ),
+
       ],
     );
 

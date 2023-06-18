@@ -1874,3 +1874,28 @@ class NotificationResponse  extends BaseResponse {
       _$NotificationResponseToJson(this);
 
 }
+@JsonSerializable()
+class UpdatePositionResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  dynamic data;
+  UpdatePositionResponse(this.data);
+  // from json
+  factory UpdatePositionResponse.fromJson(Map<String,dynamic>json)=>
+      _$UpdatePositionResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$UpdatePositionResponseToJson(this);
+
+}
+@JsonSerializable()
+class Position   {
+  double lat;
+  double lng;
+  Position(this.lat, this.lng); // from json
+  factory Position.fromJson(Map<String,dynamic>json)=>
+      _$PositionFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$PositionToJson(this);
+
+}

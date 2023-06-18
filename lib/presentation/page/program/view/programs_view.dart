@@ -166,6 +166,7 @@ class _ProgramsViewState extends State<ProgramsView>
             ],
           )
               : SingleChildScrollView(
+
                 child: Column(
                   children: [
                     Container(
@@ -198,6 +199,7 @@ class _ProgramsViewState extends State<ProgramsView>
                                         : ColorManager.sidBar,
                                     fontWeight: FontWeight.bold,
                                   ),
+
                                 ),
                               ),
                             ),
@@ -353,7 +355,7 @@ class TripStudentWidget extends StatelessWidget {
             children: [
               Text(LocaleKeys.GoingConfirm.tr()),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b1,
+                value: trip.confirmAttendance1,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
@@ -371,7 +373,7 @@ class TripStudentWidget extends StatelessWidget {
                 LocaleKeys.Returningconfirm.tr(),
               ),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b2,
+                value: trip.confirmAttendance2,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,

@@ -18,9 +18,10 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   Map<int, List<DataProgram> > program2={};
   String selectedDay = 'Sat';
   int indexDay=0;
-  List<String> weekDays = ['${LocaleKeys.Mon.tr()}', '${LocaleKeys.Tus.tr()}', '${LocaleKeys.Wed.tr()}', '${LocaleKeys.Thu.tr()}','${LocaleKeys.fri.tr()}','${LocaleKeys.Sat.tr()}', '${LocaleKeys.Sun.tr()}'];
-  bool? b1=null;
-  bool? b2=null;
+
+  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}'];
+  bool? b1=false;
+  bool? b2=false;
   double _rating=0;
   List<String>getWeekDays(){
     return weekDays;
