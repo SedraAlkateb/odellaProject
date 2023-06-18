@@ -61,7 +61,9 @@ final  _scaffoldKey = GlobalKey<FormState>();
           actions: [
 
               Provider.of<Not>(context,listen: true).getCount()==0
-                  ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                  ? IconButton(onPressed: () {
+                Navigator.pushNamed(context,Routes.notification);
+                    }, icon: const Icon(Icons.notifications))
                   : Padding(
                 padding: const EdgeInsets.all(20),
                 child: InkWell(
@@ -74,7 +76,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
                   onTap: ()
                   {
                     print("kkkkkk");
-                  Navigator.pushNamed(context, Routes.message);
+                    Navigator.pushNamed(context,Routes.notification);
                   },
 
                 ),

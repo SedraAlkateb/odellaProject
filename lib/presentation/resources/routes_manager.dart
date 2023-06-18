@@ -79,9 +79,6 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
-      case Routes.message:
-        initNotificationModule();
-        return MaterialPageRoute(builder: (_) => const Application());
       case Routes.messageDetail1:
         return MaterialPageRoute(builder: (_) => const MessageDetailView());
       case Routes.informationTrip:
@@ -124,8 +121,8 @@ class RouteGenerator {
       case Routes.baseHomeScreen:
         initBaseHomeModule();
         return MaterialPageRoute(builder: (_) => const BaseHomeView());
-      // case Routes.settingRoute:
-      //   return MaterialPageRoute(builder: (_) => const SettingsView());
+       case Routes.settingRoute:
+         return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.lostItemsRoute:
         return MaterialPageRoute(builder: (_) => const LostItemsView());
       case Routes.complaintsRoute:
@@ -135,6 +132,7 @@ class RouteGenerator {
       case Routes.qrCodeViewRoute:
         return MaterialPageRoute(builder: (_) =>  QrCodeView());
       case Routes.notification:
+        initNotificationModule();
         return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
       case Routes.notification_message:
         return MaterialPageRoute(builder: (_) =>  MessageList());

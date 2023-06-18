@@ -51,7 +51,11 @@ class _ProgramsViewState extends State<ProgramsView>
               appBar: AppBar(
                 actions: [
                   Provider.of<Not>(context).getCount()==0
-                      ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                      ? IconButton(onPressed: ()
+                  {
+                    Navigator.pushNamed(context,Routes.notification);
+                    },
+                      icon: const Icon(Icons.notifications))
                       : Padding(
                     padding: const EdgeInsets.all(20),
                     child: InkWell(
