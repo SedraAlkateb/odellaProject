@@ -1,13 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:untitled/domain/models/models.dart';
+import 'package:location/location.dart';
+import 'package:pusher_client/pusher_client.dart';
+import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:untitled/presentation/map_position/view_model/location_service.dart';
+import 'package:untitled/domain/models/models.dart';
+import 'package:location/location.dart' as loc;
+import 'package:untitled/domain/usecase/supervisor_update_position_usecase.dart';
+
 class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
 
   HomeSupervisorUseCase _homeSupervisorUseCase;
-  HomeSuperVisorViewModel(this._homeSupervisorUseCase);
+  SupervisorUpdatePositionUseCase _supervisorUpdatePositionUseCase;
+  HomeSuperVisorViewModel(this._homeSupervisorUseCase,this._supervisorUpdatePositionUseCase);
   List<User>search =[];
   bool _succ=false;
  bool getSucc(){
@@ -16,11 +24,15 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   setSucc(bool s){
    _succ=s;
   }
+
   @override
   void start() async{
 //   await setTime();
     homeSupervisor();
+
   }
+
+
   String _time="";
   String getTime(){
     return _time;
@@ -78,7 +90,58 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
           print(failure.massage);
         },
             (data)  async{
-          setHomeSuperVisor(data.dataHomeSupervisor!);
+              if(data!=null){
+                await  setHomeSuperVisor(data.dataHomeSupervisor!);
+                _setupLocationStream(data.dataHomeSupervisor!.id);
+              }
         });
   }
+  LocationData? _locationData;
+
+  String? _error;
+  int tripId=0;
+setLocation(LocationData? newLocationData, String? error){
+  _locationData = newLocationData;
+  _error = error;
+  notifyListeners();
+}
+LocationData? getLocationData(){
+  return _locationData;
+}
+String? getError(){
+  return _error;
+}
+  Future<void> _setupLocationStream(int tripId) async {
+    final location = loc.Location() ;
+    _locationData = await LocationService().getLocation();
+    try {
+      // await LocationService().getPermission();
+      location.onLocationChanged.listen((LocationData newLocationData) {
+        if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
+          supervisorPosition(
+              tripId, newLocationData.longitude!, newLocationData.latitude!);
+        }
+        setLocation(newLocationData, null);
+      });
+    }on Exception catch (e) {
+      print(e);
+      print("_scaffoldKey.currentState?.showSnackBar("
+          " SnackBar(content: Text('Error refreshing location!')));");
+      setLocation(null, e.toString());
+    }
+  }
+
+  supervisorPosition(int tripId,double lng,double lat) async{
+    ( await _supervisorUpdatePositionUseCase.execute(UpdatePositionSupervisorUseCaseInput(
+        tripId, lng, lat
+    ))).fold(
+            (failure)  {
+          setSucc(false);
+          print(failure.massage);
+        },
+            (data)  async{
+         print(data);
+        });
+  }
+
 }

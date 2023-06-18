@@ -1604,3 +1604,29 @@ Map<String, dynamic> _$NotificationResponseToJson(
       'message': instance.massage,
       'data': instance.data,
     };
+
+UpdatePositionResponse _$UpdatePositionResponseFromJson(
+        Map<String, dynamic> json) =>
+    UpdatePositionResponse(
+      json['data'],
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$UpdatePositionResponseToJson(
+        UpdatePositionResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.data,
+    };
+
+Position _$PositionFromJson(Map<String, dynamic> json) => Position(
+      (json['lat'] as num).toDouble(),
+      (json['lng'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$PositionToJson(Position instance) => <String, dynamic>{
+      'lat': instance.lat,
+      'lng': instance.lng,
+    };

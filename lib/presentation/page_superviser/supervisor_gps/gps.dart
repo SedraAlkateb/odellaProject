@@ -18,19 +18,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    PusherClient pusherClient2;
+    Channel channel2;
     PusherOptions options = PusherOptions(
       // host: "yaamen1.com",
       //   wsPort: 6001,
       //wssPort: 6001,
       // encrypted: false,
       cluster:  PusherConfigration.cluster,
-    );
-    pusherClient2 = PusherClient(
-      PusherConfigration.key,
-      options,
-      autoConnect:true,
-      enableLogging: true,
-
     );
     pusherClient2 = PusherClient(
       PusherConfigration.key,
@@ -50,18 +45,19 @@ class _MyAppState extends State<MyApp> {
       print("error: ${error?.message} ${error?.code}${error?.exception}");
     });
     channel2 = pusherClient2.subscribe("tracking.1");
-
     //   channel = pusherClient.subscribe("name_channel");
-    if (channel2 != null) {
-      channel2.trigger("tracking.1", {"longitude":"3333","latitude":"333333333"});
-    }
+
 
 // Bind to listen for events called "order-status-updated" sent to "private-orders" channel
 
 
 // Unsubscribe from channel
     // pusherClient.unsubscribe("tracking.1");
-
+/*
+   if (channel2 != null) {
+      channel2.trigger("tracking.1", {"longitude":"3333","latitude":"333333333"});
+    }
+ */
 // Disconnect from pusher service
     //pusherClient.disconnect();
     super.initState();

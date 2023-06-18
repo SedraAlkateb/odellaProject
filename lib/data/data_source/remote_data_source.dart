@@ -40,6 +40,7 @@ abstract class RemoteDataSource{
   Future<AcceptAndDenyResponse> deny(int id);
   Future<AuthenticationResponse> refresh();
   Future<NotificationResponse> notification();
+  Future<UpdatePositionResponse> supervisorPositionUpdate(PositionMap PositionMap);
 
 }
 
@@ -334,6 +335,11 @@ street: supervisorRequest.street
   @override
   Future<NotificationResponse> notification() async{
     return await _appServiceClient.notification();
+  }
+
+  @override
+  Future<UpdatePositionResponse> supervisorPositionUpdate(PositionMap PositionMap) async{
+    return await _appServiceClient.supervisorPositionUpdate(PositionMap.tripId, PositionMap.lng, PositionMap.lat);
   }
 
 }

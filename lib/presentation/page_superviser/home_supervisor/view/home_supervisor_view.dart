@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pusher_client/pusher_client.dart';
 import 'package:sizer/sizer.dart';
+import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
@@ -32,7 +34,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
   @override
   void initState() {
     Provider.of<HomeSuperVisorViewModel>(context, listen: false).start();
-    super.initState();
+       super.initState();
   }
 
   @override
@@ -120,6 +122,17 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   child:  Text('${StringsManager.trip_information}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
                 ),
                 SizedBox(height: 4.h),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    model.getLocationData() != null
+                        ? Text(
+                        'Lat: ${model.getLocationData()?.latitude}, Long: ${model.getLocationData()?.longitude}')
+                        : model.getError() != null
+                        ? Text('Error: ${model.getError()}')
+                        : CircularProgressIndicator(),
+                  ],
+                ),
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (_, index) => Container(

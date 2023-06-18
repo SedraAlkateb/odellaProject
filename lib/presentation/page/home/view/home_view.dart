@@ -58,11 +58,16 @@ final  _scaffoldKey = GlobalKey<FormState>();
           actions: [
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Badge(
-                badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, Routes.message);
+                },
+                child: Badge(
+                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                child: Icon(Icons.notifications,size: AppSize.s30),
-                badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  child: Icon(Icons.notifications,size: AppSize.s30),
+                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                ),
               ),
             )
             // Padding(

@@ -1,6 +1,13 @@
 
 import 'dart:io';
 
+class PositionMap{
+   int tripId;
+  double lng;
+ double lat;
+
+   PositionMap(this.tripId, this.lng, this.lat);
+}
 class LoginRequest{
   String email;
   String password;

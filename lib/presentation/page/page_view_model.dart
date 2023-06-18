@@ -9,6 +9,7 @@ import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart'
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page/profile/view/profile_view.dart';
 import 'package:untitled/presentation/page/program/view/programs_view.dart';
+import 'package:untitled/presentation/page/supervisor_trip/view/trip.dart';
 import 'package:untitled/presentation/resources/conestants_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 
@@ -19,6 +20,7 @@ class NavbarProvider  with ChangeNotifier {
     NavbarDTO(label: StringsManager.home,widget: HomeView(),iconData: Icons.home),
     NavbarDTO(label: LocaleKeys.profile.tr(),widget: ProfileView(),iconData: Icons.account_box_rounded),
     NavbarDTO(label: StringsManager.programmer,widget: ProgramsView(),iconData: Icons.chrome_reader_mode),
+    NavbarDTO(label: StringsManager.programmer,widget: TripSupervisor(),iconData: Icons.chrome_reader_mode),
   ];
   int _selectedIndex = AppConstants.home;
   int get selectedIndex => _selectedIndex;

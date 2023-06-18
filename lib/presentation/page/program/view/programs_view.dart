@@ -164,7 +164,7 @@ class _ProgramsViewState extends State<ProgramsView>
                           (index) => Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            model.setSelectedDay(index);
+                            Provider.of<ProgramsViewModel>(context,listen: false).setSelectedDay(index);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -337,7 +337,7 @@ class TripStudentWidget extends StatelessWidget {
             children: [
               Text(StringsManager.go_confirm),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b1,
+                value: trip.confirmAttendance1,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
@@ -355,7 +355,7 @@ class TripStudentWidget extends StatelessWidget {
                 StringsManager.return_confirm,
               ),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b2,
+                value: trip.confirmAttendance2,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,

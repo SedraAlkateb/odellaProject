@@ -3,17 +3,87 @@ import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/map_position/view_model/location_service.dart';
-import 'package:untitled/presentation/resources/routes_manager.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:pusher_client/pusher_client.dart';
 
-void main() => runApp(MyApp());
-class MyApp extends StatefulWidget {
+
+class Location extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _LocationState createState() => _LocationState();
 }
-class _MyAppState extends State<MyApp> {
+class _LocationState extends State<Location> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  LocationData? _locationData;
+
+  String? _error;
+  int tripId=0;
+  @override
+  void initState() {
+    super.initState();
+    _setupLocationStream();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text('Live Location Tracking'),
+        ),
+        body: Center(
+          child:
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _locationData != null
+                  ? Text(
+                  'Lat: ${_locationData?.latitude}, Long: ${_locationData?.longitude}')
+                  : _error != null
+                  ? Text('Error: $_error')
+                  : CircularProgressIndicator(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Future<void> _setupLocationStream() async {
+    final location = Location();
+    _locationData = await LocationService().getLocation();
+    try {
+  // await LocationService().getPermission();
+     // location.onLocationChanged.listen((LocationData newLocationData) {
+      //  setState(() {
+       //   _locationData = newLocationData;
+        //  _error = null;
+        //});
+      //});
+    }on Exception catch (e) {
+      print(e);
+      print("_scaffoldKey.currentState?.showSnackBar("
+          " SnackBar(content: Text('Error refreshing location!')));");
+
+      setState(() {
+        _locationData = null;
+        _error = e.toString();
+      });
+    }
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+
+/*
+class SSS extends StatefulWidget {
+  @override
+  _SSSState createState() => _SSSState();
+}
+class _SSSState extends State<SSS> {
 
 
   @override
@@ -81,6 +151,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+ */
 
 /*
 void main() => runApp(MyApp());
@@ -183,6 +254,8 @@ class _MyAppState extends State<MyApp>  {
   }
 
 }*/
+
+
 /*
 class MyApp extends StatefulWidget {
   @override

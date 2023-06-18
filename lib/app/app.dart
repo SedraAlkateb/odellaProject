@@ -17,6 +17,7 @@ import 'package:untitled/presentation/page/page_view_model.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/page/position/view_model/polyline_view_model.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
+import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
@@ -79,10 +80,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<AddLostItemViewModel>()),
         ChangeNotifierProvider(create: (_)=>PolyLineMapViewModel()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationsViewModel>()),
-        ChangeNotifierProvider(create: (_)=>Not()),
-
-
-
+        ChangeNotifierProvider(create: (_)=>instance<Not>()),
+        ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
 
       ],
       child: MaterialApp(
