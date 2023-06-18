@@ -1,6 +1,7 @@
 import 'dart:io';
 //import 'package:cached_network_image/cached_network_image.dart';
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/routes_manager.dart';
 import '../../page_view_model.dart';
 import '../../profile/view_model/profile_view_model.dart';
@@ -51,18 +53,27 @@ class _LostItemsViewState extends State<LostItemsView> {
         drawer:  NavBar(),
         appBar: AppBar(
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Badge(
-                badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+            Provider.of<Not>(context).getCount()==0
+                ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                : Padding(
+              padding: const EdgeInsets.all(20),
+              child: InkWell(
+                child: Badge(
+                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                child: Icon(Icons.notifications,size: AppSize.s30),
-                badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  child: Icon(Icons.notifications,size: AppSize.s30),
+                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                ),
+                onTap: ()
+                {
+                  print("kkkkkk");
+                  Navigator.pushNamed(context,Routes.notification);
+                },
               ),
             ),
           ],
 
-          title: Text(StringsManager.lostItems,
+          title: Text(LocaleKeys.lostItems.tr(),
               style: getBoldStyle(
                   color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
         ),
@@ -110,7 +121,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                           ),
                           hintStyle: getRegularStyle(
                               color: ColorManager.icon, fontSize: FontSize.s16),
-                          hintText: StringsManager.searchlost,
+                          hintText: LocaleKeys.Searchlost.tr(),
                           //       hintStyle:Theme.of(context).textTheme.bodySmall,
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 8.sp),
@@ -150,6 +161,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                   .search
                                   .length,
                               itemBuilder: (context, index) => Container(
+
                                   decoration: BoxDecoration(
                                     border:
                                         Border.all(color: Colors.grey.shade300),
@@ -247,12 +259,12 @@ class _LostItemsViewState extends State<LostItemsView> {
                                               height: 3.h,
                                             ),
                                             ExpandableText(
-                                              '${StringsManager.description} :'
+                                              '${LocaleKeys.description.tr()} :'
                                                 '${Provider.of<LostItemsViewModel>(context).getSearch()[index].description }' ,
                                               expandText:
-                                                  '${StringsManager.show_more}',
+                                                  '${LocaleKeys.showmore.tr()}',
                                               collapseText:
-                                                  '${StringsManager.show_less}',
+                                                  '${LocaleKeys.showless.tr()}',
                                               maxLines: 1,
                                               linkColor: ColorManager.button,
                                             ),
@@ -262,7 +274,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  '${StringsManager.status}'
+                                                  '${LocaleKeys.status.tr()}'
                                                   ': ',
                                                   style: TextStyle(
                                                     color:
@@ -398,12 +410,12 @@ class _LostItemsViewState extends State<LostItemsView> {
                                               height: 3.h,
                                             ),
                                             ExpandableText(
-                                              '${StringsManager.description} :'
+                                              '${LocaleKeys.description.tr()} :'
                                                   '${Provider.of<LostItemsViewModel>(context).getSearch()[index].description }' ,
                                               expandText:
-                                              '${StringsManager.show_more}',
+                                              '${LocaleKeys.showmore.tr()}',
                                               collapseText:
-                                              '${StringsManager.show_less}',
+                                              '${LocaleKeys.showless.tr()}',
                                               maxLines: 1,
                                               linkColor: ColorManager.button,
                                             ),
@@ -413,7 +425,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  '${StringsManager.status}'
+                                                  '${LocaleKeys.status.tr()}'
                                                   ': ',
                                                   style: TextStyle(
                                                     color:
@@ -429,9 +441,9 @@ class _LostItemsViewState extends State<LostItemsView> {
                                             SizedBox(
                                               height: 4.h,
                                             ),
-                                            SizedBox(
-                                              height: 3.h,
-                                            ),
+                                            // SizedBox(
+                                            //   height: 3.h,
+                                            // ),
                                           ],
                                         )
                               ),
@@ -472,7 +484,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                             hintStyle: getRegularStyle(
                                 color: ColorManager.icon,
                                 fontSize: FontSize.s16),
-                            hintText: StringsManager.searchlost,
+                            hintText: LocaleKeys.Searchlost.tr(),
                             //       hintStyle:Theme.of(context).textTheme.bodySmall,
                             prefixIcon: Padding(
                               padding: EdgeInsets.only(left: 8.sp),
@@ -537,8 +549,8 @@ class _LostItemsViewState extends State<LostItemsView> {
                                           Padding(
                                             padding: EdgeInsets.all(2.sp),
                                             child: Container(
-                                              width: 20.w,
-                                              height: 20.w,
+                                              width: 15.w,
+                                              height: 15.w,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                               ),
@@ -609,12 +621,12 @@ class _LostItemsViewState extends State<LostItemsView> {
                                         height: 2.h,
                                       ),
                                       ExpandableText(
-                                        '${StringsManager.description} :'
+                                        '${LocaleKeys.description.tr()} :'
                                             '${Provider.of<LostItemsViewModel>(context).getSearch()[index].description }' ,
                                         expandText:
-                                        '${StringsManager.show_more}',
+                                        '${LocaleKeys.showmore.tr()}',
                                         collapseText:
-                                        '${StringsManager.show_less}',
+                                        '${LocaleKeys.showless.tr()}',
                                         maxLines: 1,
                                         linkColor: ColorManager.button,
                                       ),
@@ -624,7 +636,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                       Row(
                                         children: [
                                           Text(
-                                            '${StringsManager.status}' ': ',
+                                            '${LocaleKeys.status.tr()}' ': ',
                                             style: TextStyle(
                                               color: ColorManager.lightGrey,
                                             ),
@@ -643,27 +655,31 @@ class _LostItemsViewState extends State<LostItemsView> {
                                 ),
                               ),
                               Expanded(
-                                child: FadeInImage.assetNetwork(
-                                  placeholder:
-                                      ImageAssets.gray, // الصورة المؤقتة
-                                  image: ImageDownloader.getUrl(
-                                      Provider.of<LostItemsViewModel>(context)
-                                              .getListFound()?[index]
-                                              .image ??
-                                          ""), // الصورة الفعلية
-                                  fit: BoxFit.cover,
-                                  imageErrorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return Container(
+                                child: Container(
+                                  height: 40.w,
+                                  width: 40.w,
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        ImageAssets.gray, // الصورة المؤقتة
+                                    image: ImageDownloader.getUrl(
+                                        Provider.of<LostItemsViewModel>(context)
+                                                .getListFound()?[index]
+                                                .image ??
+                                            ""), // الصورة الفعلية
+                                    fit: BoxFit.fitHeight,
+                                    imageErrorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return Container(
 
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey, // الخلفية البديلة
-                                      ),
-                                    );
-                                  },
-                                  fadeInDuration: Duration(milliseconds: 500),
-                                  fadeOutDuration: Duration(milliseconds: 500),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey, // الخلفية البديلة
+                                        ),
+                                      );
+                                    },
+                                    fadeInDuration: Duration(milliseconds: 500),
+                                    fadeOutDuration: Duration(milliseconds: 500),
+                                  ),
                                 ),
                               ),
                             ],
@@ -766,12 +782,12 @@ class _LostItemsViewState extends State<LostItemsView> {
                                         height: 2.h,
                                       ),
                                       ExpandableText(
-                                        '${StringsManager.description} :'
+                                        '${LocaleKeys.description.tr()} :'
                                             '${Provider.of<LostItemsViewModel>(context).getSearch()[index].description }' ,
                                         expandText:
-                                        '${StringsManager.show_more}',
+                                        '${LocaleKeys.showmore.tr()}',
                                         collapseText:
-                                        '${StringsManager.show_less}',
+                                        '${LocaleKeys.showless.tr()}',
                                         maxLines: 1,
                                         linkColor: ColorManager.button,
                                       ),
@@ -781,7 +797,7 @@ class _LostItemsViewState extends State<LostItemsView> {
                                       Row(
                                         children: [
                                           Text(
-                                            '${StringsManager.status}' ': ',
+                                            '${LocaleKeys.status.tr()}' ': ',
                                             style: TextStyle(
                                               color: ColorManager.lightGrey,
                                             ),

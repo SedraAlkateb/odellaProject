@@ -27,7 +27,7 @@ class _MessageList extends State<MessageList> {
       setState(() {
         _messages = [..._messages, message];
         Provider.of<Not>(context,listen: false).updateInc();
-        print( Provider.of<Not>(context).getCount());
+        print( Provider.of<Not>(context,listen: false).getCount());
       });
     });
   }
@@ -45,7 +45,7 @@ class _MessageList extends State<MessageList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Badge(
-              badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+              badgeContent: Text("${ Provider.of<Not>(context,listen: false).getCount()}",style: TextStyle(color: Colors.white),),
 
               child: Icon(Icons.notifications,size: AppSize.s30),
               badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
@@ -69,7 +69,7 @@ class _MessageList extends State<MessageList> {
                 trailing: const Icon(Icons.notifications_active,color: Colors.red,),
                 onTap: () {
                   setState(() {
-                    if( Provider.of<Not>(context).getCount()==0)
+                    if( Provider.of<Not>(context,listen: false).getCount()==0)
                       return;
                     Provider.of<Not>(context,listen: false).updateDec();
                   });

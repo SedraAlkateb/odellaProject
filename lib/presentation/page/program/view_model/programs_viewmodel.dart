@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/evaluation_usecase.dart';
@@ -6,6 +7,8 @@ import 'package:untitled/domain/usecase/programs_usecase.dart';
 import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+
+import '../../../../lang/locale_keys.g.dart';
 
 class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   ProgramsUseCase _programsUseCase;
@@ -15,7 +18,7 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   Map<int, List<DataProgram> > program2={};
   String selectedDay = 'Sat';
   int indexDay=0;
-  List<String> weekDays = ['${StringsManager.mon}', '${StringsManager.tus}', '${StringsManager.wed}', '${StringsManager.thu}','${StringsManager.fri}','${StringsManager.sat}', '${StringsManager.sun}'];
+  List<String> weekDays = ['${LocaleKeys.Mon.tr()}', '${LocaleKeys.Tus.tr()}', '${LocaleKeys.Wed.tr()}', '${LocaleKeys.Thu.tr()}','${LocaleKeys.fri.tr()}','${LocaleKeys.Sat.tr()}', '${LocaleKeys.Sun.tr()}'];
   bool? b1=null;
   bool? b2=null;
   double _rating=0;

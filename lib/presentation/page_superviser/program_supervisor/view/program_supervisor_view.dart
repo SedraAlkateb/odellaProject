@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -9,8 +10,10 @@ import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
+import '../../../resources/routes_manager.dart';
 import '../../../resources/style_manage.dart';
 
 class SupervisorProgramView extends StatefulWidget {
@@ -37,17 +40,26 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
          Scaffold(
            appBar:  AppBar(
              actions: [
-               Padding(
-                 padding: const EdgeInsets.all(10),
-                 child: Badge(
-                   badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+               Provider.of<Not>(context).getCount()==0
+                   ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                   : Padding(
+                 padding: const EdgeInsets.all(20),
+                 child: InkWell(
+                   child: Badge(
+                     badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                   child: Icon(Icons.notifications,size: AppSize.s30),
-                   badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                     child: Icon(Icons.notifications,size: AppSize.s30),
+                     badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                   ),
+                   onTap: ()
+                   {
+                     print("kkkkkk");
+                     Navigator.pushNamed(context,Routes.notification);
+                   },
                  ),
                ),
              ],
-             title: Text(StringsManager.program,
+             title: Text(LocaleKeys.Program.tr(),
                  style: getBoldStyle(
                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
            ),
@@ -97,7 +109,7 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
                   child: model.getProgramDay().isEmpty
                       ? Center(
                     child: Text(
-                      '${StringsManager.no_trip}',
+                      '${LocaleKeys.Rating.tr()}',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -160,7 +172,7 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
                   child: model.getProgramDay().isEmpty
                       ?  Center(
                     child: Text(
-                      '${StringsManager.no_trip}',
+                      '${LocaleKeys.Rating.tr()}',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -217,7 +229,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.go_time} ${trip.start}',
+                  '${LocaleKeys.Gotime.tr()} ${trip.start}',
                   style:  TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,
@@ -238,7 +250,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.return_time} ${trip.end}',
+                  '${LocaleKeys.Returntime.tr()} ${trip.end}',
                   style:  TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,
@@ -259,7 +271,7 @@ class TripWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Text(
-                  '${StringsManager.postion} ${trip.dataTransferPositions?.name}',
+                  '${LocaleKeys.Position.tr()} ${trip.dataTransferPositions?.name}',
                   style: TextStyle(
                     color: ColorManager.sidBar,
                     fontWeight: FontWeight.bold,

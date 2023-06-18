@@ -129,7 +129,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       Text("Succsses"),
                       Icon(Icons.check_circle ,color: ColorManager.icon1,)
                     ],
-                    
+
                   ):
                   Padding(
                       padding: const EdgeInsets.only(

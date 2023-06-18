@@ -11,14 +11,16 @@ import 'package:untitled/presentation/page_superviser/program_supervisor/view/pr
 import 'package:untitled/presentation/resources/conestants_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 
+import '../../testing.dart';
+
 class PageSupervisorViewModel  with ChangeNotifier {
  late BuildContext context;
   List<NavbarDTO> items = [
 
-    NavbarDTO(label: StringsManager.daily_recieve,widget: DailyReceiveView(),iconData: Icons.chrome_reader_mode),
-    NavbarDTO(label: StringsManager.home,widget: HomeSupervisorView(),iconData: Icons.home),
-    NavbarDTO(label: LocaleKeys.profile.tr(),widget: SupervisorProfileView1(),iconData: Icons.account_box_rounded),
-    NavbarDTO(label: StringsManager.programmer,widget: SupervisorProgramView(),iconData: Icons.chrome_reader_mode),
+    NavbarDTO(label: LocaleKeys.dailyrecieve.tr(),widget: DailyReceiveView(),iconData: Icons.chrome_reader_mode),
+    NavbarDTO(label: LocaleKeys.Home.tr(),widget: HomeSupervisorView(),iconData: Icons.home),
+    NavbarDTO(label: LocaleKeys.profile.tr(),widget:SupervisorProfileView(),iconData: Icons.account_box_rounded),
+    NavbarDTO(label: LocaleKeys.programmer.tr(),widget: SupervisorProgramView(),iconData: Icons.chrome_reader_mode),
     // NavbarDTO(label: 'daily receive',widget: DailyReceiveView(),iconData: Icons.chrome_reader_mode,appBar: getAppBarProgram()),
   ];
   int _selectedIndex = AppConstants.home;

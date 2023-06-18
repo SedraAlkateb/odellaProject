@@ -1,9 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../lang/locale_keys.g.dart';
 class AfterSplashView extends StatefulWidget {
   const AfterSplashView({Key? key}) : super(key: key);
 
@@ -61,7 +64,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
             child: ElevatedButton(
                 onPressed: () =>
                   _goTransactionLine(),
-                child:  Text(StringsManager.transportationLines)),
+                child:  Text(LocaleKeys.transportationLines.tr())),
               ),
               const SizedBox(
             height: AppSize.s28,
@@ -72,7 +75,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
             child: ElevatedButton(
                 onPressed: ()  =>
                     _dailyReservation(),
-                child:  Text(StringsManager.dailyReservation)),
+                child:  Text(LocaleKeys.dailyReservation.tr())),
               ),
               const SizedBox(
             height: AppSize.s28,
@@ -83,7 +86,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
             child: ElevatedButton(
                 onPressed: ()  =>
                     _subscription(),
-                child:  Text(StringsManager.subscription)),
+                child:  Text(LocaleKeys.subscription.tr())),
               ),
               const SizedBox(
             height: AppSize.s28,
@@ -94,7 +97,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
             child: ElevatedButton(
                 onPressed: () =>
                   _goLogin(),
-                child:  Text(StringsManager.signIn)),
+                child:  Text(LocaleKeys.signIn.tr())),
               ),
             ],
           ),

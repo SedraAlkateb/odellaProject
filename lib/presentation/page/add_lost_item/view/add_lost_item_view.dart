@@ -1,3 +1,5 @@
+import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +9,9 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+
+import '../../../../lang/locale_keys.g.dart';
+import '../../../not_viewmodel.dart';
 
 
 class AddLostItemView extends StatefulWidget {
@@ -38,12 +43,31 @@ class _AddLostItemViewState extends State<AddLostItemView> {
              Scaffold(
               appBar: AppBar(
                 title:  Text(
-                  StringsManager.add_lost_item,
+                  LocaleKeys.addlostitem.tr(),
                   style: TextStyle(
                       color: ColorManager.sidBarIcon,
                       fontSize: FontSize.s18
                   ),
                 ),
+                actions: [
+                  Provider.of<Not>(context).getCount()==0
+                      ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                      : Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: InkWell(
+                      child: Badge(
+                        badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                        child: Icon(Icons.notifications,size: AppSize.s30),
+                        badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                      ),
+                      onTap: ()
+                      {
+                        print("kkkkkk");
+                      },
+                    ),
+                  ),
+                ],
               ),
               body: SingleChildScrollView(
                 child: orientation == Orientation.portrait
@@ -56,7 +80,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         maxLines: 10,
                         //textDirection: TextDirection.,
                         decoration: InputDecoration(
-                          hintText: StringsManager.enter_description_lostitem,
+                          hintText: LocaleKeys.descriptionlostitem.tr(),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 width: 1.w, color: ColorManager.sidBar),
@@ -79,7 +103,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('${StringsManager.enter_image}'':' ,
+                        Text('${LocaleKeys.enterimage.tr()}'':' ,
                           style: TextStyle(fontSize: AppSize.s18),),
                         SizedBox(
                           width: 3.w,
@@ -142,7 +166,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${StringsManager.select_trip}'':',
+                          '${LocaleKeys.selecttrip.tr()}'':',
                           style: TextStyle(fontSize: AppSize.s20),
                         ),
                         SizedBox(
@@ -184,7 +208,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         model.storeClaim();
                       },
                       child: Text(
-                        StringsManager.send,
+                        LocaleKeys.send.tr(),
                       ),
                     ),
                     SizedBox(height: 5.h),
@@ -205,7 +229,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('${StringsManager.enter_image}'':' ,
+                              Text('${LocaleKeys.enterimage.tr()}'':' ,
                                 style: TextStyle(fontSize: AppSize.s18),),
                               SizedBox(
                                 width: 3.w,
@@ -269,7 +293,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '${StringsManager.select_trip}'':',
+                                '${LocaleKeys.selecttrip.tr()}'':',
                                 style: TextStyle(fontSize: AppSize.s20),
                               ),
                               SizedBox(
@@ -314,7 +338,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                           ),
                           ElevatedButton(
                               onPressed: () {},
-                              child: Text(StringsManager.send)),
+                              child: Text(LocaleKeys.send.tr())),
                         ],
                       ),
                     ),
@@ -325,7 +349,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                           controller: textEditingController,
                           maxLines: 10,
                           decoration: InputDecoration(
-                            hintText: StringsManager.enter_description_lostitem,
+                            hintText: LocaleKeys.descriptionlostitem.tr(),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 1.w, color: ColorManager.sidBar),

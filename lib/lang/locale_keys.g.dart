@@ -89,5 +89,6 @@ abstract class  LocaleKeys {
   static const linename = 'linename';
   static const date = 'date';
   static const availableseats = 'availableseats';
+  static const code = 'code';
 
 }

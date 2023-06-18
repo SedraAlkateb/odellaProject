@@ -102,7 +102,8 @@ class CodegenLoader extends AssetLoader{
   "notrip": "لايوجد رحلات",
   "linename": "اسم الخط",
   "date": "تاريخ الرحلة",
-  "availableseats": "المقاعد المتاحة"
+  "availableseats": "المقاعد المتاحة",
+  "code": "رمز"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -193,7 +194,8 @@ static const Map<String,dynamic> en = {
   "notrip": "No trips found",
   "linename": "Line name",
   "date": "Trip date",
-  "availableseats": "Available seats"
+  "availableseats": "Available seats",
+  "code": "code"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

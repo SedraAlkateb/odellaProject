@@ -13,7 +13,7 @@ class ForgotPasswordViewModel extends BaseViewModel
   ForgotPasswordViewModel(this._forgotPasswordUseCase);
 
   String _email = "";
-  String _massage=StringsManager.forgetMessage;
+  String _massage="LocalKey.forgetMessage.tr()";
 bool _rest=false;
   // input
   @override

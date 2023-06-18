@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/app/constants.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+
+import '../../../lang/locale_keys.g.dart';
 
 abstract class FlowState{
   StateRendererType getStateRendererType();
@@ -19,7 +22,7 @@ class LoadingState extends FlowState{
       }
       );
     @override
-  String getMessage() =>message ?? StringsManager.loading;
+  String getMessage() =>message ?? LocaleKeys.loading.tr();
 
   @override
   StateRendererType getStateRendererType() =>stateRendererType;
@@ -122,7 +125,7 @@ extension FlowStateExtension on FlowState{
       case SuccessState:{
         dismissDialog(context);
         showPopup(context, StateRendererType.popupSuccess, getMessage()
-        ,title:StringsManager.success
+        ,title:LocaleKeys.success.tr()
         );
         //show content ui of the screen
         return contentScreenWidget;

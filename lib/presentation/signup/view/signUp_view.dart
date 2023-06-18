@@ -10,6 +10,8 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 import 'dart:math'as math;
+
+import '../../../lang/locale_keys.g.dart';
 class SignUpView extends StatefulWidget {
   @override
   State<SignUpView> createState() => _SignUpViewState();
@@ -160,7 +162,7 @@ class _SignUpViewState extends State<SignUpView> {
                             bottom: AppPadding.p28,
                             top: AppPadding.p28),
                         child: Text(
-                          StringsManager.signUp,
+                          LocaleKeys.signUp.tr(),
                           style: Theme.of(context).textTheme.labelLarge,
                         ),
                       ),
@@ -174,7 +176,7 @@ class _SignUpViewState extends State<SignUpView> {
                           controller: _firstNameController,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsManager.errorFirstName;
+                              return LocaleKeys.errorFirstName.tr();
                             } else {
                               Provider.of<SignUpViewModel>(context,
                                       listen: false)
@@ -183,8 +185,8 @@ class _SignUpViewState extends State<SignUpView> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: StringsManager.eFirstName,
-                            labelText: StringsManager.eFirstName,
+                            hintText: LocaleKeys.eFirstName.tr(),
+                            labelText: LocaleKeys.eFirstName.tr(),
                             prefixIcon: Icon(
                               Icons.perm_identity,
                               color: ColorManager.kMainColor,
@@ -201,7 +203,7 @@ class _SignUpViewState extends State<SignUpView> {
                           controller: _lastNameController,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsManager.errorLastName;
+                              return LocaleKeys.errorLastName.tr();
                             } else {
                               Provider.of<SignUpViewModel>(context,
                                       listen: false)
@@ -210,8 +212,8 @@ class _SignUpViewState extends State<SignUpView> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: StringsManager.eLastName,
-                            labelText: StringsManager.eLastName,
+                            hintText: LocaleKeys.eLastName.tr(),
+                            labelText: LocaleKeys.eLastName.tr(),
                             prefixIcon: Icon(
                               Icons.perm_identity,
                               color: ColorManager.kMainColor,
@@ -230,7 +232,7 @@ class _SignUpViewState extends State<SignUpView> {
                           controller: _emailController,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsManager.errorEmail;
+                              return LocaleKeys.errorEmail.tr();
                             } else {
                               Provider.of<SignUpViewModel>(context,
                                       listen: false)
@@ -262,7 +264,7 @@ class _SignUpViewState extends State<SignUpView> {
 
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsManager.errorPassword;
+                              return LocaleKeys.errorPassword.tr();
                             } else {
                               Provider.of<SignUpViewModel>(context,
                                       listen: false)
@@ -301,7 +303,7 @@ class _SignUpViewState extends State<SignUpView> {
                           controller: _phoneNumberController,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsManager.errorPhoneNumber;
+                              return LocaleKeys.errorPhoneNumber.tr();
                             } else {
                               Provider.of<SignUpViewModel>(context,
                                       listen: false)
@@ -310,8 +312,8 @@ class _SignUpViewState extends State<SignUpView> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: StringsManager.ePhoneNumber,
-                            labelText: StringsManager.ePhoneNumber,
+                            hintText: LocaleKeys.ePhoneNumber.tr(),
+                            labelText: LocaleKeys.ePhoneNumber.tr(),
                             prefixIcon: Icon(
                               Icons.local_phone,
                               color: ColorManager.kMainColor,
@@ -377,11 +379,10 @@ class _SignUpViewState extends State<SignUpView> {
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
                                       hint: Text(
-                                          StringsManager.transportationLines),
+                                          LocaleKeys.transportationLines.tr()),
                                       validator: (value) {
                                         if (value == null) {
-                                          return StringsManager
-                                              .transportationLines;
+                                          return LocaleKeys.transportationLines.tr();
                                         }
                                         //  return null;
                                       },
@@ -408,10 +409,10 @@ class _SignUpViewState extends State<SignUpView> {
                                   child: DropdownButtonFormField(
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     hint:
-                                        Text(StringsManager.transferPositions),
+                                        Text(LocaleKeys.transferPositions.tr()),
                                     validator: (value) {
                                       if (value == null) {
-                                        return StringsManager.transferPositions;
+                                        return LocaleKeys.transferPositions.tr();
                                       }
                                       return null;
                                     },
@@ -435,10 +436,10 @@ class _SignUpViewState extends State<SignUpView> {
                                   child: DropdownButtonFormField(
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
-                                      hint: Text(StringsManager.universities),
+                                      hint: Text(LocaleKeys.universities.tr()),
                                       validator: (value) {
                                         if (value == null) {
-                                          return StringsManager.universities;
+                                          return LocaleKeys.universities.tr();
                                         }
                                         return null;
                                       },
@@ -470,10 +471,10 @@ class _SignUpViewState extends State<SignUpView> {
                                   child: DropdownButtonFormField(
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
-                                      hint: Text(StringsManager.cities),
+                                      hint: Text(LocaleKeys.cities.tr()),
                                       validator: (value) {
                                         if (value == null) {
-                                          return StringsManager.eCities;
+                                          return LocaleKeys.eCities.tr();
                                         }
                                         //  return null;
                                       },
@@ -499,10 +500,10 @@ class _SignUpViewState extends State<SignUpView> {
                                   child: DropdownButtonFormField(
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
-                                      hint: Text(StringsManager.areas),
+                                      hint: Text(LocaleKeys.areas.tr()),
                                       validator: (value) {
                                         if (value == null) {
-                                          return StringsManager.eAreas;
+                                          return LocaleKeys.eAreas.tr();
                                         }
                                         return null;
                                       },
@@ -598,7 +599,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 children: [
                                   Expanded(
                                       child: Text(
-                                    StringsManager.subscription,
+                                        LocaleKeys.subscription.tr(),
                                     textAlign: TextAlign.center,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
@@ -609,7 +610,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    StringsManager.daysNumber,
+                                        LocaleKeys.daysNumber.tr(),
                                     textAlign: TextAlign.center,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
@@ -620,7 +621,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    StringsManager.price,
+                                        LocaleKeys.price.tr(),
                                     textAlign: TextAlign.center,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
@@ -867,7 +868,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             .getSignUp();
                                       }
                                     },
-                                    child: Text(StringsManager.signUp)),
+                                    child: Text(LocaleKeys.signUp.tr())),
                               ),
                             ),
                           ],

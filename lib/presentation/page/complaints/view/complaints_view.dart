@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
@@ -6,7 +7,9 @@ import 'package:untitled/presentation/page/complaints/view_model/complaints_view
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/font_manager.dart';
+import '../../../resources/routes_manager.dart';
 import '../../../resources/style_manage.dart';
 import '../../../resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
@@ -36,18 +39,27 @@ class _ComplaintsViewState extends State<ComplaintsView> {
         return Scaffold(
           appBar:  AppBar(
             actions: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Badge(
-                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+              Provider.of<Not>(context).getCount()==0
+                  ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
+                  : Padding(
+                padding: const EdgeInsets.all(20),
+                child: InkWell(
+                  child: Badge(
+                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                  child: Icon(Icons.notifications,size: AppSize.s30),
-                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                    child: Icon(Icons.notifications,size: AppSize.s30),
+                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                  ),
+                  onTap: ()
+                  {
+                    print("kkkkkk");
+                    Navigator.pushNamed(context,Routes.notification);
+                  },
                 ),
               ),
             ],
 
-            title: Text(StringsManager.complaints,
+            title: Text(LocaleKeys.complaints.tr(),
                 style: getBoldStyle(
                     color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
           ),
@@ -62,7 +74,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                     controller: textEditingController,
                     maxLines: 10,
                     decoration: InputDecoration(
-                      hintText: StringsManager.enter_complaint,
+                      hintText: LocaleKeys.Enteryourcompliaint.tr(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1.w, color: ColorManager.sidBar),
@@ -82,7 +94,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      StringsManager.select_trip,
+                      LocaleKeys.selecttrip.tr(),
                       style: TextStyle(fontSize: AppSize.s20),
                     ),
                     SizedBox(
@@ -92,7 +104,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                         icon:
                         const Icon(Icons.keyboard_arrow_down),
                         hint: Text(
-                            StringsManager.transportationLines),
+                            LocaleKeys.transportationLines.tr()),
                         items:Provider.of<ComplaintsViewModel>(context).getTrip()
                             .map((e) => DropdownMenuItem(
                           value: e.id,
@@ -130,7 +142,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                     Provider.of<ComplaintsViewModel>(context,listen: false).storeClaim();
                   },
                   child: Text(
-                    StringsManager.send,
+                    LocaleKeys.send.tr(),
                   ),
                 ),
                 SizedBox(height: 5.h),
@@ -148,7 +160,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${StringsManager.select_trip}'':',
+                            '${LocaleKeys.selecttrip.tr()}'':',
                             style: TextStyle(fontSize: AppSize.s20),
                           ),
                           SizedBox(
@@ -158,7 +170,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                               icon:
                               const Icon(Icons.keyboard_arrow_down),
                               hint: Text(
-                                  StringsManager.transportationLines),
+                                  LocaleKeys.transportationLines.tr()),
                               items:Provider.of<ComplaintsViewModel>(context).getTrip()
                                   .map((e) => DropdownMenuItem(
                                 value: e.id,
@@ -196,7 +208,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                       ),
                       ElevatedButton(
                           onPressed: () {},
-                          child: Text(StringsManager.send)),
+                          child: Text(LocaleKeys.send.tr())),
                     ],
                   ),
                 ),
@@ -207,7 +219,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                       controller: textEditingController,
                       maxLines: 10,
                       decoration: InputDecoration(
-                        hintText: StringsManager.enter_complaint,
+                        hintText: LocaleKeys.Enteryourcompliaint.tr(),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: 1.w, color: ColorManager.sidBar),

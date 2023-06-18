@@ -85,6 +85,7 @@
   "notrip": "لايوجد رحلات",
   "linename": "اسم الخط",
   "date": "تاريخ الرحلة",
-  "availableseats": "المقاعد المتاحة"
+  "availableseats": "المقاعد المتاحة",
+  "code": "رمز"
 
 }
