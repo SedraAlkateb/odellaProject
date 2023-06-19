@@ -2,11 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/di.dart';
-<<<<<<< HEAD
+
 import 'package:untitled/notification_list.dart';
-=======
+
 import 'package:untitled/notification_details.dart';
->>>>>>> ea6fdb8c86f07470ee4c96e446b26b39d80313ea
+
+
+import 'package:untitled/notification_list.dart';
+import 'package:untitled/notification_details.dart';
+
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';

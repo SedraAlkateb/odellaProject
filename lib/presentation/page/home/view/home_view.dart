@@ -59,7 +59,6 @@ final  _scaffoldKey = GlobalKey<FormState>();
           title: Text( LocaleKeys.Home.tr(),style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
           ),
           actions: [
-<<<<<<< HEAD
               Provider.of<Not>(context,listen: true).getCount()==0
                   ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
                   : Padding(
@@ -74,9 +73,9 @@ final  _scaffoldKey = GlobalKey<FormState>();
                   onTap: ()
                   {
                     print("kkkkkk");
-                    Navigator.pushNamed(context,Routes.notification);
+                  Navigator.pushNamed(context, Routes.message);
                   },
-=======
+
             Padding(
               padding: const EdgeInsets.all(10),
               child: InkWell(
@@ -88,7 +87,7 @@ final  _scaffoldKey = GlobalKey<FormState>();
 
                   child: Icon(Icons.notifications,size: AppSize.s30),
                   badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
->>>>>>> ea6fdb8c86f07470ee4c96e446b26b39d80313ea
+
                 ),
               ),
             ],

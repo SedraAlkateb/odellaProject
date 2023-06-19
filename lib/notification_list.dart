@@ -68,17 +68,22 @@ class _MessageList extends State<MessageList> {
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
                 trailing: const Icon(Icons.notifications_active,color: Colors.red,),
                 onTap: () {
-<<<<<<< HEAD
+
                   setState(() {
                     if( Provider.of<Not>(context,listen: false).getCount()==0)
                       return;
                     Provider.of<Not>(context,listen: false).updateDec();
                   });
-=======
+
                     if( Provider.of<Not>(context).getCount()!=0) {
                       Provider.of<Not>(context, listen: false).updateDec();
                     }
->>>>>>> ea6fdb8c86f07470ee4c96e446b26b39d80313ea
+
+
+                    if( Provider.of<Not>(context).getCount()!=0) {
+                      Provider.of<Not>(context, listen: false).updateDec();
+                    }
+
 
                   Navigator.pushNamed(context, '/message',
                     arguments: MessageArguments(message, false),);

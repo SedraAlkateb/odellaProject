@@ -83,57 +83,57 @@ class _SettingsViewState extends State<SettingsView> {
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                    StringsManager.inviteFriends,
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    StringsManager.changePassword,
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.inviteFriends,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                    StringsManager.contactUs,
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    StringsManager.changePassword,
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.contactUs,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                    title: Text(StringsManager.signOut),
-                    leading: Icon(
-                      Icons.logout,
-                      color: ColorManager.sidBarIcon,
-                    ),
-                    onTap: () async {}),
-              ],
-            )
+            //     ListTile(
+            //         title: Text(StringsManager.signOut),
+            //         leading: Icon(
+            //           Icons.logout,
+            //           color: ColorManager.sidBarIcon,
+            //         ),
+            //         onTap: () async {}),
+            //   ],
+            // )
                 :ListView(
               children: [
                 ListTile(
