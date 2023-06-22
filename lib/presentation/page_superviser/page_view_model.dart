@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view/daily_recieve_view.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view/home_supervisor_view.dart';
-import 'package:untitled/presentation/page_superviser/profile/view/profile_view.dart';
 import 'package:untitled/presentation/page_superviser/profile/view/supervispr_profile_view.dart';
 import 'package:untitled/presentation/page_superviser/program_supervisor/view/program_supervisor_view.dart';
 import 'package:untitled/presentation/resources/conestants_manager.dart';

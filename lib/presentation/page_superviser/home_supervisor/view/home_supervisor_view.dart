@@ -28,6 +28,8 @@ class HomeSupervisorView extends StatefulWidget {
 
   @override
   State<HomeSupervisorView> createState() => _HomeSupervisorViewState();
+
+  getPosition() {}
 }
 
 class _HomeSupervisorViewState extends State<HomeSupervisorView> {
@@ -41,6 +43,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
 
   @override
   Widget build(BuildContext context) {
+   // var _register1 = Provider.of<HomeSupervisorView>(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return Consumer<HomeSuperVisorViewModel>(
         builder: (context, model, child) =>
@@ -133,8 +136,51 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         Routes.informationTrip
                     );
                   },
-                  child:  Text('${LocaleKeys.tripinformation.tr()}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
+                  child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Text(
+                    '?',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  onHover: (event) {
+                    Text("information trip");
+                  },),
                 ),
+                // Row(
+                //   children: [
+                //     Container(
+                //       height: 5.h,
+                //       width: 10.w,
+                //       child: DropdownButtonFormField(
+                //         icon: const Icon(Icons.keyboard_arrow_down),
+                //         hint:
+                //         Text(LocaleKeys.transferPositions.tr()),
+                //         validator: (value) {
+                //           if (value == null) {
+                //             return LocaleKeys.transferPositions.tr();
+                //           }
+                //           return null;
+                //         },
+                //         items: _register1
+                //             .getPosition()
+                //             .map((e) => DropdownMenuItem(
+                //           value: e,
+                //           child: Text(" ${e.name}"),
+                //         ))
+                //             .toList(),
+                //         onChanged: (val) {
+                //
+                //           // Provider.of<HomeSupervisorView>(context,
+                //           //     listen: false)
+                //           //     .setTransferPositionId(val!.id);
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: 4.h),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -232,6 +278,12 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                 ],
                               ),
                             ),
+                          ),
+                          Checkbox(value:true, onChanged: (value)
+                          {
+                            bool? vv=value;
+                          },
+                            activeColor: ColorManager.sidBar,
                           ),
                         ],
                       ),

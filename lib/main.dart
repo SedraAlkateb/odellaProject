@@ -228,7 +228,7 @@ Widget build(BuildContext context) {
           padding: const EdgeInsets.all(20),
           child: InkWell(
             child: Badge(
-              badgeContent: Text("${ Provider.of<Not>(context,listen: false).getCount()}",style: TextStyle(color: Colors.white),),
+              badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 //${ Provider.of<Not>(context).getCount()}
               child: Icon(Icons.notifications,size: AppSize.s30),
               badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
@@ -243,14 +243,17 @@ Widget build(BuildContext context) {
     ),
     body: SingleChildScrollView(
       child: Column(
-        children: const [
+        children:  [
           Padding(
             padding: EdgeInsets.all(16),
-            child: Center(
-              child: Text(
-                'Notifications List',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Now',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
           MessageList(),

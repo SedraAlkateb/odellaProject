@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/notification_usecase.dart';
@@ -6,10 +7,31 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 class Not extends BaseViewModel with ChangeNotifier {
   NotificationUseCase _notificationUseCase;
   Not(this._notificationUseCase);
+
+
+
+
   int count = 0;
   late String title;
   late String body;
   int index=0;
+
+  List<RemoteMessage> _messages = [];
+  updateMassages(){
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _messages = [..._messages, message];
+      updateInc();
+      notifyListeners();
+    });
+  }
+  int getMessageL(){
+    return  _messages.length;
+  }
+  RemoteMessage getMessageIndex(int messageIndex){
+    return _messages[messageIndex];
+  }
+
+
   List<NotificationModel> _notifications=[];
   setCount(int i) {
     count = i;

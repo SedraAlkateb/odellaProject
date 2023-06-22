@@ -8,7 +8,6 @@ import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
-import 'package:untitled/presentation/display_image.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map/mapline.dart';
@@ -145,8 +144,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
       case Routes.changepass:
         return MaterialPageRoute(builder: (_) =>  ChangePassView());
-      case Routes.display_image:
-        return MaterialPageRoute(builder: (_) =>  DisplayImageView());
+
 
       // case Routes.mapline:
       //   //return MaterialPageRoute(builder: (_) => MapboxMapPage());
