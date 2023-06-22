@@ -38,7 +38,7 @@ class _TripSupervisorState extends State<TripSupervisor> {
           /*
           (model.getTripId()==0) ?
              Center(
-              child: Text(StringsManager.no_trip),
+              child: Text(LocaleKeys.no_trip),
              ) :
           */
                GoogleMap(

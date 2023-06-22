@@ -5,6 +5,8 @@ import 'package:untitled/domain/usecase/forget_password_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 
+import '../../../lang/locale_keys.g.dart';
+
 class ForgotPasswordViewModel extends BaseViewModel
     with ChangeNotifier{
 
@@ -46,11 +48,11 @@ return _rest;
 
     (await _forgotPasswordUseCase.execute(getEmail())).fold((failure) {
       print(failure.massage);
-      setStringMassage(failure.massage+StringsManager.forgetMessageError);
+      setStringMassage(failure.massage+"LocaleKeys.forgetMessageError");
     }, (supportMessage) {
       print(supportMessage);
 
-      setStringMassage(supportMessage+StringsManager.forgetMessageError);
+      setStringMassage(supportMessage+"LocaleKeys.forgetMessageError");
       notifyListeners();
       setRest(true);
 

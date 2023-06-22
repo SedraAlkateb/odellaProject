@@ -39,11 +39,11 @@ class _SettingsViewState extends State<SettingsView> {
               children: [
                 ListTile(
                   subtitle: Text(
-                    "change language to arabic",
+                    LocaleKeys.changelangtoarabic.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    "Change Language",
+                    LocaleKeys.changelang.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -76,6 +76,28 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   onTap: () {
                     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                    Navigator.pushNamed(context, Routes.changepass);
+                  },
+                ),
+                Divider(
+                  color: ColorManager.sidBarIcon,
+                  height: 15,
+                ),
+                ListTile(
+                  subtitle: Text(
+                   LocaleKeys.resetpasstonew.tr(),
+                    style: TextStyle(color: ColorManager.sidBarIcon),
+                  ),
+                  title: Text(
+                    LocaleKeys.resetpass.tr(),
+                    //style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  leading: Icon(
+                    Icons.password,
+                    color: ColorManager.sidBarIcon,
+                  ),
+                  onTap: () {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {});
                     Navigator.pushNamed(context, Routes.resetPasswordRoute);
                   },
                 ),
@@ -85,15 +107,15 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    "StringsManager.inviteFriends",
+                    LocaleKeys.contactus.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                  LocaleKeys.contactus.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
-                    Icons.language,
+                    Icons.contact_support,
                     color: ColorManager.sidBarIcon,
                   ),
                   onTap: () {
@@ -104,27 +126,8 @@ class _SettingsViewState extends State<SettingsView> {
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                   " StringsManager.contactUs",
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    LocaleKeys.changePassword.tr(),
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
-                Divider(
-                  color: ColorManager.sidBarIcon,
-                  height: 15,
-                ),
+
+
                 ListTile(
                     title: Text(LocaleKeys.signOut.tr()),
                     leading: Icon(
@@ -138,11 +141,11 @@ class _SettingsViewState extends State<SettingsView> {
               children: [
                 ListTile(
                   subtitle: Text(
-                    "change language to english",
+                    LocaleKeys.changelangtoarabic.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.language.tr(),
+                    LocaleKeys.changelang.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -162,7 +165,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    "تغيير كلمة السر ",
+                    LocaleKeys.changePassword.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
@@ -170,7 +173,29 @@ class _SettingsViewState extends State<SettingsView> {
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
-                    Icons.language,
+                    Icons.password,
+                    color: ColorManager.sidBarIcon,
+                  ),
+                  onTap: () {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {});
+                    Navigator.pushNamed(context, Routes.changepass);
+                  },
+                ),
+                Divider(
+                  color: ColorManager.sidBarIcon,
+                  height: 15,
+                ),
+                ListTile(
+                  subtitle: Text(
+                    LocaleKeys.resetpasstonew.tr(),
+                    style: TextStyle(color: ColorManager.sidBarIcon),
+                  ),
+                  title: Text(
+                    LocaleKeys.resetpass.tr(),
+                    //style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  leading: Icon(
+                    Icons.password,
                     color: ColorManager.sidBarIcon,
                   ),
                   onTap: () {
@@ -184,15 +209,15 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    "StringsManager.inviteFriends",
+                    LocaleKeys.contactus.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    LocaleKeys.contactus.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
-                    Icons.language,
+                    Icons.contact_support,
                     color: ColorManager.sidBarIcon,
                   ),
                   onTap: () {
@@ -203,27 +228,8 @@ class _SettingsViewState extends State<SettingsView> {
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                   " LocaleKeys.contactUs.tr()",
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    LocaleKeys.changePassword.tr(),
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
-                Divider(
-                  color: ColorManager.sidBarIcon,
-                  height: 15,
-                ),
+
+
                 ListTile(
                     title: Text(LocaleKeys.signOut.tr()),
                     leading: Icon(

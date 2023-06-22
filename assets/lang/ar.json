@@ -1,6 +1,6 @@
 {"title": "العنوان",
   "welcome": "اهلا بك في التطبيق",
-  "username": "الحساب",
+  "email": "الحساب",
   "usernameError": "الرجاء ادخال الحساب",
   "passwordError": "الرجاء ادخال كلمة السر",
   "password": "كلمة السر",
@@ -86,6 +86,12 @@
   "linename": "اسم الخط",
   "date": "تاريخ الرحلة",
   "availableseats": "المقاعد المتاحة",
-  "code": "رمز"
-
+  "code": "رمز",
+  "changelang": "تغيير اللغة",
+  "changelangtoarabic": "تغيير اللغة إالى العربية",
+  "resetpass": "إعادة تعيين كلمة السر",
+  "resetpasstonew": "تعيين كلمة سر جديدة",
+  "contactus": "تواصل معنا",
+  "qrcode": "رمز الاستجابة السريعة",
+  "notification": "الاشعارات"
 }

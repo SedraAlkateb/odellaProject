@@ -49,26 +49,28 @@ class _ProfileViewState extends State<ProfileView> {
     return Sizer(
       builder: (context, orientation, deviceType) =>
           Scaffold(
-            drawer:  NavBar(),
-            appBar:  AppBar(
+            drawer: NavBar(),
+            appBar: AppBar(
               actions: [
-                Provider.of<Not>(context).getCount()==0
+                Provider.of<Not>(context).getCount() == 0
                     ? IconButton(onPressed: () {
-                  Navigator.pushNamed(context,Routes.notification);
-                      }, icon: const Icon(Icons.notifications))
+                  Navigator.pushNamed(context, Routes.notification);
+                }, icon: const Icon(Icons.notifications))
                     : Padding(
                   padding: const EdgeInsets.all(20),
                   child: InkWell(
                     child: Badge(
-                      badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+                      badgeContent: Text(
+                        "${ Provider.of<Not>(context).getCount()}",
+                        style: TextStyle(color: Colors.white),),
 
-                      child: Icon(Icons.notifications,size: AppSize.s30),
-                      badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                      child: Icon(Icons.notifications, size: AppSize.s30),
+                      badgeAnimation: BadgeAnimation.fade(
+                          animationDuration: Duration(milliseconds: 250)),
                     ),
-                    onTap: ()
-                    {
+                    onTap: () {
                       print("kkkkkk");
-                      Navigator.pushNamed(context,Routes.notification);
+                      Navigator.pushNamed(context, Routes.notification);
                     },
                   ),
                 ),
@@ -91,7 +93,7 @@ class _ProfileViewState extends State<ProfileView> {
     TextEditingController _streetController =
     TextEditingController(text: profile1.getStreet());
     return Consumer<ProfileViewModel>(
-      builder:(context, model, child) =>
+      builder: (context, model, child) =>
           Sizer(
             builder: (context, orientation, deviceType) {
               return SafeArea(
@@ -102,57 +104,94 @@ class _ProfileViewState extends State<ProfileView> {
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: const EdgeInsets.all(AppPadding.p20),
+                        padding: EdgeInsets.all(16.sp),
                         child: Column(
                           children: [
                             Row(
                               children: [
-                                Container(
-                                  child: Provider.of<ProfileViewModel>(context)
-                                      .getIm() !=
-                                      null
-                                  //  profile1.getDownload()
-                                      ? InkWell(
-                                    onTap: () async {
-                                      await profile.updateImageFromGallory();
-                                      await profile.updateImage();
-                                    },
-                                    child: Container(
-                                      width: 28.w,
-                                      height: 17.h,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          //color: Colors.grey[300],
-                                          image: DecorationImage(
-                                              fit: BoxFit.contain,
-                                              image: FileImage(
-                                                  Provider.of<ProfileViewModel>(
-                                                      context)
-                                                      .getIm() ??
-                                                      File("")))),
-                                    ),
-                                  )
-                                      : InkWell(
-                                    onTap: () async {
-                                      await profile.updateImageFromGallory();
-                                      await profile.updateImage();
-                                    },
-                                    child: Container(
-                                        width: 28.w,
-                                        height: 17.h,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          shape: BoxShape.circle,
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: Provider.of<ProfileViewModel>(
+                                          context)
+                                          .getIm() !=
+                                          null
+                                      //  profile1.getDownload()
+                                          ? InkWell(
+                                        onTap: () async {
+                                          //Navigator.pushNamed(context, Routes.display_image);
+                                          showDialogFunc(
+                                              context, 50.h,50.h,40.w,40.w);
+                                        },
+                                        child: Container(
+                                          width: 28.w,
+                                          height: 17.h,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              //color: Colors.grey[300],
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: FileImage(
+                                                      Provider.of<
+                                                          ProfileViewModel>(
+                                                          context)
+                                                          .getIm() ??
+                                                          File("")))),
                                         ),
-                                        child: const Icon(Icons.add,
-                                            size: AppSize.s50,
-                                            color: Color(0xFFFFFFFF))),
-                                  )
-                                  //:profile1.getLocalPath()!=null?
-                                  ,
+                                      )
+                                          : InkWell(
+                                        onTap: () async {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                        child: Container(
+                                            width: 28.w,
+                                            height: 17.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.add,
+                                                size: AppSize.s50,
+                                                color: Color(0xFFFFFFFF))),
+                                      )
+                                      //:profile1.getLocalPath()!=null?
+                                      ,
+                                    ),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: InkWell(
+                                        child: Container(
+                                          width: 24,
+                                          height: 24,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ColorManager.sidBarIcon,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.edit,
+                                            size: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () async
+                                        {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  width: 25,
+                                 SizedBox(
+                                  width: 2.w,
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +222,9 @@ class _ProfileViewState extends State<ProfileView> {
                               ],
                             ),
                             SizedBox(height: 2.h,),
-                            Divider(height: 3.h,color: ColorManager.sidBar,thickness: 2,),
+                            Divider(height: 3.h,
+                              color: ColorManager.sidBarIcon,
+                              thickness: 1,),
                           ],
                         ),
                       ),
@@ -191,245 +232,295 @@ class _ProfileViewState extends State<ProfileView> {
                     Expanded(
                       flex: 2,
                       child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.person,
-                                  size: AppSize.s25,
-                                ),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(LocaleKeys.eFirstName.tr(),
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    SizedBox(
-                                      width: 55.w,
-                                      child: TextField(
-                                          controller: _firstNameController,
-
-                                          onChanged:(value)
-                                          {
-                                            Provider.of<ProfileViewModel>(context,listen: false)
-                                                .updateFirstName(value);
-                                          }
-
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.person,
-                                  size: AppSize.s25,
-                                ),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(LocaleKeys.eLastName.tr(),
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    SizedBox(
-                                      width: 55.w,
-                                      child: TextField(
-                                        controller: _lastNameController,
-                                        onChanged: (value) {
-                                          Provider.of<ProfileViewModel>(context,listen: false).updateLastName(value);
-                                          _lastNameController.text = value;
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.streetview,
-                                  size: AppSize.s25,
-                                ),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("  Street",
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    SizedBox(
-                                      width: 55.w,
-                                      child: TextField(
-                                        controller: _streetController,
-                                        onChanged: (value) {
-                                          Provider.of<ProfileViewModel>(context,listen: false).updateStreet(value);
-
-                                          _streetController.text = value;
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.phone,
-                                  size: AppSize.s25,
-                                ),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(LocaleKeys.ePhoneNumber.tr(),
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                    SizedBox(
-                                      width: 55.w,
-                                      child: TextField(
-                                        controller: _phoneNumberController,
-                                        onChanged: (value) {
-                                          Provider.of<ProfileViewModel>(context,listen: false).updatePhone(value);
-
-                                          _phoneNumberController.text = value;
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-                            SizedBox(
-                              height: 14.h,
-                              width: 70.w,
-                              child: DropdownButtonFormField(
-                                  icon:
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  hint: Text(model.getProfileCity()),
-                                  items: model
-                                      .getCities()
-                                      .map((e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
-                                  ))
-                                      .toList(),
-                                  onChanged: (val) {
-                                    model.setCityId(val!);
-                                    model.getAreasByIdCity(val);
-                                  }),
-                            ),
-
-                            SizedBox(
-                              height: 14.h,
-                              width: 70.w,
-                              child: DropdownButtonFormField(
-                                  icon:
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  hint: Text(model.getProfileArea()),
-                                  items: model
-                                      .getAreas()
-                                      .map((e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
-                                  ))
-                                      .toList(),
-                                  onChanged: (val) {
-                                    model.setAreaId(val!);
-                                  }),
-                            ),
-                            SizedBox(
-                              height: 14.h,
-                              width: 70.w,
-                              child: DropdownButtonFormField(
-                                  icon:
-                                  const Icon(Icons.keyboard_arrow_down),
-                                  hint: Text(model.getProfileUni()),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return LocaleKeys.universities.tr();
-                                    }
-                                    return null;
-                                  },
-                                  items: model
-                                      .getUniversities()
-                                      .map((e) => DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text(" ${e.name}",overflow: TextOverflow.ellipsis,),
-                                  ))
-                                      .toList(),
-                                  onChanged: (val) {
-                                    model.setUniversityId(val!);
-                                  }),
-                            ),
-
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: AppPadding.p28,
-                                  horizontal: AppPadding.p28),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  profile.UpdateStudent();
-                                },
-                                child: Text(LocaleKeys.save.tr()),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 20.sp,left: 20.sp),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 1.h,
                               ),
-                            ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.person,
+                                    size: AppSize.s25,
+                                  ),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(LocaleKeys.eFirstName.tr(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                      SizedBox(
+                                        width: 55.w,
+                                        child: TextField(
+                                            controller: _firstNameController,
+
+                                            onChanged: (value) {
+                                              Provider.of<ProfileViewModel>(
+                                                  context, listen: false)
+                                                  .updateFirstName(value);
+                                            }
+
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.person,
+                                    size: AppSize.s25,
+                                  ),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(LocaleKeys.eLastName.tr(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                      SizedBox(
+                                        width: 55.w,
+                                        child: TextField(
+                                          controller: _lastNameController,
+                                          onChanged: (value) {
+                                            Provider.of<ProfileViewModel>(
+                                                context, listen: false)
+                                                .updateLastName(value);
+                                            _lastNameController.text = value;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.streetview,
+                                    size: AppSize.s25,
+                                  ),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text("  Street",
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                      SizedBox(
+                                        width: 55.w,
+                                        child: TextField(
+                                          controller: _streetController,
+                                          onChanged: (value) {
+                                            Provider.of<ProfileViewModel>(
+                                                context, listen: false)
+                                                .updateStreet(value);
+
+                                            _streetController.text = value;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.phone,
+                                    size: AppSize.s25,
+                                  ),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(LocaleKeys.ePhoneNumber.tr(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                      SizedBox(
+                                        width: 55.w,
+                                        child: TextField(
+                                          controller: _phoneNumberController,
+                                          onChanged: (value) {
+                                            Provider.of<ProfileViewModel>(
+                                                context, listen: false)
+                                                .updatePhone(value);
+
+                                            _phoneNumberController.text = value;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 6.h,
+                              ),
+                              Divider(
+                                height: 3.h,
+                                thickness: 1,
+                                color: ColorManager.sidBarIcon,
+                              ),
+                              SizedBox(
+                                height: 6.h,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.location_city,size: AppSize.s25,),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  SizedBox(
+                                    height: 14.h,
+                                    width: 70.w,
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                        const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(model.getProfileCity()),
+                                        items: model
+                                            .getCities()
+                                            .map((e) =>
+                                            DropdownMenuItem(
+                                              value: e.id,
+                                              child: Text(" ${e.name}",
+                                                overflow: TextOverflow.ellipsis,),
+                                            ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          model.setCityId(val!);
+                                          model.getAreasByIdCity(val);
+                                        }),
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.area_chart_outlined,size: AppSize.s25,),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  SizedBox(
+                                    height: 14.h,
+                                    width: 70.w,
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                        const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(model.getProfileArea()),
+                                        items: model
+                                            .getAreas()
+                                            .map((e) =>
+                                            DropdownMenuItem(
+                                              value: e.id,
+                                              child: Text(" ${e.name}",
+                                                overflow: TextOverflow.ellipsis,),
+                                            ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          model.setAreaId(val!);
+                                        }),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.account_balance,size: AppSize.s25,),
+                                  SizedBox(
+                                    width: 6.w,
+                                  ),
+                                  SizedBox(
+                                    height: 14.h,
+                                    width: 70.w,
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                        const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(model.getProfileUni()),
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return LocaleKeys.universities.tr();
+                                          }
+                                          return null;
+                                        },
+                                        items: model
+                                            .getUniversities()
+                                            .map((e) =>
+                                            DropdownMenuItem(
+                                              value: e.id,
+                                              child: Text(" ${e.name}",
+                                                overflow: TextOverflow.ellipsis,),
+                                            ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          model.setUniversityId(val!);
+                                        }),
+                                  ),
+                                ],
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p28,
+                                    horizontal: AppPadding.p28),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    profile.UpdateStudent();
+                                  },
+                                  child: Text(LocaleKeys.save.tr()),
+                                ),
+                              ),
 
 
-                            SizedBox(
-                              height: 5.h,
-                            ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
 
 
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -446,52 +537,87 @@ class _ProfileViewState extends State<ProfileView> {
                             height: 15.h,
                             padding: const EdgeInsets.all(AppPadding.p20),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: Provider.of<ProfileViewModel>(context)
-                                      .getIm() !=
-                                      null
-                                  //  profile1.getDownload()
-                                      ? InkWell(
-                                    onTap: () async {
-                                      await profile.updateImageFromGallory();
-                                      await profile.updateImage();
-                                    },
-                                    child: Container(
-                                      width: 40.w,
-                                      height: 20.h,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          //color: Colors.grey[300],
-                                          image: DecorationImage(
-                                              fit: BoxFit.contain,
-                                              image: FileImage(
-                                                  Provider.of<ProfileViewModel>(
-                                                      context)
-                                                      .getIm() ??
-                                                      File("")))),
-                                    ),
-                                  )
-                                      : InkWell(
-                                    onTap: () async {
-                                      await profile.updateImageFromGallory();
-                                      await profile.updateImage();
-                                    },
-                                    child: Container(
-                                        width: 40.w,
-                                        height: 20.h,
+                            children:[  Stack(
+                                children: [
+                                  Container(
+                                    child: Provider.of<ProfileViewModel>(
+                                        context)
+                                        .getIm() !=
+                                        null
+                                    //  profile1.getDownload()
+                                        ? InkWell(
+                                      onTap: () async {
+                                        //Navigator.pushNamed(context, Routes.display_image);
+                                        showDialogFunc(
+                                          context, 50.h,50.h,40.w,40.w);
+                                      },
+                                      child: Container(
+                                        width: 28.w,
+                                        height: 17.h,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[300],
+                                            shape: BoxShape.circle,
+                                            //color: Colors.grey[300],
+                                            image: DecorationImage(
+                                                fit: BoxFit.contain,
+                                                image: FileImage(
+                                                    Provider.of<
+                                                        ProfileViewModel>(
+                                                        context)
+                                                        .getIm() ??
+                                                        File("")))),
+                                      ),
+                                    )
+                                        : InkWell(
+                                      onTap: () async {
+                                        await profile
+                                            .updateImageFromGallory();
+                                        await profile.updateImage();
+                                      },
+                                      child: Container(
+                                          width: 28.w,
+                                          height: 17.h,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(Icons.add,
+                                              size: AppSize.s50,
+                                              color: Color(0xFFFFFFFF))),
+                                    )
+                                    //:profile1.getLocalPath()!=null?
+                                    ,
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: InkWell(
+                                      child: Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
                                           shape: BoxShape.circle,
+                                          color: ColorManager.sidBarIcon,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
                                         ),
-                                        child: const Icon(Icons.add,
-                                            size: AppSize.s50,
-                                            color: Color(0xFFFFFFFF))),
-                                  )
-                                  //:profile1.getLocalPath()!=null?
-                                  ,
-                                ),
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      onTap: () async
+                                      {
+                                        await profile
+                                            .updateImageFromGallory();
+                                        await profile.updateImage();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                                 SizedBox(
                                   width: 10.w,
                                 ),
@@ -527,26 +653,28 @@ class _ProfileViewState extends State<ProfileView> {
                           Container(
                             width: 200.w,
                             child: Divider(height: 2.h,
-                              color: ColorManager.sidBar ,
+                              color: ColorManager.sidBar,
                               thickness: 2,),
                           ),
                           Expanded(
                             child: SingleChildScrollView(
 
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: AppSize.s45),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSize.s45),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
                                       height: 3.h,
                                     ),
-                                    // Text(StringsManager.profile,style: Theme.of(context).textTheme.labelLarge),
+                                    // Text(LocaleKeys.profile,style: Theme.of(context).textTheme.labelLarge),
                                     // const SizedBox(
                                     //   height: 16,
                                     // ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start,
                                       children: [
                                         const Icon(
                                           Icons.person,
@@ -558,7 +686,8 @@ class _ProfileViewState extends State<ProfileView> {
                                         Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
                                           children: [
                                             Text(LocaleKeys.eFirstName.tr(),
                                                 style: Theme
@@ -570,8 +699,11 @@ class _ProfileViewState extends State<ProfileView> {
                                               child: TextField(
                                                 controller: _firstNameController,
                                                 onChanged: (value) {
-                                                  _firstNameController.text = value;
-                                                  Provider.of<ProfileViewModel>(context).updateFirstName(value);
+                                                  _firstNameController.text =
+                                                      value;
+                                                  Provider.of<ProfileViewModel>(
+                                                      context).updateFirstName(
+                                                      value);
                                                 },
                                               ),
                                             ),
@@ -583,7 +715,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       height: 3.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start,
                                       children: [
                                         const Icon(
                                           Icons.person,
@@ -595,7 +728,8 @@ class _ProfileViewState extends State<ProfileView> {
                                         Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
                                           children: [
                                             Text(LocaleKeys.eLastName.tr(),
                                                 style: Theme
@@ -607,8 +741,11 @@ class _ProfileViewState extends State<ProfileView> {
                                               child: TextField(
                                                 controller: _lastNameController,
                                                 onChanged: (value) {
-                                                  Provider.of<ProfileViewModel>(context,listen: false).updateLastName(value);
-                                                  _lastNameController.text = value;
+                                                  Provider.of<ProfileViewModel>(
+                                                      context, listen: false)
+                                                      .updateLastName(value);
+                                                  _lastNameController.text =
+                                                      value;
                                                 },
                                               ),
                                             ),
@@ -620,7 +757,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       height: 3.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start,
                                       children: [
                                         const Icon(
                                           Icons.streetview,
@@ -632,9 +770,10 @@ class _ProfileViewState extends State<ProfileView> {
                                         Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
                                           children: [
-                                            Text("StringsManager.street",
+                                            Text("LocaleKeys.street",
                                                 style: Theme
                                                     .of(context)
                                                     .textTheme
@@ -644,8 +783,11 @@ class _ProfileViewState extends State<ProfileView> {
                                               child: TextField(
                                                 controller: _streetController,
                                                 onChanged: (value) {
-                                                  Provider.of<ProfileViewModel>(context,listen: false).updateStreet(value);
-                                                  _streetController.text = value;
+                                                  Provider.of<ProfileViewModel>(
+                                                      context, listen: false)
+                                                      .updateStreet(value);
+                                                  _streetController.text =
+                                                      value;
                                                 },
                                               ),
                                             ),
@@ -657,7 +799,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       height: 3.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start,
                                       children: [
                                         const Icon(
                                           Icons.phone,
@@ -669,7 +812,8 @@ class _ProfileViewState extends State<ProfileView> {
                                         Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center,
                                           children: [
                                             Text(LocaleKeys.ePhoneNumber.tr(),
                                                 style: Theme
@@ -681,9 +825,12 @@ class _ProfileViewState extends State<ProfileView> {
                                               child: TextField(
                                                 controller: _phoneNumberController,
                                                 onChanged: (value) {
-                                                  Provider.of<ProfileViewModel>(context,listen: false).updatePhone(value);
+                                                  Provider.of<ProfileViewModel>(
+                                                      context, listen: false)
+                                                      .updatePhone(value);
 
-                                                  _phoneNumberController.text = value;
+                                                  _phoneNumberController.text =
+                                                      value;
                                                 },
                                               ),
                                             ),
@@ -726,9 +873,10 @@ class _ProfileViewState extends State<ProfileView> {
                           children: [
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                               // Icon(Icons.location_city,size: 5,),
                                 SizedBox(
                                   width: 120.w,
                                   height: 10.h,
@@ -738,10 +886,11 @@ class _ProfileViewState extends State<ProfileView> {
                                       hint: Text(model.getProfileCity()),
                                       items: model
                                           .getCities()
-                                          .map((e) => DropdownMenuItem(
-                                        value: e.id,
-                                        child: Text(" ${e.name}"),
-                                      ))
+                                          .map((e) =>
+                                          DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(" ${e.name}"),
+                                          ))
                                           .toList(),
                                       onChanged: (val) {
                                         model.setCityId(val!);
@@ -764,10 +913,11 @@ class _ProfileViewState extends State<ProfileView> {
                                       hint: Text(model.getProfileArea()),
                                       items: model
                                           .getAreas()
-                                          .map((e) => DropdownMenuItem(
-                                        value: e.id,
-                                        child: Text(" ${e.name}"),
-                                      ))
+                                          .map((e) =>
+                                          DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(" ${e.name}"),
+                                          ))
                                           .toList(),
                                       onChanged: (val) {
                                         model.setAreaId(val!);
@@ -794,10 +944,11 @@ class _ProfileViewState extends State<ProfileView> {
                                       },
                                       items: model
                                           .getUniversities()
-                                          .map((e) => DropdownMenuItem(
-                                        value: e.id,
-                                        child: Text(" ${e.name}"),
-                                      ))
+                                          .map((e) =>
+                                          DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(" ${e.name}"),
+                                          ))
                                           .toList(),
                                       onChanged: (val) {
                                         model.setUniversityId(val!);
@@ -815,6 +966,51 @@ class _ProfileViewState extends State<ProfileView> {
               );
             },
           ),
+    );
+  }
+
+  showDialogFunc(context,double h1,double w1,double h2,double w2) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.sp),
+              height:h1,
+              width: w1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 5.h,),
+                  Container(
+                    width: h2,
+                    height: w2,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: FileImage(
+                              Provider.of<ProfileViewModel>(
+                                  context)
+                                  .getIm() ??
+                                  File(""))
+                      ),
+                    ),
+                  ),
+
+          ],),
+
+              ),
+            ),
+
+        );
+      },
     );
   }
 }

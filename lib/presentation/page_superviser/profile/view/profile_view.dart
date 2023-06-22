@@ -320,7 +320,7 @@
 //                                     CrossAxisAlignment.start,
 //                                     mainAxisAlignment: MainAxisAlignment.center,
 //                                     children: [
-//                                       Text("StringsManager.street",
+//                                       Text("LocaleKeys.street",
 //                                           style: Theme
 //                                               .of(context)
 //                                               .textTheme
@@ -506,7 +506,7 @@
 //                                       SizedBox(
 //                                         height: 3.h,
 //                                       ),
-//                                       // Text(StringsManager.profile,style: Theme.of(context).textTheme.labelLarge),
+//                                       // Text(LocaleKeys.profile,style: Theme.of(context).textTheme.labelLarge),
 //                                       // const SizedBox(
 //                                       //   height: 16,
 //                                       // ),
@@ -636,7 +636,7 @@
 //                                             CrossAxisAlignment.start,
 //                                             mainAxisAlignment: MainAxisAlignment.center,
 //                                             children: [
-//                                               Text("StringsManager.street",
+//                                               Text("LocaleKeys.street",
 //                                                   style: Theme
 //                                                       .of(context)
 //                                                       .textTheme
