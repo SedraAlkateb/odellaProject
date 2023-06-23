@@ -41,7 +41,7 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
       ),
 
       child: Drawer(
-backgroundColor: ColorManager.side,
+//backgroundColor: ColorManager.sidBarIcon,
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
@@ -81,7 +81,7 @@ backgroundColor: ColorManager.side,
               ),
 
               decoration: BoxDecoration(
-                  color: ColorManager.side,
+                  //color: ColorManager.side,
               ),
             ),
             Divider(
@@ -138,21 +138,8 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(LocaleKeys.busSite.tr()),
-              leading: Icon(Icons.location_on_outlined, color: ColorManager.sidBarIcon,
-              ),
-
-              onTap: () {
-                print("on tap");
-              },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
               title: Text(LocaleKeys.complaints.tr()),
-              leading: Icon(Icons.call,
+              leading: Icon(Icons.comment_bank,
                 color: ColorManager.sidBarIcon,
 
               ),
@@ -161,12 +148,29 @@ backgroundColor: ColorManager.side,
                 Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.complaints;
                 },
             ),
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
             ),
             ListTile(
-                title: Text(StringsManager.qrCode),
+                title: Text(LocaleKeys.lostItems.tr()),
+                leading: Icon(Icons.shopping_bag_rounded,
+                  color: ColorManager.sidBarIcon,
+
+                ),
+
+                onTap: () async{
+                  Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.lostItem;
+                }
+
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+                title: Text(LocaleKeys.qrcode.tr()),
                 leading: Icon(Icons.qr_code,
                   color: ColorManager.sidBarIcon,
 
@@ -177,43 +181,6 @@ backgroundColor: ColorManager.side,
                 }
 
             ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-                title: Text(LocaleKeys.lostItems.tr()),
-                leading: Icon(Icons.storefront,
-                  color: ColorManager.sidBarIcon,
-
-                ),
-
-                onTap: () async{
-                  Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.lostItem;
-                }
-
-            ),
-
-
-
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-                title: Text(LocaleKeys.lostItems.tr()),
-                leading: Icon(Icons.storefront,
-                  color: ColorManager.sidBarIcon,
-
-                ),
-
-                onTap: () async{
-                  //Navigator.pushNamed(context, Routes.mapline);
-                }
-
-            ),
-
-
 
             Divider(
               color: ColorManager.sidBarIcon,
@@ -221,7 +188,7 @@ backgroundColor: ColorManager.side,
             ),
 
             ListTile(
-                title: Text("notification"),
+                title: Text(LocaleKeys.notification.tr()),
                 leading: Icon(Icons.notifications,
                   color: ColorManager.sidBarIcon,
 

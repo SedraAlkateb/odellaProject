@@ -135,7 +135,7 @@ backgroundColor: ColorManager.side,
               height: 15,
             ),
             ListTile(
-              title: Text(LocaleKeys.busSite.tr()),
+              title: Text(LocaleKeys.dailyrecieve.tr()),
               leading: Icon(Icons.location_on_outlined, color: ColorManager.sidBarIcon,
               ),
 
@@ -147,23 +147,10 @@ backgroundColor: ColorManager.side,
               color: ColorManager.sidBarIcon,
               height: 15,
             ),
-            ListTile(
-              title: Text(LocaleKeys.complaints.tr()),
-              leading: Icon(Icons.call,
-                color: ColorManager.sidBarIcon,
 
-              ),
 
-              onTap: () {
-                Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.complaints;
-                },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
             ListTile(
-                title: Text(StringsManager.qrCode),
+                title: Text(LocaleKeys.qrcode.tr()),
                 leading: Icon(Icons.qr_code,
                   color: ColorManager.sidBarIcon,
 
@@ -171,22 +158,6 @@ backgroundColor: ColorManager.side,
 
                 onTap: () {
                   Navigator.pushNamed(context,Routes.qrCodeViewRoute);
-                }
-
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-                title: Text(LocaleKeys.lostItems.tr()),
-                leading: Icon(Icons.storefront,
-                  color: ColorManager.sidBarIcon,
-
-                ),
-
-                onTap: () async{
-                  Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.lostItem;
                 }
 
             ),

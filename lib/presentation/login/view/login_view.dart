@@ -146,12 +146,12 @@ class _LoginViewState extends State<LoginView> {
                   keyboardType: TextInputType.emailAddress,
                   controller: _userNameController,
                   decoration:  InputDecoration(
-                    hintText: StringsManager.username,
-                    labelText: StringsManager.username,
+                    hintText: LocaleKeys.email.tr(),
+                    labelText: LocaleKeys.email.tr(),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return StringsManager.usernameError;
+                      return LocaleKeys.usernameError;
                     } else {
                       loginViewModelRead.setUserName(value);
                     }
@@ -183,12 +183,12 @@ class _LoginViewState extends State<LoginView> {
                          Icon(Icons.visibility_off,
                            color: ColorManager.kMainColor,
                          )),
-                    hintText: StringsManager.password,
-                    labelText: StringsManager.password,
+                    hintText: LocaleKeys.password,
+                    labelText: LocaleKeys.password,
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return StringsManager.passwordError;
+                      return LocaleKeys.passwordError;
                     } else {
                       loginViewModelRead
                           .setPassword(value);
@@ -210,7 +210,7 @@ class _LoginViewState extends State<LoginView> {
                           context, Routes.forgotPasswordRoute);
                     },
                     child: Text(
-                      StringsManager.forgetPassword,
+                      LocaleKeys.forgetPassword,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
