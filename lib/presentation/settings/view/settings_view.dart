@@ -39,11 +39,11 @@ class _SettingsViewState extends State<SettingsView> {
               children: [
                 ListTile(
                   subtitle: Text(
-                    "change language to arabic",
+                    LocaleKeys.changePassword.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    "Change Language",
+                    LocaleKeys.changePassword.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -63,11 +63,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "resetpass",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "resetpass",
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -83,13 +83,73 @@ class _SettingsViewState extends State<SettingsView> {
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.inviteFriends,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     "StringsManager.inviteFriends",
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     LocaleKeys.changePassword.tr(),
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+                //
+                // Divider(
+                //   color: ColorManager.sidBarIcon,
+                //   height: 15,
+                // ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.contactUs,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+
                 ListTile(
                   subtitle: Text(
-                    "StringsManager.inviteFriends",
+                    "contactus",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "contactus",
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -100,49 +160,41 @@ class _SettingsViewState extends State<SettingsView> {
                     WidgetsBinding.instance.addPostFrameCallback((_) {});
                   },
                 ),
+
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                   " StringsManager.contactUs",
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    LocaleKeys.changePassword.tr(),
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
-                Divider(
-                  color: ColorManager.sidBarIcon,
-                  height: 15,
-                ),
-                ListTile(
-                    title: Text(LocaleKeys.signOut.tr()),
-                    leading: Icon(
-                      Icons.logout,
-                      color: ColorManager.sidBarIcon,
-                    ),
-                    onTap: () async {}),
-              ],
-            )
+
+                //     ListTile(
+                //         title: Text(StringsManager.signOut),
+                //         leading: Icon(
+                //           Icons.logout,
+                //           color: ColorManager.sidBarIcon,
+                //         ),
+                //         onTap: () async {}),
+                //   ],
+                // )
+
+                //     ListTile(
+                //         title: Text(LocaleKeys.signOut.tr()),
+                //         leading: Icon(
+                //           Icons.logout,
+                //           color: ColorManager.sidBarIcon,
+                //         ),
+                //         onTap: () async {}),
+                //   ],
+                // )
+              ], )
                 :ListView(
               children: [
                 ListTile(
                   subtitle: Text(
-                    "change language to english",
+                    LocaleKeys.changePassword.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.language.tr(),
+                    LocaleKeys.changePassword.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -162,15 +214,15 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    "تغيير كلمة السر ",
+                    "resetpass",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "resetpass",
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
-                    Icons.language,
+                    Icons.password,
                     color: ColorManager.sidBarIcon,
                   ),
                   onTap: () {
@@ -182,13 +234,73 @@ class _SettingsViewState extends State<SettingsView> {
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.inviteFriends,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     "StringsManager.inviteFriends",
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     LocaleKeys.changePassword.tr(),
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+                //
+                // Divider(
+                //   color: ColorManager.sidBarIcon,
+                //   height: 15,
+                // ),
+
+                // ListTile(
+                //   subtitle: Text(
+                //     StringsManager.contactUs,
+                //     style: TextStyle(color: ColorManager.sidBarIcon),
+                //   ),
+                //   title: Text(
+                //     StringsManager.changePassword,
+                //     //style: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   leading: Icon(
+                //     Icons.language,
+                //     color: ColorManager.sidBarIcon,
+                //   ),
+                //   onTap: () {
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {});
+                //   },
+                // ),
+
                 ListTile(
                   subtitle: Text(
-                    "StringsManager.inviteFriends",
+                    "contactus",
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "contactus",
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -199,38 +311,31 @@ class _SettingsViewState extends State<SettingsView> {
                     WidgetsBinding.instance.addPostFrameCallback((_) {});
                   },
                 ),
+
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-                ListTile(
-                  subtitle: Text(
-                   " LocaleKeys.contactUs.tr()",
-                    style: TextStyle(color: ColorManager.sidBarIcon),
-                  ),
-                  title: Text(
-                    LocaleKeys.changePassword.tr(),
-                    //style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  leading: Icon(
-                    Icons.language,
-                    color: ColorManager.sidBarIcon,
-                  ),
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {});
-                  },
-                ),
-                Divider(
-                  color: ColorManager.sidBarIcon,
-                  height: 15,
-                ),
-                ListTile(
-                    title: Text(LocaleKeys.signOut.tr()),
-                    leading: Icon(
-                      Icons.logout,
-                      color: ColorManager.sidBarIcon,
-                    ),
-                    onTap: () async {}),
+
+                //     ListTile(
+                //         title: Text(StringsManager.signOut),
+                //         leading: Icon(
+                //           Icons.logout,
+                //           color: ColorManager.sidBarIcon,
+                //         ),
+                //         onTap: () async {}),
+                //   ],
+                // )
+
+                //     ListTile(
+                //         title: Text(LocaleKeys.signOut.tr()),
+                //         leading: Icon(
+                //           Icons.logout,
+                //           color: ColorManager.sidBarIcon,
+                //         ),
+                //         onTap: () async {}),
+                //   ],
+                // )
               ],
             )
         ),
@@ -243,10 +348,10 @@ class _SettingsViewState extends State<SettingsView> {
   }
   _changeLanguage()async {
     // i will implement it later
-  await  _appPreferences.changeAppLanguage().then((value) =>
+    await  _appPreferences.changeAppLanguage().then((value) =>
 
-      Phoenix.rebirth(context)
-  );
+        Phoenix.rebirth(context)
+    );
 
 
   }

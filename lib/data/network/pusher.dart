@@ -1,6 +1,45 @@
 import 'package:laravel_echo/laravel_echo.dart';
 import 'package:pusher_client/pusher_client.dart';
+import 'package:untitled/app/app_preferences.dart';
+class PusherTrip{
+  final AppPreferences _appPreferences;
+  PusherTrip(this._appPreferences);
+  Future<PusherClient> createPusherClient()
+async  {
+  String  token= await _appPreferences.getToken();
+    PusherOptions options = PusherOptions(
+      host: PusherConfigration.hostEndPoint,
+      auth: PusherAuth(PusherConfigration.hostAuthEndPoint
+        , headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
 
+      ),
+      wsPort: PusherConfigration.port,
+      cluster:  PusherConfigration.cluster,
+    );
+    PusherClient pusherClient = PusherClient(
+      PusherConfigration.key,
+      options,
+      autoConnect:true,
+      enableLogging: true,
+
+    );
+    pusherClient.connect();
+    pusherClient.onConnectionStateChange((state) {
+      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
+    });
+    pusherClient.onConnectionError((error) {
+      print("error: ${error?.message} ${error?.code}${error?.exception}");
+    });
+    return pusherClient;
+  }
+}
+class ChannelTrip{
+
+}
 class LaravelEcho {
   static LaravelEcho? _singleton;
   static late Echo _echo;
@@ -9,7 +48,7 @@ class LaravelEcho {
   LaravelEcho._({
     required this.token,
   }) {
-    _echo   = createLaravelEcho(token);
+   // _echo   = createLaravelEcho(token);
   }
 
   factory LaravelEcho.init({
@@ -56,40 +95,18 @@ class PusherConfigration {
   static const key = "89c548f8b2ac294bf0b0";
   static const secret = "74c08533a22c0e0e9b74";
   static const cluster = "mt1";
-  static const hostEndPoint = "yaamen1.com";
-  static const hostAuthEndPoint = "$hostEndPoint/api/broadcasting/auth";
+  static const hostEndPoint = "https://yaamen1.com";
+  static const hostAuthEndPoint = "$hostEndPoint/broadcasting/auth";
   static const port = 6001;
 }
 
-PusherClient createPusherClient(String token) {
-  PusherOptions options = PusherOptions(
-      wsPort: PusherConfigration.port,
-      encrypted: true,
-      host: PusherConfigration.hostEndPoint,
-      cluster: PusherConfigration.cluster,
-      auth: PusherAuth(PusherConfigration.hostAuthEndPoint
-          , headers: {
-        "Authorization": "Bearer $token",
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
 
-      )
-
-
-  );
-  PusherClient pusherClient = PusherClient(
-    PusherConfigration.key,
-
-    options,
-    autoConnect: false,
-    enableLogging: true,
-  );
-
-
-  return pusherClient;
+Channel reciveEvent(PusherClient pusherClient,Function f, int id){
+ Channel channel = pusherClient.subscribe("private-tracking.${id}");
+  channel.bind("tracking", (PusherEvent? event) =>f);
+return channel;
 }
-
+/*
 Echo createLaravelEcho(String token) {
 
   return Echo(
@@ -98,3 +115,4 @@ Echo createLaravelEcho(String token) {
   );
 
 }
+ */

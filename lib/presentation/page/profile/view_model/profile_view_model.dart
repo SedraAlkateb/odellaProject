@@ -24,6 +24,7 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   final ProfileUseCase _profileUseCase;
   final UpdateImageUseCase _updateImageUseCase;
+  //TODO
   final UpdateStudentUseCase _updateStudentUseCase;
   final UpdateStudenttUseCase _studenttUseCase;
   final UpdatePasswordUseCase _updatePasswordUseCase;
@@ -306,7 +307,7 @@ notifyListeners();
     }, (data)async {
           setProfile(data);
           setIsStudent(true);
-          if(data.image!=null&& data.image!=""){
+          if(data.image!=null&& data.image!=""&&data.image!=" "){
             final file= await  ImageDownloader.downloadImage(data.image);
             setIm(file);
           }
@@ -323,9 +324,6 @@ notifyListeners();
       city_id: getCity(),
       firstName: getFirstName(),
       lastName: getLastName(),
- //     newPassword: studentUpdate.newPassword,
-  //    newPassword_confirmation: studentUpdate.newPassword_confirmation,
-   //   oldPassword: studentUpdate.oldPassword,
       phoneNumber: getPhone(),
       street: studentUpdate.street,
       subscription_id: getSubscriptionsId(),
@@ -367,32 +365,6 @@ notifyListeners();
     (await _updateImageUseCase.execute(UpdateImageUseCaseInput(
       getId()?? 0,
       studentUpdate.image ?? File(""),
-    )))
-        .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-    }, (data) {
-      // setProfile(data);
-      //   inputState.add(ContentState());
-      print("object");
-      notifyListeners();
-    });
-  }
-  UpdateStudent1() async {
-    //  inputState.add(
-    //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _updateStudentUseCase.execute(UpdateStudentUseCaseInput(
-        getId()?? 0,
-        area_id: studentUpdate.area_id,
-        city_id: studentUpdate.city_id,
-        firstName: studentUpdate.firstName,
-        lastName: studentUpdate.lastName,
-       phoneNumber: studentUpdate.phoneNumber,
-        street: studentUpdate.street,
-        subscription_id: studentUpdate.subscription_id.toString(),
-        transfer_position_id: studentUpdate.transfer_position_id.toString(),
-        transportation_line_id: studentUpdate.transportation_line_id.toString(),
-        university_id: studentUpdate.university_id.toString(),
-      image: studentUpdate.image
     )))
         .fold((failure) {
       // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));

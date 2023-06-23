@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -18,7 +19,7 @@ class ForgotPasswordView extends StatefulWidget {
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTextEditingController =
-      TextEditingController();
+  TextEditingController();
 
   late var _viewModel;
 
@@ -43,82 +44,77 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         Navigator.pushReplacementNamed(context,Routes.resetPasswordRoute);
       });
     }
-    return Scaffold(body: _getContentWidget());
+    return Scaffold(appBar:AppBar(title: Text(LocaleKeys.forgetPassword.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),body: _getContentWidget());
   }
 
   Widget _getContentWidget() {
-   final _viewModelFalse = Provider.of<ForgotPasswordViewModel>(context,listen: false);
-   final _viewModelTrue = Provider.of<ForgotPasswordViewModel>(context);
+    final _viewModelFalse = Provider.of<ForgotPasswordViewModel>(context,listen: false);
+    final _viewModelTrue = Provider.of<ForgotPasswordViewModel>(context);
 
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      padding: const EdgeInsets.only(top: AppPadding.p100),
-      color: ColorManager.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image(image: AssetImage(ImageAssets.logo4)),
+    return
 
-          SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                   Padding(
-                     padding: const EdgeInsets.only(
-                         left: AppPadding.p28, right: AppPadding.p28),
-                     child: Text( Provider.of<ForgotPasswordViewModel>(context).getMassage(),style: Theme.of(context).textTheme.titleLarge),
-                   ),
-                  const SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: AppPadding.p28, right: AppPadding.p28,top:AppPadding.p28),
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailTextEditingController,
-                        decoration: InputDecoration(
-                          hintText: "StringsManager.emailHint.tr()",
-                          labelText: "StringsManager.emailHint.tr()",
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return " StringsManager.forgetPasswordError";
-                          } else {
-                            _viewModelFalse
-                                .setEmail(value);
+      SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                right: AppPadding.p28,
+                left: AppPadding.p28,
+                bottom: AppPadding.p28),
+            child: Column(
+              children: [
+                Center(child: Image.asset(ImageAssets.logo4)),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //       left: AppPadding.p28, right: AppPadding.p28),
+                //   child: Text( Provider.of<ForgotPasswordViewModel>(context).getMassage(),style: Theme.of(context).textTheme.titleLarge),
+                // ),
+                const SizedBox(
+                  height:50,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        left: AppPadding.p28, right: AppPadding.p28,top:AppPadding.p28),
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _emailTextEditingController,
+                      decoration: InputDecoration(
+                        hintText: "email",
+                        labelText: "email",
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return LocaleKeys.errorEmail.tr();
+                        } else {
+                          _viewModelFalse
+                              .setEmail(value);
+                        }
+                      },
+                    )),
+                const SizedBox(
+                  height: AppSize.s28,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        left: AppPadding.p28, right: AppPadding.p28),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Provider.of<ForgotPasswordViewModel>(context,
+                                listen: false)
+                                .forgotPassword();
                           }
                         },
-                      )),
-                  const SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: AppPadding.p28, right: AppPadding.p28),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: AppSize.s40,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Provider.of<ForgotPasswordViewModel>(context,
-                                      listen: false)
-                                  .forgotPassword();
-                            }
-                          },
-                          child: Text("ResetPassword"),
-                        ),
-                      )),
-                ],
-              ),
+                        child: Text("resetpass"),
+                      ),
+                    )),
+              ],
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      );
   }
 }

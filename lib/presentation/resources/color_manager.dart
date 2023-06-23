@@ -7,14 +7,13 @@ class ColorManager{
   static Color darkGray =const Color(0xff525252);
   static Color grey =const Color(0xff737477) ;
   static Color lightGrey =const Color(0xff9e9e9e);
-  static Color others=const Color(0x27279BB5);
+  //static Color others=const Color(0x27279BB5);
   static Color shadow=const Color(0xff031c4c);
   static Color shadow1=const Color(0xE3242A2C);
 
   static Color card =const Color(0x73279BB5) ;
   static Color icon =const Color(0xFF136274) ;
   static Color sidBarIcon =const Color(0xFF084B59) ;
-  static Color icon1 =const Color(0xA6279BB5) ;
   static Color sidBar =const Color(0xA6279BB5) ;
   static Color profile =const Color(0x26279BB5) ;
   static Color side =const Color(0xFF279BB5) ;

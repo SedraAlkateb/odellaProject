@@ -6,6 +6,7 @@ import 'package:pusher_client/pusher_client.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
@@ -14,6 +15,7 @@ import 'package:untitled/presentation/page_superviser/home_supervisor/view_model
 import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
+import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
@@ -48,27 +50,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
            drawer:  DrawerSupervisorView(),
           appBar: AppBar(
             actions: [
-              Provider.of<Not>(context).getCount()==0
-                  ? IconButton(onPressed: () {
-                    Navigator.pushNamed(context,Routes.notification);
-
-                    }, icon: const Icon(Icons.notifications))
-                  : Padding(
-                padding: const EdgeInsets.all(20),
-                child: InkWell(
-                  child: Badge(
-                    badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-                    child: Icon(Icons.notifications,size: AppSize.s30),
-                    badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                  ),
-                  onTap: ()
-                  {
-                    print("kkkkkk");
-                    Navigator.pushNamed(context,Routes.notification);
-                  },
-                ),
-              ),
+              notificationIcon(context)
             ],
              title: Text(LocaleKeys.Home.tr(),
                  style: getBoldStyle(
@@ -126,14 +108,31 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   ),
                 ),
                 SizedBox(height: 4.h),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                        Routes.informationTrip
-                    );
-                  },
-                  child:  Text('${LocaleKeys.tripinformation.tr()}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
+                Center(
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                              Routes.informationTrip
+                          );
+                        },
+                        child:  Text('${LocaleKeys.tripinformation.tr()}' ' ?',style: TextStyle(fontSize: FontSize.s18,color: ColorManager.sidBar,),),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      IconButton(
+                          onPressed: ()async{
+                            await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
+                            Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);
+
+                          },
+                          icon: Icon(Icons.qr_code_scanner)
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(height: 4.h),
                 Column(
