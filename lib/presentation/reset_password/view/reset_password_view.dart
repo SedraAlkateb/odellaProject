@@ -7,6 +7,7 @@ import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+import 'package:sizer/sizer.dart';
 class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({Key? key}) : super(key: key);
 
@@ -31,7 +32,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
       });
     }
     return Scaffold(
-        appBar: AppBar(title: Text("resetpass",style: TextStyle(color: ColorManager.sidBarIcon),),),
+
+        appBar: AppBar(title: Text(LocaleKeys.resetpass.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),
         body: _getContentWidget());
   }
   Widget _getContentWidget() {
@@ -40,104 +42,98 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.only(
-                right: AppPadding.p28,
-                left: AppPadding.p28,
-                bottom: AppPadding.p28),
+            padding:  EdgeInsets.only(
+                right: 28.sp,
+                left: 28.sp,
+                bottom: 28.sp),
             child: Column(
               children: [
                 Center(child: Image.asset(ImageAssets.logo4)),
-                const SizedBox(
-                  height: AppSize.s28,
+                 SizedBox(
+                  height: 5.h,
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
-                  child: Text( Provider.of<ResetPasswordViewModel>(context).getMessage(),style: Theme.of(context).textTheme.titleLarge),
+                Container(
+                  height: 10.h,
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailTextEditingController,
+                    decoration: InputDecoration(
+                      hintText: LocaleKeys.email.tr(),
+                      labelText: LocaleKeys.email.tr(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return LocaleKeys.email.tr();
+                      } else {
+                        Provider.of<ResetPasswordViewModel>(context,listen: false)
+                            .setEmail(value);
+                      }
+                    },
+                  ),
                 ),
-                const SizedBox(
-                  height: AppSize.s28,
+                 SizedBox(
+                  height: 1.h,
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28,top:AppPadding.p28),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailTextEditingController,
-                      decoration: InputDecoration(
-                        hintText: "email",
-                        labelText: "email",
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "email";
-                        } else {
-                          Provider.of<ResetPasswordViewModel>(context,listen: false)
-                              .setEmail(value);
-                        }
-                      },
-                    )),
-                const SizedBox(
-                  height: AppSize.s28,
+                Container(
+                  height: 10.h,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _codeEditingController,
+                    decoration: InputDecoration(
+                      hintText: LocaleKeys.code.tr(),
+                      labelText: LocaleKeys.code.tr(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return LocaleKeys.code.tr();
+                      } else {
+                        Provider.of<ResetPasswordViewModel>(context,listen: false)
+                            .setCode(int.tryParse(_codeEditingController.text)!);
+                      }
+                    },
+                  ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28,top:AppPadding.p28),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: _codeEditingController,
-                      decoration: InputDecoration(
-                        hintText: LocaleKeys.code.tr(),
-                        labelText: LocaleKeys.code.tr(),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return LocaleKeys.code.tr();
-                        } else {
-                          Provider.of<ResetPasswordViewModel>(context,listen: false)
-                              .setCode(int.tryParse(_codeEditingController.text)!);
-                        }
-                      },
-                    )),
-                const SizedBox(
-                  height: AppSize.s28,
+               SizedBox(
+                  height:1.h,
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28,top:AppPadding.p28),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: _passwordTextEditingController,
-                      decoration: InputDecoration(
-                        hintText: "resetpass",
-                        labelText: "resetpass",
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "resetpass";
-                        } else {
-                          Provider.of<ResetPasswordViewModel>(context,listen: false)
-                              .setNewPassword(value);
-                        }
-                      },
-                    )),
-                const SizedBox(
-                  height: AppSize.s28,
+                Container(
+                  height: 10.h,
+                  child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: _passwordTextEditingController,
+                    decoration: InputDecoration(
+                      hintText: LocaleKeys.resetpass.tr(),
+                      labelText: LocaleKeys.resetpass.tr(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return LocaleKeys.resetpass.tr();
+                      } else {
+                        Provider.of<ResetPasswordViewModel>(context,listen: false)
+                            .setNewPassword(value);
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 4.h,
                 ),
 
                 Provider.of<ResetPasswordViewModel>(context,
                     listen: false).getSuccses() ?
                 Row(
                   children: [
-                    Text("Succsses"),
-                    Icon(Icons.check_circle ,color: ColorManager.sidBar,)
+
+                    Text(LocaleKeys.success.tr()),
+                    Icon(Icons.check_circle ,color: ColorManager.icon1,)
                   ],
 
                 ):
                 Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
+
+                    padding:EdgeInsets.only(
+                        left: 2.sp, right:2.sp),
                     child: SizedBox(
                       width: double.infinity,
                       height: AppSize.s40,
@@ -149,7 +145,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                                 .resetPassword();
                           }
                         },
-                        child: Text("resetpass"),
+
+                        child: Text(LocaleKeys.save.tr()),
                       ),
                     )),
               ],

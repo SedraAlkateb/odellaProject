@@ -22,7 +22,7 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageList extends State<MessageList> {
-  //List<RemoteMessage> _messages = [];
+
   @override
   void initState() {
     super.initState();
@@ -35,13 +35,7 @@ class _MessageList extends State<MessageList> {
 
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            notificationIcon(context)
-          ],
-        ),
+        InkWell(child: Text("make all as read")),
         ListView.separated(
             shrinkWrap: true,
             separatorBuilder: (context, index) => const SizedBox(
@@ -49,6 +43,7 @@ class _MessageList extends State<MessageList> {
               height: AppSize.s20,
               // color: Color,
             ),
+
             itemCount: Provider.of<Not>(context).getMessageL(),
             itemBuilder: (context, index) {
               RemoteMessage message = Provider.of<Not>(context,listen: false).getMessageIndex(index);
@@ -56,7 +51,7 @@ class _MessageList extends State<MessageList> {
                 title: Text(message.notification?.title ?? 'N/D',style:const TextStyle(fontWeight: FontWeight.bold),),
                 subtitle:
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
-                trailing: const Icon(Icons.notifications_active,color: Colors.red,),
+                trailing: const Icon(Icons.circle,color: Colors.red,),
                 onTap: () {
                     if( Provider.of<Not>(context).getCount()!=0) {
                       Provider.of<Not>(context, listen: false).updateDec();

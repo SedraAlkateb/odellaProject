@@ -243,8 +243,8 @@ class _SignUpViewState extends State<SignUpView> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: StringsManager.username,
-                            labelText: StringsManager.username,
+                            hintText: LocaleKeys.email.tr(),
+                            labelText: LocaleKeys.email.tr(),
                             prefixIcon: Icon(
                               Icons.email,
                               color: ColorManager.kMainColor,
@@ -290,8 +290,8 @@ class _SignUpViewState extends State<SignUpView> {
 
                                   color: ColorManager.kMainColor,
                                 )),
-                            hintText: StringsManager.password,
-                            labelText: StringsManager.password,
+                            hintText: LocaleKeys.password,
+                            labelText: LocaleKeys.password,
                           ),
                         ),
                       ),

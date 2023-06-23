@@ -3,7 +3,7 @@
 abstract class  LocaleKeys {
   static const title = 'title';
   static const welcome = 'welcome';
-  static const username = 'username';
+  static const email = 'email';
   static const usernameError = 'usernameError';
   static const passwordError = 'passwordError';
   static const password = 'password';
@@ -90,5 +90,12 @@ abstract class  LocaleKeys {
   static const date = 'date';
   static const availableseats = 'availableseats';
   static const code = 'code';
+  static const changelang = 'changelang';
+  static const changelangtoarabic = 'changelangtoarabic';
+  static const resetpass = 'resetpass';
+  static const resetpasstonew = 'resetpasstonew';
+  static const contactus = 'contactus';
+  static const qrcode = 'qrcode';
+  static const notification = 'notification';
 
 }

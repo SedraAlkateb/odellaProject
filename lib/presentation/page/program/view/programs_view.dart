@@ -488,7 +488,7 @@ class TripStudentWidget extends StatelessWidget {
         ),
  */
 /*
-                          Text(StringsManager.go_confirm),
+                          Text(LocaleKeys.go_confirm),
                           Checkbox(
                             value: myBool,
                             onChanged: (bool? value) {
@@ -508,7 +508,7 @@ class TripStudentWidget extends StatelessWidget {
                             },
                           ),
                           Text(
-                            StringsManager.return_confirm,
+                            LocaleKeys.return_confirm,
                           ),
                           Checkbox(
                             value: myBool2,
@@ -532,7 +532,7 @@ class TripStudentWidget extends StatelessWidget {
 /*
                         Row(
                           children: [
-                            Text(StringsManager.go_confirm),
+                            Text(LocaleKeys.go_confirm),
                             Checkbox(
                               value: myBool,
                               onChanged: (bool? value) {
@@ -552,7 +552,7 @@ class TripStudentWidget extends StatelessWidget {
                               },
                             ),
                             Text(
-                              StringsManager.return_confirm,
+                              LocaleKeys.return_confirm,
                             ),
                             Checkbox(
                               value: myBool2,
@@ -696,7 +696,7 @@ getWedgit() {
                         SizedBox(height: 4.h),
                         Row(
                           children: [
-                            Text(StringsManager.go_confirm),
+                            Text(LocaleKeys.go_confirm),
                             Checkbox(
                               value: myBool,
                               onChanged: (bool? value) {
@@ -716,7 +716,7 @@ getWedgit() {
                               },
                             ),
                             Text(
-                              StringsManager.return_confirm,
+                              LocaleKeys.return_confirm,
                             ),
                             Checkbox(
                               value: myBool2,
@@ -743,7 +743,7 @@ getWedgit() {
                   ),
                 ),
                 Text(
-                  StringsManager.rating,
+                  LocaleKeys.rating,
                   style:
                   const TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -876,7 +876,7 @@ getWedgit() {
                           SizedBox(height: 2.h),
                           Row(
                             children: [
-                              Text(StringsManager.go_confirm),
+                              Text(LocaleKeys.go_confirm),
                               Checkbox(
                                 value: myBool,
                                 onChanged: (bool? value) {
@@ -896,7 +896,7 @@ getWedgit() {
                                 },
                               ),
                               Text(
-                                StringsManager.return_confirm,
+                                LocaleKeys.return_confirm,
                               ),
                               Checkbox(
                                 value: myBool2,
@@ -924,7 +924,7 @@ getWedgit() {
                   ),
                   const SizedBox(height: 25),
                   Text(
-                    StringsManager.rating,
+                    LocaleKeys.rating,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold),
                   ),

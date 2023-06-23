@@ -7,6 +7,7 @@ import 'package:untitled/notification_details.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
+import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map/mapline.dart';
@@ -71,6 +72,9 @@ class Routes {
   static const String message = "/message";
 
   static const String messageDetail1 = "/messageDetail1";
+  static const String changepass = "/changepass";
+  static const String display_image = "/displayimage";
+
 
 }
 
@@ -138,6 +142,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  MessageList());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
+      case Routes.changepass:
+        return MaterialPageRoute(builder: (_) =>  ChangePassView());
+
+
       // case Routes.mapline:
       //   //return MaterialPageRoute(builder: (_) => MapboxMapPage());
 

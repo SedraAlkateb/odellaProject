@@ -24,4 +24,5 @@ extension SizerExt on num
       this * SizerUtil.height / 100;
   double get w =>
       this * SizerUtil.width / 100;
+  double get sp=> this *((SizerUtil.width)/3)/100;
 }

@@ -12,7 +12,7 @@ class StringsManager{
   static const onBoardingSubTitle3 ="Tut app is an awesone flutter application using clean architector s1";
   static const onBoardingSubTitle4 ="Tut app is an awesone flutter application using clean architector s1";
   static const skip ="Skip";
-  static String username =LocaleKeys.username.tr();
+  static String username =LocaleKeys.email.tr();
   static String usernameError =LocaleKeys.usernameError.tr();
   static String passwordError =LocaleKeys.passwordError.tr();
 

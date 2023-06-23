@@ -8,6 +8,7 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
+import 'package:sizer/sizer.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({Key? key}) : super(key: key);
@@ -44,7 +45,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         Navigator.pushReplacementNamed(context,Routes.resetPasswordRoute);
       });
     }
-    return Scaffold(appBar:AppBar(title: Text(LocaleKeys.forgetPassword.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),body: _getContentWidget());
+
+    return Scaffold(appBar:AppBar(title: Text(LocaleKeys.forgetPassword.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),
+        body: _getContentWidget());
   }
 
   Widget _getContentWidget() {
@@ -57,19 +60,16 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.only(
+
+            padding: EdgeInsets.only(
                 right: AppPadding.p28,
                 left: AppPadding.p28,
                 bottom: AppPadding.p28),
             child: Column(
               children: [
                 Center(child: Image.asset(ImageAssets.logo4)),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //       left: AppPadding.p28, right: AppPadding.p28),
-                //   child: Text( Provider.of<ForgotPasswordViewModel>(context).getMassage(),style: Theme.of(context).textTheme.titleLarge),
-                // ),
-                const SizedBox(
+
+                 SizedBox(
                   height:50,
                 ),
                 Padding(
@@ -79,8 +79,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailTextEditingController,
                       decoration: InputDecoration(
-                        hintText: "email",
-                        labelText: "email",
+                        hintText: LocaleKeys.email.tr(),
+                        labelText: LocaleKeys.email.tr()
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -108,7 +108,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                 .forgotPassword();
                           }
                         },
-                        child: Text("resetpass"),
+                        child: Text(LocaleKeys.save.tr()),
                       ),
                     )),
               ],

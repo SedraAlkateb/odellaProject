@@ -222,22 +222,22 @@ Widget build(BuildContext context) {
     appBar: AppBar(
       title: const Text('Notifications'),
       actions: [
-       // Provider.of<Not>(context).getCount()==0
-       //    ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
-       // :
         notificationIcon(context)
       ],
     ),
     body: SingleChildScrollView(
       child: Column(
-        children: const [
+        children:  [
           Padding(
             padding: EdgeInsets.all(16),
-            child: Center(
-              child: Text(
-                'Notifications List',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Now',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
           MessageList(),
