@@ -133,6 +133,9 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   onHover: (event) {
                     Text("information trip");
                   },),
+
+
+                  ),
                       SizedBox(
                         width: 5.w,
                       ),
@@ -143,10 +146,11 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
 
                           },
                           icon: Icon(Icons.qr_code_scanner)
-                      )
-                    ],
-                  ),
+                      ),
+                      SizedBox(height: 4.h),
+             ]
 
+                ),
                 ),
                 // Row(
                 //   children: [
@@ -180,7 +184,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                 //     ),
                 //   ],
                 // ),
-                SizedBox(height: 4.h),
+
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -280,6 +284,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                           ),
                           Checkbox(value:true, onChanged: (value)
                           {
+                            model.confirmQr( model.getUser()[index].id);
                             bool? vv=value;
                           },
                             activeColor: ColorManager.sidBar,
