@@ -45,6 +45,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         Navigator.pushReplacementNamed(context,Routes.resetPasswordRoute);
       });
     }
+
     return Scaffold(appBar:AppBar(title: Text(LocaleKeys.forgetPassword.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),
         body: _getContentWidget());
   }
@@ -59,6 +60,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         child: Form(
           key: _formKey,
           child: Padding(
+
             padding: EdgeInsets.only(
                 right: AppPadding.p28,
                 left: AppPadding.p28,
@@ -66,6 +68,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             child: Column(
               children: [
                 Center(child: Image.asset(ImageAssets.logo4)),
+
                  SizedBox(
                   height:50,
                 ),

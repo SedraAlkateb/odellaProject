@@ -1835,11 +1835,50 @@ class QrConfirmResponse  extends BaseResponse {
       _$QrConfirmResponseToJson(this);
 
 }
+@JsonSerializable()
+class NotificationReadDataResponse {
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"user_id")
+  int? userId;
+  @JsonKey(name:"title")
+  String? title;
+  @JsonKey(name:"body")
+  String? body;
+  @JsonKey(name:"is_read")
+  String? isRead;
+  @JsonKey(name:"created_at")
+  String? created_at;
+  @JsonKey(name:"updated_at")
+  String? updated_at;
+
+
+  NotificationReadDataResponse(this.id, this.userId, this.title, this.body,
+      this.isRead, this.created_at, this.updated_at);
+
+  factory NotificationReadDataResponse.fromJson(Map<String,dynamic>json)=>
+      _$NotificationReadDataResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$NotificationReadDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class NotificationReadResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  NotificationReadDataResponse? data;
+  NotificationReadResponse(this.data);
+  // from json
+  factory NotificationReadResponse.fromJson(Map<String,dynamic>json)=>
+      _$NotificationReadResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$NotificationReadResponseToJson(this);
+
+}
 
 @JsonSerializable()
 class NotificationDataResponse {
-  // @JsonKey(name:"position")
-  // DataTransferPositionsResponse? position;
   @JsonKey(name:"id")
   int? id;
   @JsonKey(name:"title")

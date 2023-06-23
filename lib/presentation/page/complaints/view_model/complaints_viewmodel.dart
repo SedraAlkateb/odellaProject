@@ -28,8 +28,8 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     tripId=id;
     notifyListeners();
   }
+  String lang=LanguageType.ENGLISH.getValue();
  Future<String> date(String d)async{
-    String lang =await _appPreferences.getAppLanguage();
     if(lang== LanguageType.ENGLISH.getValue()){
       DateTime date = DateTime.parse(d);
       String formattedDate = DateFormat('EEEE, MMMM d, y', 'en_US').format(date);
@@ -42,7 +42,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
 
   }
   time(String d){
-    if(_appPreferences.getAppLanguage()==LanguageType.ENGLISH.getValue()){
+    if(lang==LanguageType.ENGLISH.getValue()){
 // تحويل النص إلى كائن DateTime
       DateTime time = DateFormat('HH:mm:ss').parse(d);
 // تنسيق الوقت باللغة الإنجليزية
@@ -86,6 +86,8 @@ Future  storeClaim() async {
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
       setTrip(data.dataTrips!);
+       lang =await _appPreferences.getAppLanguage();
+      lang=await _appPreferences.getAppLanguage();
       notifyListeners();
     });
   }

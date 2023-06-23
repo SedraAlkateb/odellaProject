@@ -32,6 +32,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
       });
     }
     return Scaffold(
+
         appBar: AppBar(title: Text(LocaleKeys.resetpass.tr(),style: TextStyle(color: ColorManager.sidBarIcon),),),
         body: _getContentWidget());
   }
@@ -123,12 +124,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     listen: false).getSuccses() ?
                 Row(
                   children: [
+
                     Text(LocaleKeys.success.tr()),
                     Icon(Icons.check_circle ,color: ColorManager.icon1,)
                   ],
 
                 ):
                 Padding(
+
                     padding:EdgeInsets.only(
                         left: 2.sp, right:2.sp),
                     child: SizedBox(
@@ -142,6 +145,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                                 .resetPassword();
                           }
                         },
+
                         child: Text(LocaleKeys.save.tr()),
                       ),
                     )),

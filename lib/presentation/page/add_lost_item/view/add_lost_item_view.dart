@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
@@ -50,23 +51,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                   ),
                 ),
                 actions: [
-                  Provider.of<Not>(context).getCount()==0
-                      ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
-                      : Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: InkWell(
-                      child: Badge(
-                        badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-                        child: Icon(Icons.notifications,size: AppSize.s30),
-                        badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                      ),
-                      onTap: ()
-                      {
-                        print("kkkkkk");
-                      },
-                    ),
-                  ),
+                  notificationIcon(context)
                 ],
               ),
               body: SingleChildScrollView(
@@ -162,7 +147,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                     ),
 
                     SizedBox(height: 2.h),
-                    Row(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

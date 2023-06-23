@@ -2,12 +2,14 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pusher_client/pusher_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/data/data_source/remote_data_source.dart';
 import 'package:untitled/data/network/app_api.dart';
 import 'package:untitled/data/network/dio_factory.dart';
 import 'package:untitled/data/network/network_info.dart';
+import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/data/repository/repository.dart';
 import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
@@ -78,15 +80,15 @@ Future<void>initAppModule()async{
   instance.registerLazySingleton<SharedPreferences>(() =>
   sharedPrefs);
   //app prefs instance
-  instance.
-  registerLazySingleton<AppPreferences>(() =>
+  instance.registerLazySingleton<AppPreferences>(() =>
       AppPreferences(instance()));
   //network info instance
   instance.registerLazySingleton<NetworkInfo>(() =>
       NetWorkInfoImpl(InternetConnectionChecker()));
   instance.registerLazySingleton<DioFactory>(() =>
       DioFactory(instance()));
-
+  instance.registerLazySingleton<PusherTrip>(() =>
+      PusherTrip(instance()));
   Dio dio =await instance<DioFactory>().getDio();
   instance.registerLazySingleton<AppServiceClient>(() =>
       AppServiceClient(dio));
@@ -162,8 +164,9 @@ Future<void>initdailyReservationsModule() async{
 Future<void>initHomeSupervisorModule() async{
   if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
     instance.registerFactory<HomeSupervisorUseCase>(() =>
-        HomeSupervisorUseCase(instance()));
-    instance.registerFactory<SupervisorUpdatePositionUseCase>(() =>
+        HomeSupervisorUseCase(instance()));}
+    if(!GetIt.I.isRegistered<SupervisorUpdatePositionUseCase>()) {
+      instance.registerFactory<SupervisorUpdatePositionUseCase>(() =>
         SupervisorUpdatePositionUseCase(instance()));
     instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance(),instance()));
   }
@@ -172,9 +175,13 @@ Future<void>initTripSupervisorModule() async{
   if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
     instance.registerFactory<HomeSupervisorUseCase>(() =>
         HomeSupervisorUseCase(instance()));
-    instance.registerFactory<SupervisorTripViewModel>(() =>SupervisorTripViewModel(instance()));
   }
+    if(!GetIt.I.isRegistered<SupervisorTripViewModel>()) {
+      instance.registerFactory<SupervisorTripViewModel>(() =>
+          SupervisorTripViewModel(instance()));
+    }
 }
+
 Future<void>initNotificationModule() async{
   if(!GetIt.I.isRegistered<NotificationUseCase>()) {
     instance.registerFactory<NotificationUseCase>(() =>

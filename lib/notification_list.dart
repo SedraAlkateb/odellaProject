@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
@@ -21,22 +22,7 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageList extends State<MessageList> {
-  // List<RemoteMessage> _messages = [];
 
-  // void initState() {
-  //
-  //
-  //   super.initState();
-  //   Provider.of<Not>(context,listen: false).start();
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     setState(() {
-  //       _messages = [..._messages, message];
-  //
-  //     });
-  //     Provider.of<Not>(context,listen: false).updateInc();
-  //     print( Provider.of<Not>(context,listen: false).getCount());
-  //   });
-  // }
   @override
   void initState() {
     super.initState();
@@ -57,10 +43,9 @@ class _MessageList extends State<MessageList> {
               height: AppSize.s20,
               // color: Color,
             ),
-            //itemCount: _messages.length,
+
             itemCount: Provider.of<Not>(context).getMessageL(),
             itemBuilder: (context, index) {
-              //RemoteMessage message = _messages[index];
               RemoteMessage message = Provider.of<Not>(context,listen: false).getMessageIndex(index);
               return ListTile(
                 title: Text(message.notification?.title ?? 'N/D',style:const TextStyle(fontWeight: FontWeight.bold),),
@@ -68,14 +53,11 @@ class _MessageList extends State<MessageList> {
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
                 trailing: const Icon(Icons.circle,color: Colors.red,),
                 onTap: () {
-
                     if( Provider.of<Not>(context).getCount()!=0) {
                       Provider.of<Not>(context, listen: false).updateDec();
                     }
-
                   Navigator.pushNamed(context, '/message',
                     arguments: MessageArguments(message, false),);
-
                 }
               );
             }),

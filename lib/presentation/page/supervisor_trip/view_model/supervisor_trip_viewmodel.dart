@@ -10,9 +10,11 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/data/responses/responses.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
+import 'package:untitled/main.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 
 class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier{
+  AppPreferences _appPreferences =instance<AppPreferences>();
   late  PusherClient pusherClient;
   late Channel channel;
   late GoogleMapController _controller;
@@ -55,38 +57,14 @@ int tripId=0;
 
     return formatted;
   }
+  PusherTrip _pusherTrip=instance<PusherTrip>();
   int getTimezoneOffset(String timezone) {
     DateTime now = DateTime.now();
     Duration offset = DateTime.parse(now.toString()).timeZoneOffset;
     int hours = offset.inHours;
     return hours;
   }
-
-
-  getPusherConnect(){
-    PusherOptions options = PusherOptions(
-      encrypted: true,
-      cluster:  PusherConfigration.cluster,
-    );
-    pusherClient = PusherClient(
-      PusherConfigration.key,
-
-      options,
-      autoConnect:true,
-      enableLogging: true,
-
-    );
-    pusherClient.connect();
-    pusherClient.onConnectionStateChange((state) {
-      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
-    });
-
-    pusherClient.onConnectionError((error) {
-      print("error: ${error?.message} ${error?.code}${error?.exception}");
-    });
-
-  }
-
+  String t="";
   tripSupervisor() async{
     setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
@@ -95,21 +73,27 @@ int tripId=0;
           print(failure.massage);
         },
             (data)  async{
+             t= await  _appPreferences.getToken();
+             print(t);
           if(data!=null){
-            if(data.dataHomeSupervisor!=null
-              //  && data.dataHomeSupervisor?.id!=0
+            if(data.dataHomeSupervisor!=null && data.dataHomeSupervisor?.id!=0
             ){
               setTripId(data.dataHomeSupervisor?.id ??0);
-              getPusherConnect();
-              channel = pusherClient.subscribe("tracking.4");//${data.dataHomeSupervisor?.id}
+            pusherClient=await _pusherTrip.createPusherClient();
+            channel = pusherClient.subscribe("private-tracking.${data.dataHomeSupervisor?.id}");
               channel.bind("tracking", (PusherEvent? event) {
                 print(event?.data);
                 if(event?.data!=null){
                   updateMarker(event!.data!);
                 }
               });
+            }else{
+              print("object");
             }
 
+          }
+          else{
+            print("object");
           }
         });
   }
@@ -145,7 +129,8 @@ int tripId=0;
 
   @override
   void dispose() {
-    LaravelEcho.instance.disconnect();
+    pusherClient.unsubscribe("tracking.${12}");
+    pusherClient.disconnect();
     super.dispose();
   }
 

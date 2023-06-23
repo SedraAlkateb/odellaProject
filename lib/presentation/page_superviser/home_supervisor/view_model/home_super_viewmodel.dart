@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:pusher_client/pusher_client.dart';
+import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/di.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
@@ -12,6 +14,7 @@ import 'package:location/location.dart' as loc;
 import 'package:untitled/domain/usecase/supervisor_update_position_usecase.dart';
 
 class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
+  AppPreferences _appPreferences =instance<AppPreferences>();
 
   HomeSupervisorUseCase _homeSupervisorUseCase;
   SupervisorUpdatePositionUseCase _supervisorUpdatePositionUseCase;
@@ -111,15 +114,64 @@ LocationData? getLocationData(){
 String? getError(){
   return _error;
 }
+  late  PusherClient pusherClient;
+  late Channel channel;
+
+  getPusherConnect(String  token){
+    PusherOptions options = PusherOptions(
+      host: PusherConfigration.hostEndPoint,
+      auth: PusherAuth(PusherConfigration.hostAuthEndPoint
+        , headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+
+        },
+
+      ),
+      wsPort: PusherConfigration.port,
+      cluster:  PusherConfigration.cluster,
+    );
+    pusherClient = PusherClient(
+      PusherConfigration.key,
+      options,
+      autoConnect:false,
+      enableLogging: true,
+
+    );
+    pusherClient.connect();
+    pusherClient.onConnectionStateChange((state) {
+      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
+    });
+
+    pusherClient.onConnectionError((error) {
+      print("error: ${error?.message} ${error?.code}${error?.exception}");
+    });
+
+  }
+  String t="";
   Future<void> _setupLocationStream(int tripId) async {
     final location = loc.Location() ;
+    t= await  _appPreferences.getToken();
+
     _locationData = await LocationService().getLocation();
     try {
       // await LocationService().getPermission();
-      location.onLocationChanged.listen((LocationData newLocationData) {
+ //     getPusherConnect();
+//      channel = pusherClient.subscribe("tracking.${12}");//${tripId};
+
+      location.onLocationChanged.listen((LocationData newLocationData)async {
         if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
+          await  getPusherConnect(t);
+          channel = pusherClient.subscribe("private-tracking.${tripId}");
+          channel.trigger("tracking", {"lng":99.00,"lat":99.00});
+        /*
           supervisorPosition(
               tripId, newLocationData.longitude!, newLocationData.latitude!);
+         */
+
+
+
         }
         setLocation(newLocationData, null);
       });
