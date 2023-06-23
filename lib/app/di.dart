@@ -165,9 +165,10 @@ Future<void>initHomeSupervisorModule() async{
   if(!GetIt.I.isRegistered<HomeSupervisorUseCase>()) {
     instance.registerFactory<HomeSupervisorUseCase>(() =>
         HomeSupervisorUseCase(instance()));}
-    if(!GetIt.I.isRegistered<SupervisorUpdatePositionUseCase>()) {
-      instance.registerFactory<SupervisorUpdatePositionUseCase>(() =>
-        SupervisorUpdatePositionUseCase(instance()));
+  if(!GetIt.I.isRegistered<ConfirmQrUseCase>()) {
+    instance.registerFactory<ConfirmQrUseCase>(() =>
+        ConfirmQrUseCase(instance()));}
+    if(!GetIt.I.isRegistered<HomeSuperVisorViewModel>()) {
     instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance(),instance()));
   }
 }
@@ -193,7 +194,9 @@ Future<void>initNotificationModule() async{
 Future<void>initScanQrModule() async{
   if(!GetIt.I.isRegistered<ConfirmQrUseCase>()) {
     instance.registerFactory<ConfirmQrUseCase>(() =>
-        ConfirmQrUseCase(instance()));
+        ConfirmQrUseCase(instance()));}
+  if(!GetIt.I.isRegistered<ScanQrViewModel>()) {
+
     instance.registerFactory<ScanQrViewModel>(() =>ScanQrViewModel(instance()));
   }
 }

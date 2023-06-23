@@ -126,7 +126,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   children: [
 
                     Text(LocaleKeys.success.tr()),
-                    Icon(Icons.check_circle ,color: ColorManager.icon1,)
+                    Icon(Icons.check_circle ,color: ColorManager.sidBar,)
                   ],
 
                 ):
