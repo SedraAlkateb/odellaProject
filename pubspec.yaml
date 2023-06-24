@@ -61,6 +61,9 @@ dependencies:
   firebase_analytics: ^10.4.3
   flutter_local_notifications: ^14.1.1
   badges: ^3.1.1
+
+
+  google_directions_api: ^0.9.1
   laravel_echo:
     git:
       url: https://github.com/kakajansh/echo.git

@@ -1,7 +1,6 @@
 
 
 import 'dart:io';
-
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +14,12 @@ import 'package:untitled/presentation/page/profile/view_model/profile_view_model
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/routes_manager.dart';
-
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -191,7 +190,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ],
                                 ),
                                  SizedBox(
-                                  width: 2.w,
+                                  width: 1.w,
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -219,6 +218,13 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  width: 3.w,
+                                ),
+                                IconButton(onPressed: ()
+                                {
+                                  Navigator.pushNamed(context, Routes.qrCodeViewRoute);
+                                }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
                               ],
                             ),
                             SizedBox(height: 2.h,),
@@ -407,15 +413,22 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                               // mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.location_city,size: AppSize.s25,),
+                                  //SizedBox(height: 4.h,),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5.h,),
+                                      Icon(Icons.location_city,size: AppSize.s25,),
+                                    ],
+                                  ),
                                   SizedBox(
                                     width: 6.w,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("   City :"),
+                                      Text("   ${LocaleKeys.city.tr()} "),
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
@@ -446,8 +459,12 @@ class _ProfileViewState extends State<ProfileView> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
-                                  Icon(Icons.area_chart_outlined,size: AppSize.s25,),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5.h,),
+                                      Icon(Icons.area_chart_outlined,size: AppSize.s25,),
+                                    ],
+                                  ),
                                   SizedBox(
                                     width: 6.w,
                                   ),
@@ -455,7 +472,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
 
-                                      Text("   Area :"),
+                                      Text("   ${LocaleKeys.area.tr()} "),
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
@@ -484,17 +501,22 @@ class _ProfileViewState extends State<ProfileView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
-                                  Icon(Icons.account_balance,size: AppSize.s25,),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5.h,),
+                                      Icon(Icons.account_balance,size: AppSize.s25,),
+                                    ],
+                                  ),
                                   SizedBox(
                                     width: 6.w,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("   University :"),
+                                      Text("   ${LocaleKeys.university.tr()} "),
                                       SizedBox(
                                         height: 14.h,
-                                        width: 70.w,
+                                        width: 72.w,
                                         child: DropdownButtonFormField(
                                             icon:
                                             const Icon(Icons.keyboard_arrow_down),
@@ -529,10 +551,26 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                               Column(
                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                Text("${LocaleKeys.subscription.tr()} : lllllll"),
-                                Text("${LocaleKeys.daysNumber.tr()} : lllllll"),
-                                Text("${LocaleKeys.price.tr()} : lllllll"),
+                                  SizedBox(height: 4.h,),
+                                Row(
+                                  children: [
+                                    Text("${LocaleKeys.subscription.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16),),
+                                  ],
+                                ),
+                                SizedBox(height: 2.h,),
+                                Row(
+                                  children: [
+                                    Text("${LocaleKeys.daysNumber.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
+                                  ],
+                                ),
+                                  SizedBox(height: 2.h,),
+                                Row(
+                                  children: [
+                                    Text("${LocaleKeys.price.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
+                                  ],
+                                ),
                               ],),
 
 
@@ -683,6 +721,13 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
+                              SizedBox(
+                                width: 18.w,
+                              ),
+                              IconButton(onPressed: ()
+                              {
+                                Navigator.pushNamed(context, Routes.qrCodeViewRoute);
+                              }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
                               ],
                             ),
                           ),
@@ -911,14 +956,19 @@ class _ProfileViewState extends State<ProfileView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.location_city,size: AppSize.s25,),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 3.h,),
+                                    Icon(Icons.location_city,size: AppSize.s25,),
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 6.w,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("   City :"),
+                                    Text("   ${LocaleKeys.city.tr()} "),
                                     SizedBox(
                                       height: 10.h,
                                       width: 120.w,
@@ -950,7 +1000,12 @@ class _ProfileViewState extends State<ProfileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                Icon(Icons.area_chart_outlined,size: AppSize.s25,),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 3.h,),
+                                    Icon(Icons.area_chart_outlined,size: AppSize.s25,),
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 6.w,
                                 ),
@@ -958,7 +1013,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
 
-                                    Text("   Area :"),
+                                    Text("   ${LocaleKeys.area.tr()}"),
                                     SizedBox(
                                       height: 10.h,
                                       width: 120.w,
@@ -988,17 +1043,22 @@ class _ProfileViewState extends State<ProfileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                Icon(Icons.account_balance,size: AppSize.s25,),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 3.h,),
+                                    Icon(Icons.account_balance,size: AppSize.s25,),
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 6.w,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("   University :"),
+                                    Text("   ${LocaleKeys.university.tr()}"),
                                     SizedBox(
                                       height: 10.h,
-                                      width: 120.w,
+                                      width: 128.w,
                                       child: DropdownButtonFormField(
                                           icon:
                                           const Icon(Icons.keyboard_arrow_down),
@@ -1029,11 +1089,33 @@ class _ProfileViewState extends State<ProfileView> {
                         Divider(height: 2.h,
                           color: ColorManager.sidBarIcon,
                           thickness: 1,),
-                            SizedBox(height: 4.h,),
-                            Text("${LocaleKeys.subscription.tr()} : lllllll"),
-                            Text("${LocaleKeys.daysNumber.tr()} : lllllll"),
-                            Text("${LocaleKeys.price.tr()} : lllllll"),
-                            SizedBox(height: 4.h,),
+                            SizedBox(height: 2.h,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 4.h,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 4.w,),
+                                    Text("${LocaleKeys.subscription.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16),),
+                                  ],
+                                ),
+                                SizedBox(height: 2.h,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 4.w,),
+                                    Text("${LocaleKeys.daysNumber.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
+                                  ],
+                                ),
+                                SizedBox(height: 2.h,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 4.w,),
+                                    Text("${LocaleKeys.price.tr()} : lllllll",style: getBoldStyle(color:Colors.black,fontSize: AppSize.s16)),
+                                  ],
+                                ),
+                              ],),
                           ],
                         ),
 
