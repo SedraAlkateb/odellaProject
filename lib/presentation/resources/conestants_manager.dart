@@ -7,4 +7,10 @@ class AppConstants{
   static const int complaints=0;
   static const int program=4;
 
+  static const int home2=1;
+  static const int profile2=2;
+  static const int dailyrecieve=0;
+  // static const int complaints=0;
+  static const int program2=3;
+
 }

@@ -12,6 +12,7 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/codegen_loader.g.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -72,6 +73,7 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     /// ToDO change your data ///
@@ -221,6 +223,7 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       title: const Text('Notifications'),
+      backgroundColor: ColorManager.sidBar,
       actions: [
         notificationIcon(context)
       ],
@@ -228,18 +231,7 @@ Widget build(BuildContext context) {
     body: SingleChildScrollView(
       child: Column(
         children:  [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Now',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
+
           MessageList(),
         ],
       ),

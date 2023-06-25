@@ -57,7 +57,8 @@ final  _scaffoldKey = GlobalKey<FormState>();
     return Scaffold(
         drawer:  NavBar(),
         appBar: AppBar(
-          title: Text( LocaleKeys.Home.tr(),style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20),
+          title: Text( LocaleKeys.Home.tr(),style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s20,
+          ),
           ),
           actions: [
 

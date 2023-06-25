@@ -113,7 +113,7 @@ class _ProgramsViewState extends State<ProgramsView>
                       ),
                     )
                         : Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 15.sp),
+                      padding:  EdgeInsets.symmetric(vertical: 16.sp),
                       child: ListView(
                         children: List.generate(
                             model.getProgramDay().length,
@@ -258,7 +258,6 @@ class TripStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -333,9 +332,14 @@ class TripStudentWidget extends StatelessWidget {
               ),
             ],
           ),
+
           Row(
             children: [
-              Text(LocaleKeys.GoingConfirm.tr()),
+              SizedBox(width: 10.w,),
+              Text(LocaleKeys.GoingConfirm.tr(),style:TextStyle(
+                color: ColorManager.sidBar,
+                fontWeight: FontWeight.bold,
+              ),),
               Checkbox(
                 value: trip.confirmAttendance1,
                 onChanged: (bool? value) {
@@ -350,9 +354,13 @@ class TripStudentWidget extends StatelessWidget {
                       listen: false)
                       .confirmStudent();
                 },
+                checkColor: ColorManager.sidBar,
               ),
               Text(
-                LocaleKeys.Returningconfirm.tr(),
+                LocaleKeys.Returningconfirm.tr(),style:TextStyle(
+                color: ColorManager.sidBar,
+                fontWeight: FontWeight.bold,
+              ),
               ),
               Checkbox(
                 value:  trip.confirmAttendance2,
@@ -368,6 +376,7 @@ class TripStudentWidget extends StatelessWidget {
                       listen: false)
                       .confirmStudent();
                 },
+                checkColor: ColorManager.sidBar,
               ),
             ],
           ),

@@ -15,6 +15,7 @@ import '../../testing.dart';
 
 class PageSupervisorViewModel  with ChangeNotifier {
  late BuildContext context;
+
   List<NavbarDTO> items = [
 
     NavbarDTO(label: LocaleKeys.dailyrecieve.tr(),widget: DailyReceiveView(),iconData: Icons.chrome_reader_mode),

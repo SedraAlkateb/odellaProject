@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/page_view_model.dart';
 import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
+
+
 class QRScanScreen extends StatefulWidget {
   @override
   _QRScanScreenState createState() => _QRScanScreenState();

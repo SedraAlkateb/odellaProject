@@ -110,7 +110,14 @@ class CodegenLoader extends AssetLoader{
   "resetpasstonew": "تعيين كلمة سر جديدة",
   "contactus": "تواصل معنا",
   "qrcode": "رمز الاستجابة السريعة",
-  "notification": "الاشعارات"
+  "notification": "الاشعارات",
+  "city": "المدينة",
+  "area": "المنطقة",
+  "university": "الجامعة",
+  "qrscan": "ماسح رمز الاستجابة السريعة",
+  "makeallread": "جعل جميع الاشعارات مقروءة",
+  "neww": "الآن",
+  "earlier": "سابقاً"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -140,7 +147,7 @@ static const Map<String,dynamic> en = {
   "errorPassword": "   Please inter your password ",
   "errorPhoneNumber": "   Please inter your phone number",
   "transferPositions": " TransferPositions",
-  "daysNumber": " Days number",
+  "daysNumber": "Days number",
   "universities": " Universities",
   "name": "Name",
   "programmer": " Program",
@@ -163,7 +170,7 @@ static const Map<String,dynamic> en = {
   "lostItems": "Lost items",
   "settings": "Settings",
   "signOut": "Sign out",
-  "price": "price",
+  "price": "Price",
   "language": "language",
   "send": "send",
   "Program": "Program",
@@ -209,7 +216,14 @@ static const Map<String,dynamic> en = {
   "resetpasstonew": "reset new password",
   "contactus": "Contact us",
   "qrcode": "QR code",
-  "notification": "Notifications"
+  "notification": "Notifications",
+  "city": "City",
+  "area": "Area",
+  "university": "University",
+  "qrscan": "QR scanner",
+  "makeallread": "make all as read",
+  "neww": "New",
+  "earlier": "Earlier"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

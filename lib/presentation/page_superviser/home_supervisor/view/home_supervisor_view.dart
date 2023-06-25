@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/generated/i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:sizer/sizer.dart';
@@ -8,6 +9,7 @@ import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
@@ -35,6 +37,8 @@ class HomeSupervisorView extends StatefulWidget {
 }
 
 class _HomeSupervisorViewState extends State<HomeSupervisorView> {
+  bool isChecked = false;
+  bool isLocked = false;
 
 
   @override
@@ -111,80 +115,91 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   ),
                 ),
                 SizedBox(height: 4.h),
-                Center(
-                  child: Row(
-                    children: [
-                     InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                        Routes.informationTrip
-                    );
-                  },
-                  child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Text(
-                    '?',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      decoration: TextDecoration.underline,
+                SizedBox(width: 4.w),
+                Padding(
+                  padding:  EdgeInsets.only(left:17.sp,right:17.sp),
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color:Colors.grey.shade300,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                            width: 10.w,
+                            height: 10.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.redAccent,
+
+                            ),
+                            child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),)),
+                        // Container(
+                        //   height: 5.h,
+                        //   width: 10.w,
+                        //   child: DropdownButtonFormField(
+                        //     icon: const Icon(Icons.keyboard_arrow_down),
+                        //     hint:
+                        //     Text(LocaleKeys.transferPositions.tr()),
+                        //     validator: (value) {
+                        //       if (value == null) {
+                        //         return LocaleKeys.transferPositions.tr();
+                        //       }
+                        //       return null;
+                        //     },
+                        //     items: _register1
+                        //         .getPosition()
+                        //         .map((e) => DropdownMenuItem(
+                        //       value: e,
+                        //       child: Text(" ${e.name}"),
+                        //     ))
+                        //         .toList(),
+                        //     onChanged: (val) {
+                        //
+                        //       // Provider.of<HomeSupervisorView>(context,
+                        //       //     listen: false)
+                        //       //     .setTransferPositionId(val!.id);
+                        //     },
+                        //   ),
+                        // ),
+
+                        IconButton(onPressed: ()
+               {
+                await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
+                      Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);
+               },icon: Icon(Icons.qr_code_scanner,size: 25,)),
+
+                        Container(
+                          width: 10.w,
+                          height: 10.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorManager.sidBar,
+
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                  Routes.informationTrip
+                              );
+                            },
+                              onLongPress: ()
+                              {
+                               showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
+                              },
+                            child:Icon(Icons.question_mark_rounded)
+                          ),
+                        ),
+                        SizedBox(width: 1.w,),
+                      ],
                     ),
                   ),
-                  onHover: (event) {
-                    Text("information trip");
-                  },),
-
-
-                  ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      IconButton(
-                          onPressed: ()async{
-                            await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
-                            Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);
-
-                          },
-                          icon: Icon(Icons.qr_code_scanner)
-                      ),
-                      SizedBox(height: 4.h),
-             ]
-
                 ),
-                ),
-                // Row(
-                //   children: [
-                //     Container(
-                //       height: 5.h,
-                //       width: 10.w,
-                //       child: DropdownButtonFormField(
-                //         icon: const Icon(Icons.keyboard_arrow_down),
-                //         hint:
-                //         Text(LocaleKeys.transferPositions.tr()),
-                //         validator: (value) {
-                //           if (value == null) {
-                //             return LocaleKeys.transferPositions.tr();
-                //           }
-                //           return null;
-                //         },
-                //         items: _register1
-                //             .getPosition()
-                //             .map((e) => DropdownMenuItem(
-                //           value: e,
-                //           child: Text(" ${e.name}"),
-                //         ))
-                //             .toList(),
-                //         onChanged: (val) {
-                //
-                //           // Provider.of<HomeSupervisorView>(context,
-                //           //     listen: false)
-                //           //     .setTransferPositionId(val!.id);
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
 
+                SizedBox(height: 4.h),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -282,14 +297,21 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                               ),
                             ),
                           ),
-                          Checkbox(value:true, onChanged: (value)
-                          {
-                            model.confirmQr( model.getUser()[index].id);
-                            bool? vv=value;
-                          },
-                            activeColor: ColorManager.sidBar,
-                          ),
-                        ],
+
+                          Checkbox( value: isChecked,
+                              onChanged: isLocked ? null : (value) {
+                                
+                                setState(() {
+                                  isChecked = value!;
+                                  if (isChecked) {
+                                    model.confirmQr( model.getUser()[index].id);
+                                    isLocked = true;
+                                  }
+                                }
+                                );
+                              }
+                          ),],
+
                       ),
                     ),
                     separatorBuilder: (_, index) =>  SizedBox(
@@ -462,6 +484,43 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
       );
 
     },
+    );
+  }
+  showDetailFunc(context,double h1,double w1,double h2,double w2) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.sp),
+              height:h1,
+              width: w1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 5.h,),
+                  Container(
+                    width: w2,
+                    height: h2,
+                    child: Text(LocaleKeys.tripinformation.tr(),
+                      style: TextStyle(color: ColorManager.sidBar,fontSize: AppSize.s15),
+                      ),
+                    ),
+                 ], ),
+
+
+
+            ),
+          ),
+
+        );
+      },
     );
   }
 }

@@ -25,7 +25,7 @@
   "errorPassword": "   Please inter your password ",
   "errorPhoneNumber": "   Please inter your phone number",
   "transferPositions": " TransferPositions",
-  "daysNumber": " Days number",
+  "daysNumber": "Days number",
   "universities": " Universities",
   "name": "Name",
   "programmer": " Program",
@@ -48,7 +48,7 @@
   "lostItems": "Lost items",
   "settings": "Settings",
   "signOut": "Sign out",
-  "price": "price",
+  "price": "Price",
   "language": "language",
   "send": "send",
   "Program": "Program",
@@ -94,6 +94,13 @@
   "resetpasstonew": "reset new password",
   "contactus": "Contact us",
   "qrcode": "QR code",
-  "notification": "Notifications"
+  "notification": "Notifications",
+  "city": "City",
+  "area": "Area",
+  "university": "University",
+  "qrscan": "QR scanner",
+  "makeallread": "make all as read",
+  "neww": "New",
+  "earlier": "Earlier"
 
 }

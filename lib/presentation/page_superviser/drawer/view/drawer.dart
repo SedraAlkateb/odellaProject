@@ -16,8 +16,11 @@ import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 
+import '../../page_view_model.dart';
+
 class DrawerSupervisorView extends StatelessWidget {
   DrawerSupervisorView({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
 
@@ -32,39 +35,46 @@ if(Provider.of<DrawerSupervisorViewModel>(context).isSuccess()){
     }
     );
 }
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(AppSize.s50),
       ),
 
       child: Drawer(
-backgroundColor: ColorManager.side,
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(Provider.of<SupervisorProfileViewModel>(context).getName()??""),
-              accountEmail: Text(Provider.of<SupervisorProfileViewModel>(context).getEmail()),
-              currentAccountPicture: CircleAvatar(
-                child: Provider.of<SupervisorProfileViewModel>(context).getIm() != null
-                //  profile1.getDownload()
-                    ?Container(
+          //backgroundColor: ColorManager.side,
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                    Provider.of<SupervisorProfileViewModel>(context)
+                        .getName() ?? ""),
+                accountEmail: Text(
+                    Provider.of<SupervisorProfileViewModel>(context)
+                        .getEmail()),
+                currentAccountPicture: CircleAvatar(
+                    child: Provider.of<SupervisorProfileViewModel>(context)
+                        .getIm() != null
+                    //  profile1.getDownload()
+                        ? Container(
                       width: 160.0,
                       height: 160.0,
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.grey[300],
                           image: DecorationImage(
                               fit: BoxFit.contain,
                               image:
                               FileImage(
-                                  Provider.of<SupervisorProfileViewModel>(context).getIm()?? File("")
+                                  Provider.of<SupervisorProfileViewModel>(
+                                      context).getIm() ?? File("")
                               )
                           )
                       ),
 
 
                     )
-                    : Container(
+                        : Container(
                         width: 160,
                         height: 160,
                         decoration: BoxDecoration(
@@ -73,133 +83,159 @@ backgroundColor: ColorManager.side,
                         ),
                         child: const Icon(Icons.add,
                             size: 50, color: Color(0xFFFFFFFF)))
-                //:profile1.getLocalPath()!=null?
+                  //:profile1.getLocalPath()!=null?
 
-              ),
+                ),
 
-              decoration: BoxDecoration(
+                decoration: BoxDecoration(
                   color: ColorManager.side,
+                ),
               ),
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-
-              title: Text(
-                LocaleKeys.Home.tr(),
-                style: TextStyle(color: ColorManager.sidBarIcon),
-              ),
-              leading: Icon(
-                Icons.home,
+              Divider(
                 color: ColorManager.sidBarIcon,
+                height: 15,
               ),
+              ListTile(
 
-              onTap: () {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-
-      Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.home;
-      });
-              },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-              title: Text(LocaleKeys.profile.tr()),
-              leading: Icon(Icons.person,color: ColorManager.sidBarIcon,),
-
-              onTap: () {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.profile;
-                });
-              },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-              title: Text(LocaleKeys.programmer.tr()),
-              leading: Icon(Icons.calendar_today,color: ColorManager.sidBarIcon,
-              ),
-
-              onTap: () {
-                Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.program;
-              },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-              title: Text(LocaleKeys.dailyrecieve.tr()),
-              leading: Icon(Icons.location_on_outlined, color: ColorManager.sidBarIcon,
-              ),
-
-              onTap: () {
-                print("on tap");
-              },
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-
-
-            ListTile(
-                title: Text(LocaleKeys.qrcode.tr()),
-                leading: Icon(Icons.qr_code,
+                title: Text(
+                  LocaleKeys.Home.tr(),
+                  style: TextStyle(color: ColorManager.sidBarIcon),
+                ),
+                leading: Icon(
+                  Icons.home,
                   color: ColorManager.sidBarIcon,
-
                 ),
 
                 onTap: () {
-                  Navigator.pushNamed(context,Routes.qrCodeViewRoute);
-                }
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Provider
+                        .of<PageSupervisorViewModel>(context, listen: false)
+                        .selectedIndex = AppConstants.home2;
+                  });
+                },
+              ),
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+              ListTile(
+                title: Text(LocaleKeys.profile.tr()),
+                leading: Icon(
+                  Icons.person, color: ColorManager.sidBarIcon,),
 
-            ),
-
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-                title: Text(LocaleKeys.settings.tr()),
-                leading: Icon(Icons.settings,
-                  color: ColorManager.sidBarIcon,
-
+                onTap: () {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Provider
+                        .of<PageSupervisorViewModel>(context, listen: false)
+                        .selectedIndex = AppConstants.profile2;
+                  });
+                },
+              ),
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+              ListTile(
+                title: Text(LocaleKeys.programmer.tr()),
+                leading: Icon(
+                  Icons.calendar_today, color: ColorManager.sidBarIcon,
                 ),
 
                 onTap: () {
-                  Navigator.pushNamed(context,Routes.settingRoute);
-                }
-
-            ),
-            Divider(
-              color: ColorManager.sidBarIcon,
-              height: 15,
-            ),
-            ListTile(
-              title: Text(LocaleKeys.signOut.tr()),
-              leading: Icon(Icons.logout,
+                  Provider
+                      .of<PageSupervisorViewModel>(context, listen: false)
+                      .selectedIndex = AppConstants.program2;
+                },
+              ),
+              Divider(
                 color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+              ListTile(
+                title: Text(LocaleKeys.dailyrecieve.tr()),
+                leading: Icon(Icons.location_on_outlined,
+                  color: ColorManager.sidBarIcon,
+                ),
+
+                onTap: () {
+                  Provider
+                      .of<PageSupervisorViewModel>(context, listen: false)
+                      .selectedIndex = AppConstants.dailyrecieve;
+                },
+              ),
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+
+              ListTile(
+                  title: Text(LocaleKeys.qrscan.tr()),
+                  leading: Icon(Icons.qr_code_scanner,
+                    color: ColorManager.sidBarIcon,
+
+                  ),
+
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.qrscan);
+                  }
+
+              ),
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+
+              ListTile(
+                  title: Text(LocaleKeys.notification.tr()),
+                  leading: Icon(Icons.notifications,
+                    color: ColorManager.sidBarIcon,
+
+                  ),
+
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.notification);
+                  }
 
               ),
 
-              onTap: () async{
-                await Provider.of<DrawerSupervisorViewModel>(context,listen: false).logout();
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+              ListTile(
+                  title: Text(LocaleKeys.settings.tr()),
+                  leading: Icon(Icons.settings,
+                    color: ColorManager.sidBarIcon,
 
-                }
+                  ),
 
-            ),
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.settingRoute);
+                  }
 
-          ],
+              ),
+              Divider(
+                color: ColorManager.sidBarIcon,
+                height: 15,
+              ),
+              ListTile(
+                  title: Text(LocaleKeys.signOut.tr()),
+                  leading: Icon(Icons.logout,
+                    color: ColorManager.sidBarIcon,
+
+                  ),
+
+                  onTap: () async {
+                    await Provider.of<DrawerSupervisorViewModel>(
+                        context, listen: false).logout();
+                  }
+
+              ),
+
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   }
 }
