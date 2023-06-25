@@ -1566,6 +1566,49 @@ Map<String, dynamic> _$QrConfirmResponseToJson(QrConfirmResponse instance) =>
       'data': instance.data,
     };
 
+NotificationReadDataResponse _$NotificationReadDataResponseFromJson(
+        Map<String, dynamic> json) =>
+    NotificationReadDataResponse(
+      json['id'] as int?,
+      json['user_id'] as int?,
+      json['title'] as String?,
+      json['body'] as String?,
+      json['is_read'] as String?,
+      json['created_at'] as String?,
+      json['updated_at'] as String?,
+    );
+
+Map<String, dynamic> _$NotificationReadDataResponseToJson(
+        NotificationReadDataResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.userId,
+      'title': instance.title,
+      'body': instance.body,
+      'is_read': instance.isRead,
+      'created_at': instance.created_at,
+      'updated_at': instance.updated_at,
+    };
+
+NotificationReadResponse _$NotificationReadResponseFromJson(
+        Map<String, dynamic> json) =>
+    NotificationReadResponse(
+      json['data'] == null
+          ? null
+          : NotificationReadDataResponse.fromJson(
+              json['data'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$NotificationReadResponseToJson(
+        NotificationReadResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.data,
+    };
+
 NotificationDataResponse _$NotificationDataResponseFromJson(
         Map<String, dynamic> json) =>
     NotificationDataResponse(

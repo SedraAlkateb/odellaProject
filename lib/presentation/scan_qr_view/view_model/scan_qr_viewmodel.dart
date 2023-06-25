@@ -32,7 +32,7 @@ Future<String> scanBarcode() async {
   return _barcodeValue;
 }
 confirmQr(int id) async{
-
+  print(id);
   ( await _confirmQrUseCase.execute(
       ConfirmQrUseCaseInput(
           int.parse(_barcodeValue),id

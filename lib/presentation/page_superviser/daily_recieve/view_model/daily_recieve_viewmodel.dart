@@ -37,7 +37,6 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
             (data)  async{
 
               setDailyReservations(data.dailyReservationsModel ??[]);
-              print(_dailyReservations[0].seatsNumber);
         });
   }
 

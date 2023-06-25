@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/app.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/codegen_loader.g.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
@@ -224,24 +225,7 @@ Widget build(BuildContext context) {
       title: const Text('Notifications'),
       backgroundColor: ColorManager.sidBar,
       actions: [
-       // Provider.of<Not>(context).getCount()==0
-       //    ? IconButton(onPressed: () {print("0");}, icon: const Icon(Icons.notifications))
-       // :
-       Padding(
-          padding: const EdgeInsets.all(20),
-          child: InkWell(
-            child: Badge(
-              badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-//${ Provider.of<Not>(context).getCount()}
-              child: Icon(Icons.notifications,size: AppSize.s30),
-              badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-            ),
-            onTap: ()
-            {
-              print("kkkkkk");
-            },
-          ),
-        ),
+        notificationIcon(context)
       ],
     ),
     body: SingleChildScrollView(

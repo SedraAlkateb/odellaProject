@@ -21,7 +21,7 @@ class _QRScanScreenState extends State<QRScanScreen> {
       Scaffold(
         body:  GestureDetector(
           onTap: () async {
-            await model.scanBarcode();
+            await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
             model.confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);
           },
           child: Center(

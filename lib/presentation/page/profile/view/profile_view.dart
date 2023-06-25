@@ -1,10 +1,9 @@
-
-
 import 'dart:io';
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
@@ -30,6 +29,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel profileViewModel = instance<ProfileViewModel>();
+  GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -191,6 +191,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                  SizedBox(
                                   width: 1.w,
+
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -446,6 +447,9 @@ class _ProfileViewState extends State<ProfileView> {
                                                 ))
                                                 .toList(),
                                             onChanged: (val) {
+                                              if (_fbKey2.currentState != null) {
+                                                _fbKey2.currentState?.reset();
+                                              }
                                               model.setCityId(val!);
                                               model.getAreasByIdCity(val);
                                             }),
@@ -476,22 +480,25 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
-                                        child: DropdownButtonFormField(
-                                            icon:
-                                            const Icon(Icons.keyboard_arrow_down),
-                                            hint: Text(model.getProfileArea()),
-                                            items: model
-                                                .getAreas()
-                                                .map((e) =>
-                                                DropdownMenuItem(
-                                                  value: e.id,
-                                                  child: Text(" ${e.name}",
-                                                    overflow: TextOverflow.ellipsis,),
-                                                ))
-                                                .toList(),
-                                            onChanged: (val) {
-                                              model.setAreaId(val!);
-                                            }),
+                                        child: FormBuilder(
+                                          key: _fbKey2,
+                                          child: DropdownButtonFormField(
+                                              icon:
+                                              const Icon(Icons.keyboard_arrow_down),
+                                              hint: Text(model.getProfileArea()),
+                                              items: model
+                                                  .getAreas()
+                                                  .map((e) =>
+                                                  DropdownMenuItem(
+                                                    value: e.id,
+                                                    child: Text(" ${e.name}",
+                                                      overflow: TextOverflow.ellipsis,),
+                                                  ))
+                                                  .toList(),
+                                              onChanged: (val) {
+                                                model.setAreaId(val!);
+                                              }),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -550,6 +557,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: ColorManager.sidBarIcon,
                               ),
                               Column(
+
                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -572,6 +580,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ],
                                 ),
                               ],),
+
 
 
                               Padding(
@@ -610,88 +619,88 @@ class _ProfileViewState extends State<ProfileView> {
                             height: 15.h,
                             padding: const EdgeInsets.all(AppPadding.p20),
                             child: Row(
-                            children:[
-                              Stack(
-                                children: [
-                                  Container(
-                                    child: Provider.of<ProfileViewModel>(
-                                        context)
-                                        .getIm() !=
-                                        null
-                                    //  profile1.getDownload()
-                                        ? InkWell(
-                                      onTap: () async {
-                                        //Navigator.pushNamed(context, Routes.display_image);
-                                        showDialogFunc(
-                                          context, 30.h,30.h,40.w,40.w);
-                                      },
-                                      child: Container(
-                                        width: 28.w,
-                                        height: 17.h,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            //color: Colors.grey[300],
-                                            image: DecorationImage(
-                                                fit: BoxFit.contain,
-                                                image: FileImage(
-                                                    Provider.of<
-                                                        ProfileViewModel>(
-                                                        context)
-                                                        .getIm() ??
-                                                        File("")))),
-                                      ),
-                                    )
-                                        : InkWell(
-                                      onTap: () async {
-                                        await profile
-                                            .updateImageFromGallory();
-                                        await profile.updateImage();
-                                      },
-                                      child: Container(
+                              children:[
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: Provider.of<ProfileViewModel>(
+                                          context)
+                                          .getIm() !=
+                                          null
+                                      //  profile1.getDownload()
+                                          ? InkWell(
+                                        onTap: () async {
+                                          //Navigator.pushNamed(context, Routes.display_image);
+                                          showDialogFunc(
+                                              context, 30.h,30.h,40.w,40.w);
+                                        },
+                                        child: Container(
                                           width: 28.w,
                                           height: 17.h,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(Icons.add,
-                                              size: AppSize.s50,
-                                              color: Color(0xFFFFFFFF))),
-                                    )
-                                    //:profile1.getLocalPath()!=null?
-                                    ,
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: InkWell(
-                                      child: Container(
-                                        width: 24,
-                                        height: 24,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: ColorManager.sidBarIcon,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
+                                              shape: BoxShape.circle,
+                                              //color: Colors.grey[300],
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: FileImage(
+                                                      Provider.of<
+                                                          ProfileViewModel>(
+                                                          context)
+                                                          .getIm() ??
+                                                          File("")))),
                                         ),
-                                        child: Icon(
-                                          Icons.edit,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      onTap: () async
-                                      {
-                                        await profile
-                                            .updateImageFromGallory();
-                                        await profile.updateImage();
-                                      },
+                                      )
+                                          : InkWell(
+                                        onTap: () async {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                        child: Container(
+                                            width: 28.w,
+                                            height: 17.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.add,
+                                                size: AppSize.s50,
+                                                color: Color(0xFFFFFFFF))),
+                                      )
+                                      //:profile1.getLocalPath()!=null?
+                                      ,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: InkWell(
+                                        child: Container(
+                                          width: 24,
+                                          height: 24,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ColorManager.sidBarIcon,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.edit,
+                                            size: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () async
+                                        {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 2.w,
                                 ),
@@ -986,6 +995,9 @@ class _ProfileViewState extends State<ProfileView> {
                                               ))
                                               .toList(),
                                           onChanged: (val) {
+                                            if (_fbKey2.currentState != null) {
+                                              _fbKey2.currentState?.reset();
+                                            }
                                             model.setCityId(val!);
                                             model.getAreasByIdCity(val);
                                           }),
@@ -1017,22 +1029,25 @@ class _ProfileViewState extends State<ProfileView> {
                                     SizedBox(
                                       height: 10.h,
                                       width: 120.w,
-                                      child: DropdownButtonFormField(
-                                          icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                          hint: Text(model.getProfileArea()),
-                                          items: model
-                                              .getAreas()
-                                              .map((e) =>
-                                              DropdownMenuItem(
-                                                value: e.id,
-                                                child: Text(" ${e.name}",
-                                                  overflow: TextOverflow.ellipsis,),
-                                              ))
-                                              .toList(),
-                                          onChanged: (val) {
-                                            model.setAreaId(val!);
-                                          }),
+                                      child: FormBuilder(
+                                        key: _fbKey2,
+                                        child: DropdownButtonFormField(
+                                            icon:
+                                            const Icon(Icons.keyboard_arrow_down),
+                                            hint: Text(model.getProfileArea()),
+                                            items: model
+                                                .getAreas()
+                                                .map((e) =>
+                                                DropdownMenuItem(
+                                                  value: e.id,
+                                                  child: Text(" ${e.name}",
+                                                    overflow: TextOverflow.ellipsis,),
+                                                ))
+                                                .toList(),
+                                            onChanged: (val) {
+                                              model.setAreaId(val!);
+                                            }),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -1086,6 +1101,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ],
                             ),
+
                         Divider(height: 2.h,
                           color: ColorManager.sidBarIcon,
                           thickness: 1,),
@@ -1116,6 +1132,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ],
                                 ),
                               ],),
+
                           ],
                         ),
 
@@ -1165,15 +1182,13 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   ),
 
-          ],),
+                ],),
 
-              ),
             ),
+          ),
 
         );
       },
     );
   }
 }
-
-

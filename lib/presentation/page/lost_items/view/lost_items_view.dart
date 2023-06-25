@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/detail_screen/view/detail_screen_view.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
@@ -53,26 +54,7 @@ class _LostItemsViewState extends State<LostItemsView> {
         drawer:  NavBar(),
         appBar: AppBar(
           actions: [
-            Provider.of<Not>(context).getCount()==0
-                ? IconButton(onPressed: () {
-              Navigator.pushNamed(context,Routes.notification);
-              }, icon: const Icon(Icons.notifications))
-                : Padding(
-              padding: const EdgeInsets.all(20),
-              child: InkWell(
-                child: Badge(
-                  badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-                  child: Icon(Icons.notifications,size: AppSize.s30),
-                  badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                ),
-                onTap: ()
-                {
-                  print("kkkkkk");
-                  Navigator.pushNamed(context,Routes.notification);
-                },
-              ),
-            ),
+            notificationIcon(context)
           ],
 
           title: Text(LocaleKeys.lostItems.tr(),

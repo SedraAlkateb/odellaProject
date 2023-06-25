@@ -10,7 +10,7 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 import 'dart:math'as math;
-
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../../lang/locale_keys.g.dart';
 class SignUpView extends StatefulWidget {
   @override
@@ -24,6 +24,8 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  GlobalKey<FormBuilderState> _fbKey1 = GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
   SignUpViewModel _signUpViewModel = instance<SignUpViewModel>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -394,6 +396,9 @@ class _SignUpViewState extends State<SignUpView> {
                                               ))
                                           .toList(),
                                       onChanged: (val) {
+                                        if (_fbKey1.currentState != null) {
+                                          _fbKey1.currentState?.reset();
+                                        }
                                         Provider.of<SignUpViewModel>(context,
                                                 listen: false)
                                             .setTransportationLineId(val!);
@@ -406,28 +411,31 @@ class _SignUpViewState extends State<SignUpView> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: AppPadding.p28),
-                                  child: DropdownButtonFormField(
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    hint:
-                                        Text(LocaleKeys.transferPositions.tr()),
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return LocaleKeys.transferPositions.tr();
-                                      }
-                                      return null;
-                                    },
-                                    items: _register1
-                                        .getPosition()
-                                        .map((e) => DropdownMenuItem(
-                                              value: e,
-                                              child: Text(" ${e.name}"),
-                                            ))
-                                        .toList(),
-                                    onChanged: (val) {
-                                      Provider.of<SignUpViewModel>(context,
-                                              listen: false)
-                                          .setTransferPositionId(val!.id);
-                                    },
+                                  child: FormBuilder(
+                                    key: _fbKey1,
+                                    child: DropdownButtonFormField(
+                                      icon: const Icon(Icons.keyboard_arrow_down),
+                                      hint:
+                                          Text(LocaleKeys.transferPositions.tr()),
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return LocaleKeys.transferPositions.tr();
+                                        }
+                                        return null;
+                                      },
+                                      items: _register1
+                                          .getPosition()
+                                          .map((e) => DropdownMenuItem(
+                                                value: e,
+                                                child: Text(" ${e.name}"),
+                                              ))
+                                          .toList(),
+                                      onChanged: (val) {
+                                        Provider.of<SignUpViewModel>(context,
+                                                listen: false)
+                                            .setTransferPositionId(val!.id);
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -468,56 +476,64 @@ class _SignUpViewState extends State<SignUpView> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: AppPadding.p28),
-                                  child: DropdownButtonFormField(
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      hint: Text(LocaleKeys.cities.tr()),
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return LocaleKeys.eCities.tr();
-                                        }
-                                        //  return null;
-                                      },
-                                      items: _register1
-                                          .getCities()
-                                          .map((e) => DropdownMenuItem(
-                                                value: e.id,
-                                                child: Text(" ${e.name}"),
-                                              ))
-                                          .toList(),
-                                      onChanged: (val) {
-                                        Provider.of<SignUpViewModel>(context,
-                                                listen: false)
-                                            .setCityId(val!);
-                                        Provider.of<SignUpViewModel>(context,
-                                                listen: false)
-                                            .getAreasByIdCity(val);
-                                      }),
+                                  child: FormBuilder(
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                            const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(LocaleKeys.cities.tr()),
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return LocaleKeys.eCities.tr();
+                                          }
+                                          //  return null;
+                                        },
+                                        items: _register1
+                                            .getCities()
+                                            .map((e) => DropdownMenuItem(
+                                                  value: e.id,
+                                                  child: Text(" ${e.name}"),
+                                                ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          if (_fbKey2.currentState != null) {
+                                            _fbKey2.currentState?.reset();
+                                          }
+                                          Provider.of<SignUpViewModel>(context,
+                                                  listen: false)
+                                              .setCityId(val!);
+                                          Provider.of<SignUpViewModel>(context,
+                                                  listen: false)
+                                              .getAreasByIdCity(val);
+                                        }),
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: AppPadding.p28),
-                                  child: DropdownButtonFormField(
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      hint: Text(LocaleKeys.areas.tr()),
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return LocaleKeys.eAreas.tr();
-                                        }
-                                        return null;
-                                      },
-                                      items: _register1
-                                          .getAreas()
-                                          .map((e) => DropdownMenuItem(
-                                                value: e.name,
-                                                child: Text(" ${e.name}"),
-                                              ))
-                                          .toList(),
-                                      onChanged: (val) {
-                                        print(val);
-                                        //       _register2.setAreaId(val!);
-                                      }),
+                                  child: FormBuilder(
+                                    key: _fbKey2,
+                                    child: DropdownButtonFormField(
+                                        icon:
+                                            const Icon(Icons.keyboard_arrow_down),
+                                        hint: Text(LocaleKeys.areas.tr()),
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return LocaleKeys.eAreas.tr();
+                                          }
+                                          return null;
+                                        },
+                                        items: _register1
+                                            .getAreas()
+                                            .map((e) => DropdownMenuItem(
+                                                  value: e.name,
+                                                  child: Text(" ${e.name}"),
+                                                ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          print(val);
+                                          //       _register2.setAreaId(val!);
+                                        }),
+                                  ),
                                 ),
                               ],
                             ),
@@ -526,56 +542,64 @@ class _SignUpViewState extends State<SignUpView> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: AppPadding.p28,
                                 vertical: AppPadding.p28),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                      Provider.of<SignUpViewModel>(context,
-                                              listen: false)
-                                          .setNum(0);
-
-                                    //     }
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: ColorManager.icon,
-                                        child: Icon(
-                                          Icons.keyboard_arrow_left_rounded,
-                                          color: ColorManager.white,
-                                          size: 60,
-                                        )),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    if (_globalKey.currentState!.validate()) {
-
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
                                         Provider.of<SignUpViewModel>(context,
                                                 listen: false)
-                                            .setNum(2);
+                                            .setNum(0);
 
-                                    }
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: ColorManager.icon,
-                                        child: Transform(
-                                          alignment: Alignment.center,
-                                          transform: Matrix4.rotationY(isRtl() ? math.pi :0),
-                                          child: Icon(
-                                            Icons.keyboard_arrow_right_rounded,
-                                            color: ColorManager.white,
-                                            size: 60,
-                                          ),
-                                        )),
+                                      //     }
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: ColorManager.icon,
+                                          child: Transform(
+                                            alignment: Alignment.center,
+                                            transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                                            child: Icon(
+                                              Icons.keyboard_arrow_left_rounded,
+                                              color: ColorManager.white,
+                                              size: 60,
+                                            ),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  InkWell(
+                                    onTap: () {
+                                      if (_globalKey.currentState!.validate()) {
+
+                                          Provider.of<SignUpViewModel>(context,
+                                                  listen: false)
+                                              .setNum(2);
+
+                                      }
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: ColorManager.icon,
+                                          child: Transform(
+                                            alignment: Alignment.center,
+                                            transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                                            child: Icon(
+                                              Icons.keyboard_arrow_right_rounded,
+                                              color: ColorManager.white,
+                                              size: 60,
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

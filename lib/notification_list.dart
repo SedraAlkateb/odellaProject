@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
@@ -28,22 +29,7 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageList extends State<MessageList> {
-  // List<RemoteMessage> _messages = [];
 
-  // void initState() {
-  //
-  //
-  //   super.initState();
-  //   Provider.of<Not>(context,listen: false).start();
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     setState(() {
-  //       _messages = [..._messages, message];
-  //
-  //     });
-  //     Provider.of<Not>(context,listen: false).updateInc();
-  //     print( Provider.of<Not>(context,listen: false).getCount());
-  //   });
-  // }
   @override
   void initState() {
     super.initState();
@@ -69,6 +55,7 @@ class _MessageList extends State<MessageList> {
                     child: InkWell(child: Text(LocaleKeys.makeallread.tr(),))),
               ],
             ),
+
           ),
           SizedBox(height: 3.h,),
           Row(
@@ -80,6 +67,26 @@ class _MessageList extends State<MessageList> {
             ],
           ),
           ListView.separated(
+            itemCount: Provider.of<Not>(context).getMessageL(),
+            itemBuilder: (context, index) {
+              RemoteMessage message = Provider.of<Not>(context,listen: false).getMessageIndex(index);
+              return ListTile(
+                title: Text(message.notification?.title ?? 'N/D',style:const TextStyle(fontWeight: FontWeight.bold),),
+                subtitle:
+                Text(message.sentTime?.toString() ?? DateTime.now().toString()),
+                trailing: const Icon(Icons.circle,color: Colors.red,),
+                onTap: () {
+                    if( Provider.of<Not>(context).getCount()!=0) {
+                      Provider.of<Not>(context, listen: false).updateDec();
+                    }
+                  Navigator.pushNamed(context, '/message',
+                    arguments: MessageArguments(message, false),);
+                }
+              );
+            }),
+        Consumer<Not>(
+          builder: (context, model, child) =>
+           ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => const SizedBox(
                 width: double.infinity,

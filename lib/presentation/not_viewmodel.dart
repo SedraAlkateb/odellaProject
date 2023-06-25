@@ -8,9 +8,6 @@ class Not extends BaseViewModel with ChangeNotifier {
   NotificationUseCase _notificationUseCase;
   Not(this._notificationUseCase);
 
-
-
-
   int count = 0;
   late String title;
   late String body;

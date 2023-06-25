@@ -105,10 +105,9 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
   }
-
+/////////////////////////////laila
   Future<void> _drawPolyline(LatLng from, LatLng to) async {
     Polyline polyline = await PolylineService().drawPolyline(from, to);
-
     _polylines.add(polyline);
 
     _setMarker(from);
