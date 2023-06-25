@@ -21,7 +21,6 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
   var _line;
   bool _isLog=false;
   bool isPos=false;
-
   void setIsPos(bool isLog1){
     isPos =isLog1;
     notifyListeners();
@@ -71,7 +70,16 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
   void dispose() {
     super.dispose();
   }
-
+@override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
+  @override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
   @override
   void start() {
     getTransportationLinesData();
@@ -88,18 +96,17 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
   }
   /////////////////////////async
   getTransportationLinesData()async{
-    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+    setStateScreen(1);
     ( await _transportationLinesUseCase.execute(null))
         .fold(
             (failure)  {
-          inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
-        },
+              setStateScreen(2);
+            },
             (data)  {
               if(data.dataTransportationLines==null){
-                inputState.add(EmptyState("TransportationLines not found"));
+                setStateScreen(3);
               }else{
-                inputState.add(ContentState());
-
+                setStateScreen(0);
               }
               setIsLog(true);
               dataTransportationLines=data.dataTransportationLines;
@@ -112,17 +119,16 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
 
 
   getPositionLineData(int id)async{
-    inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+    setStateScreen(1);
     ( await _positionLineUseCase.execute(id))
         .fold(
             (failure)  {
-          inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-        },
+              setStateScreen(2);
+            },
             (data)  {
+             // setStateScreen(0);
               isPos=true;
-              inputState.add(ContentState());
           setPosition(data.positionLine);
-
         });
 
   }

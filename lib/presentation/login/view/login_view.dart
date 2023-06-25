@@ -27,23 +27,6 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
   final _forKey = GlobalKey<FormState>();
   final AppPreferences _appPreferences =instance<AppPreferences>();
-  var loginViewModelWatch;
-  var loginViewModelRead;
-  @override
-  void didChangeDependencies() {
-    loginViewModelWatch  = context.watch<LoginViewModel>();
-    loginViewModelRead = context.read<LoginViewModel>();
-    loginViewModelRead.start();
-
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    loginViewModelRead.status=0;
-
-    super.dispose();
-  }
   @override
   void initState() {
  isobscured=true;
@@ -52,8 +35,12 @@ class _LoginViewState extends State<LoginView> {
  });
  super.initState();
   }
- var isobscured;
 
+ var isobscured;
+@override
+  void dispose() {
+    super.dispose();
+  }
 
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -90,175 +77,167 @@ class _LoginViewState extends State<LoginView> {
           ),
         ],
       ),
-      body:  StreamBuilder<FlowState>(
-          stream:
-          loginViewModelRead.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data?.getScreenWidget(
-                _scaffoldKey.currentContext!, _getContentWidget(), () {
-              loginViewModelRead.start();
-            }) ??
-                _getContentWidget();
-          }),
-        //_getContentWidget()
-
+      body:  _getContentWidget()
     );
   }
 
   Widget _getContentWidget() {
-    if (loginViewModelWatch.success()) {
-      _appPreferences.setLoggedIn(loginViewModelWatch.getToken() ??"",loginViewModelRead.getRole() ??"").then((value) =>
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            if(_appPreferences.getToken()!=null){
-              if (_appPreferences.getUser() ==  Constants.student) {
-              //  Provider.of<LoginViewModel>(context,listen: false).setSuc(0);
-                Navigator.pushReplacementNamed(context,Routes.pageScreen);
-              }else if(_appPreferences.getUser() == Constants.supervisor) {
-                Navigator.pushReplacementNamed(context,Routes.supervisorPageRoute);
-              }
-            }else{
-              loginViewModelRead.login();
-            }
-
-          })
-      );
-
-    }
-
-    return SingleChildScrollView(
-      child: Form(
-        key: _forKey,
-        child: Padding(
-          padding: const EdgeInsets.only(
-              right: AppPadding.p28,
-              left: AppPadding.p28,
-              bottom: AppPadding.p28),
-          child: Column(
-            children: [
-              Center(child: Image.asset(ImageAssets.logo4)),
-              const SizedBox(
-                height: AppSize.s28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: AppPadding.p28, right: AppPadding.p28),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _userNameController,
-                  decoration:  InputDecoration(
-                    hintText: LocaleKeys.email.tr(),
-                    labelText: LocaleKeys.email.tr(),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return LocaleKeys.usernameError;
-                    } else {
-                      loginViewModelRead.setUserName(value);
-                    }
-                  },
+    return Consumer<LoginViewModel>(
+      builder: (context, model, child) =>
+       SingleChildScrollView(
+        child: Form(
+          key: _forKey,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                right: AppPadding.p28,
+                left: AppPadding.p28,
+                bottom: AppPadding.p28),
+            child: Column(
+              children: [
+                Center(child: Image.asset(ImageAssets.logo4)),
+                const SizedBox(
+                  height: AppSize.s28,
                 ),
-              ),
-              const SizedBox(
-                height: AppSize.s28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: AppPadding.p28, right: AppPadding.p28),
-                child: TextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: _passwordController,
-                  obscureText: isobscured,
-                  decoration:  InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: (){
-                          setState(() {
-                            isobscured=!isobscured;
-                          }
-                          );
-                        },
-
-                        icon: isobscured?  Icon(Icons.visibility
-                          ,color: ColorManager.kMainColor,
-                        ):
-                         Icon(Icons.visibility_off,
-                           color: ColorManager.kMainColor,
-                         )),
-                    hintText: LocaleKeys.password,
-                    labelText: LocaleKeys.password,
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return LocaleKeys.passwordError;
-                    } else {
-                      loginViewModelRead
-                          .setPassword(value);
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: AppSize.s28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: AppPadding.p28, bottom: AppPadding.p8),
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, Routes.forgotPasswordRoute);
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: AppPadding.p28, right: AppPadding.p28),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _userNameController,
+                    decoration:  InputDecoration(
+                      hintText: LocaleKeys.email.tr(),
+                      labelText: LocaleKeys.email.tr(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return LocaleKeys.usernameError;
+                      } else {
+                        model.setUserName(value);
+                      }
                     },
-                    child: Text(
-                      LocaleKeys.forgetPassword,
-                      style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const SizedBox(
+                  height: AppSize.s28,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: AppPadding.p28, right: AppPadding.p28),
+                  child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: _passwordController,
+                    obscureText: isobscured,
+                    decoration:  InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: (){
+                            setState(() {
+                              isobscured=!isobscured;
+                            }
+                            );
+                          },
+
+                          icon: isobscured?  Icon(Icons.visibility
+                            ,color: ColorManager.kMainColor,
+                          ):
+                           Icon(Icons.visibility_off,
+                             color: ColorManager.kMainColor,
+                           )),
+                      hintText: LocaleKeys.password,
+                      labelText: LocaleKeys.password,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return LocaleKeys.passwordError;
+                      } else {
+                        model
+                            .setPassword(value);
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: AppSize.s28,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      right: AppPadding.p28, bottom: AppPadding.p8),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, Routes.forgotPasswordRoute);
+                      },
+                      child: Text(
+                        LocaleKeys.forgetPassword,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: AppPadding.p28, right: AppPadding.p28),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: AppSize.s64,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (_forKey.currentState!.validate()) {
-                          loginViewModelRead.login();
-                          loginViewModelRead.scheduleTokenRefresh();
-                        }
-                      },
-                      child:  Text(LocaleKeys.signIn.tr())),
-                ),
-              ),
-              const SizedBox(
-                height: AppSize.s28,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: AppPadding.p12,
-                    left: AppPadding.p28,
-                    right: AppPadding.p28),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                       Text(LocaleKeys.registerText.tr()),
-                      TextButton(
-                        onPressed: () {
-                            Navigator.pushNamed(context, Routes.signupRoute);
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: AppPadding.p28, right: AppPadding.p28),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: AppSize.s64,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          if (_forKey.currentState!.validate()) {
+                            Provider.of<LoginViewModel>(context,listen: false).login().then((value) {
+                              if(value){
+                                _appPreferences.setLoggedIn(model.getToken() ??"",model.getRole() ??"").then((value) =>
+                                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                                      if(_appPreferences.getToken()!=null){
+                                        if (_appPreferences.getUser() ==  Constants.student) {
+                                          //  Provider.of<LoginViewModel>(context,listen: false).setSuc(0);
+                                          Navigator.pushReplacementNamed(context,Routes.pageScreen);
+                                        }else if(_appPreferences.getUser() == Constants.supervisor) {
+                                          Navigator.pushReplacementNamed(context,Routes.supervisorPageRoute);
+                                        }
+                                      }
+
+                                    })
+                                );
+
+                              }
+                            }
+
+                            );
+                            model.scheduleTokenRefresh();
+                          }
                         },
-                        child: Text(
-                          LocaleKeys.signUp.tr(),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
+                        child:  Text(LocaleKeys.signIn.tr())),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: AppSize.s28,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: AppPadding.p12,
+                      left: AppPadding.p28,
+                      right: AppPadding.p28),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                         Text(LocaleKeys.registerText.tr()),
+                        TextButton(
+                          onPressed: () {
+                              Navigator.pushNamed(context, Routes.signupRoute);
+                          },
+                          child: Text(
+                            LocaleKeys.signUp.tr(),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

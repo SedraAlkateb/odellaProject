@@ -148,6 +148,9 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                           icon: Icon(Icons.qr_code_scanner)
                       ),
                       SizedBox(height: 4.h),
+                      IconButton(icon: Icon(Icons.stop_circle_outlined),onPressed: (){
+                        model.stopTracking();
+                      },)
              ]
 
                 ),

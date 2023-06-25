@@ -1208,7 +1208,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/api/update/position/${id}',
+              '/api/user/make_read_notification/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -1237,6 +1237,32 @@ class _AppServiceClient implements AppServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UpdatePositionResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<StudentPositionResponse> studentPosition(
+    tripId,
+    positionId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<StudentPositionResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/student/trips/${tripId}/positions/${positionId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = StudentPositionResponse.fromJson(_result.data!);
     return value;
   }
 

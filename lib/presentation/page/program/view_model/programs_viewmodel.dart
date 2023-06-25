@@ -112,17 +112,17 @@ program();
  double getRating(){
     return _rating;
   }
-  program() async {
-  //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
+  program() async {
+    setStateScreen(1);
     (await _programsUseCase.execute(null))
         .fold((failure) {
-    //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+setStateScreen(2);
     }, (data)async {
+      setStateScreen(0);
          setMap(data.dataProgram);
          setSelectedDay(5);
-    //  inputState.add(ContentState());
-      notifyListeners();
+         notifyListeners();
     });
   }
   evaluation(int r) async {
@@ -151,5 +151,14 @@ program();
       notifyListeners();
     });
   }
-
+@override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
+  @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
 }

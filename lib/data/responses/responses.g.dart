@@ -1665,11 +1665,29 @@ Map<String, dynamic> _$UpdatePositionResponseToJson(
     };
 
 Position _$PositionFromJson(Map<String, dynamic> json) => Position(
-      (json['lat'] as num).toDouble(),
       (json['lng'] as num).toDouble(),
+      (json['lat'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$PositionToJson(Position instance) => <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
+    };
+
+StudentPositionResponse _$StudentPositionResponseFromJson(
+        Map<String, dynamic> json) =>
+    StudentPositionResponse(
+      (json['data'] as List<dynamic>)
+          .map((e) => UserLAFResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$StudentPositionResponseToJson(
+        StudentPositionResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.users,
     };

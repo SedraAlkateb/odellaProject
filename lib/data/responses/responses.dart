@@ -1,7 +1,5 @@
-import 'dart:io';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:untitled/data/responses/responses.dart';
 part 'responses.g.dart';
 @JsonSerializable()
 class BaseResponse {
@@ -1930,11 +1928,23 @@ class UpdatePositionResponse  extends BaseResponse {
 class Position   {
   double lat;
   double lng;
-  Position(this.lat, this.lng); // from json
+  Position(this.lng,this.lat); // from json
   factory Position.fromJson(Map<String,dynamic>json)=>
       _$PositionFromJson(json);
   // to json
   Map<String,dynamic>toJson()=>
       _$PositionToJson(this);
+
+}
+@JsonSerializable()
+class StudentPositionResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+List<UserLAFResponse> users;
+  StudentPositionResponse(this.users); // from json
+  factory StudentPositionResponse.fromJson(Map<String,dynamic>json)=>
+      _$StudentPositionResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$StudentPositionResponseToJson(this);
 
 }

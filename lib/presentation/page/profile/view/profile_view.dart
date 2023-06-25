@@ -8,6 +8,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
@@ -34,7 +35,10 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   void initState() {
-    Provider.of<ProfileViewModel>(context, listen: false).start();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    var  viewModel = Provider.of<ProfileViewModel>(context, listen: false);
+      viewModel.start();
+    });
     super.initState();
   }
 
@@ -54,7 +58,7 @@ class _ProfileViewState extends State<ProfileView> {
               actions: [
                 Provider.of<Not>(context).getCount() == 0
                     ? IconButton(onPressed: () {
-                  Navigator.pushNamed(context, Routes.notification);
+                  Navigator.pushNamed(context, Routes.application);
                 }, icon: const Icon(Icons.notifications))
                     : Padding(
                   padding: const EdgeInsets.all(20),
@@ -70,13 +74,26 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     onTap: () {
                       print("kkkkkk");
-                      Navigator.pushNamed(context, Routes.notification);
+                      Navigator.pushNamed(context, Routes.application);
                     },
                   ),
                 ),
               ],
             ),
-            body: contentWidget(),
+            body:
+            Provider.of<ProfileViewModel>(context).getStateScreen() == 0
+                ? contentWidget()
+                :Provider.of<ProfileViewModel>(context).getStateScreen()==1
+                ?StateRenderer(
+                stateRendererType: StateRendererType.fullScreenLoadingState,
+                message: "Loading",
+                retryActionFunction: () {})
+               : StateRenderer(
+                stateRendererType: StateRendererType.fullScreenErrorState,
+                message: "something wrong",
+                retryActionFunction: () {})
+
+
           ),
     );
   }
@@ -92,7 +109,8 @@ class _ProfileViewState extends State<ProfileView> {
     TextEditingController(text: profile1.getPhone());
     TextEditingController _streetController =
     TextEditingController(text: profile1.getStreet());
-    return Consumer<ProfileViewModel>(
+    return
+      Consumer<ProfileViewModel>(
       builder: (context, model, child) =>
           Sizer(
             builder: (context, orientation, deviceType) {
@@ -536,9 +554,9 @@ class _ProfileViewState extends State<ProfileView> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text("${LocaleKeys.subscription.tr()} : lllllll"),
-                                  Text("${LocaleKeys.daysNumber.tr()} : lllllll"),
-                                  Text("${LocaleKeys.price.tr()} : lllllll"),
+                                  Text("${LocaleKeys.subscription.tr()} : ${model.getStudentSub()?.name ??""} "),
+                                  Text("${LocaleKeys.daysNumber.tr()} :  ${model.getStudentSub()?.daysNumber??""}"),
+                                  Text("${LocaleKeys.price.tr()} :  ${model.getStudentSub()?.price??""}"),
                                 ],),
 
 
@@ -1042,9 +1060,9 @@ class _ProfileViewState extends State<ProfileView> {
                               color: ColorManager.sidBarIcon,
                               thickness: 1,),
                             SizedBox(height: 4.h,),
-                            Text("${LocaleKeys.subscription.tr()} : lllllll"),
-                            Text("${LocaleKeys.daysNumber.tr()} : lllllll"),
-                            Text("${LocaleKeys.price.tr()} : lllllll"),
+                            Text("${LocaleKeys.subscription.tr()} : ${model.getStudentSub()?.name} "),
+                            Text("${LocaleKeys.daysNumber.tr()} :  ${model.getStudentSub()?.daysNumber}"),
+                            Text("${LocaleKeys.price.tr()} :  ${model.getStudentSub()?.price}"),
                             SizedBox(height: 4.h,),
                           ],
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
 
@@ -21,8 +22,12 @@ class _TripSupervisorState extends State<TripSupervisor> {
   }
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var home = Provider.of<SupervisorTripViewModel>(context, listen: false);
+      home.start();
+    });
     super.initState();
-    Provider.of<SupervisorTripViewModel>(context, listen: false).start();
+
   }
 
   @override
@@ -35,20 +40,31 @@ class _TripSupervisorState extends State<TripSupervisor> {
             title: Text('Live Location Tracking'),
           ),
           body:
-          /*
-          (model.getTripId()==0) ?
-             Center(
-              child: Text(LocaleKeys.no_trip),
-             ) :
-          */
-               GoogleMap(
+          Provider.of<SupervisorTripViewModel>(context).getStateScreen() == 0
+              ? GoogleMap(
             onMapCreated: onMapCreated,
             initialCameraPosition: CameraPosition(
               target: model.getLatLng(),
               zoom: _zoom,
             ),
             markers: Set.of((model.getMarker() != null) ? [model.getMarker()] : []),
-          ),
+          )
+              :Provider.of<SupervisorTripViewModel>(context).getStateScreen()==1
+              ?StateRenderer(
+              stateRendererType: StateRendererType.fullScreenLoadingState,
+              message: "Loading",
+              retryActionFunction: () {})
+              : Provider.of<SupervisorTripViewModel>(context).getStateScreen()==2
+              ? StateRenderer(
+              stateRendererType: StateRendererType.fullScreenErrorState,
+              message: "something wrong",
+              retryActionFunction: () {})
+              : StateRenderer(
+              stateRendererType: StateRendererType.fullScreenEmptyState,
+              message: "Not found any transmission lines",
+              retryActionFunction: () {})
+
+
         ),
     );
 
@@ -57,7 +73,7 @@ class _TripSupervisorState extends State<TripSupervisor> {
 
   @override
   void dispose() {
-   // channel.
+   Provider.of<SupervisorTripViewModel>(context,listen: false).dispose();
     super.dispose();
   }
 }

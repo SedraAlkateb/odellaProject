@@ -510,6 +510,17 @@ extension UserLFResponseMapper on UserLAFResponse? {
     );
   }
 }
+extension StudentPositionResponseMapper on StudentPositionResponse? {
+  StudentPosition toDomain() {
+    return StudentPosition(
+      (this?.users.map((dataResponse) => dataResponse.toDomain()) ??
+          const Iterable.empty())
+          .cast<User>()
+          .toList(),
+    );
+  }
+}
+
 extension LostAndFoundDataMapper on LostAndFoundDataResponse? {
   LostAndFoundData toDomain() {
     return LostAndFoundData(

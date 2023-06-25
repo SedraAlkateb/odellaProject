@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/di.dart';
-import 'package:untitled/notification_list.dart';
 import 'package:untitled/notification_details.dart';
+import 'package:untitled/notification_list.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
@@ -64,16 +64,13 @@ class Routes {
 
   static const String polyLineRoute = "/PolyLine";
   static const String informationTrip = "/informationTripRoute";
-  static const String notification = "/notification";
   static const String notification_message = "/notificationMessage";
-
   static const String mapline = "/mapline";
-
-  static const String message = "/message";
-
-  static const String messageDetail1 = "/messageDetail1";
   static const String changepass = "/changepass";
   static const String display_image = "/displayimage";
+  static const String application = "/application";
+  static const String notMessage = "/notMessage";
+  static const String notMessageRealTime = "/notMessageRealTime";
 
 
 }
@@ -83,8 +80,13 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
-      case Routes.messageDetail1:
-        return MaterialPageRoute(builder: (_) => const MessageDetailView());
+      case Routes.application:
+        initNotificationModule();
+        return MaterialPageRoute(builder: (_) => const Application());
+      case Routes.notMessage:
+        return MaterialPageRoute(builder: (_) =>  const NotMessageView());
+      case Routes.notMessageRealTime:
+        return MaterialPageRoute(builder: (_) =>  const MessageView());
       case Routes.informationTrip:
         return MaterialPageRoute(builder: (_) => const TripInformationView());
       case Routes.addLostItemRoute:
@@ -135,20 +137,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  MapPage());
       case Routes.qrCodeViewRoute:
         return MaterialPageRoute(builder: (_) =>  QrCodeView());
-      case Routes.notification:
-        initNotificationModule();
-        return MaterialPageRoute(builder: (_) =>  MessagingExampleApp());
       case Routes.notification_message:
         return MaterialPageRoute(builder: (_) =>  MessageList());
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
       case Routes.changepass:
         return MaterialPageRoute(builder: (_) =>  ChangePassView());
-
-
-      // case Routes.mapline:
-      //   //return MaterialPageRoute(builder: (_) => MapboxMapPage());
-
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());
       case Routes.supervisorPageRoute:

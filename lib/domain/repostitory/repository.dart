@@ -48,7 +48,7 @@ abstract class Repository{
   Future<  Either<Failure,String>>supervisorPositionUpdate(PositionMap PositionMap);
   Future<  Either<Failure,String>>makeReadNotification(int id);
   Future<  Either<Failure,String>>readAllNot();
-
+  Future<  Either<Failure,StudentPosition>>studentPosition(int trip,int position);
 
 
 }

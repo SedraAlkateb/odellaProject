@@ -9,6 +9,11 @@ class Time{
 
   Time(this.id, this.start, this.date);
 }
+class StudentPosition{
+  List<User> users;
+
+  StudentPosition(this.users);
+}
 class Line{
   String name;
   Line(this.name);
@@ -133,7 +138,7 @@ class UserProfile{
   String lastName;
   String email;
   String phoneNumber;
-  String image;
+  String? image;
   String expiredSubscriptionDate;
   DataTransportationLines? line;
   DataTransferPositions? position;

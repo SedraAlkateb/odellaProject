@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:pusher_client/pusher_client.dart';
-import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/domain/usecase/confirm_qr_usecase.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
+import 'package:untitled/domain/usecase/student_position_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:untitled/presentation/map_position/view_model/location_service.dart';
@@ -17,8 +19,8 @@ import 'package:location/location.dart' as loc;
 class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   ConfirmQrUseCase _confirmQrUseCase;
   HomeSupervisorUseCase _homeSupervisorUseCase;
-//  SupervisorUpdatePositionUseCase _supervisorUpdatePositionUseCase;
-  HomeSuperVisorViewModel(this._homeSupervisorUseCase,this._confirmQrUseCase);
+  StudentPositionUseCase _studentPositionUseCase;
+  HomeSuperVisorViewModel(this._homeSupervisorUseCase,this._confirmQrUseCase,this._studentPositionUseCase);
   List<User>search =[];
   bool _succ=false;
  bool getSucc(){
@@ -30,9 +32,7 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
 
   @override
   void start() async{
-//   await setTime();
     homeSupervisor();
-
   }
 cancelTrip(){
   channel.cancelEventChannelStream();
@@ -40,8 +40,6 @@ cancelTrip(){
 }
 @override
   void dispose() {
-   channel.cancelEventChannelStream();
-  pusherClient.disconnect();
    super.dispose();
   }
   String _time="";
@@ -53,6 +51,19 @@ cancelTrip(){
     ( await _confirmQrUseCase.execute(
         ConfirmQrUseCaseInput(
             id,_homeSuperVisor.id
+        ))).fold(
+
+            (failure)  {
+        },
+            (data)  async{
+        });
+  }
+
+  studentPosition(int id,int id1) async{
+    print(id);
+    ( await _studentPositionUseCase.execute(
+        StudentPositionUseCaseInput(
+            id,id1
         ))).fold(
 
             (failure)  {
@@ -120,12 +131,14 @@ cancelTrip(){
         });
   }
   LocationData? _locationData;
-
+  bool _trackingLocation = false;
+ late StreamSubscription<LocationData>? _locationSubscription=null;
   String? _error;
   int tripId=0;
 setLocation(LocationData? newLocationData, String? error){
   _locationData = newLocationData;
   _error = error;
+  _trackingLocation=true;
   notifyListeners();
 }
 LocationData? getLocationData(){
@@ -137,19 +150,37 @@ String? getError(){
 PusherTrip _pusherTrip=instance<PusherTrip>();
   late  PusherClient pusherClient;
   late Channel channel;
-
+  void stopTracking() {
+    if (_locationSubscription != null) {
+      _trackingLocation = false;
+      _locationSubscription?.cancel();
+    //  _locationSubscription.pause();
+    }
+    cancelTrip();
+    notifyListeners();
+  }
+  //final location = loc.Location() ;
+  loc.Location location = loc.Location();
   Future<void> _setupLocationStream(int tripId) async {
-    final location = loc.Location() ;
-    _locationData = await LocationService().getLocation();
+    //_locationData = await LocationService().getLocation();
     try {
-      location.onLocationChanged.listen((LocationData newLocationData)async {
-        if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
-          pusherClient= await  _pusherTrip.createPusherClient();
-          channel = pusherClient.subscribe("private-tracking.${tripId}");
-          channel.trigger("tracking", {"lng":99.00,"lat":99.00});
-        }
-        setLocation(newLocationData, null);
-      });
+      pusherClient= await  _pusherTrip.createPusherClient();
+      channel = pusherClient.subscribe("private-tracking.${tripId}");
+      if(_locationSubscription==null){
+        print("alesar");
+        _locationSubscription =location.onLocationChanged.listen((LocationData newLocationData)async {
+          if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
+            print(newLocationData.longitude);
+            channel.trigger("client-tracking",
+                {
+              "lng":newLocationData.longitude,
+              "lat":newLocationData.latitude
+            }
+            );
+          }//client-tracking
+          setLocation(newLocationData, null);
+        });
+      }
     }on Exception catch (e) {
       print(e);
       print("_scaffoldKey.currentState?.showSnackBar("

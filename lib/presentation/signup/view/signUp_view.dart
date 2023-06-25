@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
@@ -26,33 +27,47 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _phoneNumberController = TextEditingController();
   GlobalKey<FormBuilderState> _fbKey1 = GlobalKey<FormBuilderState>();
   GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
-  SignUpViewModel _signUpViewModel = instance<SignUpViewModel>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     isobscured=true;
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      ss=Provider.of<SignUpViewModel>(context, listen: false);
       Provider.of<SignUpViewModel>(context, listen: false).start();
     });
     super.initState();
   }
   var isobscured;
-
-
+  late SignUpViewModel ss;
   @override
   void dispose() {
-    _signUpViewModel.dispose();
-
+  //  Provider.of<SignUpViewModel>(context,listen: false).dispose();
+ss.nnum=0;
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       body:
-    _getContentWidget()
+      Provider.of<SignUpViewModel>(context).getStateScreen() == 0
+          ?   _getContentWidget()
+          :Provider.of<SignUpViewModel>(context).getStateScreen()==1
+          ?StateRenderer(
+          stateRendererType: StateRendererType.fullScreenLoadingState,
+          message: "Loading",
+          retryActionFunction: () {})
+          : Provider.of<SignUpViewModel>(context).getStateScreen()==2
+          ? StateRenderer(
+          stateRendererType: StateRendererType.fullScreenErrorState,
+          message: "Loading",
+          retryActionFunction: () {})
+          : StateRenderer(
+          stateRendererType: StateRendererType.fullScreenEmptyState,
+          message: "Loading",
+          retryActionFunction: () {})
+
     );
   }
 
@@ -132,7 +147,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     ),
                                   ),
                       )),
-                  Provider.of<SignUpViewModel>(context, listen: false)
+                  Provider.of<SignUpViewModel>(context)
                               .getNum() ==
                           2
                       ? Padding(
@@ -153,7 +168,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ],
               ),
             ),
-            Provider.of<SignUpViewModel>(context, listen: false).getNum() == 0
+            Provider.of<SignUpViewModel>(context).getNum() == 0
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -890,6 +905,16 @@ class _SignUpViewState extends State<SignUpView> {
                                         Provider.of<SignUpViewModel>(context,
                                                 listen: false)
                                             .getSignUp();
+                                        Provider.of<SignUpViewModel>(context,listen: false).getDialog()==1
+                                        ? StateRenderer(
+                                            stateRendererType: StateRendererType.popupLoadingState,
+                                            message: "Loading",
+                                            retryActionFunction: () {})
+                                            :StateRenderer(
+                                            stateRendererType: StateRendererType.popupErrorState,
+                                            message: "Loading",
+                                            retryActionFunction: () {
+                                            });
                                       }
                                     },
                                     child: Text(LocaleKeys.signUp.tr())),
