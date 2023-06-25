@@ -104,5 +104,9 @@ abstract class  LocaleKeys {
   static const makeallread = 'makeallread';
   static const neww = 'neww';
   static const earlier = 'earlier';
+  static const comprating = 'comprating';
+  static const day = 'day';
+  static const ratingsent = 'ratingsent';
+  static const searchtrip = 'searchtrip';
 
 }

@@ -117,7 +117,11 @@ class CodegenLoader extends AssetLoader{
   "qrscan": "ماسح رمز الاستجابة السريعة",
   "makeallread": "جعل جميع الاشعارات مقروءة",
   "neww": "الآن",
-  "earlier": "سابقاً"
+  "earlier": "سابقاً",
+  "comprating": "الشكاوي و التقييمات",
+  "day": "اليوم",
+  "ratingsent": "تقييم الرحلة",
+  "searchtrip": "البحث عن رحلة"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -223,7 +227,11 @@ static const Map<String,dynamic> en = {
   "qrscan": "QR scanner",
   "makeallread": "make all as read",
   "neww": "New",
-  "earlier": "Earlier"
+  "earlier": "Earlier",
+  "comprating": "Complaint And Rating",
+  "day": "Day",
+  "ratingsent": "Rating the trip",
+  "searchtrip": "Search for trip"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -101,6 +101,10 @@
   "qrscan": "QR scanner",
   "makeallread": "make all as read",
   "neww": "New",
-  "earlier": "Earlier"
+  "earlier": "Earlier",
+  "comprating": "Complaint And Rating",
+  "day": "Day",
+  "ratingsent": "Rating the trip",
+  "searchtrip": "Search for trip"
 
 }

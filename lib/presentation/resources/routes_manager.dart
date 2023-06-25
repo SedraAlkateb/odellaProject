@@ -18,7 +18,7 @@ import 'package:untitled/presentation/page/complaints/view/complaints_view.dart'
 import 'package:untitled/presentation/page/home/view/home_view.dart';
 import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart';
 import 'package:untitled/presentation/page/page_view.dart';
-import 'package:untitled/presentation/page/polyyline.dart';
+import 'package:untitled/presentation/page/polylinee.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
 import 'package:untitled/presentation/page_superviser/page_view.dart';
@@ -34,6 +34,7 @@ import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
 
 import '../../main.dart';
+
 
 class Routes {
   static const String sedra = "/sedra";
@@ -77,6 +78,7 @@ class Routes {
   static const String changepass = "/changepass";
   static const String polyline = "/polyline";
   static const String qrscan = "/qrscan";
+  static const String compandrat = "/compandrat";
 
 
 
@@ -151,7 +153,9 @@ class RouteGenerator {
       case Routes.qrscan:
         return MaterialPageRoute(builder: (_) => QRScanScreen());
       case Routes.polyline:
-        return MaterialPageRoute(builder: (_) => MapScreen());
+        return MaterialPageRoute(builder: (_) => Polylinee());
+      case Routes.compandrat:
+        return MaterialPageRoute(builder: (_) => ComplaintsView());
 
 
 
