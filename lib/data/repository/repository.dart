@@ -859,7 +859,9 @@ class RepositoryImp implements Repository {
   async {
     try {
       //connect to internet,its safe to call Api
-      final response = await _remoteDataSource.notification();
+      final response = await _remoteDataSource.notification(
+
+      );
       if (response.status == ApiInternalStatus.SUCCESS) {
         //success
         //return either right
@@ -902,6 +904,52 @@ class RepositoryImp implements Repository {
     }
   }
 
+  @override
+  Future<Either<Failure, String>> makeReadNotification(int id)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.makeReadNotification(id);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.massage??" ");
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+  @override
+  Future<Either<Failure, String>> readAllNot()
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.readAllNot();
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.massage??" ");
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
 
 
 }

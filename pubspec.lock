@@ -370,6 +370,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_form_builder:
+    dependency: "direct main"
+    description:
+      name: flutter_form_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.7.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1047,6 +1054,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  reflectable:
+    dependency: "direct main"
+    description:
+      name: reflectable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.4"
   retrofit:
     dependency: "direct dev"
     description:

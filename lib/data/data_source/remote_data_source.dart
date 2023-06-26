@@ -41,7 +41,8 @@ abstract class RemoteDataSource{
   Future<AuthenticationResponse> refresh();
   Future<NotificationResponse> notification();
   Future<UpdatePositionResponse> supervisorPositionUpdate(PositionMap PositionMap);
-
+  Future<NotificationReadResponse> makeReadNotification(int id);
+  Future<UpdatePositionResponse> readAllNot();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -341,5 +342,15 @@ street: supervisorRequest.street
   Future<UpdatePositionResponse> supervisorPositionUpdate(PositionMap PositionMap) async{
     return await _appServiceClient.supervisorPositionUpdate(PositionMap.tripId, PositionMap.lng, PositionMap.lat);
   }
+
+  @override
+  Future<NotificationReadResponse> makeReadNotification(int id)async{
+    return await _appServiceClient.makeReadNotification(id);
+  }
+  @override
+  Future<UpdatePositionResponse> readAllNot() async{
+    return await _appServiceClient.readAllNot();
+  }
+
 
 }

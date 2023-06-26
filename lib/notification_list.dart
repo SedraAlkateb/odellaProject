@@ -1,14 +1,12 @@
 
 // ignore_for_file: require_trailing_commas
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/domain/models/models.dart';
-import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
@@ -65,8 +63,8 @@ class _MessageList extends State<MessageList> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  color:Colors.grey.shade300,
-                    child: InkWell(child: Text(LocaleKeys.makeallread.tr(),))),
+                    color:Colors.grey.shade300,
+                    child: InkWell(child: Text("make all as read ",))),
               ],
             ),
           ),
@@ -75,8 +73,8 @@ class _MessageList extends State<MessageList> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 1.w,),
-              Text(LocaleKeys.neww.tr(),
-              style: getBoldStyle(color: Colors.black,fontSize: FontSize.s18),),
+              Text("New",
+                style: getBoldStyle(color: Colors.black,fontSize: FontSize.s18),),
             ],
           ),
           ListView.separated(
@@ -94,15 +92,15 @@ class _MessageList extends State<MessageList> {
                 return GestureDetector(
                   onTap: ()
                   {
-                  if( Provider.of<Not>(context).getCount()!=0) {
-                            Provider.of<Not>(context, listen: false).updateDec();
-                          }
+                    if( Provider.of<Not>(context).getCount()!=0) {
+                      Provider.of<Not>(context, listen: false).updateDec();
+                    }
 
-                        Navigator.pushNamed(context, '/message',
-                          arguments: MessageArguments(message, false),);
+                    Navigator.pushNamed(context, '/message',
+                      arguments: MessageArguments(message, false),);
                   },
                   child: Container(
-                   // color: ColorManager.sidBar,
+                    // color: ColorManager.sidBar,
                     child: Padding(
                       padding:  EdgeInsets.all(10),
                       child: Column(
@@ -148,48 +146,48 @@ class _MessageList extends State<MessageList> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 1.w,),
-              Text(LocaleKeys.earlier.tr(),
+              Text("Earlier",
                 style: getBoldStyle(color: Colors.black,fontSize: FontSize.s18),),
             ],
           ),
           Consumer<Not>(
             builder: (context, model, child) =>
-             ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: double.infinity,
-                  height: AppSize.s20,
-                  // color: Color,
-                ),
-                itemCount: model.getNotification().length,
-                itemBuilder: (context, index) {
-                  NotificationModel message = model.getNotification()[index];
-                  return GestureDetector(
-                    onTap: ()
-                    {
-                      Navigator.pushNamed(context, Routes.message);
-                    },
-                    child: Container(
-                      color: ColorManager.sidBar,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 1.h,),
-                          Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [Icon(Icons.circle,color: Colors.redAccent,),],
-                          ),
-                          Text(message.body),
-
-                          ],
-                        ),
-                      ),
+                ListView.separated(
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s20,
+                      // color: Color,
                     ),
-                  );
-                }),
+                    itemCount: model.getNotification().length,
+                    itemBuilder: (context, index) {
+                      NotificationModel message = model.getNotification()[index];
+                      return GestureDetector(
+                        onTap: ()
+                        {
+                          Navigator.pushNamed(context, Routes.message);
+                        },
+                        child: Container(
+                          color: ColorManager.sidBar,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 1.h,),
+                                Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [Icon(Icons.circle,color: Colors.redAccent,),],
+                                ),
+                                Text(message.body),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
           ),
 
         ],

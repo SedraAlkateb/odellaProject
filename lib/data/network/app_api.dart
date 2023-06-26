@@ -215,4 +215,10 @@ abstract class AppServiceClient {
       @Part(name:"lng") double lng,
       @Part(name:"lat") double lat
       );
+  @POST("/api/update/position/{id}")
+  Future<NotificationReadResponse> makeReadNotification(
+      @Path("id") int id,
+      );
+  @GET("/api/user/make_all_read_notifications")
+  Future<UpdatePositionResponse> readAllNot();
 }

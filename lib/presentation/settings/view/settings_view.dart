@@ -39,6 +39,7 @@ class _SettingsViewState extends State<SettingsView> {
               children: [
                 ListTile(
                   subtitle: Text(
+
                     LocaleKeys.changelangtoarabic.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
@@ -122,11 +123,11 @@ class _SettingsViewState extends State<SettingsView> {
                     WidgetsBinding.instance.addPostFrameCallback((_) {});
                   },
                 ),
+
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
                 ),
-
 
                 ListTile(
                     title: Text(LocaleKeys.signOut.tr()),
@@ -134,7 +135,8 @@ class _SettingsViewState extends State<SettingsView> {
                       Icons.logout,
                       color: ColorManager.sidBarIcon,
                     ),
-                    onTap: () async {}),
+                    onTap: () async {
+                    }),
               ],
             )
                 :ListView(
@@ -165,11 +167,12 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
+
                     LocaleKeys.changePassword.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    LocaleKeys.changePassword.tr(),
+                    "resetpass",
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
@@ -224,6 +227,7 @@ class _SettingsViewState extends State<SettingsView> {
                     WidgetsBinding.instance.addPostFrameCallback((_) {});
                   },
                 ),
+
                 Divider(
                   color: ColorManager.sidBarIcon,
                   height: 15,
@@ -249,10 +253,10 @@ class _SettingsViewState extends State<SettingsView> {
   }
   _changeLanguage()async {
     // i will implement it later
-  await  _appPreferences.changeAppLanguage().then((value) =>
+    await  _appPreferences.changeAppLanguage().then((value) =>
 
-      Phoenix.rebirth(context)
-  );
+        Phoenix.rebirth(context)
+    );
 
 
   }

@@ -189,7 +189,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
-                                 SizedBox(
+                                SizedBox(
                                   width: 1.w,
                                 ),
                                 Column(
@@ -413,7 +413,7 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                               // mainAxisAlignment: MainAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   //SizedBox(height: 4.h,),
                                   Column(
@@ -550,28 +550,28 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: ColorManager.sidBarIcon,
                               ),
                               Column(
-                               mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 4.h,),
-                                Row(
-                                  children: [
-                                    Text("${LocaleKeys.subscription.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16),),
-                                  ],
-                                ),
-                                SizedBox(height: 2.h,),
-                                Row(
-                                  children: [
-                                    Text("${LocaleKeys.daysNumber.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
-                                  ],
-                                ),
+                                  Row(
+                                    children: [
+                                      Text("${LocaleKeys.subscription.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16),),
+                                    ],
+                                  ),
                                   SizedBox(height: 2.h,),
-                                Row(
-                                  children: [
-                                    Text("${LocaleKeys.price.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
-                                  ],
-                                ),
-                              ],),
+                                  Row(
+                                    children: [
+                                      Text("${LocaleKeys.daysNumber.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
+                                    ],
+                                  ),
+                                  SizedBox(height: 2.h,),
+                                  Row(
+                                    children: [
+                                      Text("${LocaleKeys.price.tr()} : lllllll",style: getBoldStyle(color: ColorManager.black,fontSize: AppSize.s16)),
+                                    ],
+                                  ),
+                                ],),
 
 
                               Padding(
@@ -610,88 +610,88 @@ class _ProfileViewState extends State<ProfileView> {
                             height: 15.h,
                             padding: const EdgeInsets.all(AppPadding.p20),
                             child: Row(
-                            children:[
-                              Stack(
-                                children: [
-                                  Container(
-                                    child: Provider.of<ProfileViewModel>(
-                                        context)
-                                        .getIm() !=
-                                        null
-                                    //  profile1.getDownload()
-                                        ? InkWell(
-                                      onTap: () async {
-                                        //Navigator.pushNamed(context, Routes.display_image);
-                                        showDialogFunc(
-                                          context, 30.h,30.h,40.w,40.w);
-                                      },
-                                      child: Container(
-                                        width: 28.w,
-                                        height: 17.h,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            //color: Colors.grey[300],
-                                            image: DecorationImage(
-                                                fit: BoxFit.contain,
-                                                image: FileImage(
-                                                    Provider.of<
-                                                        ProfileViewModel>(
-                                                        context)
-                                                        .getIm() ??
-                                                        File("")))),
-                                      ),
-                                    )
-                                        : InkWell(
-                                      onTap: () async {
-                                        await profile
-                                            .updateImageFromGallory();
-                                        await profile.updateImage();
-                                      },
-                                      child: Container(
+                              children:[
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: Provider.of<ProfileViewModel>(
+                                          context)
+                                          .getIm() !=
+                                          null
+                                      //  profile1.getDownload()
+                                          ? InkWell(
+                                        onTap: () async {
+                                          //Navigator.pushNamed(context, Routes.display_image);
+                                          showDialogFunc(
+                                              context, 30.h,30.h,40.w,40.w);
+                                        },
+                                        child: Container(
                                           width: 28.w,
                                           height: 17.h,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(Icons.add,
-                                              size: AppSize.s50,
-                                              color: Color(0xFFFFFFFF))),
-                                    )
-                                    //:profile1.getLocalPath()!=null?
-                                    ,
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: InkWell(
-                                      child: Container(
-                                        width: 24,
-                                        height: 24,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: ColorManager.sidBarIcon,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
+                                              shape: BoxShape.circle,
+                                              //color: Colors.grey[300],
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: FileImage(
+                                                      Provider.of<
+                                                          ProfileViewModel>(
+                                                          context)
+                                                          .getIm() ??
+                                                          File("")))),
                                         ),
-                                        child: Icon(
-                                          Icons.edit,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      onTap: () async
-                                      {
-                                        await profile
-                                            .updateImageFromGallory();
-                                        await profile.updateImage();
-                                      },
+                                      )
+                                          : InkWell(
+                                        onTap: () async {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                        child: Container(
+                                            width: 28.w,
+                                            height: 17.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.add,
+                                                size: AppSize.s50,
+                                                color: Color(0xFFFFFFFF))),
+                                      )
+                                      //:profile1.getLocalPath()!=null?
+                                      ,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: InkWell(
+                                        child: Container(
+                                          width: 24,
+                                          height: 24,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ColorManager.sidBarIcon,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.edit,
+                                            size: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () async
+                                        {
+                                          await profile
+                                              .updateImageFromGallory();
+                                          await profile.updateImage();
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 2.w,
                                 ),
@@ -721,13 +721,13 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
-                              SizedBox(
-                                width: 18.w,
-                              ),
-                              IconButton(onPressed: ()
-                              {
-                                Navigator.pushNamed(context, Routes.qrCodeViewRoute);
-                              }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
+                                SizedBox(
+                                  width: 18.w,
+                                ),
+                                IconButton(onPressed: ()
+                                {
+                                  Navigator.pushNamed(context, Routes.qrCodeViewRoute);
+                                }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
                               ],
                             ),
                           ),
@@ -1086,9 +1086,9 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ],
                             ),
-                        Divider(height: 2.h,
-                          color: ColorManager.sidBarIcon,
-                          thickness: 1,),
+                            Divider(height: 2.h,
+                              color: ColorManager.sidBarIcon,
+                              thickness: 1,),
                             SizedBox(height: 2.h,),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -1165,10 +1165,10 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                   ),
 
-          ],),
+                ],),
 
-              ),
             ),
+          ),
 
         );
       },

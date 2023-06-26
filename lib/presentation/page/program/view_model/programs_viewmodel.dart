@@ -6,7 +6,6 @@ import 'package:untitled/domain/usecase/evaluation_usecase.dart';
 import 'package:untitled/domain/usecase/programs_usecase.dart';
 import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
-import 'package:untitled/presentation/resources/strings_manager.dart';
 
 import '../../../../lang/locale_keys.g.dart';
 

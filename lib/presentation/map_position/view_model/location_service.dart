@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
 class LocationService {
@@ -21,7 +22,7 @@ class LocationService {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         _permissionGranted = await location.requestPermission();
-        throw Exception();
+   //     throw Exception();
       }
     }
 
@@ -36,20 +37,18 @@ class LocationService {
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        _serviceEnabled = await location.requestService();
-      }
     }
 
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       print("object2");
-      _permissionGranted = await location.requestPermission();
+    //  _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         print("object3");
-        throw Exception();
+        _permissionGranted = await location.hasPermission();
       }
     }
 
   }
+
 }

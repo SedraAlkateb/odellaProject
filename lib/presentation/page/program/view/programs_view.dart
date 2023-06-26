@@ -8,6 +8,7 @@ import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/program/view_model/programs_viewmodel.dart';
@@ -38,7 +39,7 @@ class _ProgramsViewState extends State<ProgramsView>
 
   @override
   void dispose() {
-    viewModel.dispose();
+  //  viewModel.dispose();
     super.dispose();
   }
 
@@ -50,28 +51,7 @@ class _ProgramsViewState extends State<ProgramsView>
             Scaffold(
               appBar: AppBar(
                 actions: [
-                  Provider.of<Not>(context).getCount()==0
-                      ? IconButton(onPressed: ()
-                  {
-                    Navigator.pushNamed(context,Routes.notification);
-                    },
-                      icon: const Icon(Icons.notifications))
-                      : Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: InkWell(
-                      child: Badge(
-                        badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-                        child: Icon(Icons.notifications,size: AppSize.s30),
-                        badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                      ),
-                      onTap: ()
-                      {
-                        print("kkkkkk");
-                        Navigator.pushNamed(context,Routes.notification);
-                      },
-                    ),
-                  ),
+                  notificationIcon(context)
                 ],
                 title: Text(LocaleKeys.Program.tr(),
                     style: getBoldStyle(
@@ -361,7 +341,7 @@ class TripStudentWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b1,
+                value: trip.confirmAttendance1,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,
@@ -383,7 +363,7 @@ class TripStudentWidget extends StatelessWidget {
               ),
               ),
               Checkbox(
-                value: Provider.of<ProgramsViewModel>(context).b2,
+                value:  trip.confirmAttendance2,
                 onChanged: (bool? value) {
                   Provider.of<ProgramsViewModel>(
                       context,

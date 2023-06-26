@@ -18,7 +18,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   @override
   _goLogin(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushNamed(context, Routes.loginRoute);
+      Navigator.pushReplacementNamed(context, Routes.loginRoute);
     });
   }
   _goTransactionLine(){
