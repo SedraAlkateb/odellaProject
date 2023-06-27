@@ -14,6 +14,22 @@ class StudentPosition{
 
   StudentPosition(this.users);
 }
+class EvaluationTrip{
+  int id;
+  String review;
+  int idTrip;
+
+  EvaluationTrip(this.id, this.review, this.idTrip);
+}
+class WeeklyTrip{
+  List<EvaluationTrip>? evaluation;
+List<DataTrips> trips;
+  WeeklyTrip(this.evaluation,this.trips);
+}
+class WeeklyTripInfor{
+  WeeklyTrip? weeklyTrip;
+  WeeklyTripInfor(this.weeklyTrip);
+}
 class Line{
   String name;
   Line(this.name);
@@ -304,9 +320,10 @@ class DataProgram{
   String end ;
   bool confirmAttendance1 ;
   bool confirmAttendance2 ;
+  List<String> line;
 
   DataProgram(this.id, this.day, this.dataTransferPositions, this.start, this.end,
-      this.confirmAttendance1, this.confirmAttendance2);
+      this.confirmAttendance1, this.confirmAttendance2,this.line);
 }
 class Claims{
 int id;

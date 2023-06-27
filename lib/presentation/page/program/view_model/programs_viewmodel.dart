@@ -12,8 +12,7 @@ import '../../../../lang/locale_keys.g.dart';
 class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   ProgramsUseCase _programsUseCase;
   StudentAttendenceUsecase _studentAttendenceUsecase;
-  EvaluationUseCase _evaluationUseCase;
-  ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase,this._evaluationUseCase);
+  ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase);
   Map<int, List<DataProgram> > program2={};
   String selectedDay = 'Sat';
   int indexDay=0;
@@ -125,16 +124,7 @@ setStateScreen(2);
          notifyListeners();
     });
   }
-  evaluation(int r) async {
-    //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _evaluationUseCase.execute(EvaluationUseCaseInput(13, r)))
-        .fold((failure) {
-      //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-    }, (data)async {
-
-    });
-  }
   confirmStudent() async {
     //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 

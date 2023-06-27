@@ -108,19 +108,18 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
 
   void updateMarker(String data) {
     Position position;
-    Map<String, double> resultMap;
-    resultMap = json.decode(data);
-    print("dddddddddddfffffdksndlkkkkkddresultMap");
-    print(resultMap);
-    position = Position.fromJson(resultMap);
-    print(position.lng);
-    print(position.lat);
-    LatLng latLng = LatLng(position.lat, position.lng);
+    Map<String, dynamic> resultMap;
+  //  resultMap = jsonDecode(data)  ;
+    Map<String, dynamic> eventData = jsonDecode('${data}');
+   // position = Position.fromJson(resultMap);
+    print(eventData['lng']);
+    print(eventData['lat']);
+ //   LatLng latLng = LatLng(position.lat, position.lng);
     MarkerId markerId = MarkerId('location');
     Marker marker = Marker(
       markerId: markerId,
       //icon: _markerIcon,
-      position: latLng,
+     // position: latLng,
     );
     setMarker(marker);
   }

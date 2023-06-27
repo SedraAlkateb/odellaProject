@@ -643,7 +643,7 @@ class RepositoryImp implements Repository {
     }
 
   @override
-  Future<Either<Failure, Trips>> weeklyTrip()
+  Future<Either<Failure, WeeklyTripInfor>> weeklyTrip()
   async {
     try {
       //connect to internet,its safe to call Api

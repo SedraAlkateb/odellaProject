@@ -116,21 +116,20 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     children: [
                      InkWell(
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                        Routes.informationTrip
-                    );
+
                   },
                   child: MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Text(
-                    '?',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  onHover: (event) {
+                  child:
+                  IconButton(onPressed: (){
+
+                    Navigator.pushNamed(
+                        context,
+                        Routes.informationTrip
+                    );
+                  }, icon: Icon(Icons.info)),
+
+                    onHover: (event) {
                     Text("information trip");
                   },),
 
@@ -155,38 +154,41 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
 
                 ),
                 ),
-                // Row(
-                //   children: [
-                //     Container(
-                //       height: 5.h,
-                //       width: 10.w,
-                //       child: DropdownButtonFormField(
-                //         icon: const Icon(Icons.keyboard_arrow_down),
-                //         hint:
-                //         Text(LocaleKeys.transferPositions.tr()),
-                //         validator: (value) {
-                //           if (value == null) {
-                //             return LocaleKeys.transferPositions.tr();
-                //           }
-                //           return null;
-                //         },
-                //         items: _register1
-                //             .getPosition()
-                //             .map((e) => DropdownMenuItem(
-                //           value: e,
-                //           child: Text(" ${e.name}"),
-                //         ))
-                //             .toList(),
-                //         onChanged: (val) {
-                //
-                //           // Provider.of<HomeSupervisorView>(context,
-                //           //     listen: false)
-                //           //     .setTransferPositionId(val!.id);
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Container(
+                  height: 5.h,
+                //  width: 10.w,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(child: Text("Get All student"),onPressed: (){
+                          model.setAllUser();
+                        },),
+                      ),
+                      Expanded(
+                        child: DropdownButtonFormField(
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          hint:
+                          Text(LocaleKeys.transferPositions.tr()),
+                          validator: (value) {
+                            if (value == null) {
+                              return LocaleKeys.transferPositions.tr();
+                            }
+                            return null;
+                          },
+                          items: model.getHomeSuperVisor().
+                          dataTransferPositions?.map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(" ${e.name}"),
+                          ))
+                              .toList(),
+                          onChanged: (val) {
+                            model.studentPosition( val!.id);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -298,7 +300,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     separatorBuilder: (_, index) =>  SizedBox(
                       height: 2.h,
                     ),
-                    itemCount: model.getUser().length,
+                    itemCount: Provider.of<HomeSuperVisorViewModel>(context).getUser().length,
                   ),
                 ),
               ],
@@ -312,7 +314,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   child: TextFormField(
                     onChanged: (value) {
                       try {
-                        // Provider.of<HomeViewModel>(context,listen: false).setSearch(value);
+                        Provider.of<HomeSuperVisorViewModel>(context,listen: false).setSearch(value);
                       } catch (e, s) {
                         print(s);
                       }

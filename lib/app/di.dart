@@ -131,7 +131,9 @@ Future<void>initClaimModule() async{
         StoreClaimUseCase(instance()));
     instance.registerFactory<WeeklyTripUsecase>(() =>
         WeeklyTripUsecase(instance()));
-    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance(),instance()));
+    instance.registerFactory<EvaluationUseCase>(() =>EvaluationUseCase(instance()));
+
+    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance(),instance(),instance()));
   }
 }
 Future<void>initAddLostModule() async{
@@ -343,8 +345,7 @@ initProgramModule() {
   if (!GetIt.I.isRegistered<ProgramsUseCase>()) {
     instance.registerFactory<ProgramsUseCase>(() =>ProgramsUseCase(instance()));
     instance.registerFactory<StudentAttendenceUsecase>(() =>StudentAttendenceUsecase(instance()));
-    instance.registerFactory<EvaluationUseCase>(() =>EvaluationUseCase(instance()));
-    instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance(),instance()));
+    instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance()));
     }
 }
 initLostAndFoundModule() {
