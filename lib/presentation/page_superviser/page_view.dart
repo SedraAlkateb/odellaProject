@@ -20,7 +20,6 @@ class SupervisorPagesView extends StatelessWidget  {
        color: Colors.black,
       child: BottomNavigationBar(
         selectedItemColor: ColorManager.black,
-
           unselectedItemColor: ColorManager.black,
           currentIndex: mpp.selectedIndex,
           elevation: AppSize.s60,

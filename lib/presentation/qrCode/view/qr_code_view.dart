@@ -37,6 +37,7 @@ class _QrCodeViewState extends State<QrCodeView> {
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
+
                       ),
                     ),
                     SizedBox(height: 16.0),

@@ -61,6 +61,7 @@ class _HomeViewState extends State<HomeView> {
             LocaleKeys.Home.tr(),
             style: getBoldStyle(
                 color: ColorManager.sidBarIcon, fontSize: FontSize.s20),
+
           ),
           actions: [notificationIcon(context)],
         ),

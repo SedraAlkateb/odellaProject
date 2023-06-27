@@ -20,7 +20,7 @@ Future<String> scanBarcode() async {
     '#FF0000',
     'Cancel',
     true,
-    ScanMode.BARCODE,
+    ScanMode.QR,
   );
   print(_barcodeValue);
 

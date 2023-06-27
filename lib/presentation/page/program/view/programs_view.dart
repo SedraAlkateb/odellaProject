@@ -211,7 +211,6 @@ class TripStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -282,6 +281,7 @@ class TripStudentWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
             ),
           ],
         ),
@@ -327,6 +327,7 @@ class TripStudentWidget extends StatelessWidget {
             ),
           ],
         ),
+
 
       ]),
     );

@@ -75,6 +75,7 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     /// ToDO change your data ///
@@ -206,9 +207,15 @@ Widget build(BuildContext context) {
       backgroundColor: ColorManager.sidBar,
       toolbarHeight: 60,
       title: const Text('Notifications'),
+
       leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
         Navigator.pop(context);
       },),
+
+      backgroundColor: ColorManager.sidBar,
+      actions: [
+        notificationIcon(context)
+      ],
     ),
     body: SingleChildScrollView(
       child: Column(
@@ -230,6 +237,7 @@ Widget build(BuildContext context) {
               ],
             ),
           ),
+
           MessageList(),
         ],
       ),

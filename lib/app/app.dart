@@ -33,6 +33,8 @@ import 'package:untitled/presentation/page/home/view_model/home_view_model.dart'
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
 import 'package:untitled/presentation/subscription/view_model/subscription_view_model.dart';
 
+import '../presentation/page/polyyline_view_model.dart';
+
 
 class MyApp extends StatefulWidget {
   //name constructor
@@ -82,6 +84,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationsViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<Not>()),
         ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
+        // ChangeNotifierProvider(create: (_)=>instance<MapScreen>()),
 
       ],
       child: MaterialApp(
