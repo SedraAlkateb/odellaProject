@@ -51,17 +51,25 @@ class SignUpViewModel extends BaseViewModel
   var isUn=false;
   var isCities=false;
   File ?image1;
-var _nnum=0;
+var nnum=0;
   From? positionValue=null;
   Area? areaValue;
-
-
+@override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
+@override
+  setStateScreen(int state) {
+notifyListeners();
+    return super.setStateScreen(state);
+  }
 int getNum(){
- return _nnum;
+ return nnum;
 }
 
 setNum(int n){
-  _nnum=n;
+  nnum=n;
   notifyListeners();
 }
  // bool _disposed = false;
@@ -78,25 +86,10 @@ setNum(int n){
   }
   @override
   void dispose() {
-    _nnum=0;
-     _dataModel=[];
-    _dataSubscriptions=[];
-    _dataTransferPositions=[];
-     _dataTransportationLines=[];
-    _position=[];
-    _cities=[];
-    _areas=[];
-     signUpObject= SignUpObject(2,1,"asddassad",0,"","","","","",0,0,null,0);
-      isLog=false;
-      isLin=false;
-      isSub =false;
-      isUn=false;
-      isCities=false;
-     image1=null;
-
-     positionValue=null;
-      areaValue=null;
+    nnum=0;
+   //  signUpObject= SignUpObject(2,1,"asddassad",0,"","","","","",0,0,null,0);
     super.dispose();
+
   }
   var index1=100000;
   setC(int index,int id){
@@ -218,30 +211,9 @@ setNum(int n){
   setUniversityId(int universityId){
     signUpObject= signUpObject.copyWith(university_id: universityId);
   }
-/*
-
-setPositionValue(From value){
-    positionValue=value;
-    notifyListeners();
-}
-setAreaValue(Area value){
-areaValue=value;
-notifyListeners();
-}
-
- From? getPositionValue(){
-  return  positionValue;
-
-  }
-  Area? getAreaValue(String value){
-   return areaValue;
-
-  }
- */
-
   /////////////////////async function//////////////////////////////////////////////////
   getSignUp()async{
-    inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+    setDialog(1);
     ( await _signUpUseCase.execute(
         SignUpCaseInput(signUpObject.city_id, signUpObject.area_id, signUpObject.street, signUpObject.subscription_id,
             signUpObject.firstName, signUpObject.lastName, signUpObject.email, signUpObject.password,
@@ -251,10 +223,11 @@ notifyListeners();
     ))
         .fold(
             (failure)  {
-          inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+              setDialog(2);
         },
             (data)  {
-              inputState.add(ContentState());
+              setDialog(0);
+
               isLog=true;
           notifyListeners();
         });
@@ -271,7 +244,7 @@ notifyListeners();
             (data)  {
       //    inputState.add(ContentState());
           setPosition(data.positionLine);
-          inputState.add(ContentState());
+          //inputState.add(ContentState());
           notifyListeners();
         });
 
@@ -336,21 +309,19 @@ notifyListeners();
     }
     return false;
   }
+
   getAllInf()async{
-    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+    setStateScreen(1);
     ( get()).then(
             (value){
           if(value) {
             print(isLin && isSub && isUn && isCities);
-            inputState.add(ContentState());
+            setStateScreen(0);
             notifyListeners();
           }else{
-            inputState.add(ErrorState(StateRendererType.fullScreenErrorState,"something worng"));
-
+            setStateScreen(2);
           }
         }
-
-
     );
   }
 ////////////////////////////city//
@@ -361,7 +332,7 @@ notifyListeners();
       //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
         },
             (data)  {
-             inputState.add(ContentState());
+             //inputState.add(ContentState());
           setAreas(data.areas!);
           notifyListeners();
         });

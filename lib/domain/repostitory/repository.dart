@@ -38,7 +38,7 @@ abstract class Repository{
   Future< Either<Failure,String>>resetPassword(RestPasswordRequest restPasswordRequest);
   Future< Either<Failure,HomeSuperVisor>>homeSupervisor(String time);
   Future< Either<Failure,String>>evaluation(EvaluationRequest evaluationRequest);
-  Future< Either<Failure,Trips>>weeklyTrip();
+  Future< Either<Failure,WeeklyTripInfor>>weeklyTrip();
   Future< Either<Failure,DailyReservations>>dailyReservations(int id);
   Future< Either<Failure,String>>confirmStudentByQrCode(ConfirmQrRequest confirmQrRequest);
   Future< Either<Failure,AcceptDenyModel>>approve(int id);
@@ -48,7 +48,7 @@ abstract class Repository{
   Future<  Either<Failure,String>>supervisorPositionUpdate(PositionMap PositionMap);
   Future<  Either<Failure,String>>makeReadNotification(int id);
   Future<  Either<Failure,String>>readAllNot();
-
+  Future<  Either<Failure,StudentPosition>>studentPosition(int trip,int position);
 
 
 }

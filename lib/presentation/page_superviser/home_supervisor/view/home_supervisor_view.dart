@@ -115,6 +115,26 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   ),
                 ),
                 SizedBox(height: 4.h),
+                Center(
+                  child: Row(
+                    children: [
+                     InkWell(
+                  onTap: () {
+
+                  },
+                  child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child:
+                  IconButton(onPressed: (){
+                    Navigator.pushNamed(
+                        context,
+                        Routes.informationTrip
+                    );
+                  }, icon: Icon(Icons.info)),
+
+                    onHover: (event) {
+                    Text("information trip");
+                  },),
                 SizedBox(width: 4.w),
                 Padding(
                   padding:  EdgeInsets.only(left:17.sp,right:17.sp),
@@ -135,7 +155,8 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                               color: Colors.redAccent,
 
                             ),
-                            child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),)),
+                            child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),
+                                         )),
                         // Container(
                         //   height: 5.h,
                         //   width: 10.w,
@@ -168,36 +189,48 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         IconButton(onPressed: ()
                {
                 await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
-                      Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);
-               },icon: Icon(Icons.qr_code_scanner,size: 25,)),
-
-                        Container(
-                          width: 10.w,
-                          height: 10.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ColorManager.sidBar,
-
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                  Routes.informationTrip
-                              );
-                            },
-                              onLongPress: ()
-                              {
-                               showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
-                              },
-                            child:Icon(Icons.question_mark_rounded)
-                          ),
+                      Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);            },icon: Icon(Icons.qr_code_scanner)),
+                      SizedBox(height: 4.h),
+                      IconButton(icon: Icon(Icons.stop_circle_outlined),onPressed: (){
+                        model.stopTracking();
+                      },)  ]
+                ),
+                Container(
+                  height: 5.h,
+                //  width: 10.w,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(child: Text("Get All student"),onPressed: (){
+                          model.setAllUser();
+                        },),
+                      ),
+                      Expanded(
+                        child: DropdownButtonFormField(
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          hint:
+                          Text(LocaleKeys.transferPositions.tr()),
+                          validator: (value) {
+                            if (value == null) {
+                              return LocaleKeys.transferPositions.tr();
+                            }
+                            return null;
+                          },
+                          items: model.getHomeSuperVisor().
+                          dataTransferPositions?.map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(" ${e.name}"),
+                          ))
+                              .toList(),
+                          onChanged: (val) {
+                            model.studentPosition( val!.id);
+                          },
                         ),
-                        SizedBox(width: 1.w,),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
+
 
                 SizedBox(height: 4.h),
                 Column(
@@ -317,7 +350,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     separatorBuilder: (_, index) =>  SizedBox(
                       height: 2.h,
                     ),
-                    itemCount: model.getUser().length,
+                    itemCount: Provider.of<HomeSuperVisorViewModel>(context).getUser().length,
                   ),
                 ),
               ],
@@ -331,7 +364,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   child: TextFormField(
                     onChanged: (value) {
                       try {
-                        // Provider.of<HomeViewModel>(context,listen: false).setSearch(value);
+                        Provider.of<HomeSuperVisorViewModel>(context,listen: false).setSearch(value);
                       } catch (e, s) {
                         print(s);
                       }

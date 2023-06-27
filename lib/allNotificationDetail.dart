@@ -1,14 +1,11 @@
 
-// ignore_for_file: require_trailing_commas
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
-
-/// Displays information about a [RemoteMessage].
-class MessageDetailView extends StatelessWidget {
-  const MessageDetailView({Key? key}) : super(key: key);
+class NotMessageView extends StatelessWidget {
+  const NotMessageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,37 +15,33 @@ class MessageDetailView extends StatelessWidget {
         appBar: AppBar(
           title: appbar(model.getMessage().body),
         ),
-        body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // img(
-                          //   notification.android!.imageUrl,
-                          // ),
-                          const Text(
-                            'Notification Information :',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          viewData(
-                            'Title',
-                            model.getMessage().title,
-                          ),
-                          viewData(
-                            'Body',
-                            model.getMessage().body,
-                          ),
-                        ],
-                      ),
-                    )
-                ],
-              ),
-            )),
+        body: Container(
+          alignment: Alignment.center,
+
+          child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8,right: 8,left: 8,top: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    iconNotification(int.parse(model.getMessage().type)),
+                    const Text(
+                      'Notification Information :',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    viewData(
+                      'Title',
+                      model.getMessage().title,
+                    ),
+                    viewData(
+                      'Body',
+                      model.getMessage().body,
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
@@ -91,5 +84,4 @@ class MessageDetailView extends StatelessWidget {
   Widget appbar(String? value) {
     return Text(value ?? 'N/A',style: const TextStyle(fontSize: 16),);
   }
-
 }

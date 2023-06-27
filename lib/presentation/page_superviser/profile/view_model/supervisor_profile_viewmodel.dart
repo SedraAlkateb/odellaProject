@@ -309,11 +309,11 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     }, (data)async {
       setProfile(data);
       setIsStudent(true);
-      if(data.image!=null&& data.image!=""){
-        final file= await  ImageDownloader.downloadImage(data.image );
+      if(data.image!=null&& data.image!=""&& data.image!=" "){
+        final file= await  ImageDownloader.downloadImage(data.image! );
         setIm(file);
       }
-      inputState.add(ContentState());
+      //inputState.add(ContentState());
       notifyListeners();
     });
   }

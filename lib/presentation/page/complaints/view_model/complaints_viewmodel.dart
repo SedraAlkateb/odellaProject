@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/domain/usecase/evaluation_usecase.dart';
 import 'package:untitled/domain/usecase/store_claim_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
@@ -12,15 +13,26 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
   @override
   StoreClaimUseCase _claimUseCase;
   WeeklyTripUsecase _weeklyTripUsecase;
+  EvaluationUseCase _evaluationUseCase;
+
   String _description="";
   int tripId=0;
-  ComplaintsViewModel(this._claimUseCase,this._weeklyTripUsecase);
+
+  ComplaintsViewModel(this._claimUseCase,this._weeklyTripUsecase,this._evaluationUseCase);
   List<DataTrips> _trip=[];
   AppPreferences _appPreferences =instance<AppPreferences>();
   setTrip(List<DataTrips> trip){
     _trip=trip;
     notifyListeners();
   }
+  List<EvaluationTrip> _eval=[];
+  setEval(List<EvaluationTrip> eval){
+    _eval=eval;
+    notifyListeners();
+  }
+  List<EvaluationTrip> getEval(){
+    return _eval;
+}
   List<DataTrips> getTrip(){
     return _trip;
   }
@@ -65,10 +77,10 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     _description=d;
     notifyListeners();
   }
-Future  storeClaim() async {
+Future  storeClaim( int trip) async {
    // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _claimUseCase.execute(ClaimUseCaseInput(tripId, getDescription())))
+    (await _claimUseCase.execute(ClaimUseCaseInput(trip, getDescription())))
         .fold((failure) {
    //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
@@ -85,9 +97,10 @@ Future  storeClaim() async {
       print("failer");
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
-      setTrip(data.dataTrips!);
-       lang =await _appPreferences.getAppLanguage();
-      lang=await _appPreferences.getAppLanguage();
+      setTrip(data.weeklyTrip!.trips);
+      setEval(data.weeklyTrip?.evaluation??[]);
+
+      lang =await _appPreferences.getAppLanguage();
       notifyListeners();
     });
   }
@@ -95,5 +108,16 @@ Future  storeClaim() async {
   @override
   void start() {
     getWeeklyTrip();
+  }
+
+  evaluation(int r,int trip) async {
+    //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+
+    (await _evaluationUseCase.execute(EvaluationUseCaseInput(trip, r)))
+        .fold((failure) {
+      //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+    }, (data)async {
+
+    });
   }
 }

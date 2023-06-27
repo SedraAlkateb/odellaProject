@@ -75,8 +75,8 @@ setTrip(List<DataTrips> trip){
     }, (data)async {
       print("data.dataTrips![0].availableSeats ??0");
 
-      print(data.dataTrips![0].availableSeats);
-          setTrip(data.dataTrips!);
+      print(data.weeklyTrip!.trips[0].availableSeats);
+          setTrip(data.weeklyTrip!.trips);
       notifyListeners();
     });
   }

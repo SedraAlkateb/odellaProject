@@ -2,11 +2,8 @@ import 'dart:ui';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart' ;
-import 'package:path_provider/path_provider.dart';
 import 'package:untitled/app/constants.dart';
-//import 'package:image/image.dart' as img;
 
 class ImageDownloader {
   static const String image="${Constants.baseUrl}storage/";
