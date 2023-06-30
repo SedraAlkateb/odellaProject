@@ -99,75 +99,77 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    child: model
-                                        .getIm() !=
-                                        null
-                                        ? InkWell(
-                                      onTap: () async {
-                                        await model.updateImageFromGallory();
-                                        await model.updateImage();
-                                      },
-                                      child: Container(
-                                        width: 28.w,
-                                        height: 17.h,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            //color: Colors.grey[300],
-                                            image: DecorationImage(
-                                                fit: BoxFit.contain,
-                                                image: FileImage(
-                                                    Provider.of<SupervisorProfileViewModel>(context).getIm()?? File("")
-                                                ))),
-                                      ),
-                                    )
-                                        : InkWell(
-                                      onTap: () async {
-                                        await model.updateImageFromGallory();
-                                        await model.updateImage();
-                                      },
-                                      child: Container(
+                                  Expanded(
+                                    child: Container(
+                                      child: model
+                                          .getIm() !=
+                                          null
+                                          ? InkWell(
+                                        onTap: () async {
+                                          await model.updateImageFromGallory();
+                                          await model.updateImage();
+                                        },
+                                        child: Container(
                                           width: 28.w,
                                           height: 17.h,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[300],
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(Icons.add,
-                                              size: AppSize.s50,
-                                              color: Color(0xFFFFFFFF))),
-                                    )
-                                    //:profile1.getLocalPath()!=null?
-                                    ,
+                                              shape: BoxShape.circle,
+                                              //color: Colors.grey[300],
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: FileImage(
+                                                      Provider.of<SupervisorProfileViewModel>(context).getIm()?? File("")
+                                                  ))),
+                                        ),
+                                      )
+                                          : InkWell(
+                                        onTap: () async {
+                                          await model.updateImageFromGallory();
+                                          await model.updateImage();
+                                        },
+                                        child: Container(
+                                            width: 28.w,
+                                            height: 17.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.add,
+                                                size: AppSize.s50,
+                                                color: Color(0xFFFFFFFF))),
+                                      )
+                                      //:profile1.getLocalPath()!=null?
+                                      ,
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    width: 25,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        model.getName() ?? '',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeightManager.bold,
-                                            fontSize: FontSize.s18),
-                                      ),
-                                      Text(
-                                        model.getEmail(),
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                      Text(
-                                        model.getPhone(),
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                    ],
+                                
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          model.getName() ?? '',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeightManager.bold,
+                                              fontSize: FontSize.s18),
+                                        ),
+                                        Text(
+                                          model.getEmail(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                        ),
+                                        Text(
+                                          model.getPhone(),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

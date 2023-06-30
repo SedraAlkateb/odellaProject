@@ -12,8 +12,9 @@ async  {
       auth: PusherAuth(PusherConfigration.hostAuthEndPoint
         , headers: {
           "Authorization": "Bearer $token",
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+      //    "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",
+      //    "Accept-Encoding":"gzip, deflate, br",
+          "Accept": "*/*"
         },
 
       ),
@@ -23,7 +24,8 @@ async  {
     PusherClient pusherClient = PusherClient(
       PusherConfigration.key,
       options,
-      autoConnect:true,
+
+   //   autoConnect:true,
       enableLogging: true,
 
     );

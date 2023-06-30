@@ -29,7 +29,10 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
 
     if(Provider.of<HomeSuperVisorViewModel>(context).getSucc()){
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        Provider.of<DailyReservationsViewModel>(context,listen: false).dailyReservation(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id);
+        if(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id!=0){
+          Provider.of<DailyReservationsViewModel>(context,listen: false).dailyReservation(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id);
+
+        }
       });
       Provider.of<HomeSuperVisorViewModel>(context).setSucc(false);
 

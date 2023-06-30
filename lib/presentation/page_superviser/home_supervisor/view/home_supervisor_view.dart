@@ -175,14 +175,21 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             }
                             return null;
                           },
-                          items: model.getHomeSuperVisor().
-                          dataTransferPositions?.map((e) => DropdownMenuItem(
+
+                          items:
+                          model.getPositions().map((e) =>
+                          e!=[] ?
+                              DropdownMenuItem(
                             value: e,
                             child: Text(" ${e.name}"),
-                          ))
-                              .toList(),
+                          )
+                              :    DropdownMenuItem(
+                          //  value: e,
+                            child: Text("no positions"),
+                          )
+                          ).toList(),
                           onChanged: (val) {
-                            model.studentPosition( val!.id);
+                            model.studentPosition( val.id);
                           },
                         ),
                       ),
