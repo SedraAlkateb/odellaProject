@@ -6,13 +6,11 @@ import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
-import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -34,7 +32,11 @@ class SupervisorProfileView extends StatefulWidget {
 class _SupervisorProfileViewState extends State<SupervisorProfileView> {
   SupervisorProfileViewModel profileViewModel =
   instance<SupervisorProfileViewModel>();
-  GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
+
+  String dropdownTransportationLine = 't1';
+  String dropdownPosition = 'p1';
+  String dropdownUniversity = 'u1';
+
   @override
   void initState() {
     Provider.of<SupervisorProfileViewModel>(context, listen: false).start();
@@ -54,7 +56,27 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
           Scaffold(
             appBar: AppBar(
               actions: [
-                notificationIcon(context)
+                Provider.of<Not>(context).getCount()==0
+                    ? IconButton(onPressed: () {
+                  Navigator.pushNamed(context,Routes.notification);
+
+                }, icon: const Icon(Icons.notifications))
+                    : Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: InkWell(
+                    child: Badge(
+                      badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
+
+                      child: Icon(Icons.notifications,size: AppSize.s30),
+                      badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
+                    ),
+                    onTap: ()
+                    {
+                      print("kkkkkk");
+                      Navigator.pushNamed(context,Routes.notification);
+                    },
+                  ),
+                ),
               ],
               title: Text(LocaleKeys.profile.tr(),
                   style: getBoldStyle(
@@ -790,32 +812,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                                     ],
                                   ),
                                   SizedBox(
-                                    width: 120.w,
-                                    height: 10.h,
-                                    child: DropdownButtonFormField(
-                                        icon:
-                                        const Icon(Icons.keyboard_arrow_down),
-                                        hint: Text(LocaleKeys.cities.tr()),
-
-                                        items: model
-                                            .getCities()
-                                            .map((e) => DropdownMenuItem(
-                                          value: e.id,
-                                          child: Text(" ${e.name}"),
-                                        ))
-                                            .toList(),
-                                        onChanged: (val) {
-                                          if (_fbKey2.currentState != null) {
-                                            _fbKey2.currentState?.reset();
-                                          }
-                                          Provider.of<SupervisorProfileViewModel>(context,
-                                              listen: false)
-                                              .setCityId(val!);
-                                          Provider.of<SupervisorProfileViewModel>(context,
-                                              listen: false)
-                                              .getAreasByIdCity(val);
-                                        }),
-
+                                    width: 6.w,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -859,27 +856,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                                     ],
                                   ),
                                   SizedBox(
-                                    width: 120.w,
-                                    height: 10.h,
-                                    child:FormBuilder(
-                                      key: _fbKey2,
-                                      child: DropdownButtonFormField(
-                                          icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                          hint: Text(model.getProfileArea()),
-
-                                          items: model
-                                              .getAreas()
-                                              .map((e) => DropdownMenuItem(
-                                            value: e.id,
-                                            child: Text(" ${e.name}"),
-                                          ))
-                                              .toList(),
-                                          onChanged: (val) {
-                                            print(val);
-                                            model.setAreaId(val!);
-                                          }),
-                                    ),
+                                    width: 6.w,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,

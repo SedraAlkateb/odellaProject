@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
@@ -23,6 +24,7 @@ class ComplaintsView extends StatefulWidget {
 class _ComplaintsViewState extends State<ComplaintsView> {
 //   TextEditingController textEditingController = TextEditingController();
 //   int dropdownTransportationLine = 0;
+
    var viewModel;
  @override
    void initState() {
@@ -34,7 +36,6 @@ class _ComplaintsViewState extends State<ComplaintsView> {
 //   items:Provider.of<ComplaintsViewModel>(context).getTrip()
 
  // Provider.of<ComplaintsViewModel>(context, listen: false) .setTripId(val!);
-
   TextEditingController textEditingController = TextEditingController();
 
   @override
@@ -43,7 +44,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
       drawer: NavBar(),
       appBar: AppBar(
         title: Text(
-          "LocaleKeys.comprating.tr()",
+          LocaleKeys.comprating.tr(),
           style: getBoldStyle(
             color: ColorManager.sidBarIcon,
             fontSize: FontSize.s20,
@@ -125,6 +126,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
                       Row(
                         children: [
                           SizedBox(width: 4.w,),
@@ -135,6 +137,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                       Row(
                         children: [
                           SizedBox(width: 4.w,),
+
                           Text("${"time"} : ${Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].time?.start}",style: getMediumStyle(color: Colors.black,fontSize: FontSize.s16),),
                         ],
                       ),
@@ -159,6 +162,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                             ),
 
                             onRatingUpdate: (rating) {
+
                                Provider.of<ComplaintsViewModel>(context,
                                    listen: false)
                                    .evaluation(rating.toInt(),Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
@@ -182,6 +186,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                             ),
                           ),
                           onChanged: (value){
+
                             Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value);
                          //   textEditingController.text=value;
                           }
@@ -190,6 +195,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+
                           IconButton(icon: Icon(Icons.check_circle,size: 30,), onPressed: () {
                             Provider.of<ComplaintsViewModel>(context,listen: false).storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
 

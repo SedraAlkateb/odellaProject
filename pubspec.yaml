@@ -32,6 +32,7 @@ dependencies:
   provider:
   flutter:
     sdk: flutter
+  #here_sdk: ^4.9.0
   flutter_localizations :
     sdk: flutter
 
@@ -61,7 +62,8 @@ dependencies:
   firebase_analytics: ^10.4.3
   flutter_local_notifications: ^14.1.1
   badges: ^3.1.1
-
+  flutter_map: ^0.13.1
+  #latlong: ^0.6.1
 
   google_directions_api: ^0.9.1
   laravel_echo:
@@ -152,7 +154,6 @@ flutter:
     - assets/images/splash_screen.png
     - assets/images/gray.png
     - assets/lang/
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

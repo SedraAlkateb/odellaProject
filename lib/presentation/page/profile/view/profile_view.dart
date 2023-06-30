@@ -1,9 +1,10 @@
+
+
 import 'dart:io';
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
@@ -30,7 +31,6 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel profileViewModel = instance<ProfileViewModel>();
-  GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -55,28 +55,8 @@ class _ProfileViewState extends State<ProfileView> {
             drawer: NavBar(),
             appBar: AppBar(
               actions: [
-                Provider.of<Not>(context).getCount() == 0
-                    ? IconButton(onPressed: () {
-                  Navigator.pushNamed(context, Routes.application);
-                }, icon: const Icon(Icons.notifications))
-                    : Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: InkWell(
-                    child: Badge(
-                      badgeContent: Text(
-                        "${ Provider.of<Not>(context).getCount()}",
-                        style: TextStyle(color: Colors.white),),
+                        notificationIcon(context)
 
-                      child: Icon(Icons.notifications, size: AppSize.s30),
-                      badgeAnimation: BadgeAnimation.fade(
-                          animationDuration: Duration(milliseconds: 250)),
-                    ),
-                    onTap: () {
-                      print("kkkkkk");
-                      Navigator.pushNamed(context, Routes.application);
-                    },
-                  ),
-                ),
               ],
             ),
             body:
@@ -207,9 +187,8 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
-                                 SizedBox(
+                                SizedBox(
                                   width: 1.w,
-
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -432,7 +411,7 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                               // mainAxisAlignment: MainAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   //SizedBox(height: 4.h,),
                                   Column(
@@ -465,9 +444,6 @@ class _ProfileViewState extends State<ProfileView> {
                                                 ))
                                                 .toList(),
                                             onChanged: (val) {
-                                              if (_fbKey2.currentState != null) {
-                                                _fbKey2.currentState?.reset();
-                                              }
                                               model.setCityId(val!);
                                               model.getAreasByIdCity(val);
                                             }),
@@ -498,25 +474,22 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
-                                        child: FormBuilder(
-                                          key: _fbKey2,
-                                          child: DropdownButtonFormField(
-                                              icon:
-                                              const Icon(Icons.keyboard_arrow_down),
-                                              hint: Text(model.getProfileArea()),
-                                              items: model
-                                                  .getAreas()
-                                                  .map((e) =>
-                                                  DropdownMenuItem(
-                                                    value: e.id,
-                                                    child: Text(" ${e.name}",
-                                                      overflow: TextOverflow.ellipsis,),
-                                                  ))
-                                                  .toList(),
-                                              onChanged: (val) {
-                                                model.setAreaId(val!);
-                                              }),
-                                        ),
+                                        child: DropdownButtonFormField(
+                                            icon:
+                                            const Icon(Icons.keyboard_arrow_down),
+                                            hint: Text(model.getProfileArea()),
+                                            items: model
+                                                .getAreas()
+                                                .map((e) =>
+                                                DropdownMenuItem(
+                                                  value: e.id,
+                                                  child: Text(" ${e.name}",
+                                                    overflow: TextOverflow.ellipsis,),
+                                                ))
+                                                .toList(),
+                                            onChanged: (val) {
+                                              model.setAreaId(val!);
+                                            }),
                                       ),
                                     ],
                                   ),
@@ -575,10 +548,10 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: ColorManager.sidBarIcon,
                               ),
                               Column(
-
-                               mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+
                                   Text("${LocaleKeys.subscription.tr()} : ${model.getStudentSub()?.name ??""} "),
                                   Text("${LocaleKeys.daysNumber.tr()} :  ${model.getStudentSub()?.daysNumber??""}"),
                                   Text("${LocaleKeys.price.tr()} :  ${model.getStudentSub()?.price??""}"),
@@ -731,13 +704,13 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
-                              SizedBox(
-                                width: 18.w,
-                              ),
-                              IconButton(onPressed: ()
-                              {
-                                Navigator.pushNamed(context, Routes.qrCodeViewRoute);
-                              }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
+                                SizedBox(
+                                  width: 18.w,
+                                ),
+                                IconButton(onPressed: ()
+                                {
+                                  Navigator.pushNamed(context, Routes.qrCodeViewRoute);
+                                }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
                               ],
                             ),
                           ),
@@ -996,9 +969,6 @@ class _ProfileViewState extends State<ProfileView> {
                                               ))
                                               .toList(),
                                           onChanged: (val) {
-                                            if (_fbKey2.currentState != null) {
-                                              _fbKey2.currentState?.reset();
-                                            }
                                             model.setCityId(val!);
                                             model.getAreasByIdCity(val);
                                           }),
@@ -1030,25 +1000,22 @@ class _ProfileViewState extends State<ProfileView> {
                                     SizedBox(
                                       height: 10.h,
                                       width: 120.w,
-                                      child: FormBuilder(
-                                        key: _fbKey2,
-                                        child: DropdownButtonFormField(
-                                            icon:
-                                            const Icon(Icons.keyboard_arrow_down),
-                                            hint: Text(model.getProfileArea()),
-                                            items: model
-                                                .getAreas()
-                                                .map((e) =>
-                                                DropdownMenuItem(
-                                                  value: e.id,
-                                                  child: Text(" ${e.name}",
-                                                    overflow: TextOverflow.ellipsis,),
-                                                ))
-                                                .toList(),
-                                            onChanged: (val) {
-                                              model.setAreaId(val!);
-                                            }),
-                                      ),
+                                      child: DropdownButtonFormField(
+                                          icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                          hint: Text(model.getProfileArea()),
+                                          items: model
+                                              .getAreas()
+                                              .map((e) =>
+                                              DropdownMenuItem(
+                                                value: e.id,
+                                                child: Text(" ${e.name}",
+                                                  overflow: TextOverflow.ellipsis,),
+                                              ))
+                                              .toList(),
+                                          onChanged: (val) {
+                                            model.setAreaId(val!);
+                                          }),
                                     ),
                                   ],
                                 ),
@@ -1169,3 +1136,5 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 }
+
+

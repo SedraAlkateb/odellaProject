@@ -149,7 +149,6 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
                 Provider.of<NavbarProvider>(context,listen: false).selectedIndex=AppConstants.complaints;
                 },
             ),
-
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
@@ -166,10 +165,12 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
                 }
 
             ),
+
             Divider(
               color: ColorManager.sidBarIcon,
               height: 15,
             ),
+
             ListTile(
                 title: Text("polyline"),
                 leading: Icon(Icons.shopping_bag_rounded,

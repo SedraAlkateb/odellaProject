@@ -64,11 +64,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 ListTile(
                   subtitle: Text(
-                    "resetpass",
+                    LocaleKeys.changePassword.tr(),
                     style: TextStyle(color: ColorManager.sidBarIcon),
                   ),
                   title: Text(
-                    "resetpass",
+                    LocaleKeys.changePassword.tr(),
                     //style: Theme.of(context).textTheme.titleMedium,
                   ),
                   leading: Icon(
