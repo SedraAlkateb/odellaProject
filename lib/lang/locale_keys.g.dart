@@ -97,5 +97,16 @@ abstract class  LocaleKeys {
   static const contactus = 'contactus';
   static const qrcode = 'qrcode';
   static const notification = 'notification';
+  static const city = 'city';
+  static const area = 'area';
+  static const university = 'university';
+  static const qrscan = 'qrscan';
+  static const makeallread = 'makeallread';
+  static const neww = 'neww';
+  static const earlier = 'earlier';
+  static const comprating = 'comprating';
+  static const day = 'day';
+  static const ratingsent = 'ratingsent';
+  static const searchtrip = 'searchtrip';
 
 }

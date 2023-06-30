@@ -15,8 +15,8 @@ import 'package:untitled/presentation/resources/strings_manager.dart';
 
 class NavbarProvider  with ChangeNotifier {
   List<NavbarDTO> items = [
-    NavbarDTO(label: LocaleKeys.lostItems.tr(),widget: LostItemsView(),iconData: Icons.storefront_outlined),
-    NavbarDTO(label: LocaleKeys.complaints.tr(),widget: ComplaintsView(),iconData: Icons.call),
+    NavbarDTO(label: LocaleKeys.lostItems.tr(),widget: LostItemsView(),iconData: Icons.shopping_bag_sharp,),
+    NavbarDTO(label: LocaleKeys.complaints.tr(),widget: ComplaintsView(),iconData: Icons.comment_bank),
     NavbarDTO(label: LocaleKeys.Home.tr(),widget: HomeView(),iconData: Icons.home),
     NavbarDTO(label: LocaleKeys.profile.tr(),widget: ProfileView(),iconData: Icons.account_box_rounded),
 

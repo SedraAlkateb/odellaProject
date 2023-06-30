@@ -18,6 +18,7 @@ import 'package:untitled/presentation/page/complaints/view/complaints_view.dart'
 import 'package:untitled/presentation/page/home/view/home_view.dart';
 import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart';
 import 'package:untitled/presentation/page/page_view.dart';
+import 'package:untitled/presentation/page/polylinee.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
 import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
 import 'package:untitled/presentation/page_superviser/page_view.dart';
@@ -26,12 +27,14 @@ import 'package:untitled/presentation/page_superviser/trip_information/view/trip
 import 'package:untitled/presentation/qrCode/view/qr_code_view.dart';
 import 'package:untitled/presentation/reset_password/view/reset_password_view.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
+import 'package:untitled/presentation/scan_qr_view/view/scan_qr_view.dart';
 import 'package:untitled/presentation/settings/view/settings_view.dart';
 import 'package:untitled/presentation/signup/view/signUp_view.dart';
 import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
 
 import '../../main.dart';
+
 
 class Routes {
   static const String sedra = "/sedra";
@@ -67,10 +70,16 @@ class Routes {
   static const String notification_message = "/notificationMessage";
   static const String mapline = "/mapline";
   static const String changepass = "/changepass";
+
   static const String display_image = "/displayimage";
   static const String application = "/application";
   static const String notMessage = "/notMessage";
   static const String notMessageRealTime = "/notMessageRealTime";
+
+  static const String polyline = "/polyline";
+  static const String qrscan = "/qrscan";
+  static const String compandrat = "/compandrat";
+
 
 
 }
@@ -143,6 +152,13 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
       case Routes.changepass:
         return MaterialPageRoute(builder: (_) =>  ChangePassView());
+      case Routes.qrscan:
+        return MaterialPageRoute(builder: (_) => QRScanScreen());
+      case Routes.polyline:
+        return MaterialPageRoute(builder: (_) => Polylinee());
+      case Routes.compandrat:
+        return MaterialPageRoute(builder: (_) => ComplaintsView());
+
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());
       case Routes.supervisorPageRoute:

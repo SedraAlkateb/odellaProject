@@ -93,5 +93,16 @@
   "resetpasstonew": "تعيين كلمة سر جديدة",
   "contactus": "تواصل معنا",
   "qrcode": "رمز الاستجابة السريعة",
-  "notification": "الاشعارات"
+  "notification": "الاشعارات",
+  "city": "المدينة",
+  "area": "المنطقة",
+  "university": "الجامعة",
+  "qrscan": "ماسح رمز الاستجابة السريعة",
+  "makeallread":"جعل جميع الاشعارات مقروءة",
+  "neww": "الآن",
+  "earlier": "سابقاً",
+  "comprating": "الشكاوي و التقييمات",
+  "day": "اليوم",
+  "ratingsent": "تقييم الرحلة",
+  "searchtrip": "البحث عن رحلة"
 }

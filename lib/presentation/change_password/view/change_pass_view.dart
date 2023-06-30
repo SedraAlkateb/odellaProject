@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
 import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+
+import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
 
 class ChangePassView extends StatefulWidget {
