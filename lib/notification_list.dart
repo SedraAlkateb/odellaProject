@@ -165,7 +165,7 @@ class _MessageList extends State<MessageList> {
                       return GestureDetector(
                         onTap: ()
                         {
-                          Navigator.pushNamed(context, Routes.message);
+                          //Navigator.pushNamed(context, Routes.message);
                         },
                         child: Container(
                           color: ColorManager.sidBar,

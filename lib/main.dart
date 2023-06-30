@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/app.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/codegen_loader.g.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:untitled/config-firebase.dart';
+import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'notification_details.dart';
 import 'notification_list.dart';
@@ -89,12 +91,8 @@ Future<void> main() async {
   Provider.debugCheckInvalidValueType=null;
   ByteData  data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
-
-
-
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
@@ -134,23 +132,6 @@ Future<void> main() async {
   );
 }
 
-/// Entry point for the example application.
-class MessagingExampleApp extends StatelessWidget {
-  const MessagingExampleApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Messaging Example App',
-      theme: ThemeData.light(),
-      routes: {
-        '/': (context) =>const Application(),
-        '/message': (context) => const MessageView(),
-      },
-    );
-  }
-}
 
 /// Renders the example application.
 class Application extends StatefulWidget {
@@ -165,7 +146,8 @@ class _Application extends State<Application> {
 
   void getToken() async {
     final token =
-    _firebaseMessaging.getToken().then((value) => print('Token:///////////////////////////////////////////////////////////........... $value'));
+    _firebaseMessaging.getToken().then((value) =>
+        print('Token:///////////////////////////////////////////////////////////........... $value'));
   }
 
   @override
@@ -179,7 +161,7 @@ class _Application extends State<Application> {
       if (message != null) {
         Navigator.pushNamed(
           context,
-          '/message',
+          Routes.notMessageRealTime,
           arguments: MessageArguments(message, true),
         );
       }
@@ -222,8 +204,15 @@ class _Application extends State<Application> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text('Notifications'),
       backgroundColor: ColorManager.sidBar,
+      toolbarHeight: 60,
+      title: const Text('Notifications'),
+
+      leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+        Navigator.pop(context);
+      },),
+
+      //backgroundColor: ColorManager.sidBar,
       actions: [
         notificationIcon(context)
       ],
@@ -231,6 +220,23 @@ Widget build(BuildContext context) {
     body: SingleChildScrollView(
       child: Column(
         children:  [
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("make all as read",
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)
+                ) ,
+                  onTap: (){
+                    Provider.of<Not>(context,listen: false).getAllNotificationRead();
+                  },
+                ),
+              ],
+            ),
+          ),
 
           MessageList(),
         ],

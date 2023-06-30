@@ -424,6 +424,16 @@ extension DayResponseMapper on DataDayResponse? {
 
 extension DataProgramResponseMapper on DayProgramResponse? {
   DataProgram toDomain() {
+    List<String>line1=[];
+    if(this?.line==null){
+      line1.add("No line Name");
+    }
+    else if(this?.line?.length==0){
+      line1.add("No line Name");
+    }
+    else{
+     line1= this?.line??[];
+    }
     return DataProgram(
       this?.id ?? Constants.zero,
       this?.day.toDomain(),
@@ -432,7 +442,7 @@ extension DataProgramResponseMapper on DayProgramResponse? {
       this?.end ?? Constants.empty,
       this?.confirmAttendance1 ?? true ,
       this?.confirmAttendance2  ?? true,
-
+      line1
     );
   }
 }
@@ -510,6 +520,17 @@ extension UserLFResponseMapper on UserLAFResponse? {
     );
   }
 }
+extension StudentPositionResponseMapper on StudentPositionResponse? {
+  StudentPosition toDomain() {
+    return StudentPosition(
+      (this?.users?.map((dataResponse) => dataResponse.toDomain()) ??
+          const Iterable.empty())
+          .cast<User>()
+          .toList(),
+    );
+  }
+}
+
 extension LostAndFoundDataMapper on LostAndFoundDataResponse? {
   LostAndFoundData toDomain() {
     return LostAndFoundData(
@@ -587,14 +608,11 @@ extension DataTripsMapper on DataTripsResponse? {
   }
 }
 extension TripsMapper on TripsResponse? {
-  Trips toDomain() {
-    List<DataTrips> dataModel = (this
-        ?.dataTrips
-        ?.map((dataResponse) => dataResponse.toDomain()) ??
-        const Iterable.empty())
-        .cast<DataTrips>()
-        .toList();
-    return Trips(dataModel);
+  WeeklyTripInfor toDomain() {
+    return WeeklyTripInfor(
+        this?.trips.toDomain()
+    );
+
   }
 }
 
@@ -669,3 +687,31 @@ extension NotificatioDataMapper on NotificationDataResponse? {
     );
   }
 }
+extension EvalutionTripMapper on EvaluationInfoResponse? {
+  EvaluationTrip toDomain() {
+    return EvaluationTrip(
+        this?.id ?? Constants.zero,
+        this?.review ?? Constants.empty,
+        this?.trip?.id  ?? Constants.zero,
+    );
+  }
+}
+extension WeeklyTripsMapper on DataTripsWeekResponse? {
+  WeeklyTrip
+  toDomain() {
+    List<EvaluationTrip> dataEvaluation = (this
+        ?.evaluations
+        ?.map((dataResponse) => dataResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<EvaluationTrip>()
+        .toList();
+    List<DataTrips> dataTrips = (this
+        ?.trips
+        ?.map((dataResponse) => dataResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTrips>()
+        .toList();
+    return WeeklyTrip(dataEvaluation,dataTrips);
+  }
+}
+

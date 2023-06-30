@@ -1432,11 +1432,31 @@ Map<String, dynamic> _$DataTripsResponseToJson(DataTripsResponse instance) =>
       'availableSeats': instance.availableSeats,
     };
 
-TripsResponse _$TripsResponseFromJson(Map<String, dynamic> json) =>
-    TripsResponse(
-      (json['data'] as List<dynamic>?)
+DataTripsWeekResponse _$DataTripsWeekResponseFromJson(
+        Map<String, dynamic> json) =>
+    DataTripsWeekResponse(
+      (json['trips'] as List<dynamic>?)
           ?.map((e) => DataTripsResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
+      evaluations: (json['evaluations'] as List<dynamic>?)
+          ?.map(
+              (e) => EvaluationInfoResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DataTripsWeekResponseToJson(
+        DataTripsWeekResponse instance) =>
+    <String, dynamic>{
+      'trips': instance.trips,
+      'evaluations': instance.evaluations,
+    };
+
+TripsResponse _$TripsResponseFromJson(Map<String, dynamic> json) =>
+    TripsResponse(
+      json['data'] == null
+          ? null
+          : DataTripsWeekResponse.fromJson(
+              json['data'] as Map<String, dynamic>),
     )
       ..status = json['status'] as int?
       ..massage = json['message'] as String?;
@@ -1445,7 +1465,7 @@ Map<String, dynamic> _$TripsResponseToJson(TripsResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'message': instance.massage,
-      'data': instance.dataTrips,
+      'data': instance.trips,
     };
 
 DataUpdateSupervisorResponse _$DataUpdateSupervisorResponseFromJson(
@@ -1665,11 +1685,62 @@ Map<String, dynamic> _$UpdatePositionResponseToJson(
     };
 
 Position _$PositionFromJson(Map<String, dynamic> json) => Position(
-      (json['lat'] as num).toDouble(),
       (json['lng'] as num).toDouble(),
+      (json['lat'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$PositionToJson(Position instance) => <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
+    };
+
+StudentPositionResponse _$StudentPositionResponseFromJson(
+        Map<String, dynamic> json) =>
+    StudentPositionResponse(
+      (json['data'] as List<dynamic>?)
+          ?.map((e) => UserLAFResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$StudentPositionResponseToJson(
+        StudentPositionResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.users,
+    };
+
+TripEvaluationResponse _$TripEvaluationResponseFromJson(
+        Map<String, dynamic> json) =>
+    TripEvaluationResponse(
+      json['id'] as int?,
+      json['availableSeats'] as int?,
+    );
+
+Map<String, dynamic> _$TripEvaluationResponseToJson(
+        TripEvaluationResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'availableSeats': instance.availableSeats,
+    };
+
+EvaluationInfoResponse _$EvaluationInfoResponseFromJson(
+        Map<String, dynamic> json) =>
+    EvaluationInfoResponse(
+      json['id'] as int?,
+      json['review'] as String?,
+      json['trip'] == null
+          ? null
+          : TripEvaluationResponse.fromJson(
+              json['trip'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$EvaluationInfoResponseToJson(
+        EvaluationInfoResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'review': instance.review,
+      'trip': instance.trip,
     };

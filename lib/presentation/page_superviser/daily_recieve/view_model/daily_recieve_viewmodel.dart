@@ -21,22 +21,27 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
   }
   setDailyReservations(List<DailyReservationsModel> dR){
     _dailyReservations= dR;
-    notifyListeners();
+  //  notifyListeners();
   }
   List<DailyReservationsModel> getDailyReservations(){
     print(_dailyReservations.length);
     return _dailyReservations;
   }
   dailyReservation(int id) async{
-
+    setStateScreen(1);
     ( await _dailyReservationUseCase.execute(id)).fold(
 
             (failure)  {
+              setStateScreen(2);
               print(failure.massage);
         },
             (data)  async{
-
-              setDailyReservations(data.dailyReservationsModel ??[]);
+              if(data.dailyReservationsModel?.length==0){
+                setStateScreen(3);
+              }else{
+                setStateScreen(0);
+                setDailyReservations(data.dailyReservationsModel ??[]);
+              }
         });
   }
 
@@ -61,5 +66,15 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
             (data)  async{
           print("succsec");
         });
+  }
+  @override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
+  @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
   }
 }

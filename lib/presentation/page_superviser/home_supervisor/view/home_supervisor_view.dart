@@ -57,7 +57,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                 actions: [
                   Provider.of<Not>(context).getCount()==0
                       ? IconButton(onPressed: () {
-                    Navigator.pushNamed(context,Routes.notification);
+                   // Navigator.pushNamed(context,Routes.notification);
 
                   }, icon: const Icon(Icons.notifications))
                       : Padding(
@@ -72,7 +72,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                       onTap: ()
                       {
                         print("kkkkkk");
-                        Navigator.pushNamed(context,Routes.notification);
+                       // Navigator.pushNamed(context,Routes.notification);
                       },
                     ),
                   ),

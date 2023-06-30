@@ -14,7 +14,16 @@ class LostItemsViewModel extends BaseViewModel with ChangeNotifier{
   List<LostAndFoundData>search =[];
   LostItemsViewModel(this._allLostUseCase);
   File? image;
-
+@override
+  setDialog(int state) {
+  notifyListeners();
+  return super.setDialog(state);
+  }
+  @override
+  setStateScreen(int state) {
+  notifyListeners();
+  return super.setStateScreen(state);
+  }
   @override
   void start() {
     getAllLostAndFound();
@@ -27,7 +36,6 @@ File getImage(){
 return image! ;
   }
   /////////////////////////
-
   setSearch( String value){
     search= lostFound?.lostAndFound?.lostAndFoundData?.where(
             (element){
@@ -56,16 +64,19 @@ return image! ;
     return lostFound?.lostAndFound?.lostAndFoundData;
   }
   getAllLostAndFound() async{
- //   inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-
+  setStateScreen(1);
     ( await _allLostUseCase.execute(null)).fold(
             (failure)  {
-        //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-        },
+
+              setStateScreen(2);
+            },
             (data)  async{
-          // await _appPreferences.setToken();
-      //    inputState.add(ContentState());
-          setLost(data);
+              if(data.lostAndFound==null){
+                setStateScreen(3);
+              }else{
+                setStateScreen(0);
+                setLost(data);
+              }
             });
   }
  /*

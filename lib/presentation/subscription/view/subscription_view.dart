@@ -37,19 +37,22 @@ super.initState();
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              Navigator.popAndPushNamed(context,Routes.afterSplashRoute);
-            });
-
-          },
-          icon:  SvgPicture.asset(
-              ImageAssets.vector,
-              semanticsLabel: 'Acme Logo'
-          ),
-
-        ),
+        title: Text("Subscription",style: Theme
+            .of(context)
+            .textTheme.bodyLarge,),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     SchedulerBinding.instance.addPostFrameCallback((_) {
+        //       Navigator.popAndPushNamed(context,Routes.afterSplashRoute);
+        //     });
+        //
+        //   },
+        //   icon:  SvgPicture.asset(
+        //       ImageAssets.vector,
+        //       semanticsLabel: 'Acme Logo'
+        //   ),
+        //
+        // ),
 
       ),
       key: _global,
@@ -67,12 +70,12 @@ Widget  contentWidget(){
          // crossAxisAlignment:CrossAxisAlignment.center ,
          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-                child:
-                Image.asset(ImageAssets.logo4)
-
-
-            ),
+            // Center(
+            //     child:
+            //     Image.asset(ImageAssets.logo4)
+            //
+            //
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppPadding.p18, vertical: AppPadding.p18),
               child: Column(

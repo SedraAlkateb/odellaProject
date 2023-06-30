@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,7 +68,7 @@ String? getRole(){
   @override
   void start() {
     // view model should tell view please show content state
-    inputState.add(ContentState());
+    //inputState.add(ContentState());
   }
   String fcmToken="";
   setFcmToken(String fcmToken1){
@@ -78,10 +79,10 @@ String? getRole(){
   String getFcmToken(){
     return fcmToken;
   }
-
+bool s=false;
   //////////////////////////input////////////////////////
-  login() async{
- inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+ Future<bool> login() async{
+ //inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
 
  ( await _loginUseCase.execute(
         LoginUseCaseInput(
@@ -89,15 +90,17 @@ String? getRole(){
         ))).fold(
 
             (failure)  {
-              inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+              s= false;
+              //inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
         },
             (data)  async{
-              setSuc(1);
+            //  setSuc(1);
               // await _appPreferences.setToken();
-           inputState.add(ContentState());
+           //inputState.add(ContentState());
             setAuth(data);
-
+            s= true;
             });
+ return s;
  }
  Future<String?> refresh() async{
 
@@ -119,7 +122,6 @@ String? getRole(){
   }
 @override
   void dispose() {
-    setSuc(0);
     super.dispose();
   }
 

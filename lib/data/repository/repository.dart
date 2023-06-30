@@ -643,7 +643,7 @@ class RepositoryImp implements Repository {
     }
 
   @override
-  Future<Either<Failure, Trips>> weeklyTrip()
+  Future<Either<Failure, WeeklyTripInfor>> weeklyTrip()
   async {
     try {
       //connect to internet,its safe to call Api
@@ -938,6 +938,30 @@ class RepositoryImp implements Repository {
         //return either right
         //return data
         return Right(response.massage??" ");
+      } else {
+        //return either left
+        //failure --business error
+        return Left(Failure(ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMassage.DEFAULT));
+      }
+    } catch (error) {
+      return Left(ErrorHandler
+          .handle(error)
+          .failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, StudentPosition>> studentPosition(int trip, int position)
+  async {
+    try {
+      //connect to internet,its safe to call Api
+      final response = await _remoteDataSource.studentPosition(trip, position);
+      if (response.status == ApiInternalStatus.SUCCESS) {
+        //success
+        //return either right
+        //return data
+        return Right(response.toDomain());
       } else {
         //return either left
         //failure --business error

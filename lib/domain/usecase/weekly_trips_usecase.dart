@@ -5,11 +5,11 @@ import 'package:untitled/domain/repostitory/repository.dart';
 
 import 'base_usecase.dart';
 
-class WeeklyTripUsecase implements BaseUseCase<Null,Trips>{
+class WeeklyTripUsecase implements BaseUseCase<Null,WeeklyTripInfor>{
   Repository _repository;
   WeeklyTripUsecase(this._repository);
   @override
-  Future<Either<Failure, Trips>> execute(Null) async{
+  Future<Either<Failure, WeeklyTripInfor>> execute(Null) async{
     return await _repository.weeklyTrip();
   }
 

@@ -58,7 +58,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
               actions: [
                 Provider.of<Not>(context).getCount()==0
                     ? IconButton(onPressed: () {
-                  Navigator.pushNamed(context,Routes.notification);
+                  //Navigator.pushNamed(context,Routes.notification);
 
                 }, icon: const Icon(Icons.notifications))
                     : Padding(
@@ -73,7 +73,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                     onTap: ()
                     {
                       print("kkkkkk");
-                      Navigator.pushNamed(context,Routes.notification);
+                      //Navigator.pushNamed(context,Routes.notification);
                     },
                   ),
                 ),

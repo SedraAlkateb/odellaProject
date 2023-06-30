@@ -83,7 +83,7 @@
   "accept": "Accept",
   "reject": "Reject",
   "dailyrecieve": "Daily Recieve",
-  "notrip": "No trips found",
+  "notrip": "No trips today",
   "linename": "Line name",
   "date": "Trip date",
   "availableseats": "Available seats",

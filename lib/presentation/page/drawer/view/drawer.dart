@@ -213,7 +213,7 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
                 ),
 
                 onTap: () {
-                  Navigator.pushNamed(context,Routes.notification);
+                  Navigator.pushNamed(context,Routes.application);
                 }
 
             ),
@@ -241,7 +241,6 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
               title: Text(LocaleKeys.signOut.tr()),
               leading: Icon(Icons.logout,
                 color: ColorManager.sidBarIcon,
-
               ),
 
               onTap: () async{

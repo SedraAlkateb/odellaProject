@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page/add_lost_item/view_model/add_lost_item_viewmodel.dart';
+import 'package:untitled/presentation/page/lost_items/view_model/lost_items_viewmodle.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
@@ -62,7 +63,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                       padding: EdgeInsets.all(16.sp),
                       child: TextField(
                         controller: textEditingController,
-                        maxLines: 10,
+                        maxLines: 1,
                         //textDirection: TextDirection.,
                         decoration: InputDecoration(
                           hintText: LocaleKeys.descriptionlostitem.tr(),
@@ -332,7 +333,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         padding: EdgeInsets.all(10.sp),
                         child: TextField(
                           controller: textEditingController,
-                          maxLines: 10,
+                          maxLines: 1,
                           decoration: InputDecoration(
                             hintText: LocaleKeys.descriptionlostitem.tr(),
                             focusedBorder: OutlineInputBorder(
@@ -360,4 +361,5 @@ class _AddLostItemViewState extends State<AddLostItemView> {
       },
     );
   }
+
 }

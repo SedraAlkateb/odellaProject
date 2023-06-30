@@ -3,14 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled/presentation/not_viewmodel.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
-import 'package:untitled/presentation/resources/strings_manager.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/font_manager.dart';
-import '../../../resources/routes_manager.dart';
 import '../../../resources/style_manage.dart';
 import '../../../resources/values_manager.dart';
 import 'package:sizer/sizer.dart';
@@ -25,225 +23,17 @@ class ComplaintsView extends StatefulWidget {
 class _ComplaintsViewState extends State<ComplaintsView> {
 //   TextEditingController textEditingController = TextEditingController();
 //   int dropdownTransportationLine = 0;
-//   var viewModel;
-// @override
-//   void initState() {
-//   viewModel = Provider.of<ComplaintsViewModel>(context, listen: false);
-//   viewModel.start();
-// //  Provider.of<ComplaintsViewModel>(context).start();
-//     super.initState();
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return OrientationBuilder(
-//       builder: (BuildContext context, Orientation orientation) {
-//         return Scaffold(
-//           appBar:  AppBar(
-//             actions: [
-//               Provider.of<Not>(context).getCount()==0
-//                   ? IconButton(onPressed: () {
-//                 Navigator.pushNamed(context,Routes.notification);
-//                     }, icon: const Icon(Icons.notifications))
-//                   : Padding(
-//                 padding: const EdgeInsets.all(20),
-//                 child: InkWell(
-//                   child: Badge(
-//                     badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-//
-//                     child: Icon(Icons.notifications,size: AppSize.s30),
-//                     badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-//                   ),
-//                   onTap: ()
-//                   {
-//                     print("kkkkkk");
-//                     Navigator.pushNamed(context,Routes.notification);
-//                   },
-//                 ),
-//               ),
-//             ],
-//
-//             title: Text(LocaleKeys.complaints.tr(),
-//                 style: getBoldStyle(
-//                     color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-//           ),
-//           drawer:  NavBar(),
-//           body: SingleChildScrollView(
-//             child: orientation == Orientation.portrait
-//                 ? Column(
-//               children: [
-//                 Padding(
-//                   padding:  EdgeInsets.all(16.sp),
-//                   child: TextField(
-//                     controller: textEditingController,
-//                     maxLines: 10,
-//                     decoration: InputDecoration(
-//                       hintText: LocaleKeys.Enteryourcompliaint.tr(),
-//                       focusedBorder: OutlineInputBorder(
-//                         borderSide: BorderSide(
-//                             width: 1.w, color: ColorManager.sidBar),
-//                       ),
-//                       enabledBorder: OutlineInputBorder(
-//                         borderSide:
-//                         BorderSide(width: 0.5.w, color: Colors.grey),
-//                       ),
-//                     ),
-//                       onChanged: (value){Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value);
-//                       textEditingController.text=value;
-//                     }
-//                   ),
-//                 ),
-//                 SizedBox(height: 2.h),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Text(
-//                       LocaleKeys.selecttrip.tr(),
-//                       style: TextStyle(fontSize: AppSize.s20),
-//                     ),
-//                     SizedBox(
-//                       width: 10.w,
-//                     ),
-//                     DropdownButton(
-//                         icon:
-//                         const Icon(Icons.keyboard_arrow_down),
-//                         hint: Text(
-//                             LocaleKeys.transportationLines.tr()),
-//                         items:Provider.of<ComplaintsViewModel>(context).getTrip()
-//                             .map((e) => DropdownMenuItem(
-//                           value: e.id,
-//                           child: Text(
-//                             "${Provider.of<ComplaintsViewModel>(context,
-//                                 listen: false).date(e.time!.date)} ${e.time!.start} ",
-//                             overflow: TextOverflow.ellipsis,
-//                             style: const TextStyle(
-//                                 fontSize: AppSize.s15),
-//                           ),
-//                         )).toList(),
-//                         onChanged: (val) {
-//                           Provider.of<ComplaintsViewModel>(context,
-//                               listen: false)
-//                               .setTripId(val!);
-//                         }
-//                     ),
-//                   ],
-//                 ),
-//                 SizedBox(height: 2.h),
-//                 const Text(
-//                   "data 1",
-//                   style:
-//                   TextStyle(fontSize: AppSize.s15, color: Colors.grey),
-//                 ),
-//                 SizedBox(height: 2.h),
-//                 const Text(
-//                   "data 2",
-//                   style:
-//                   TextStyle(fontSize: AppSize.s15, color: Colors.grey),
-//                 ),
-//                 SizedBox(height: 2.h),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     Provider.of<ComplaintsViewModel>(context,listen: false).storeClaim();
-//                   },
-//                   child: Text(
-//                     LocaleKeys.send.tr(),
-//                   ),
-//                 ),
-//                 SizedBox(height: 5.h),
-//               ],
-//             )
-//                 : Row(
-//               children: [
-//                 Expanded(
-//                   child: Column(
-//                     children: [
-//                       SizedBox(
-//                         height: 1.h,
-//                       ),
-//                       Row(
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         children: [
-//                           Text(
-//                             '${LocaleKeys.selecttrip.tr()}'':',
-//                             style: TextStyle(fontSize: AppSize.s20),
-//                           ),
-//                           SizedBox(
-//                             width: 3.w,
-//                           ),
-//                           DropdownButton(
-//                               icon:
-//                               const Icon(Icons.keyboard_arrow_down),
-//                               hint: Text(
-//                                   LocaleKeys.transportationLines.tr()),
-//                               items:Provider.of<ComplaintsViewModel>(context).getTrip()
-//                                   .map((e) => DropdownMenuItem(
-//                                 value: e.id,
-//                                 child: Text(
-//                                   "${e.time!.date} ${e.time!.start}",
-//                                   overflow: TextOverflow.ellipsis,
-//                                   style: const TextStyle(
-//                                       fontSize: AppSize.s15),
-//                                 ),
-//                               )).toList(),
-//                               onChanged: (val) {
-//                                 Provider.of<ComplaintsViewModel>(context,
-//                                     listen: false)
-//                                     .setTripId(val!);
-//                               }
-//                           ),
-//                         ],
-//                       ),
-//                       SizedBox(
-//                         height: 1.h,
-//                       ),
-//                       const Text(
-//                         "data 1",
-//                         style: TextStyle(
-//                             fontSize: AppSize.s15, color: Colors.grey),
-//                       ),
-//                       SizedBox(
-//                         height: 1.h,
-//                       ),
-//                       const Text("data 2",
-//                           style: TextStyle(
-//                               fontSize: AppSize.s15, color: Colors.grey)),
-//                       SizedBox(
-//                         height: 1.h,
-//                       ),
-//                       ElevatedButton(
-//                           onPressed: () {},
-//                           child: Text(LocaleKeys.send.tr())),
-//                     ],
-//                   ),
-//                 ),
-//                 Expanded(
-//                   child: Padding(
-//                     padding: EdgeInsets.all(15.sp),
-//                     child: TextField(
-//                       controller: textEditingController,
-//                       maxLines: 10,
-//                       decoration: InputDecoration(
-//                         hintText: LocaleKeys.Enteryourcompliaint.tr(),
-//                         focusedBorder: OutlineInputBorder(
-//                           borderSide: BorderSide(
-//                               width: 1.w, color: ColorManager.sidBar),
-//                         ),
-//                         enabledBorder: OutlineInputBorder(
-//                           borderSide:
-//                           BorderSide(width: 0.5.w, color: Colors.grey),
-//                         ),
-//
-//                       ),
-//                       onTap: () =>Provider.of<ComplaintsViewModel>(context).storeClaim() ,
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
+  var viewModel;
+  @override
+  void initState() {
+    viewModel = Provider.of<ComplaintsViewModel>(context, listen: false);
+    viewModel.start();
+    //  Provider.of<ComplaintsViewModel>(context).start();
+    super.initState();
+  }
+//   items:Provider.of<ComplaintsViewModel>(context).getTrip()
+
+  // Provider.of<ComplaintsViewModel>(context, listen: false) .setTripId(val!);
 
   TextEditingController textEditingController = TextEditingController();
 
@@ -253,37 +43,14 @@ class _ComplaintsViewState extends State<ComplaintsView> {
       drawer: NavBar(),
       appBar: AppBar(
         title: Text(
-          LocaleKeys.comprating.tr(),
+          "LocaleKeys.comprating.tr()",
           style: getBoldStyle(
             color: ColorManager.sidBarIcon,
             fontSize: FontSize.s20,
           ),
         ),
         actions: [
-          Provider.of<Not>(context, listen: true).getCount() == 0
-              ? IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.notification);
-              },
-              icon: const Icon(Icons.notifications))
-              : Padding(
-            padding: const EdgeInsets.all(20),
-            child: InkWell(
-              child: Badge(
-                badgeContent: Text(
-                  "${Provider.of<Not>(context).getCount()}",
-                  style: TextStyle(color: Colors.white),
-                ),
-                child: Icon(Icons.notifications, size: AppSize.s30),
-                badgeAnimation: BadgeAnimation.fade(
-                    animationDuration: Duration(milliseconds: 250)),
-              ),
-              onTap: () {
-                print("kkkkkk");
-                Navigator.pushNamed(context, Routes.notification);
-              },
-            ),
-          ),
+          notificationIcon(context)
         ],
       ),
       body: Column(children: [
@@ -317,7 +84,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
               ),
               hintStyle: getRegularStyle(
                   color: ColorManager.icon, fontSize: FontSize.s16),
-              hintText: "${LocaleKeys.searchtrip.tr()}",
+              hintText: "${"LocaleKeys.searchtrip.tr()"}",
               //       hintStyle:Theme.of(context).textTheme.bodySmall,
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: AppPadding.p8),
@@ -331,17 +98,6 @@ class _ComplaintsViewState extends State<ComplaintsView> {
         ),
         Expanded(
           child:
-          // Provider.of<HomeViewModel>(context,listen: false).dataTransportationLinesSearch.length == 0
-          // ? Center(
-          // child: Text(
-          // "No result found",
-          // style: TextStyle(
-          // color: ColorManager.shadow,
-          // fontSize: FontSize.s22,
-          // fontWeight: FontWeight.bold),
-          // ),
-          // )
-          //     :
           Padding(
             padding: const EdgeInsets.only(
                 left: AppPadding.p28,
@@ -355,7 +111,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                 height: AppSize.s20,
                 // color: Color,
               ),
-              itemCount: 3,
+              itemCount: Provider.of<ComplaintsViewModel>(context).getTrip().length,
               itemBuilder: (context, index) => Container(
                 height: 50.h,
                 decoration: BoxDecoration(
@@ -369,27 +125,26 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Row(
                         children: [
                           SizedBox(width: 4.w,),
-                          Text("${LocaleKeys.linename.tr()} : LINEE",style: getBoldStyle(color: Colors.black,fontSize: FontSize.s16),),
+                          Text("${"data"} : ${Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].time?.date}",style: getBoldStyle(color: Colors.black,fontSize: FontSize.s16),),
                         ],
                       ),
                       SizedBox(height: 1.h,),
                       Row(
                         children: [
                           SizedBox(width: 4.w,),
-                          Text("${LocaleKeys.day.tr()} : Saturday",style: getMediumStyle(color: Colors.black,fontSize: FontSize.s16),),
+                          Text("${"time"} : ${Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].time?.start}",style: getMediumStyle(color: Colors.black,fontSize: FontSize.s16),),
                         ],
                       ),
                       SizedBox(height: 2.h,),
-                      Row(
+                      Column(
                         children: [
                           SizedBox(width: 4.w,),
-                          Text("${LocaleKeys.ratingsent.tr()} :"),
+                          Text("${"Rating"} :"),
                           RatingBar.builder(
-                            initialRating: 0,
+                            initialRating: Provider.of<ComplaintsViewModel>(context,listen: false).getEval().length.toDouble(),
                             minRating: 1,
                             direction: Axis.horizontal,
                             //   allowHalfRating: true,
@@ -404,16 +159,16 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                             ),
 
                             onRatingUpdate: (rating) {
-                              // Provider.of<ProgramsViewModel>(context,
-                              //     listen: false)
-                              //     .evaluation(rating.toInt());
+                              Provider.of<ComplaintsViewModel>(context,
+                                  listen: false)
+                                  .evaluation(rating.toInt(),Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
                             },
                           ),
                         ],
                       ),
                       SizedBox(height: 2.h,),
                       TextField(
-                          controller: textEditingController,
+                        //       controller: textEditingController,
                           maxLines: 2,
                           decoration: InputDecoration(
                             hintText: LocaleKeys.Enteryourcompliaint.tr(),
@@ -427,19 +182,20 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                             ),
                           ),
                           onChanged: (value){
+                            Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value);
+                            //   textEditingController.text=value;
                           }
                       ),
                       SizedBox(height: 3.h,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          IconButton(icon: Icon(Icons.check_circle,size: 30,), onPressed: () {
+                            Provider.of<ComplaintsViewModel>(context,listen: false).storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
 
-                          IconButton(icon: Icon(Icons.check_circle,size: 30,), onPressed: () {  },color: ColorManager.sidBar),
+                          },color: ColorManager.sidBar),
                         ],
                       ),
-
-
-
                     ],
                   ),
                 ),
