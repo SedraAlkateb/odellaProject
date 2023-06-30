@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
@@ -25,32 +26,51 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   SignUpViewModel _signUpViewModel = instance<SignUpViewModel>();
+
+  GlobalKey<FormBuilderState> _fbKey1 = GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     isobscured=true;
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      ss=Provider.of<SignUpViewModel>(context, listen: false);
       Provider.of<SignUpViewModel>(context, listen: false).start();
     });
     super.initState();
   }
   var isobscured;
-
-
+  late SignUpViewModel ss;
   @override
   void dispose() {
-    _signUpViewModel.dispose();
-
+  //  Provider.of<SignUpViewModel>(context,listen: false).dispose();
+ss.nnum=0;
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        body:
-        _getContentWidget()
+
+      key: _scaffoldKey,
+      body:
+      Provider.of<SignUpViewModel>(context).getStateScreen() == 0
+          ?   _getContentWidget()
+          :Provider.of<SignUpViewModel>(context).getStateScreen()==1
+          ?StateRenderer(
+          stateRendererType: StateRendererType.fullScreenLoadingState,
+          message: "Loading",
+          retryActionFunction: () {})
+          : Provider.of<SignUpViewModel>(context).getStateScreen()==2
+          ? StateRenderer(
+          stateRendererType: StateRendererType.fullScreenErrorState,
+          message: "Loading",
+          retryActionFunction: () {})
+          : StateRenderer(
+          stateRendererType: StateRendererType.fullScreenEmptyState,
+          message: "Loading",
+          retryActionFunction: () {})
+
     );
   }
 
@@ -130,9 +150,10 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                         ),
                       )),
-                  Provider.of<SignUpViewModel>(context, listen: false)
-                      .getNum() ==
-                      2
+
+                  Provider.of<SignUpViewModel>(context)
+                              .getNum() ==
+                          2
                       ? Padding(
                     padding: const EdgeInsets.only(
                         top: AppPadding.p16, left: AppPadding.p8),
@@ -151,7 +172,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ],
               ),
             ),
-            Provider.of<SignUpViewModel>(context, listen: false).getNum() == 0
+            Provider.of<SignUpViewModel>(context).getNum() == 0
                 ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -850,30 +871,377 @@ class _SignUpViewState extends State<SignUpView> {
                               ],
                             ),
                           ),
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: AppPadding.p28,
-                        right: AppPadding.p28,
-                        top: AppPadding.p28),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: AppSize.s64,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (_globalKey.currentState!.validate()) {
-                              Provider.of<SignUpViewModel>(context,
-                                  listen: false)
-                                  .getSignUp();
-                            }
-                          },
-                          child: Text(LocaleKeys.signUp.tr())),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppPadding.p28,
+                                vertical: AppPadding.p28),
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                        Provider.of<SignUpViewModel>(context,
+                                                listen: false)
+                                            .setNum(0);
+
+                                      //     }
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: ColorManager.icon,
+                                          child: Transform(
+                                            alignment: Alignment.center,
+                                            transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                                            child: Icon(
+                                              Icons.keyboard_arrow_left_rounded,
+                                              color: ColorManager.white,
+                                              size: 60,
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (_globalKey.currentState!.validate()) {
+
+                                          Provider.of<SignUpViewModel>(context,
+                                                  listen: false)
+                                              .setNum(2);
+
+                                      }
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: ColorManager.icon,
+                                          child: Transform(
+                                            alignment: Alignment.center,
+                                            transform: Matrix4.rotationY(isRtl() ? math.pi :0),
+                                            child: Icon(
+                                              Icons.keyboard_arrow_right_rounded,
+                                              color: ColorManager.white,
+                                              size: 60,
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppPadding.p18,
+                            vertical: AppPadding.p28),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: AppSize.s50,
+                              decoration: BoxDecoration(
+                                color: ColorManager.card,
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s18),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                        LocaleKeys.subscription.tr(),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )),
+                                  Container(
+                                    width: 1.0,
+                                    color: Colors.grey[200],
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                        LocaleKeys.daysNumber.tr(),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )),
+                                  Container(
+                                    width: 1.0,
+                                    color: Colors.grey[200],
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                        LocaleKeys.price.tr(),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 400,
+                              child: ListView.separated(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  separatorBuilder: (context, index) =>
+                                      Container(
+                                        width: double.infinity,
+                                        height: AppSize.s8,
+                                        color: Colors.white,
+                                      ),
+                                  itemCount: Provider.of<SignUpViewModel>(
+                                          context,
+                                          listen: false)
+                                      .getDataSubscriptions()
+                                      .length,
+                                  itemBuilder: (context, index) => _register1
+                                              .getC() ==
+                                          index
+                                      ? Container(
+                                          height: AppSize.s50,
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.card,
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s18),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      _register1
+                                                          .getDataSubscriptions()[
+                                                              index]
+                                                          .name,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displayLarge,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 2.0,
+                                                color: Colors.grey[200],
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      _register1
+                                                          .getDataSubscriptions()[
+                                                              index]
+                                                          .daysNumber,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displayLarge,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                color: Colors.grey[200],
+                                                width: 2.0,
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      _register1
+                                                          .getDataSubscriptions()[
+                                                              index]
+                                                          .price,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displayLarge,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          height: AppSize.s50,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s18),
+                                          ),
+                                          child: InkWell(
+                                            onTap: (() {
+                                              Provider.of<SignUpViewModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .setC(
+                                                      index,
+                                                      Provider.of<SignUpViewModel>(
+                                                              context,
+                                                              listen: false)
+                                                          .getDataSubscriptions()[
+                                                              index]
+                                                          .id);
+                                            }),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        Provider.of<SignUpViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .getDataSubscriptions()[
+                                                                index]
+                                                            .name,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displayLarge,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 2.0,
+                                                  color: Colors.grey[200],
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        Provider.of<SignUpViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .getDataSubscriptions()[
+                                                                index]
+                                                            .daysNumber,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displayLarge,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  color: Colors.grey[200],
+                                                  width: 2.0,
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        Provider.of<SignUpViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .getDataSubscriptions()[
+                                                                index]
+                                                            .price,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displayLarge,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: AppPadding.p28,
+                                  right: AppPadding.p28,
+                                  top: AppPadding.p28),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: AppSize.s64,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_globalKey.currentState!.validate()) {
+                                        Provider.of<SignUpViewModel>(context,
+                                                listen: false)
+                                            .getSignUp();
+                                        Provider.of<SignUpViewModel>(context,listen: false).getDialog()==1
+                                        ? StateRenderer(
+                                            stateRendererType: StateRendererType.popupLoadingState,
+                                            message: "Loading",
+                                            retryActionFunction: () {})
+                                            :StateRenderer(
+                                            stateRendererType: StateRendererType.popupErrorState,
+                                            message: "Loading",
+                                            retryActionFunction: () {
+                                            });
+                                      }
+                                    },
+                                    child: Text(LocaleKeys.signUp.tr())),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
           ],
         ),
       ),
@@ -883,15 +1251,3 @@ class _SignUpViewState extends State<SignUpView> {
     return context.locale==ARABIC_LOCALE;
   }
 }
-/*
-   StreamBuilder<FlowState>(
-          stream:
-              Provider.of<SignUpViewModel>(context, listen: false).outputState,
-          builder: (context, snapshot) {
-            return snapshot.data?.getScreenWidget(
-                    _scaffoldKey.currentContext!, _getContentWidget(), () {
-                  Provider.of<SignUpViewModel>(context, listen: false).start();
-                }) ??
-                Container();
-          }),
- */

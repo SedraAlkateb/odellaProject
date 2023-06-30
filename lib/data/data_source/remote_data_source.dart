@@ -43,6 +43,8 @@ abstract class RemoteDataSource{
   Future<UpdatePositionResponse> supervisorPositionUpdate(PositionMap PositionMap);
   Future<NotificationReadResponse> makeReadNotification(int id);
   Future<UpdatePositionResponse> readAllNot();
+  Future<StudentPositionResponse> studentPosition(int trip,int position);
+
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -350,6 +352,12 @@ street: supervisorRequest.street
   @override
   Future<UpdatePositionResponse> readAllNot() async{
     return await _appServiceClient.readAllNot();
+  }
+
+  @override
+  Future<StudentPositionResponse> studentPosition(int trip, int position) async{
+    return await _appServiceClient.studentPosition(trip, position);
+
   }
 
 

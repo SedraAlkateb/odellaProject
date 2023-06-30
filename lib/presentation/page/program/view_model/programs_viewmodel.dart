@@ -12,8 +12,7 @@ import '../../../../lang/locale_keys.g.dart';
 class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   ProgramsUseCase _programsUseCase;
   StudentAttendenceUsecase _studentAttendenceUsecase;
-  EvaluationUseCase _evaluationUseCase;
-  ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase,this._evaluationUseCase);
+  ProgramsViewModel(this._programsUseCase,this._studentAttendenceUsecase);
   Map<int, List<DataProgram> > program2={};
   String selectedDay = 'Sat';
   int indexDay=0;
@@ -112,29 +111,20 @@ program();
  double getRating(){
     return _rating;
   }
-  program() async {
-  //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
+  program() async {
+    setStateScreen(1);
     (await _programsUseCase.execute(null))
         .fold((failure) {
-    //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+setStateScreen(2);
     }, (data)async {
+      setStateScreen(0);
          setMap(data.dataProgram);
          setSelectedDay(5);
-    //  inputState.add(ContentState());
-      notifyListeners();
+         notifyListeners();
     });
   }
-  evaluation(int r) async {
-    //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _evaluationUseCase.execute(EvaluationUseCaseInput(13, r)))
-        .fold((failure) {
-      //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-    }, (data)async {
-
-    });
-  }
   confirmStudent() async {
     //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
@@ -151,5 +141,14 @@ program();
       notifyListeners();
     });
   }
-
+@override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
+  @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
 }

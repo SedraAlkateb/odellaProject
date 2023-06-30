@@ -1,12 +1,17 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/domain/usecase/not_read_all_usecase.dart';
+import 'package:untitled/domain/usecase/not_read_by_id_usecase.dart';
 import 'package:untitled/domain/usecase/notification_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 
 class Not extends BaseViewModel with ChangeNotifier {
   NotificationUseCase _notificationUseCase;
-  Not(this._notificationUseCase);
+  ReadAllNotificationUseCase _readAllNotificationUseCase;
+  ReadNotificationByIdUseCase _notificationByIdUseCase;
+
+  Not(this._notificationUseCase,this._readAllNotificationUseCase,this._notificationByIdUseCase);
 
   int count = 0;
   late String title;
@@ -72,8 +77,7 @@ NotificationModel getMessage(){
     return body;
   }
 
-   getAllNotificationsLogin()
-   async{
+   getAllNotificationsLogin() async{
 
      ( await _notificationUseCase.execute(null)).fold(
              (failure)  {
@@ -81,8 +85,29 @@ NotificationModel getMessage(){
              (data)  async{
      setNotification(data.notification!);
      });
+  }
+  getNotificationRead(int id)
+  async{
 
-         }
+    ( await _notificationByIdUseCase.execute(id)).fold(
+            (failure)  {
+        },
+            (data)  async{
+              return 1;
+        });
+
+  }
+  getAllNotificationRead()
+  async{
+    ( await _readAllNotificationUseCase.execute(null)).fold(
+            (failure)  {
+        },
+            (data)  async{
+
+        });
+
+  }
+
 
   @override
   void start() {

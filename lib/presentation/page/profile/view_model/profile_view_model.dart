@@ -21,6 +21,7 @@ import 'package:untitled/presentation/common/image/downloadImage.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
+
 class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   final ProfileUseCase _profileUseCase;
   final UpdateImageUseCase _updateImageUseCase;
@@ -38,45 +39,47 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
       this._studenttUseCase,
       this._updatePasswordUseCase,
       this._updateImageUseCase,
-  this._citiesUseCase,
-  this._areasUseCase,
-  this._subscriptionsUseCase,
-  this._universitiesUsecase
-      );
+      this._citiesUseCase,
+      this._areasUseCase,
+      this._subscriptionsUseCase,
+      this._universitiesUsecase);
   UserProfile? _profile;
-  var studentUpdate=UpdateStudentObject(0,area_id: 1,street: "asddassad",city_id:2 );
+  var studentUpdate =
+      UpdateStudentObject(0, area_id: 1, street: "asddassad", city_id: 2);
   File? imm;
-  Color color1=ColorManager.darkGray;
-  Color color2=ColorManager.darkGray;
-  Color color3=ColorManager.darkGray;
-  Color color4=ColorManager.darkGray;
-  bool _isStudent=false;
-  List<City> _cities=[];
-  List<Area> _areas=[];
-  List<DataSubscriptions> _dataSubscriptions=[];
-  List<DataModel> _dataModel=[];
-
-  setIsStudent(bool st){
-    _isStudent=st;
+  Color color1 = ColorManager.darkGray;
+  Color color2 = ColorManager.darkGray;
+  Color color3 = ColorManager.darkGray;
+  Color color4 = ColorManager.darkGray;
+  bool _isStudent = false;
+  List<City> _cities = [];
+  List<Area> _areas = [];
+  List<DataSubscriptions> _dataSubscriptions = [];
+  List<DataModel> _dataModel = [];
+  setIsStudent(bool st) {
+    _isStudent = st;
     notifyListeners();
   }
- bool getIsStudent(){
+
+  bool getIsStudent() {
     return _isStudent;
   }
-  File? getIm(){
-    return imm ;
-  }
-  setIm(File file){
-     imm=file;
-     notifyListeners();
+
+  File? getIm() {
+    return imm;
   }
 
-
+  setIm(File file) {
+    imm = file;
+    notifyListeners();
+  }
+DataSubscriptions? getStudentSub(){
+    return _profile?.subscription;
+}
   @override
   void start() {
-    student().then((value) =>
-        getAreasByIdCity(_profile?.location?.city?.id ??0)
-    );
+    student()
+        .then((value) => getAreasByIdCity(_profile?.location?.city?.id ?? 0));
     getUniversitiesData();
     getSubscriptionsData();
     getCitiesData();
@@ -87,165 +90,196 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
     super.dispose();
   }
 
- int? getId(){
+  int? getId() {
     print(_profile?.id);
     return _profile?.id;
   }
+
   ///////////////////color
- Color getColor1(){
+  Color getColor1() {
     return color1;
   }
-  Color getColor2(){
+
+  Color getColor2() {
     return color2;
   }
-  Color getColor3(){
+
+  Color getColor3() {
     return color3;
   }
-  Color getColor4(){
+
+  Color getColor4() {
     return color4;
   }
-  setColor1(){
-    color1=ColorManager.card;
+
+  setColor1() {
+    color1 = ColorManager.card;
 
     notifyListeners();
   }
-  setColor2(){
-    color2=ColorManager.card;
+
+  setColor2() {
+    color2 = ColorManager.card;
     notifyListeners();
   }
-  setColor3(){
-    color3=ColorManager.card;
+
+  setColor3() {
+    color3 = ColorManager.card;
     notifyListeners();
   }
-  setColor4(){
-    color4=ColorManager.card;
+
+  setColor4() {
+    color4 = ColorManager.card;
 
     notifyListeners();
   }
+
   ///////////////////////////
-  String getSubscriptionsId(){
-    if(studentUpdate.subscription_id!=null){
+  String getSubscriptionsId() {
+    if (studentUpdate.subscription_id != null) {
       return studentUpdate.subscription_id.toString();
-    }else{
-      return _profile?.subscription?.id.toString() ??"";
+    } else {
+      return _profile?.subscription?.id.toString() ?? "";
     }
   }
-  String getFirstName(){
-    if(studentUpdate.firstName!=null){
+
+  String getFirstName() {
+    if (studentUpdate.firstName != null) {
       return studentUpdate.firstName.toString();
-    }else{
-      return _profile?.firstName ??"";
+    } else {
+      return _profile?.firstName ?? "";
     }
   }
-  String getLastName(){
-    if(studentUpdate.lastName!=null){
+
+  String getLastName() {
+    if (studentUpdate.lastName != null) {
       return studentUpdate.lastName.toString();
-    }else{
-      return _profile?.lastName ??"";
+    } else {
+      return _profile?.lastName ?? "";
     }
   }
-  String getEmail(){
-    if(studentUpdate.email!=null){
+
+  String getEmail() {
+    if (studentUpdate.email != null) {
       return studentUpdate.email.toString();
-    }else{
-      return _profile?.email ??"";
+    } else {
+      return _profile?.email ?? "";
     }
   }
-  String getPhone(){
-    if(studentUpdate.phoneNumber!=null){
+
+  String getPhone() {
+    if (studentUpdate.phoneNumber != null) {
       return studentUpdate.phoneNumber.toString();
-    }else{
-      return _profile?.phoneNumber ??"";
+    } else {
+      return _profile?.phoneNumber ?? "";
     }
   }
-  String getStreet(){
-    if(studentUpdate.street!=null){
+
+  String getStreet() {
+    if (studentUpdate.street != null) {
       return studentUpdate.street.toString();
-    }else{
-      return _profile?.location?.street ??"";
+    } else {
+      return _profile?.location?.street ?? "";
     }
   }
-  String getTransportationLineId(){
-    if(studentUpdate.transportation_line_id!=null){
+
+  String getTransportationLineId() {
+    if (studentUpdate.transportation_line_id != null) {
       return studentUpdate.transportation_line_id.toString();
-    }else{
-      return _profile?.line?.id.toString() ??"";
+    } else {
+      return _profile?.line?.id.toString() ?? "";
     }
   }
-  String getTransferPositionId(){
-    if(studentUpdate.transfer_position_id!=null){
+
+  String getTransferPositionId() {
+    if (studentUpdate.transfer_position_id != null) {
       return studentUpdate.transfer_position_id.toString();
-    }else{
-      return _profile?.position?.id.toString() ??"";
+    } else {
+      return _profile?.position?.id.toString() ?? "";
     }
   }
-  String? getUniversityId(){
-    if(studentUpdate.university_id!=null){
+
+  String? getUniversityId() {
+    if (studentUpdate.university_id != null) {
       return studentUpdate.university_id.toString();
-    }else{
-      return _profile?.university?.id.toString() ;
+    } else {
+      return _profile?.university?.id.toString();
     }
   }
 
   ////////////////////////////////////////////////////UpdateProfile
-  setIdStudent(int id){
-    studentUpdate=studentUpdate.copyWith(studentId: id);
-    _profile?.id=id;
+  setIdStudent(int id) {
+    studentUpdate = studentUpdate.copyWith(studentId: id);
+    _profile?.id = id;
   }
-  updateCityId(int string){
-    studentUpdate=studentUpdate.copyWith(city_id: string);
+
+  updateCityId(int string) {
+    studentUpdate = studentUpdate.copyWith(city_id: string);
   }
-  updateAreaId(int string){
-    studentUpdate=studentUpdate.copyWith(area_id: string);
+
+  updateAreaId(int string) {
+    studentUpdate = studentUpdate.copyWith(area_id: string);
   }
-  updateSubscriptionsId(int string){
-    studentUpdate=studentUpdate.copyWith(subscription_id: string);
-    _profile?.subscription?.id = string ;
-notifyListeners();
-  }
-  updateStreet(String string){
-    studentUpdate=studentUpdate.copyWith(street: string);
-  }
-  updateFirstName(String string){
-    studentUpdate=studentUpdate.copyWith(firstName: string);
-  //  setFirstName(string);
-    _profile!.firstName=studentUpdate.firstName!;
+
+  updateSubscriptionsId(int string) {
+    studentUpdate = studentUpdate.copyWith(subscription_id: string);
+    _profile?.subscription?.id = string;
     notifyListeners();
   }
-  updateLastName(String string){
-    studentUpdate=studentUpdate.copyWith(lastName: string);
-    _profile!.lastName=studentUpdate.lastName!;
+
+  updateStreet(String string) {
+    studentUpdate = studentUpdate.copyWith(street: string);
+  }
+
+  updateFirstName(String string) {
+    studentUpdate = studentUpdate.copyWith(firstName: string);
+    //  setFirstName(string);
+    _profile!.firstName = studentUpdate.firstName!;
     notifyListeners();
   }
-  updateEmail(String string){
-    studentUpdate=studentUpdate.copyWith(email: string);
-    _profile!.email=studentUpdate.email!;
+
+  updateLastName(String string) {
+    studentUpdate = studentUpdate.copyWith(lastName: string);
+    _profile!.lastName = studentUpdate.lastName!;
     notifyListeners();
   }
-  updatePhone(String string){
-    studentUpdate=studentUpdate.copyWith(phoneNumber: string);
-    _profile!.phoneNumber=studentUpdate.phoneNumber!;
+
+  updateEmail(String string) {
+    studentUpdate = studentUpdate.copyWith(email: string);
+    _profile!.email = studentUpdate.email!;
     notifyListeners();
   }
-  setNewPassword(String string){
-    studentUpdate=studentUpdate.copyWith(newPassword: string);
-  }
-  setOldPassword(String string){
-    studentUpdate=studentUpdate.copyWith(oldPassword: string);
-  }
-  setNewPasswordConfirmation(String string){
-    studentUpdate=studentUpdate.copyWith(newPassword_confirmation: string);
-  }
-  updateTransportationLineId(int string){
-    studentUpdate=studentUpdate.copyWith(transportation_line_id: string);
-    _profile?.line?.id=string  ;
+
+  updatePhone(String string) {
+    studentUpdate = studentUpdate.copyWith(phoneNumber: string);
+    _profile!.phoneNumber = studentUpdate.phoneNumber!;
     notifyListeners();
   }
-  updateTransferPositionId(int string){
-    studentUpdate=studentUpdate.copyWith(transfer_position_id: string);
-    _profile?.position?.id=string ;
+
+  setNewPassword(String string) {
+    studentUpdate = studentUpdate.copyWith(newPassword: string);
+  }
+
+  setOldPassword(String string) {
+    studentUpdate = studentUpdate.copyWith(oldPassword: string);
+  }
+
+  setNewPasswordConfirmation(String string) {
+    studentUpdate = studentUpdate.copyWith(newPassword_confirmation: string);
+  }
+
+  updateTransportationLineId(int string) {
+    studentUpdate = studentUpdate.copyWith(transportation_line_id: string);
+    _profile?.line?.id = string;
     notifyListeners();
   }
+
+  updateTransferPositionId(int string) {
+    studentUpdate = studentUpdate.copyWith(transfer_position_id: string);
+    _profile?.position?.id = string;
+    notifyListeners();
+  }
+
 /*
   updateUniversity(int string){
     studentUpdate=studentUpdate.copyWith(university_id: string);
@@ -253,38 +287,40 @@ notifyListeners();
 notifyListeners();
   }
  */
-  updateImageFromGallory()async{
-    studentUpdate= studentUpdate.copyWith(image: await pickImage());
+  updateImageFromGallory() async {
+    studentUpdate = studentUpdate.copyWith(image: await pickImage());
     setIm(studentUpdate.image!);
 
     notifyListeners();
   }
 
-
   //  File? image
   ////////////////////////////////////////////////////Profile
-  File? getImage(){
+  File? getImage() {
     return studentUpdate.image;
   }
-  String?  getName(){
+
+  String? getName() {
     return "${getFirstName()} ${getLastName()}";
   }
 
-    setFirstName(String firstName){
-    _profile?.firstName
-    =firstName;
+  setFirstName(String firstName) {
+    _profile?.firstName = firstName;
     notifyListeners();
   }
-    setEmail(String email){
-     _profile?.email=email;
-     notifyListeners();
-  }
-    setPhone(String phone){
-    _profile?.phoneNumber=phone;
+
+  setEmail(String email) {
+    _profile?.email = email;
     notifyListeners();
   }
-    setLastName(String lastName){
-    _profile?.lastName=lastName;
+
+  setPhone(String phone) {
+    _profile?.phoneNumber = phone;
+    notifyListeners();
+  }
+
+  setLastName(String lastName) {
+    _profile?.lastName = lastName;
     notifyListeners();
   }
 
@@ -292,64 +328,41 @@ notifyListeners();
     return Image.memory(base64Decode(base64String));
   }
 
-  setProfile(UserProfile profile){
-    _profile=profile;
+  setProfile(UserProfile profile) {
+    _profile = profile;
     notifyListeners();
   }
 
 //////////////////////////////////////
   student() async {
-    inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-
-    (await _profileUseCase.execute(null))
-        .fold((failure) {
-      inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-    }, (data)async {
-          setProfile(data);
-          setIsStudent(true);
-          if(data.image!=null&& data.image!=""&&data.image!=" "){
-            final file= await  ImageDownloader.downloadImage(data.image);
-            setIm(file);
-          }
-
-         inputState.add(ContentState());
+   setStateScreen(1);
+    (await _profileUseCase.execute(null)).fold((failure) {
+      setStateScreen(2);
+    }, (data) async {
+      setStateScreen(0);
+      setProfile(data);
+      setIsStudent(true);
+      if (data.image != null && data.image != "" && data.image != " ") {
+        final file = await ImageDownloader.downloadImage(data.image!);
+        setIm(file);
+      }
       notifyListeners();
     });
   }
+
   //////////////////////////////
   UpdateStudent() async {
-     (await _studenttUseCase.execute(UpdateStudenttUseCaseInput(
-      getId()?? 0,
-      area_id:  getArea() ,
-      city_id: getCity(),
-      firstName: getFirstName(),
-      lastName: getLastName(),
-      phoneNumber: getPhone(),
-      street: studentUpdate.street,
-      subscription_id: getSubscriptionsId(),
-      transfer_position_id: getTransferPositionId(),
-      transportation_line_id: getTransportationLineId(),
-      university_id: getUniversityId()
-    )))
-        .fold((failure) {
-     // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-    }, (data) {
-     // setProfile(data);
-   //   inputState.add(ContentState());
-      print("object");
-      notifyListeners();
-    });
-  }
-
-  updatePassword() async {
-    //  inputState.add(
-    //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _updatePasswordUseCase.execute(UpdatePasswordUseCaseInput(
-        getId()?? 0,
-        studentUpdate.oldPassword ??"",
-         studentUpdate.newPassword??"",
-        studentUpdate.newPassword_confirmation??"" ,
-          )))
+    (await _studenttUseCase.execute(UpdateStudenttUseCaseInput(getId() ?? 0,
+            area_id: getArea(),
+            city_id: getCity(),
+            firstName: getFirstName(),
+            lastName: getLastName(),
+            phoneNumber: getPhone(),
+            street: studentUpdate.street,
+            subscription_id: getSubscriptionsId(),
+            transfer_position_id: getTransferPositionId(),
+            transportation_line_id: getTransportationLineId(),
+            university_id: getUniversityId())))
         .fold((failure) {
       // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data) {
@@ -359,11 +372,31 @@ notifyListeners();
       notifyListeners();
     });
   }
+
+  updatePassword() async {
+    //  inputState.add(
+    //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+    (await _updatePasswordUseCase.execute(UpdatePasswordUseCaseInput(
+      getId() ?? 0,
+      studentUpdate.oldPassword ?? "",
+      studentUpdate.newPassword ?? "",
+      studentUpdate.newPassword_confirmation ?? "",
+    )))
+        .fold((failure) {
+      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+    }, (data) {
+      // setProfile(data);
+      //   inputState.add(ContentState());
+      print("object");
+      notifyListeners();
+    });
+  }
+
   updateImage() async {
     //  inputState.add(
     //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
     (await _updateImageUseCase.execute(UpdateImageUseCaseInput(
-      getId()?? 0,
+      getId() ?? 0,
       studentUpdate.image ?? File(""),
     )))
         .fold((failure) {
@@ -375,109 +408,117 @@ notifyListeners();
       notifyListeners();
     });
   }
-  setUniversities(List<DataModel>universities ){
-    _dataModel=universities;
+
+  setUniversities(List<DataModel> universities) {
+    _dataModel = universities;
   }
-  setCities(List<City>cities ){
-    _cities=cities;
+
+  setCities(List<City> cities) {
+    _cities = cities;
   }
-  setDataSubscriptions(  List<DataSubscriptions> subscription){
-    _dataSubscriptions=subscription;
+
+  setDataSubscriptions(List<DataSubscriptions> subscription) {
+    _dataSubscriptions = subscription;
   }
-  setAreas( List <Area> ListAreas){
-    _areas=ListAreas;
+
+  setAreas(List<Area> ListAreas) {
+    _areas = ListAreas;
   }
-  List<City> getCities(){
+
+  List<City> getCities() {
     return _cities;
   }
-  List<Area> getAreas(){
+
+  List<Area> getAreas() {
     return _areas;
   }
-  List<DataModel> getUniversities(){
+
+  List<DataModel> getUniversities() {
     return _dataModel;
   }
-  List<DataSubscriptions> getDataSubscriptions(){
+
+  List<DataSubscriptions> getDataSubscriptions() {
     return _dataSubscriptions;
   }
-  setUniversityId(int universityId){
-    studentUpdate= studentUpdate.copyWith(university_id: universityId);
-  }
-  setCityId(int cityId){
-    studentUpdate= studentUpdate.copyWith(city_id: cityId);
-  }
-  getUniversitiesData()async{
-    ( await _universitiesUsecase.execute(null))
-        .fold(
-            (failure)  {
-          //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
-        },
-            (data)  {
-          setUniversities(data.dataModel);
-        });
 
+  setUniversityId(int universityId) {
+    studentUpdate = studentUpdate.copyWith(university_id: universityId);
   }
 
-  getSubscriptionsData()async{
-    ( await _subscriptionsUseCase.execute(null))
-        .fold(
-            (failure)  {
-          //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
-        },
-            (data)  {
+  setCityId(int cityId) {
+    studentUpdate = studentUpdate.copyWith(city_id: cityId);
+  }
 
-          setDataSubscriptions(data.dataSubscriptions);
-        });
+  getUniversitiesData() async {
+    (await _universitiesUsecase.execute(null)).fold((failure) {
+      //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+    }, (data) {
+      setUniversities(data.dataModel);
+    });
+  }
 
+  getSubscriptionsData() async {
+    (await _subscriptionsUseCase.execute(null)).fold((failure) {
+      //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+    }, (data) {
+      setDataSubscriptions(data.dataSubscriptions);
+    });
   }
-  getCitiesData()async{
-    ( await _citiesUseCase.execute(null))
-        .fold(
-            (failure)  {
-          //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
-        },
-            (data)  {
-          setCities(data.cities!);
-        });
 
+  getCitiesData() async {
+    (await _citiesUseCase.execute(null)).fold((failure) {
+      //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+    }, (data) {
+      setCities(data.cities!);
+    });
   }
-  String getProfileCity(){
-    return _profile?.location?.city?.name ??" Cities";
+
+  String getProfileCity() {
+    return _profile?.location?.city?.name ?? " Cities";
   }
-  String getProfileArea(){
-    return _profile?.location?.area?.name ??" Areas";
+
+  String getProfileArea() {
+    return _profile?.location?.area?.name ?? " Areas";
   }
-  String getProfileUni(){
-    return _profile?.university?.name ??" Universities";
+
+  String getProfileUni() {
+    return _profile?.university?.name ?? " Universities";
   }
-  int getCity(){
-    if(studentUpdate.city_id!=null){
-      return studentUpdate.city_id ??0;
-    }else{
-      return _profile?.location?.city?.id ??0  ;
-    }
-  }
-  int getArea(){
-    if(studentUpdate.area_id!=null){
-      return studentUpdate.area_id ??0;
-    }else{
-      return _profile?.location?.area?.id ??0;
+
+  int getCity() {
+    if (studentUpdate.city_id != null) {
+      return studentUpdate.city_id ?? 0;
+    } else {
+      return _profile?.location?.city?.id ?? 0;
     }
   }
 
-  getAreasByIdCity(int id)async{
-    ( await _areasUseCase.execute(id))
-        .fold(
-            (failure)  {
-        },
-            (data)  {
-          setAreas(data.areas!);
-          notifyListeners();
-        });
-
-  }
-  setAreaId(int areaId){
-    studentUpdate= studentUpdate.copyWith(area_id: areaId);
+  int getArea() {
+    if (studentUpdate.area_id != null) {
+      return studentUpdate.area_id ?? 0;
+    } else {
+      return _profile?.location?.area?.id ?? 0;
+    }
   }
 
+  getAreasByIdCity(int id) async {
+    (await _areasUseCase.execute(id)).fold((failure) {}, (data) {
+      setAreas(data.areas!);
+      notifyListeners();
+    });
+  }
 
+  setAreaId(int areaId) {
+    studentUpdate = studentUpdate.copyWith(area_id: areaId);
+  }
+  @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
+  @override
+  setDialog(int state) {
+    notifyListeners();
+    return super.setDialog(state);
+  }
 }

@@ -57,7 +57,7 @@ class  AppPreferences {
   }
   Future<bool> setToken(String token)async{
     await  _sharedPreferences.setString(PREFS_KEY_TOKEN,token );
-    // reload();
+     reload();
     return true;
   }
   String getUser(){

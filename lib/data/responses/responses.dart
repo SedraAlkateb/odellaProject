@@ -1,7 +1,5 @@
-import 'dart:io';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:untitled/data/responses/responses.dart';
 part 'responses.g.dart';
 @JsonSerializable()
 class BaseResponse {
@@ -1708,13 +1706,32 @@ class DataTripsResponse  {
       _$DataTripsResponseToJson(this);
 
 }
+@JsonSerializable()
+class DataTripsWeekResponse  {
+  @JsonKey(name: "trips")
+  List<DataTripsResponse>? trips;
+  @JsonKey(name: "evaluations")
+  List<EvaluationInfoResponse>? evaluations;
 
+  DataTripsWeekResponse(this.trips, {
+    this.evaluations
+  }
+  );
+
+  factory DataTripsWeekResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataTripsWeekResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataTripsWeekResponseToJson(this);
+
+}
 @JsonSerializable()
 class TripsResponse extends BaseResponse {
   @JsonKey(name: "data")
-  List<DataTripsResponse>? dataTrips;
+  DataTripsWeekResponse? trips;
 
-  TripsResponse(this.dataTrips);
+  TripsResponse(this.trips);
 
   factory TripsResponse.fromJson(Map<String,dynamic> json ) =>
       _$TripsResponseFromJson(json);
@@ -1724,6 +1741,7 @@ class TripsResponse extends BaseResponse {
       _$TripsResponseToJson(this);
 
 }
+
 @JsonSerializable()
 class DataUpdateSupervisorResponse {
   @JsonKey(name: "id")
@@ -1930,11 +1948,53 @@ class UpdatePositionResponse  extends BaseResponse {
 class Position   {
   double lat;
   double lng;
-  Position(this.lat, this.lng); // from json
+  Position(this.lng,this.lat); // from json
   factory Position.fromJson(Map<String,dynamic>json)=>
       _$PositionFromJson(json);
   // to json
   Map<String,dynamic>toJson()=>
       _$PositionToJson(this);
+
+}
+@JsonSerializable()
+class StudentPositionResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+List<UserLAFResponse>? users;
+  StudentPositionResponse(this.users); // from json
+  factory StudentPositionResponse.fromJson(Map<String,dynamic>json)=>
+      _$StudentPositionResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$StudentPositionResponseToJson(this);
+
+}
+@JsonSerializable()
+class TripEvaluationResponse   {
+  @JsonKey(name:"id")
+  int?id;
+  @JsonKey(name:"availableSeats")
+  int? availableSeats;
+  TripEvaluationResponse(this.id,this.availableSeats); // from json
+  factory TripEvaluationResponse.fromJson(Map<String,dynamic>json)=>
+      _$TripEvaluationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$TripEvaluationResponseToJson(this);
+
+}
+@JsonSerializable()
+class EvaluationInfoResponse {
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"review")
+  String? review;
+  @JsonKey(name:"trip")
+  TripEvaluationResponse?  trip;
+  EvaluationInfoResponse(this.id, this.review, this.trip);
+  factory EvaluationInfoResponse.fromJson(Map<String,dynamic>json)=>
+      _$EvaluationInfoResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$EvaluationInfoResponseToJson(this);
 
 }

@@ -215,10 +215,17 @@ abstract class AppServiceClient {
       @Part(name:"lng") double lng,
       @Part(name:"lat") double lat
       );
-  @POST("/api/update/position/{id}")
+  @POST("/api/user/make_read_notification/{id}")
   Future<NotificationReadResponse> makeReadNotification(
       @Path("id") int id,
       );
   @GET("/api/user/make_all_read_notifications")
   Future<UpdatePositionResponse> readAllNot();
+  @GET("/api/student/trips/{trip_id}/positions/{position_id}")
+  Future<StudentPositionResponse> studentPosition(
+      @Path("trip_id") int tripId,
+      @Path("position_id") int positionId,
+
+
+      );
 }

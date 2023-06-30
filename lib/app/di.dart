@@ -25,6 +25,8 @@ import 'package:untitled/domain/usecase/get_all_lost_usecase.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/login_usecase.dart';
 import 'package:untitled/domain/usecase/logout_usecase.dart';
+import 'package:untitled/domain/usecase/not_read_all_usecase.dart';
+import 'package:untitled/domain/usecase/not_read_by_id_usecase.dart';
 import 'package:untitled/domain/usecase/notification_usecase.dart';
 import 'package:untitled/domain/usecase/position_line_usecase.dart';
 import 'package:untitled/domain/usecase/posts_usecase.dart';
@@ -36,6 +38,7 @@ import 'package:untitled/domain/usecase/signup_usecase.dart';
 import 'package:untitled/domain/usecase/store_claim_usecase.dart';
 import 'package:untitled/domain/usecase/store_lost_usecase.dart';
 import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
+import 'package:untitled/domain/usecase/student_position_usecase.dart';
 import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
 import 'package:untitled/domain/usecase/supervisor_update_position_usecase.dart';
 import 'package:untitled/domain/usecase/transfer_positions_usecase.dart';
@@ -128,7 +131,9 @@ Future<void>initClaimModule() async{
         StoreClaimUseCase(instance()));
     instance.registerFactory<WeeklyTripUsecase>(() =>
         WeeklyTripUsecase(instance()));
-    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance(),instance()));
+    instance.registerFactory<EvaluationUseCase>(() =>EvaluationUseCase(instance()));
+
+    instance.registerFactory<ComplaintsViewModel>(() =>ComplaintsViewModel(instance(),instance(),instance()));
   }
 }
 Future<void>initAddLostModule() async{
@@ -169,7 +174,9 @@ Future<void>initHomeSupervisorModule() async{
     instance.registerFactory<ConfirmQrUseCase>(() =>
         ConfirmQrUseCase(instance()));}
     if(!GetIt.I.isRegistered<HomeSuperVisorViewModel>()) {
-    instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance(),instance()));
+      instance.registerFactory<StudentPositionUseCase>(() =>
+          StudentPositionUseCase(instance()));
+    instance.registerFactory<HomeSuperVisorViewModel>(() =>HomeSuperVisorViewModel(instance(),instance(),instance()));
   }
 }
 Future<void>initTripSupervisorModule() async{
@@ -187,7 +194,11 @@ Future<void>initNotificationModule() async{
   if(!GetIt.I.isRegistered<NotificationUseCase>()) {
     instance.registerFactory<NotificationUseCase>(() =>
         NotificationUseCase(instance()));
-    instance.registerFactory<Not>(() =>Not(instance()));
+    instance.registerFactory<ReadAllNotificationUseCase>(() =>
+        ReadAllNotificationUseCase(instance()));
+    instance.registerFactory<ReadNotificationByIdUseCase>(() =>
+        ReadNotificationByIdUseCase(instance()));
+    instance.registerFactory<Not>(() =>Not(instance(),instance(),instance()));
   }
 }
 
@@ -334,8 +345,7 @@ initProgramModule() {
   if (!GetIt.I.isRegistered<ProgramsUseCase>()) {
     instance.registerFactory<ProgramsUseCase>(() =>ProgramsUseCase(instance()));
     instance.registerFactory<StudentAttendenceUsecase>(() =>StudentAttendenceUsecase(instance()));
-    instance.registerFactory<EvaluationUseCase>(() =>EvaluationUseCase(instance()));
-    instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance(),instance()));
+    instance.registerFactory<ProgramsViewModel>(() => ProgramsViewModel(instance(),instance()));
     }
 }
 initLostAndFoundModule() {

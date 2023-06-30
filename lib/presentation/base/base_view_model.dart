@@ -6,25 +6,46 @@ import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.d
 
 abstract class  BaseViewModel extends BaseViewModelInputs
      with BaseViewModeOutputs{
-
-  final StreamController _inputStreamController =BehaviorSubject<FlowState>();//BehaviorSubject
+int stateScreen=0;
+int stateDialog=0;
+  //final StreamController _inputStreamController =BehaviorSubject<FlowState>();//BehaviorSubject
 @override
   void dispose() {
-  _inputStreamController.close();
+ // _inputStreamController.close();
+  }
+ // @override
+ // Sink get inputState => _inputStreamController.sink;
+//@override
+ // Stream<FlowState> get outputState => _inputStreamController.stream.map((flowState) => flowState);
+@override
+int getStateScreen() {
+  return stateScreen;
+}
+@override
+  setDialog(int state) {
+    stateDialog=state;
   }
   @override
-  Sink get inputState => _inputStreamController.sink;
+  int getDialog() {
+   return stateDialog;
+  }
 @override
-  Stream<FlowState> get outputState => _inputStreamController.stream.map((flowState) => flowState);
-
+setStateScreen(int state) {
+ stateScreen=state;
+}
 }
 abstract class BaseViewModelInputs{
   void start(); //  start view model job
 void dispose();//will be call when view model dispose
+  setStateScreen(int state);
+  setDialog(int state);
 
-Sink get inputState;
+//Sink get inputState;
 }
 abstract class BaseViewModeOutputs{
   // will be implemented later
-Stream<FlowState> get outputState;
+  int  getStateScreen();
+  int  getDialog();
+
+ // Stream<FlowState> get outputState;
 }

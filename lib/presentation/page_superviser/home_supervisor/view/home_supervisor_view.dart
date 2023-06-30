@@ -55,32 +55,15 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
               drawer:  DrawerSupervisorView(),
               appBar: AppBar(
                 actions: [
-                  Provider.of<Not>(context).getCount()==0
-                      ? IconButton(onPressed: () {
-                    Navigator.pushNamed(context,Routes.notification);
+                         notificationIcon(context)
 
-                  }, icon: const Icon(Icons.notifications))
-                      : Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: InkWell(
-                      child: Badge(
-                        badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
 
-                        child: Icon(Icons.notifications,size: AppSize.s30),
-                        badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                      ),
-                      onTap: ()
-                      {
-                        print("kkkkkk");
-                        Navigator.pushNamed(context,Routes.notification);
-                      },
-                    ),
-                  ),
                 ],
-                title: Text(LocaleKeys.Home.tr(),
+                   title: Text(LocaleKeys.Home.tr(),
                     style: getBoldStyle(
                         color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
               ),
+             
               body: SafeArea(
                 child: orientation == Orientation.portrait
                     ? Column(
@@ -131,7 +114,29 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             contentPadding:
                             EdgeInsets.symmetric(vertical: 1.h)),
                       ),
-                    ),
+                ),
+                SizedBox(height: 4.h),
+                Center(
+                  child: Row(
+                    children: [
+                     InkWell(
+                  onTap: () {
+
+                  },
+                  child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child:
+                  IconButton(onPressed: (){
+                    Navigator.pushNamed(
+                        context,
+                        Routes.informationTrip
+                    );
+                  }, icon: Icon(Icons.info)),
+
+                    onHover: (event) {
+                    Text("information trip");
+                  },),
+       
                     SizedBox(height: 4.h),
                     SizedBox(width: 4.w),
                     Padding(
@@ -151,43 +156,13 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.redAccent,
-
                                 ),
                                 child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),)),
-                            // Container(
-                            //   height: 5.h,
-                            //   width: 10.w,
-                            //   child: DropdownButtonFormField(
-                            //     icon: const Icon(Icons.keyboard_arrow_down),
-                            //     hint:
-                            //     Text(LocaleKeys.transferPositions.tr()),
-                            //     validator: (value) {
-                            //       if (value == null) {
-                            //         return LocaleKeys.transferPositions.tr();
-                            //       }
-                            //       return null;
-                            //     },
-                            //     items: _register1
-                            //         .getPosition()
-                            //         .map((e) => DropdownMenuItem(
-                            //       value: e,
-                            //       child: Text(" ${e.name}"),
-                            //     ))
-                            //         .toList(),
-                            //     onChanged: (val) {
-                            //
-                            //       // Provider.of<HomeSupervisorView>(context,
-                            //       //     listen: false)
-                            //       //     .setTransferPositionId(val!.id);
-                            //     },
-                            //   ),
-                            // ),
-
+                           
                             IconButton(onPressed: ()
                             {
                               Navigator.pushNamed(context, Routes.qrscan);
                             },icon: Icon(Icons.qr_code_scanner,size: 25,)),
-
 
                             Container(
                               width: 10.w,
@@ -211,70 +186,91 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                   child:Icon(Icons.question_mark_rounded)
                               ),
                             ),
-                            SizedBox(width: 1.w,),
+                                                   IconButton(onPressed: ()
+               {
+                await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
+                      Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);            },icon: Icon(Icons.qr_code_scanner)),
+                      SizedBox(height: 4.h),
+                      IconButton(icon: Icon(Icons.stop_circle_outlined),onPressed: (){
+                        model.stopTracking();
+                      },) 
                           ],
                         ),
                       ),
                     ),
+                  
+                Container(
+                  height: 5.h,
+                //  width: 10.w,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(child: Text("Get All student"),onPressed: (){
+                          model.setAllUser();
+                        },),
+                      ),
+                      Expanded(
+                        child: DropdownButtonFormField(
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          hint:
+                          Text(LocaleKeys.transferPositions.tr()),
+                          validator: (value) {
+                            if (value == null) {
+                              return LocaleKeys.transferPositions.tr();
+                            }
+                            return null;
+                          },
+                          items: model.getHomeSuperVisor().
+                          dataTransferPositions?.map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(" ${e.name}"),
+                          ))
+                              .toList(),
+                          onChanged: (val) {
+                            model.studentPosition( val!.id);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
-                    SizedBox(height: 4.h),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        model.getLocationData() != null
-                            ? Text(
-                            'Lat: ${model.getLocationData()?.latitude}, Long: ${model.getLocationData()?.longitude}')
-                            : model.getError() != null
-                            ? Text('Error: ${model.getError()}')
-                            : CircularProgressIndicator(),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.separated(
-                        itemBuilder: (_, index) => Container(
-                          margin:  EdgeInsets.symmetric(horizontal: 25.sp),
-                          padding: EdgeInsets.all(20.sp),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color:  Colors.grey.shade300,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  backgroundColor: Colors.grey,
-                                  child: CircleAvatar(
-                                    radius: 28,
-                                    backgroundColor: Colors.white,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(28),
-                                      ),
-                                      child: FadeInImage.assetNetwork(
-                                        placeholder:
-                                        ImageAssets.gray, // الصورة المؤقتة
-                                        image: ImageDownloader.getUrl(
-                                            model.getHomeSuperVisor().users?[index]
-                                                .image ??
-                                                ""), // الصورة الفعلية
-                                        fit: BoxFit.contain,
-                                        imageErrorBuilder: (BuildContext context,
-                                            Object exception,
-                                            StackTrace? stackTrace) {
-                                          return Container(
 
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey, // الخلفية البديلة
-                                            ),
-                                          );
-                                        },
-                                        fadeInDuration: Duration(milliseconds: 500),
-                                        fadeOutDuration: Duration(milliseconds: 500),
-                                      ),
-                                    ),
+                SizedBox(height: 4.h),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    model.getLocationData() != null
+                        ? Text(
+                        'Lat: ${model.getLocationData()?.latitude}, Long: ${model.getLocationData()?.longitude}')
+                        : model.getError() != null
+                        ? Text('Error: ${model.getError()}')
+                        : CircularProgressIndicator(),
+                  ],
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (_, index) => Container(
+                      margin:  EdgeInsets.symmetric(horizontal: 25.sp),
+                      padding: EdgeInsets.all(20.sp),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color:  Colors.grey.shade300,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: CircleAvatar(
+                              radius: 28,
+                              backgroundColor: Colors.grey,
+                              child: CircleAvatar(
+                                radius: 28,
+                                backgroundColor: Colors.white,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(28),
                                   ),
                                 ),
                               ),
@@ -336,74 +332,49 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     ),
                   ],
                 )
-                    :Column(
-                  children: [
-                    Container(
-                      height: 5.h,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 40.sp),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          try {
-                            // Provider.of<HomeViewModel>(context,listen: false).setSearch(value);
-                          } catch (e, s) {
-                            print(s);
-                          }
-                        },
-                        decoration: InputDecoration(
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey.shade300,
-                                  width: 0.5.w),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(AppSize.s16),
-                              ),
-                            ),
-                            // fillColor: ColorManager.white,
-                            border: OutlineInputBorder(
-                              //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
-                              borderSide: BorderSide(
-                                  color: ColorManager.shadow,
-                                  width: 0.5.w),
-                            ),
-                            hintStyle: getRegularStyle(
-                                color: ColorManager.icon,
-                                fontSize: FontSize.s16),
-                            hintText: LocaleKeys.searchstudent.tr(),
-                            //       hintStyle:Theme.of(context).textTheme.bodySmall,
-                            prefixIcon: Padding(
-                              padding:
-                              EdgeInsets.only(left: 8.sp),
-                              child: Icon(
-                                Icons.search,
-                                color: ColorManager.button,
-                              ),
-                            ),
-                            contentPadding:
-                            EdgeInsets.symmetric(vertical: 1.h)),
-                      ),
-                    ),
-                    SizedBox(height:3.h),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context,
-                            Routes.informationTrip
-                        );
-                      },
-                      child: const Text('trip informations ?',style: TextStyle(fontSize: FontSize.s18),),
-                    ),
-                    SizedBox(height: 3.h),
-                    Expanded(
-                      child: ListView.separated(
-                        itemBuilder: (_, index) => Container(
-                          margin:  EdgeInsets.symmetric(horizontal: 45.sp),
-                          padding: EdgeInsets.all(25.sp),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color:  Colors.grey.shade300,
-                            borderRadius: BorderRadius.all(Radius.circular(AppSize.s15)),
+
+                :Column(
+              children: [
+                Container(
+                  height: 5.h,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 40.sp),
+                  child: TextFormField(
+                    onChanged: (value) {
+                      try {
+                        Provider.of<HomeSuperVisorViewModel>(context,listen: false).setSearch(value);
+                      } catch (e, s) {
+                        print(s);
+                      }
+                    },
+                    decoration: InputDecoration(
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 0.5.w),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(AppSize.s16),
+                          ),
+                        ),
+                        // fillColor: ColorManager.white,
+                        border: OutlineInputBorder(
+                          //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
+                          borderSide: BorderSide(
+                              color: ColorManager.shadow,
+                              width: 0.5.w),
+                        ),
+                        hintStyle: getRegularStyle(
+                            color: ColorManager.icon,
+                            fontSize: FontSize.s16),
+                        hintText: LocaleKeys.searchstudent.tr(),
+                        //       hintStyle:Theme.of(context).textTheme.bodySmall,
+                        prefixIcon: Padding(
+                          padding:
+                          EdgeInsets.only(left: 8.sp),
+                          child: Icon(
+                            Icons.search,
+                            color: ColorManager.button,
                           ),
                           child: Row(
                             children: [
