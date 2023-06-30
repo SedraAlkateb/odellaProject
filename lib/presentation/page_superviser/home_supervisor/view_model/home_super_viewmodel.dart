@@ -84,6 +84,14 @@ setAllUser(){
   }
 
   late DataHomeSupervisor _homeSuperVisor;
+  List<DataTransferPositions> positions=[];
+  List<DataTransferPositions> getPositions(){
+    return positions;
+  }
+  setPositions(List<DataTransferPositions> pos){
+    pos=positions;
+    notifyListeners();
+  }
   setHomeSuperVisor(DataHomeSupervisor h) async{
     _homeSuperVisor=h;
     search=h.users!;
@@ -137,6 +145,7 @@ setAllUser(){
             (data)  async{
               if(data.dataHomeSupervisor!=null &&data.dataHomeSupervisor!.id!=0){
                 await  setHomeSuperVisor(data.dataHomeSupervisor!);
+                setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
                 _setupLocationStream(data.dataHomeSupervisor!.id);
               }
         });
@@ -180,13 +189,10 @@ PusherTrip _pusherTrip=instance<PusherTrip>();
       _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {
           if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
             print(newLocationData.longitude);
-            Map<String, dynamic> eventData = {  'lng':newLocationData.longitude ,'lat':newLocationData.latitude};
+            Map<String, double> eventData = {  'lng':newLocationData.longitude ??0.0,'lat':newLocationData.latitude ??0.0};
 
-            channel.trigger("client-tracking",{
-              "lng": 36.5671253,
-              "lat": 32.7132202
-            }
-            );//newLocationData.longitude ///newLocationData.latitude
+            channel.trigger("tracking", eventData);
+            //newLocationData.longitude ///newLocationData.latitude
           }//client-tracking
           setLocation(newLocationData, null);
         });

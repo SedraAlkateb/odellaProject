@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:untitled/app/app_preferences.dart';
@@ -17,7 +19,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   AppPreferences _appPreferences = instance<AppPreferences>();
   late PusherClient pusherClient;
   late Channel channel;
-  late GoogleMapController _controller;
+  Completer<GoogleMapController> _controller=Completer();
   late Marker _marker = Marker(
     markerId: MarkerId('marker_1'),
     position: _latLng,
@@ -30,7 +32,9 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   Marker getMarker() {
     return _marker;
   }
-
+  Completer<GoogleMapController> getController(){
+    return _controller;
+}
   getLatLng() {
     return _latLng;
   }
@@ -71,7 +75,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
     int hours = offset.inHours;
     return hours;
   }
-
+late  GoogleMapController googleMapController;
   tripSupervisor() async {
     setSucc(false);
     setStateScreen(1);
@@ -84,6 +88,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
       if (data != null) {
         if (data.dataHomeSupervisor != null &&
             data.dataHomeSupervisor?.id != 0) {
+        //  googleMapController=await _controller.future;
           setStateScreen(0);
           setTripId(data.dataHomeSupervisor?.id ?? 0);
           pusherClient = await _pusherTrip.createPusherClient();
@@ -105,24 +110,51 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
       }
     });
   }
+  List<LatLng> polyLineCoordinates=[];
 
-  void updateMarker(String data) {
+  void getPolyLine()async {
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        " ",
+        PointLatLng(0.0, 0.0),
+        PointLatLng(0.0, 0.0)
+    );
+    if (result.points.isEmpty) {
+      result.points.forEach((PointLatLng point) =>
+          polyLineCoordinates.add(
+            LatLng(point.latitude, point.longitude),
+          )
+      );
+    }
+  }
+
+
+  void updateMarker(String data) async{
     Position position;
     Map<String, dynamic> resultMap;
-  //  resultMap = jsonDecode(data)  ;
-    Map<String, dynamic> eventData = jsonDecode('${data}');
-   // position = Position.fromJson(resultMap);
-    print(eventData['lng']);
-    print(eventData['lat']);
- //   LatLng latLng = LatLng(position.lat, position.lng);
+    resultMap = jsonDecode(data)  ;
+    position = Position.fromJson(resultMap);
+    print(position.lng);
+    print(position.lat);
+    LatLng latLng = LatLng(position.lat , position.lng);
     MarkerId markerId = MarkerId('location');
     Marker marker = Marker(
       markerId: markerId,
       //icon: _markerIcon,
-     // position: latLng,
+      position: latLng,
     );
+    googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          zoom: 20.5,
+          target:
+          LatLng(position.lat ,position.lng )
+      )
+      )
+      );
+
     setMarker(marker);
+
   }
+
 
   setMarker(Marker marker) {
     _marker = marker;
@@ -140,6 +172,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
 
   @override
   void dispose() {
+    _controller = Completer();
     pusherClient.unsubscribe("tracking.${getTripId()}");
     pusherClient.disconnect();
     super.dispose();
