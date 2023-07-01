@@ -189,11 +189,10 @@ if(Provider.of<DrawerSupervisorViewModel>(context).isSuccess()){
                   title: Text(LocaleKeys.notification.tr()),
                   leading: Icon(Icons.notifications,
                     color: ColorManager.sidBarIcon,
-
                   ),
 
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.notification);
+                    Navigator.pushNamed(context, Routes.application);
                   }
 
               ),

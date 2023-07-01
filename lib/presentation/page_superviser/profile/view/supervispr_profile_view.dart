@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -56,27 +57,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
           Scaffold(
             appBar: AppBar(
               actions: [
-                Provider.of<Not>(context).getCount()==0
-                    ? IconButton(onPressed: () {
-                  Navigator.pushNamed(context,Routes.notification);
-
-                }, icon: const Icon(Icons.notifications))
-                    : Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: InkWell(
-                    child: Badge(
-                      badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
-                      child: Icon(Icons.notifications,size: AppSize.s30),
-                      badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
-                    ),
-                    onTap: ()
-                    {
-                      print("kkkkkk");
-                      Navigator.pushNamed(context,Routes.notification);
-                    },
-                  ),
-                ),
+          notificationIcon(context)
               ],
               title: Text(LocaleKeys.profile.tr(),
                   style: getBoldStyle(

@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
@@ -55,7 +56,7 @@ class _ProfileViewState extends State<ProfileView> {
             drawer: NavBar(),
             appBar: AppBar(
               actions: [
-                        notificationIcon(context)
+                notificationIcon(context)
 
               ],
             ),

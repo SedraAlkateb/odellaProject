@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:retrofit/http.dart';

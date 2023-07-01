@@ -212,7 +212,6 @@ Widget build(BuildContext context) {
         Navigator.pop(context);
       },),
 
-      backgroundColor: ColorManager.sidBar,
       actions: [
         notificationIcon(context)
       ],

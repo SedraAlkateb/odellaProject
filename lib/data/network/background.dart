@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,3 +23,4 @@ void onStart() {
 void main() {
   backgroundMain();
 }
+ */
