@@ -250,7 +250,7 @@ class TripStudentWidget extends StatelessWidget {
                   flex: 1,
                   child: Icon(
                     Icons.access_time_filled,
-                      color: ColorManager.sidBarIcon,
+                    color: ColorManager.sidBarIcon,
                   ),
                 ),
                 Expanded(
@@ -294,11 +294,11 @@ class TripStudentWidget extends StatelessWidget {
             Row(
               children: [
                 Text(LocaleKeys.GoingConfirm.tr(),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: ColorManager.sidBarIcon,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: ColorManager.sidBarIcon,
+                    fontWeight: FontWeight.bold,
+                  ),
 
                 ),
                 Checkbox(
@@ -320,11 +320,11 @@ class TripStudentWidget extends StatelessWidget {
                 ),
                 Text(
                   LocaleKeys.Returningconfirm.tr(),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: ColorManager.sidBarIcon,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: ColorManager.sidBarIcon,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Checkbox(
                   value:  trip.confirmAttendance2,

@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/notification_details.dart';
 import 'package:untitled/notification_list.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
+import '../daily_reservation/view/daily_reservation_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map/mapline.dart';
@@ -20,7 +22,6 @@ import 'package:untitled/presentation/page/lost_items/view/lost_items_view.dart'
 import 'package:untitled/presentation/page/page_view.dart';
 import 'package:untitled/presentation/page/polylinee.dart';
 import 'package:untitled/presentation/page/position/view/polyline_view.dart';
-import 'package:untitled/presentation/page_superviser/daily_recieve/view/daily_recieve_view.dart';
 import 'package:untitled/presentation/page_superviser/map_position_supervisor/view/position_supervisor_view.dart';
 import 'package:untitled/presentation/page_superviser/page_view.dart';
 import 'package:untitled/presentation/page_superviser/supervisor_gps/supervisor_gps.dart';
@@ -33,10 +34,10 @@ import 'package:untitled/presentation/settings/view/settings_view.dart';
 import 'package:untitled/presentation/signup/view/signUp_view.dart';
 import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
-import 'package:untitled/presentation/transportation_lines/view/transport_line_view.dart';
+import 'package:untitled/presentation/transportation_lines/transportione_lines_view.dart';
 
 import '../../main.dart';
-import '../daily_reservation/view/daily_reservation_view.dart';
+import '../subscriptions/subscriptions_view.dart';
 
 
 class Routes {
@@ -81,12 +82,10 @@ class Routes {
 
   static const String polyline = "/polyline";
   static const String qrscan = "/qrscan";
-  static const String complaintandrating = "/compandrat";
-  static const String transportationlines = "/transline";
+  static const String compandrat = "/compandrat";
+  static const String transLines = "/transLines";
   static const String dailyReservation = "/dailyReservation";
-
-
-
+  static const String subscription = "/subscription";
 
 
 
@@ -118,7 +117,7 @@ class RouteGenerator {
       case Routes.forgotPasswordRoute:
         initForgetPassword();
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
-        case Routes.signupRoute:
+      case Routes.signupRoute:
         initRegisterModule();
         return MaterialPageRoute(builder: (_) => SignUpView());
       case Routes.afterSignUp:
@@ -129,9 +128,9 @@ class RouteGenerator {
       case Routes.resetPasswordRoute:
         initResetPasswordModule();
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
-     case Routes.pageScreen:
-       initNotificationModule();
-       initHomeModule();
+      case Routes.pageScreen:
+        initNotificationModule();
+        initHomeModule();
         initLogoutModule();
         initProfileModule();
         initProgramModule();
@@ -145,8 +144,8 @@ class RouteGenerator {
       case Routes.baseHomeScreen:
         initBaseHomeModule();
         return MaterialPageRoute(builder: (_) => const BaseHomeView());
-       case Routes.settingRoute:
-         return MaterialPageRoute(builder: (_) => const SettingsView());
+      case Routes.settingRoute:
+        return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.lostItemsRoute:
         return MaterialPageRoute(builder: (_) => const LostItemsView());
       case Routes.complaintsRoute:
@@ -165,14 +164,14 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => QRScanScreen());
       case Routes.polyline:
         return MaterialPageRoute(builder: (_) => Polylinee());
-      case Routes.complaintandrating:
+      case Routes.compandrat:
         return MaterialPageRoute(builder: (_) => ComplaintsView());
-      case Routes.transportationlines:
-        return MaterialPageRoute(builder: (_) => TransportLineView());
+      case Routes.transLines:
+        return MaterialPageRoute(builder: (_) => TransportationLinesView());
       case Routes.dailyReservation:
         return MaterialPageRoute(builder: (_) => DailyReservationView());
-
-
+      case Routes.subscription:
+        return MaterialPageRoute(builder: (_) => SubscriptionsView());
 
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());
@@ -193,14 +192,14 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: const Text(
-                    StringsManager.noRouteFound), // string to strings manager
-              ),
-              body: const Center(
-                  child: Text(
-                      StringsManager.noRouteFound)), //string to strings manager
-            ));
+          appBar: AppBar(
+            title: const Text(
+                StringsManager.noRouteFound), // string to strings manager
+          ),
+          body: const Center(
+              child: Text(
+                  StringsManager.noRouteFound)), //string to strings manager
+        ));
   }
 }
 

@@ -8,7 +8,6 @@ import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/resources/strings_manager.dart';
-
 import '../../../lang/locale_keys.g.dart';
 
 class SettingsView extends StatefulWidget {

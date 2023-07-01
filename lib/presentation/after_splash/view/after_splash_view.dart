@@ -24,7 +24,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   _goTransactionLine(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
-        Navigator.pushNamed(context, Routes.transportationlines);
+        Navigator.pushNamed(context, Routes.transLines);
       } catch (e, s) {
         print(s);
       }
@@ -42,68 +42,68 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: AppPadding.p28,right: AppPadding.p28,top: AppPadding.p40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(ImageAssets.logo4),
-              SizedBox(
-                height: AppSize.s30,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: AppPadding.p28,right: AppPadding.p28,top: AppPadding.p40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(ImageAssets.logo4),
+                  SizedBox(
+                    height: AppSize.s30,
+                  ),
+                  SvgPicture.asset(ImageAssets.odella),
+                  const SizedBox(
+                    height: AppSize.s40,
+                  ),
+                  SizedBox(
+                    height: AppSize.s64,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () =>
+                            _goTransactionLine(),
+                        child:  Text(LocaleKeys.transportationLines.tr())),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  SizedBox(
+                    height: AppSize.s64,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: ()  =>
+                            _dailyReservation(),
+                        child:  Text(LocaleKeys.dailyReservation.tr())),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  SizedBox(
+                    height: AppSize.s64,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: ()  =>
+                            _subscription(),
+                        child:  Text(LocaleKeys.subscription.tr())),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  SizedBox(
+                    height: AppSize.s64,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () =>
+                            _goLogin(),
+                        child:  Text(LocaleKeys.signIn.tr())),
+                  ),
+                ],
               ),
-              SvgPicture.asset(ImageAssets.odella),
-              const SizedBox(
-              height: AppSize.s40,
             ),
-              SizedBox(
-            height: AppSize.s64,
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () =>
-                  _goTransactionLine(),
-                child:  Text(LocaleKeys.transportationLines.tr())),
-              ),
-              const SizedBox(
-            height: AppSize.s28,
-              ),
-              SizedBox(
-            height: AppSize.s64,
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: ()  =>
-                    _dailyReservation(),
-                child:  Text(LocaleKeys.dailyReservation.tr())),
-              ),
-              const SizedBox(
-            height: AppSize.s28,
-              ),
-              SizedBox(
-            height: AppSize.s64,
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: ()  =>
-                    _subscription(),
-                child:  Text(LocaleKeys.subscription.tr())),
-              ),
-              const SizedBox(
-            height: AppSize.s28,
-              ),
-              SizedBox(
-            height: AppSize.s64,
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () =>
-                  _goLogin(),
-                child:  Text(LocaleKeys.signIn.tr())),
-              ),
-            ],
           ),
-          ),
-        ),
-      )
+        )
 
     );
   }
