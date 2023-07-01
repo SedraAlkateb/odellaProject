@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
@@ -56,7 +57,8 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body: Provider.of<SignUpViewModel>(context).getStateScreen() == 0
+        body:
+        Provider.of<SignUpViewModel>(context).getStateScreen() == 0
             ? _getContentWidget()
             : Provider.of<SignUpViewModel>(context).getStateScreen() == 1
                 ? StateRenderer(
@@ -75,7 +77,6 @@ class _SignUpViewState extends State<SignUpView> {
                         message: "Loading",
                         retryActionFunction: () {}));
   }
-
   Widget _getContentWidget() {
     var _register1 = Provider.of<SignUpViewModel>(context);
     if (Provider.of<SignUpViewModel>(context).isLog == true) {
@@ -899,19 +900,19 @@ class _SignUpViewState extends State<SignUpView> {
                                 child: ElevatedButton(
                                     onPressed: () {
                                       if (_globalKey.currentState!.validate()) {
+                                        LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, " Loading");
                                         Provider.of<SignUpViewModel>(context,
                                             listen: false)
-                                            .getSignUp();
-                                        Provider.of<SignUpViewModel>(context,listen: false).getDialog()==1
-                                            ? StateRenderer(
-                                            stateRendererType: StateRendererType.popupLoadingState,
-                                            message: "Loading",
-                                            retryActionFunction: () {})
-                                            :StateRenderer(
-                                            stateRendererType: StateRendererType.popupErrorState,
-                                            message: "Loading",
-                                            retryActionFunction: () {
-                                            });
+                                            .getSignUp().then((value) {
+                                              if(value==false){
+                                                ErrorState(StateRendererType.popupErrorState, "vf").dismissDialog(context);
+                                                ErrorState(StateRendererType.popupErrorState, "vf").showPopup(context, StateRendererType.popupErrorState, "message");
+                                              }else{
+                                                ContentState().dismissDialog(context);
+                                              }
+                                        }
+                                        
+                                        );
                                       }
                                     },
                                     child: Text(LocaleKeys.signUp.tr())),

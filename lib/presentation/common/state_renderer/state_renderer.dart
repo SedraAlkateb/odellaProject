@@ -74,7 +74,7 @@ class StateRenderer extends StatelessWidget {
       return Container();
       case StateRendererType.popupSuccess:
         return _getPopupDialog(context, [
-          _getAnimatedImage(JsonAssets.loading1),
+        //  _getAnimatedImage(JsonAssets.loading1),
           _getMessage(title),
           _getMessage(message),
           _getRetryButton(LocaleKeys.ok.tr(), context)

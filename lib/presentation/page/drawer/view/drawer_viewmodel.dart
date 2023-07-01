@@ -25,19 +25,21 @@ bool isSuccess(){
       return false;
     }
 }
-  logout() async{
+bool s=false;
+Future<bool>  logout() async{
  //   inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-
     ( await _logoutUseCase.execute(
         null)).fold(
 
             (failure)  {
+              s=false;
           //        inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
         },
             (data)  async{
+              s=true;
               isSucc=data.status ?? 0;
               notifyListeners();
            });
-
+return s;
   }
 }

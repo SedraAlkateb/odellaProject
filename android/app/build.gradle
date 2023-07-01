@@ -70,6 +70,7 @@ repositories {
     maven {
         url "https://maven.google.com"
     }
+    jcenter()
 }
 
 flutter {

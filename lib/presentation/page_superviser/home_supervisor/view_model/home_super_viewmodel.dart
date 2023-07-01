@@ -36,14 +36,20 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   setSucc(bool s){
    _succ=s;
   }
-
+@override
+  setStateScreen(int state) {
+   notifyListeners();
+    return super.setStateScreen(state);
+  }
   @override
   void start() async{
     homeSupervisor();
   }
 cancelTrip(){
-  channel.cancelEventChannelStream();
-  pusherClient.disconnect();
+   if(pusherClient!=null){
+     pusherClient?.disconnect();
+   }
+//  channel.cancelEventChannelStream();
 }
 @override
   void dispose() {
@@ -134,19 +140,26 @@ setAllUser(){
     int hours = offset.inHours;
     return hours;
   }
+
   //////////////////////////input////////////////////////
   homeSupervisor() async{
+    setStateScreen(1);
     setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
             (failure)  {
+              setStateScreen(2);
               setSucc(false);
           print(failure.massage);
         },
             (data)  async{
-              if(data.dataHomeSupervisor!=null &&data.dataHomeSupervisor!.id!=0){
+              if(data.dataHomeSupervisor!=null &&data.dataHomeSupervisor!.id!=0&&data.dataHomeSupervisor!.users!.isNotEmpty){
+
+                setStateScreen(0);
                 await  setHomeSuperVisor(data.dataHomeSupervisor!);
                 setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
                 _setupLocationStream(data.dataHomeSupervisor!.id);
+              }else{
+                setStateScreen(3);
               }
         });
   }
@@ -168,7 +181,7 @@ String? getError(){
   return _error;
 }
 PusherTrip _pusherTrip=instance<PusherTrip>();
-  late  PusherClient pusherClient;
+ PusherClient? pusherClient;
   late Channel channel;
   void stopTracking() {
     if (_locationSubscription != null) {
@@ -185,7 +198,7 @@ PusherTrip _pusherTrip=instance<PusherTrip>();
     //_locationData = await LocationService().getLocation();
     try {
       pusherClient= await  _pusherTrip.createPusherClient();
-      channel = pusherClient.subscribe("private-tracking.${tripId}");
+      channel = pusherClient!.subscribe("private-tracking.${tripId}");
       _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {
           if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
             print(newLocationData.longitude);

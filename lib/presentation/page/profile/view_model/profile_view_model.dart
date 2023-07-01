@@ -349,9 +349,17 @@ notifyListeners();
       notifyListeners();
     });
   }
-
+String message="";
+  setMessage(String m){
+    message=m;
+    notifyListeners();
+  }
+ String getMessage(){
+    return message;
+  }
+  bool update=false;
   //////////////////////////////
-  UpdateStudent() async {
+ Future<bool> UpdateStudent() async {
     (await _studenttUseCase.execute(UpdateStudenttUseCaseInput(getId() ?? 0,
             area_id: getArea(),
             city_id: getCity(),
@@ -364,13 +372,18 @@ notifyListeners();
             transportation_line_id: getTransportationLineId(),
             university_id: getUniversityId())))
         .fold((failure) {
+          setMessage(failure.massage);
+          update=false;
       // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data) {
+          update=true;
       // setProfile(data);
       //   inputState.add(ContentState());
+      setMessage("Succsec");
       print("object");
       notifyListeners();
     });
+    return update;
   }
 
   updatePassword() async {

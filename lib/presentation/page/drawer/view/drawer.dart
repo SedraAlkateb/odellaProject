@@ -9,10 +9,13 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer_viewmodel.dart';
 import 'package:untitled/presentation/page/home/view_model/home_view_model.dart';
 import 'package:untitled/presentation/page/page_view_model.dart';
 import 'package:untitled/presentation/page/profile/view_model/profile_view_model.dart';
+import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/conestants_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
@@ -27,14 +30,6 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppPreferences _appPreferences =instance<AppPreferences>();
-if(Provider.of<DrawerViewModel>(context).isSuccess()){
-  _appPreferences.signOut().then((value) {
-
-      Provider.of<DrawerViewModel>(context,listen: false).dispose();
-      Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
-    }
-    );
-}
     return ClipRRect(
 
       borderRadius: const BorderRadius.only(
@@ -243,9 +238,30 @@ if(Provider.of<DrawerViewModel>(context).isSuccess()){
                 color: ColorManager.sidBarIcon,
               ),
 
-              onTap: () async{
-                await Provider.of<DrawerViewModel>(context,listen: false).logout();
+                onTap: () async {
+                  LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "Loading");
+                  await Provider.of<DrawerViewModel>(context, listen: false).logout().then((value) {
+                    if(value){
 
+                      _appPreferences.signOut().then((value) {
+                        ContentState().dismissDialog(context);
+
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Provider.of<SupervisorTripViewModel>(context,listen: false).dispose();
+                          Provider.of<DrawerViewModel>(context,listen: false).dispose();
+                          Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
+                        });
+                      }
+                      );
+                    }
+                    else{
+                      ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
+                      ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
+                    }
+
+
+                  }
+                  );
                 }
 
             ),

@@ -1618,7 +1618,10 @@ class DataEvaluationResponse {
   String? review;
 
 
-  DataEvaluationResponse(this.id, this.user, this.trip, this.review);
+  DataEvaluationResponse(this.id, this.user, this.trip,{
+    this.review
+  }
+  );
 
   factory DataEvaluationResponse.fromJson(Map<String,dynamic> json ) =>
       _$DataEvaluationResponseFromJson(json);

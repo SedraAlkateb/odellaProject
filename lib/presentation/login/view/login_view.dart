@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/constants.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -184,8 +185,10 @@ class _LoginViewState extends State<LoginView> {
                     child: ElevatedButton(
                         onPressed: () async {
                           if (_forKey.currentState!.validate()) {
+                                LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "loading");
                             Provider.of<LoginViewModel>(context,listen: false).login().then((value) {
                               if(value){
+                                ContentState().dismissDialog(context);
                                 _appPreferences.setLoggedIn(model.getToken() ??"",model.getRole() ??"").then((value) =>
                                     SchedulerBinding.instance.addPostFrameCallback((_) {
                                       if(_appPreferences.getToken()!=null){
@@ -196,10 +199,12 @@ class _LoginViewState extends State<LoginView> {
                                           Navigator.pushReplacementNamed(context,Routes.supervisorPageRoute);
                                         }
                                       }
-
                                     })
                                 );
 
+                              }else{
+                                ErrorState(StateRendererType.popupErrorState, "unAuthentication").dismissDialog(context);
+                                ErrorState(StateRendererType.popupErrorState, "unAuthentication").showPopup(context, StateRendererType.popupErrorState, "anAuth");
                               }
                             }
 

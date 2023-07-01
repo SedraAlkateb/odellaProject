@@ -212,7 +212,8 @@ setNum(int n){
     signUpObject= signUpObject.copyWith(university_id: universityId);
   }
   /////////////////////async function//////////////////////////////////////////////////
-  getSignUp()async{
+  bool s=false;
+ Future<bool> getSignUp()async{
     setDialog(1);
     ( await _signUpUseCase.execute(
         SignUpCaseInput(signUpObject.city_id, signUpObject.area_id, signUpObject.street, signUpObject.subscription_id,
@@ -224,14 +225,16 @@ setNum(int n){
         .fold(
             (failure)  {
               setDialog(2);
-        },
+              s=false;
+              },
             (data)  {
               setDialog(0);
 
               isLog=true;
+              s=true;
           notifyListeners();
         });
-
+return s;
   }
   //////////////////////////////////////////////////////////////////////
   getPositionLineData(int id)async{
