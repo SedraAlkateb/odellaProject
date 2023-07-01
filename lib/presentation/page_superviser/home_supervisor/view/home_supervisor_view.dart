@@ -7,6 +7,7 @@ import 'package:pusher_client/pusher_client.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
+import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
@@ -16,6 +17,7 @@ import 'package:untitled/presentation/page_superviser/home_supervisor/view_model
 import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
+import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
@@ -47,7 +49,6 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
 
   @override
   Widget build(BuildContext context) {
-    // var _register1 = Provider.of<HomeSupervisorView>(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return Consumer<HomeSuperVisorViewModel>(
         builder: (context, model, child) =>
@@ -117,91 +118,52 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                 ),
                 SizedBox(height: 4.h),
                 Center(
-                  child: Row(
+                  child:                         Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                     InkWell(
-                  onTap: () {
+                      Container(
+                          width: 10.w,
+                          height: 10.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.redAccent,
+                          ),
+                          child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),)),
+                      Container(
+                        width: 10.w,
+                        height: 10.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorManager.sidBar,
 
-                  },
-                  child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child:
-                  IconButton(onPressed: (){
-                    Navigator.pushNamed(
-                        context,
-                        Routes.informationTrip
-                    );
-                  }, icon: Icon(Icons.info)),
-
-                    onHover: (event) {
-                    Text("information trip");
-                  },),
-       
-                    SizedBox(height: 4.h),
-                    SizedBox(width: 4.w),
-                    Padding(
-                      padding:  EdgeInsets.only(left:17.sp,right:17.sp),
-                      child: Card(
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        color:Colors.grey.shade300,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                                width: 10.w,
-                                height: 10.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.redAccent,
-                                ),
-                                child: Center(child: Text("2",style: getBoldStyle(color: Colors.black54,fontSize: FontSize.s16),),)),
-                           
-                            IconButton(onPressed: ()
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context,
+                                  Routes.informationTrip
+                              );
+                            },
+                            onLongPress: ()
                             {
-                              Navigator.pushNamed(context, Routes.qrscan);
-                            },icon: Icon(Icons.qr_code_scanner,size: 25,)),
-
-                            Container(
-                              width: 10.w,
-                              height: 10.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorManager.sidBar,
-
-                              ),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context,
-                                        Routes.informationTrip
-                                    );
-                                  },
-                                  onLongPress: ()
-                                  {
-                                    showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
-                                  },
-                                  child:Icon(Icons.question_mark_rounded)
-                              ),
-                            ),
-                                                   IconButton(onPressed: ()
-               {
-                await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
-                      Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);            },icon: Icon(Icons.qr_code_scanner)),
+                              showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
+                            },
+                            child:Icon(Icons.question_mark_rounded)
+                        ),
+                      ),
+                      IconButton(onPressed: ()async {
+                        await Provider.of<ScanQrViewModel>(context,listen: false).scanBarcode();
+                        Provider.of<ScanQrViewModel>(context,listen: false).confirmQr(Provider.of<HomeSuperVisorViewModel>(context,listen: false).getHomeSuperVisor().id);            },icon: Icon(Icons.qr_code_scanner)),
                       SizedBox(height: 4.h),
                       IconButton(icon: Icon(Icons.stop_circle_outlined),onPressed: (){
                         model.stopTracking();
-                      },) 
-                          ],
-                        ),
-                      ),
-                    ),
-                  
+                      },)
+                    ],
+                  ),
+                ),
                 Container(
                   height: 5.h,
-                //  width: 10.w,
+                  //  width: 10.w,
                   child: Row(
                     children: [
                       Expanded(
@@ -224,12 +186,12 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                           items:
                           model.getPositions().map((e) =>
                           e!=[] ?
-                              DropdownMenuItem(
+                          DropdownMenuItem(
                             value: e,
                             child: Text(" ${e.name}"),
                           )
                               :    DropdownMenuItem(
-                          //  value: e,
+                            //  value: e,
                             child: Text("no positions"),
                           )
                           ).toList(),
@@ -241,20 +203,17 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     ],
                   ),
                 ),
-
-
                 SizedBox(height: 4.h),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    model.getLocationData() != null
-                        ? Text(
-                        'Lat: ${model.getLocationData()?.latitude}, Long: ${model.getLocationData()?.longitude}')
-                        : model.getError() != null
-                        ? Text('Error: ${model.getError()}')
-                        : CircularProgressIndicator(),
-                  ],
-                ),
+                Row(
+                    children: [
+                model.getLocationData() != null
+                    ? Text(
+                    'Lat: ${model.getLocationData()?.latitude}, Long: ${model.getLocationData()?.longitude}')
+                    : model.getError() != null
+                    ? Text('Error: ${model.getError()}')
+                    : CircularProgressIndicator(),
+                ]
+              ),
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (_, index) => Container(
@@ -281,7 +240,9 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                   ),
                                 ),
                               ),
-                              Expanded(
+                            ),
+                          ),
+                          Expanded(
                                 flex: 3,
                                 child: Padding(
                                   padding:  EdgeInsets.symmetric(horizontal: 5.sp),
@@ -315,10 +276,11 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                         ),
                                       ),
                                     ],
+                                  )
                                   ),
                                 ),
-                              ),
-                              Checkbox( value: isChecked,
+                          Checkbox(
+                              value: isChecked,
                                   onChanged: isLocked ? null : (value) {
                                     setState(() {
                                       isChecked = value!;
@@ -328,7 +290,8 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                     }
                                     );
                                   }
-                              ),],
+                              ),
+                        ],
                           ),
                         ),
                         separatorBuilder: (_, index) =>  SizedBox(
@@ -339,7 +302,6 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     ),
                   ],
                 )
-
                 :Column(
               children: [
                 Container(
@@ -383,7 +345,21 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             Icons.search,
                             color: ColorManager.button,
                           ),
-                          child: Row(
+                        ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (_, index) => Container(
+                      margin:  EdgeInsets.symmetric(horizontal: 25.sp),
+                      padding: EdgeInsets.all(20.sp),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color:  Colors.grey.shade300,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: Row(
                             children: [
                               Expanded(
                                 flex: 1,
