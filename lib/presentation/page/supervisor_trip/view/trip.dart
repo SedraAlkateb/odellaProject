@@ -73,11 +73,17 @@ class _TripSupervisorState extends State<TripSupervisor> {
     );
 
   }
+ late SupervisorTripViewModel viewModel;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    viewModel = Provider.of<SupervisorTripViewModel>(context, listen: false);
+  }
 
   @override
   void dispose() {
-   Provider.of<SupervisorTripViewModel>(context,listen: false).dispose();
+   viewModel.dispose();
     super.dispose();
   }
 }

@@ -3,12 +3,16 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/page/page_view_model.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view_model/drawer_viewmodel.dart';
+import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/conestants_manager.dart';
@@ -27,14 +31,7 @@ class DrawerSupervisorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppPreferences _appPreferences =instance<AppPreferences>();
-if(Provider.of<DrawerSupervisorViewModel>(context).isSuccess()){
-  _appPreferences.signOut().then((value) {
 
-      Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
-      Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
-    }
-    );
-}
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -225,8 +222,29 @@ if(Provider.of<DrawerSupervisorViewModel>(context).isSuccess()){
                   ),
 
                   onTap: () async {
-                    await Provider.of<DrawerSupervisorViewModel>(
-                        context, listen: false).logout();
+                      LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "Loading");
+                      await Provider.of<DrawerSupervisorViewModel>(context, listen: false).logout().then((value) {
+                        if(value){
+                            _appPreferences.signOut().then((value) {
+                              ContentState().dismissDialog(context);
+
+                              SchedulerBinding.instance.addPostFrameCallback((_) {
+                                Provider.of<HomeSuperVisorViewModel>(context,listen: false).stopTracking();
+                                Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
+                                Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
+
+                              });
+                                                        }
+                            );
+                        }
+                        else{
+                          ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
+                          ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
+                        }
+
+
+                    }
+                    );
                   }
 
               ),

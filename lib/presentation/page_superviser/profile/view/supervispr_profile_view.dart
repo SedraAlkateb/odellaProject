@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
@@ -40,7 +41,9 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
 
   @override
   void initState() {
-    Provider.of<SupervisorProfileViewModel>(context, listen: false).start();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SupervisorProfileViewModel>(context, listen: false).start();
+    });
     super.initState();
   }
 
@@ -66,11 +69,23 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
             ),
             drawer:  DrawerSupervisorView(),
 
-            body: contentWidget(),
+            body:
+            Provider.of<SupervisorProfileViewModel>(context).getStateScreen() == 0
+                ? contentWidget()
+                :Provider.of<SupervisorProfileViewModel>(context).getStateScreen()==1
+                ?StateRenderer(
+                stateRendererType: StateRendererType.fullScreenLoadingState,
+                message: "Loading",
+                retryActionFunction: () {})
+                :StateRenderer(
+                stateRendererType: StateRendererType.fullScreenErrorState,
+                message: "something wrong",
+                retryActionFunction: () {
+                  Provider.of<SupervisorProfileViewModel>(context,listen: false).student();
+                })
           ),
     );
   }
-
   Widget contentWidget() {
     //var profile = Provider.of<SupervisorProfileViewModel>(context, listen: false);
     var profile1 = Provider.of<SupervisorProfileViewModel>(context);

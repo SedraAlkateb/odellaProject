@@ -1,8 +1,9 @@
-import 'dart:async';
+/*
+import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
-
+import 'package:pusher_client/pusher_client.dart';
+import 'package:untitled/app/di.dart';
+import 'package:untitled/data/network/pusher.dart';
 void main() {
   runApp(MyApp());
 }
@@ -11,39 +12,40 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
-      home: MyHomePage(),
+      title: 'Background Fetch Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Container(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int counter = 0;
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
     super.initState();
-    // Load the saved counter value
-    _loadCounter();
+    retrieveCounter();
   }
+  late  PusherClient pusherClient;
+  late Channel channel;
+  PusherTrip _pusherTrip=instance<PusherTrip>();
 
-  Future<void> _loadCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      counter = prefs.getInt('counter') ?? 0;
-    });
-  }
-
-  Future<void> _incrementCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      counter++;
-      prefs.setInt('counter', counter);
+  Future<void> retrieveCounter() async {
+    pusherClient= await  _pusherTrip.createPusherClient();
+    channel = pusherClient.subscribe("private-tracking.${1}");
+    await BackgroundLocation.startLocationService();
+    BackgroundLocation.getLocationUpdates((location) {
+      print(location.latitude);
+      print(location.longitude);
+      // إرسال التحديثات المستمرة لموقع المستخدم إلى خادم Pusher
+      channel.trigger('my-event', {'latitude': location.latitude, 'longitude': location.longitude});
     });
   }
 
@@ -51,30 +53,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Home Page'),
+        title: Text("Background Fetch Example"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Counter:',
-            ),
-            Text(
-              '$counter',
-              style: Theme.of(context).textTheme.headline4,
+              'Counter',
+              style: TextStyle(fontSize: 24),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
+
 /*
 class BackgroundService extends FlutterBackgroundService {
   static BackgroundService? _instance;
@@ -148,3 +143,4 @@ class BackgroundService extends FlutterBackgroundService {
     _trackingLocation=true;
   }
 }*/
+ */

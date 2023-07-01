@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
@@ -64,8 +63,11 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     imm=file;
     notifyListeners();
   }
-
-
+@override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
   @override
   void start() {
     student().then((value) =>
@@ -303,10 +305,12 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
 
 //////////////////////////////////////
   Future student() async {
-
+    setStateScreen(1);
     (await _profileUseCase.execute(null))
         .fold((failure) {
+      setStateScreen(2);
     }, (data)async {
+      setStateScreen(0);
       setProfile(data);
       setIsStudent(true);
       if(data.image!=null&& data.image!=""&& data.image!=" "){

@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/page/drawer/view/drawer.dart';
@@ -558,16 +559,31 @@ class _ProfileViewState extends State<ProfileView> {
                                   Text("${LocaleKeys.price.tr()} :  ${model.getStudentSub()?.price??""}"),
                                 ],),
 
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: AppPadding.p28,
-                                    horizontal: AppPadding.p28),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    profile.UpdateStudent();
-                                  },
-                                  child: Text(LocaleKeys.save.tr()),
-                                ),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: AppPadding.p28,
+                                        horizontal: AppPadding.p28),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, profile1.getMessage());
+                                        profile.UpdateStudent().then((value) {
+                                          if(value){
+                                            SuccessState(profile1.getMessage()).dismissDialog(context);
+                                            SuccessState(profile1.getMessage()).showPopup(context, StateRendererType.popupSuccess, profile1.getMessage());
+                                          }else{
+                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage()).dismissDialog(context);
+                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage()).showPopup(context, StateRendererType.popupErrorState, profile1.getMessage());
+                                          }
+                                        }
+                                        );
+                                      },
+                                      child: Text(LocaleKeys.save.tr()),
+                                    ),
+                                  ),
+
+                                ],
                               ),
 
 

@@ -11,7 +11,8 @@
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBVjBKNkA_4AKXa35f1oP7P_-HZNMRq7CQ" />
-
+        <meta-data android:name="com.dexterous.flutterlocalnotifications.MetaData.NotificationChannelId"
+            android:value="my_notification_channel"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

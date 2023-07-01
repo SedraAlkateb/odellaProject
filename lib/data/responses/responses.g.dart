@@ -1350,7 +1350,7 @@ DataEvaluationResponse _$DataEvaluationResponseFromJson(
       json['trip'] == null
           ? null
           : Trip1Response.fromJson(json['trip'] as Map<String, dynamic>),
-      json['review'] as String?,
+      review: json['review'] as String?,
     );
 
 Map<String, dynamic> _$DataEvaluationResponseToJson(

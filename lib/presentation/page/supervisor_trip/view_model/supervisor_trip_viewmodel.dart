@@ -17,7 +17,7 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 
 class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   AppPreferences _appPreferences = instance<AppPreferences>();
-  late PusherClient pusherClient;
+   PusherClient? pusherClient;
   late Channel channel;
   Completer<GoogleMapController> _controller=Completer();
   late Marker _marker = Marker(
@@ -92,7 +92,7 @@ late  GoogleMapController googleMapController;
           setStateScreen(0);
           setTripId(data.dataHomeSupervisor?.id ?? 0);
           pusherClient = await _pusherTrip.createPusherClient();
-          channel = await pusherClient
+          channel = await pusherClient!
               .subscribe("private-tracking.${data.dataHomeSupervisor?.id}");
           await channel.bind("client-tracking", (PusherEvent? event) {
             print(event?.data);
@@ -140,21 +140,17 @@ late  GoogleMapController googleMapController;
     MarkerId markerId = MarkerId('location');
     Marker marker = Marker(
       markerId: markerId,
-      //icon: _markerIcon,
       position: latLng,
     );
-    googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          zoom: 20.5,
-          target:
-          LatLng(position.lat ,position.lng )
-      )
-      )
-      );
-
     setMarker(marker);
 
   }
-
+  cancelTrip(){
+    if(pusherClient!=null){
+      pusherClient?.disconnect();
+    }
+//  channel.cancelEventChannelStream();
+  }
 
   setMarker(Marker marker) {
     _marker = marker;
@@ -173,9 +169,8 @@ late  GoogleMapController googleMapController;
   @override
   void dispose() {
     _controller = Completer();
-    pusherClient.unsubscribe("tracking.${getTripId()}");
-    pusherClient.disconnect();
-    super.dispose();
+    pusherClient?.unsubscribe("tracking.${getTripId()}");
+    pusherClient?.disconnect();
   }
 
   @override
