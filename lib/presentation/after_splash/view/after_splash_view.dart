@@ -24,7 +24,7 @@ class _AfterSplashViewState extends State<AfterSplashView> {
   _goTransactionLine(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
-        Navigator.pushNamed(context, Routes.polyLineRoute);
+        Navigator.pushNamed(context, Routes.baseHomeScreen);
       } catch (e, s) {
         print(s);
       }

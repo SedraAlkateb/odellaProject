@@ -116,7 +116,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AfterSignUpView());
       case Routes.subscriptionRoute:
         initSubscriptionModule();
-        return MaterialPageRoute(builder: (_) => const SubscriptionView());
+        return MaterialPageRoute(builder: (_) => const SubscriptionsView());
       case Routes.resetPasswordRoute:
         initResetPasswordModule();
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
@@ -134,8 +134,8 @@ class RouteGenerator {
         initHomeModule();
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.baseHomeScreen:
-        initBaseHomeModule();
-        return MaterialPageRoute(builder: (_) => const BaseHomeView());
+        initHomeModule();
+        return MaterialPageRoute(builder: (_) =>  TransportationLinesView());
        case Routes.settingRoute:
          return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.lostItemsRoute:
