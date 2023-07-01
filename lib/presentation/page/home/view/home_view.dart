@@ -67,7 +67,6 @@ class _HomeViewState extends State<HomeView> {
         ),
         key: _scaffoldKey,
         body:
-
         Provider.of<HomeViewModel>(context).getStateScreen() == 0
             ? contentWidget()
             :Provider.of<HomeViewModel>(context).getStateScreen()==1
@@ -316,15 +315,3 @@ class _HomeViewState extends State<HomeView> {
     ]);
   }
 }
-
-/*
-StreamBuilder<FlowState>(
-          stream:
-              Provider.of<HomeViewModel>(context, listen: false).outputState,
-          builder: (context, snapshot) {
-            return snapshot.data?.getScreenWidget(context,  contentWidget(), () {
-                  Provider.of<HomeViewModel>(context, listen: false).start();
-                }) ??
-                 contentWidget();
-          });
- */

@@ -226,13 +226,7 @@ initHomeModule() {
         HomeViewModel(instance(), instance()));
   }
 }
-initBaseHomeModule() {
-  if (!GetIt.I.isRegistered<TransportationLinesUseCase>()&&!GetIt.I.isRegistered<PositionLineUseCase>()) {
-    instance.registerFactory<TransportationLinesUseCase>(() =>TransportationLinesUseCase(instance()));
-    instance.registerFactory<PositionLineUseCase>(() =>PositionLineUseCase(instance()));
-    instance.registerFactory<BaseHomeViewModel>(() => BaseHomeViewModel(instance(),instance()));
-  }
-}
+
 initProfileModule() {
   if (!GetIt.I.isRegistered<ProfileUseCase>()) {
     instance.registerFactory<ProfileUseCase>(() => ProfileUseCase(instance()));

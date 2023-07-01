@@ -48,7 +48,6 @@ class _SignUpViewState extends State<SignUpView> {
   late SignUpViewModel ss;
   @override
   void dispose() {
-    //  Provider.of<SignUpViewModel>(context,listen: false).dispose();
     ss.nnum = 0;
     super.dispose();
   }
