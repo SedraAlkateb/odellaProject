@@ -59,34 +59,44 @@ cancelTrip(){
   String getTime(){
     return _time;
   }
-  confirmQr(int id) async{
+ bool confirm=false;
+ Future<bool> confirmQr(int id) async{
     print(id);
+    confirm=false;
     ( await _confirmQrUseCase.execute(
         ConfirmQrUseCaseInput(
             id,_homeSuperVisor.id
         ))).fold(
 
             (failure)  {
+              confirm=false;
         },
             (data)  async{
+              confirm=true;
         });
+    return confirm;
   }
 setAllUser(){
     search=_homeSuperVisor.users??[];
     notifyListeners();
 }
-  studentPosition(int positionId) async{
+bool studentPos=false;
+ Future<bool> studentPosition(int positionId) async{
+   studentPos=false;
     ( await _studentPositionUseCase.execute(
         StudentPositionUseCaseInput(
             _homeSuperVisor.id,positionId
         ))).fold(
 
             (failure)  {
+              studentPos=false;
         },
             (data)  async{
+              studentPos=true;
               search=data.users;
               notifyListeners();
         });
+    return studentPos;
   }
 
   late DataHomeSupervisor _homeSuperVisor;
@@ -95,7 +105,7 @@ setAllUser(){
     return positions;
   }
   setPositions(List<DataTransferPositions> pos){
-    pos=positions;
+    positions=pos;
     notifyListeners();
   }
   setHomeSuperVisor(DataHomeSupervisor h) async{

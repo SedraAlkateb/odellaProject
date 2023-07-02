@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/di.dart';
-import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
+import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
@@ -59,7 +61,30 @@ class _SubscriptionsViewState extends State<SubscriptionsView> {
 
         ),
         key: _global,
-        body:contentWidget()
+        body:
+        Provider.of<SubscriptionViewModel>(context).getStateScreen() == 0
+            ?    contentWidget()
+            : Provider.of<SubscriptionViewModel>(context)
+            .getStateScreen() == 1
+            ? StateRenderer(
+            stateRendererType: StateRendererType
+                .fullScreenLoadingState,
+            message: "Loading",
+            retryActionFunction: () {})
+            : Provider.of<SubscriptionViewModel>(context)
+            .getStateScreen() == 2
+            ? StateRenderer(
+            stateRendererType: StateRendererType
+                .fullScreenErrorState,
+            message: "something wrong",
+            retryActionFunction: () {
+              Provider.of<SubscriptionViewModel>(context, listen: false).getSubscriptionsData();})
+            : StateRenderer(
+            stateRendererType:
+            StateRendererType.fullScreenEmptyState,
+            message: LocaleKeys.subscribtionfound.tr(),
+            retryActionFunction: () {})
+
 
 
     );

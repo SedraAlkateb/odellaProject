@@ -194,7 +194,7 @@ class _Application extends State<Application> {
       print('A new onMessageOpenedApp event was published!');
       Navigator.pushNamed(
         context,
-        '/message',
+        Routes.notMessageRealTime,
         arguments: MessageArguments(message, true),
 );
 });

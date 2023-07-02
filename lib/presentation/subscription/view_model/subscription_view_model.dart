@@ -14,11 +14,15 @@ class SubscriptionViewModel extends BaseViewModel with ChangeNotifier{
     getSubscriptionsData();
   }
   @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
-
   setDataSubscriptions(  List<DataSubscriptions> subscription){
     _dataSubscriptions=subscription;
     notifyListeners();
@@ -28,14 +32,20 @@ class SubscriptionViewModel extends BaseViewModel with ChangeNotifier{
   }
 
   getSubscriptionsData()async{
+    setStateScreen(1);
    // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
     ( await _subscriptionsUseCase.execute(null))
     
         .fold(
             (failure)  {
+              setStateScreen(2);
      //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
         },
             (data)  {
+              if(data.dataSubscriptions.isEmpty){
+                setStateScreen(3);
+              }
+              setStateScreen(0);
           setDataSubscriptions(data.dataSubscriptions);
        //   inputState.add(ContentState());
         });
