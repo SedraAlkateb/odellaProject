@@ -22,14 +22,17 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MessageArguments args =
-    ModalRoute.of(context)!.settings.arguments! as MessageArguments;
-    RemoteMessage message = args.message;
-    RemoteNotification? notification = message.notification;
-
+     RemoteMessage? message;
+    RemoteNotification? notification;
+    final args = ModalRoute.of(context)!.settings.arguments;
+    if (args != null && args is MessageArguments) {
+      // يمكن استخدام args ك MessageArguments هنا
+       message = args.message;
+       notification = message.notification;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: appbar(message.data.toString() ),
+        title: appbar(message?.data.toString() ),
       ),
       body: SingleChildScrollView(
           child: Padding(
@@ -57,7 +60,7 @@ class MessageView extends StatelessWidget {
                           'Body',
                           notification.body,
                         ),
-                        viewData('Sent Time', message.sentTime?.toString()),
+                        viewData('Sent Time', message?.sentTime?.toString()),
                       ],
                     ),
                   )

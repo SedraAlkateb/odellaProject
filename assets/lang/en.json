@@ -105,6 +105,8 @@
   "comprating": "Complaint And Rating",
   "day": "Day",
   "ratingsent": "Rating the trip",
-  "searchtrip": "Search for trip"
+  "searchtrip": "Search for trip",
+  "supervisortransferNow": "You don't have a transfer now",
+  "subscribtionfound": "Not found any subscriptions"
 
 }

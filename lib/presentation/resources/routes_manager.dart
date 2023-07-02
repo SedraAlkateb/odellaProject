@@ -8,6 +8,7 @@ import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
+import 'package:untitled/presentation/daily_reservition/view/daily_reservition_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/map/mapline.dart';
@@ -79,6 +80,7 @@ class Routes {
   static const String polyline = "/polyline";
   static const String qrscan = "/qrscan";
   static const String compandrat = "/compandrat";
+  static const String dailyReservation = "/dailyReservation";
 
 
 
@@ -89,6 +91,9 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case Routes.dailyReservation:
+        return MaterialPageRoute(builder: (_) => const DailyReservationView());
+
       case Routes.application:
         initNotificationModule();
         return MaterialPageRoute(builder: (_) => const Application());
@@ -135,7 +140,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.baseHomeScreen:
         initHomeModule();
-        return MaterialPageRoute(builder: (_) =>  TransportationLinesView());
+        return MaterialPageRoute(builder: (_) => const TransportationLinesView());
        case Routes.settingRoute:
          return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.lostItemsRoute:

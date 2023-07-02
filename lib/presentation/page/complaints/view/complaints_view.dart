@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page/complaints/view_model/complaints_viewmodel.dart';
@@ -147,7 +149,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                           SizedBox(width: 4.w,),
                           Text("${"Rating"} :"),
                           RatingBar.builder(
-                            initialRating: Provider.of<ComplaintsViewModel>(context,listen: false).getEval().length.toDouble(),
+                            initialRating: Provider.of<ComplaintsViewModel>(context,listen: false).ifEval(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id),
                             minRating: 1,
                             direction: Axis.horizontal,
                             //   allowHalfRating: true,
@@ -185,6 +187,7 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                               BorderSide(width: 0.5.w, color: Colors.grey),
                             ),
                           ),
+
                           onChanged: (value){
 
                             Provider.of<ComplaintsViewModel>(context,listen: false).setDescription(value);
@@ -197,7 +200,25 @@ class _ComplaintsViewState extends State<ComplaintsView> {
                         children: [
 
                           IconButton(icon: Icon(Icons.check_circle,size: 30,), onPressed: () {
-                            Provider.of<ComplaintsViewModel>(context,listen: false).storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
+                            if(Provider.of<ComplaintsViewModel>(context,listen: false).getDescription().isNotEmpty){
+
+                              LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading);
+                              Provider.of<ComplaintsViewModel>(context,listen: false).
+                              storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id).then((value) {
+                                if(value){
+                                  SuccessState("success").dismissDialog(context);
+                                  SuccessState("success").showPopup(context,StateRendererType.popupSuccess,"Success");
+                                  Provider.of<ComplaintsViewModel>(context,listen: false).setDescription("");
+                                }else{
+                                  ErrorState(StateRendererType.popupErrorState, "somthing worng").dismissDialog(context);
+                                  ErrorState(StateRendererType.popupErrorState, "somthing worng").showPopup(context,StateRendererType.popupErrorState,"somthing worng");
+                                  Provider.of<ComplaintsViewModel>(context,listen: false).setDescription("");
+
+                                }
+                              }
+                              );
+
+                            }
 
                           },color: ColorManager.sidBar),
                         ],
