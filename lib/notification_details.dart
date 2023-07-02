@@ -26,10 +26,11 @@ class MessageView extends StatelessWidget {
     RemoteNotification? notification;
     final args = ModalRoute.of(context)!.settings.arguments;
     if (args != null && args is MessageArguments) {
-      message = args.message;
-      notification = message.notification;
-    }
 
+      // يمكن استخدام args ك MessageArguments هنا
+       message = args.message;
+       notification = message.notification;
+    }
     return Scaffold(
       appBar: AppBar(
         title: appbar(message?.data.toString() ),

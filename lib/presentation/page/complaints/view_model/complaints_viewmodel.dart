@@ -25,6 +25,15 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     _trip=trip;
     notifyListeners();
   }
+ double ifEval(int tripIdd){
+    for(int i=0;i<_eval.length;i++){
+      if(_eval[i].idTrip==tripIdd){
+        return  double.parse(_eval[i].review);
+      }
+    }
+    return 0.0;
+  }
+
   List<EvaluationTrip> _eval=[];
   setEval(List<EvaluationTrip> eval){
     _eval=eval;
@@ -77,16 +86,18 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     _description=d;
     notifyListeners();
   }
-Future  storeClaim( int trip) async {
-   // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+  bool calim=false;
+Future<bool>  storeClaim( int trip) async {
 
     (await _claimUseCase.execute(ClaimUseCaseInput(trip, getDescription())))
         .fold((failure) {
+      calim=false;
    //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
-
+          calim=true;
           notifyListeners();
     });
+    return calim;
   }
   Future  getWeeklyTrip() async {
     // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));

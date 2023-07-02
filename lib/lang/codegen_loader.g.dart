@@ -121,7 +121,9 @@ class CodegenLoader extends AssetLoader{
   "comprating": "الشكاوي و التقييمات",
   "day": "اليوم",
   "ratingsent": "تقييم الرحلة",
-  "searchtrip": "البحث عن رحلة"
+  "searchtrip": "البحث عن رحلة",
+  "supervisortransferNow": "لا يوجد لديك نقلات الان",
+  "subscribtionfound": "لم يتم العثور على أي اشتراكات"
 };
 static const Map<String,dynamic> en = {
   "title": "title",
@@ -231,7 +233,9 @@ static const Map<String,dynamic> en = {
   "comprating": "Complaint And Rating",
   "day": "Day",
   "ratingsent": "Rating the trip",
-  "searchtrip": "Search for trip"
+  "searchtrip": "Search for trip",
+  "supervisortransferNow": "You don't have a transfer now",
+  "subscribtionfound": "Not found any subscriptions"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -9,21 +9,16 @@ import 'package:sizer/sizer.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/presentation/common/image/downloadImage.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
-import 'package:untitled/presentation/not_viewmodel.dart';
-import 'package:untitled/presentation/page/drawer/view/drawer.dart';
-import 'package:untitled/presentation/page_superviser/daily_recieve/model.dart';
-import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
 import 'package:untitled/presentation/page_superviser/home_supervisor/view_model/home_super_viewmodel.dart';
-import 'package:untitled/presentation/page_superviser/trip_information/view/trip_information_view.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
 import 'package:untitled/presentation/scan_qr_view/view_model/scan_qr_viewmodel.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
-import '../../../resources/strings_manager.dart';
 import '../../../resources/style_manage.dart';
 import '../../../resources/values_manager.dart';
 
@@ -37,8 +32,8 @@ class HomeSupervisorView extends StatefulWidget {
 }
 
 class _HomeSupervisorViewState extends State<HomeSupervisorView> {
-  bool isChecked = false;
-  bool isLocked = false;
+  bool isChecked = true;
+  bool isLocked = true;
 
   @override
   void initState() {
@@ -91,7 +86,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         : StateRenderer(
                             stateRendererType:
                                 StateRendererType.fullScreenEmptyState,
-                            message: "Not found any transmission lines",
+                            message: LocaleKeys.supervisortransferNow.tr(),
                             retryActionFunction: () {})),
       );
     });
@@ -155,7 +150,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     ),
                     child: Center(
                       child: Text(
-                        "2",
+                       "${ model.getUser().length}",
                         style: getBoldStyle(
                             color: Colors.black54, fontSize: FontSize.s16),
                       ),
@@ -224,17 +219,27 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     items: model
                         .getPositions()
                         .map((e) => e != []
-                            ? DropdownMenuItem(
-                                value: e,
-                                child: Text(" ${e.name}"),
-                              )
-                            : DropdownMenuItem(
-                                //  value: e,
-                                child: Text("no positions"),
-                              ))
+                        ? DropdownMenuItem(
+                      value: e,
+                      child: Text(" ${e.name}"),
+                    )
+                        : DropdownMenuItem(
+                      //  value: e,
+                      child: Text("no positions"),
+                    ))
                         .toList(),
                     onChanged: (val) {
-                      model.studentPosition(val.id);
+                      LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading.tr());
+                      model.studentPosition(val.id).then((value) {
+                        if(value){
+                          SuccessState("success").dismissDialog(context);
+                          SuccessState("success").showPopup(context,StateRendererType.popupSuccess , "Success");
+                        }else{
+                          ErrorState(StateRendererType.popupErrorState,"Something worng").dismissDialog(context);
+                          ErrorState(StateRendererType.popupErrorState,"Something worng").showPopup(context,StateRendererType.popupSuccess , "Something worng");
+                        }
+                        });
+
                     },
                   ),
                 ),
@@ -318,18 +323,29 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             ],
                           )),
                     ),
-                    Checkbox(
-                        value: isChecked,
-                        onChanged: isLocked
-                            ? null
-                            : (value) {
-                                setState(() {
-                                  isChecked = value!;
-                                  if (isChecked) {
-                                    isLocked = true;
-                                  }
-                                });
-                              }),
+                    Checkbox( value: isChecked,
+                        onChanged: isLocked ? null : (value) {
+                          setState(() {
+                            isChecked = value!;
+                            if (isChecked) {
+                              LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading.tr());
+                              model.confirmQr( model.getUser()[index].id).then((value) {
+                                if(value){
+                                  SuccessState("success").dismissDialog(context);
+                                  SuccessState("success").showPopup(context,StateRendererType.popupSuccess , "Success");
+                                }else{
+                                  ErrorState(StateRendererType.popupErrorState,"Something worng").dismissDialog(context);
+                                  ErrorState(StateRendererType.popupErrorState,"Something worng").showPopup(context,StateRendererType.popupSuccess , "Something worng");
+                                }
+                              }
+
+                              );
+                              isLocked = true;
+                            }
+                          }
+                          );
+                        }
+                    ),
                   ],
                 ),
               ),

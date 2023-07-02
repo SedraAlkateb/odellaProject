@@ -35,7 +35,6 @@ class _MessageList extends State<MessageList> {
 
     return Column(
       children: [
-
         ListView.separated(
             shrinkWrap: true,
             separatorBuilder: (context, index) => const SizedBox(
@@ -43,7 +42,6 @@ class _MessageList extends State<MessageList> {
               height: AppSize.s20,
               // color: Color,
             ),
-
             itemCount: Provider.of<Not>(context).getMessageL(),
             itemBuilder: (context, index) {
               RemoteMessage message = Provider.of<Not>(context).getMessageIndex(index);
