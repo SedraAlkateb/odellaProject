@@ -11,8 +11,8 @@
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBVjBKNkA_4AKXa35f1oP7P_-HZNMRq7CQ" />
-        <meta-data android:name="com.dexterous.flutterlocalnotifications.MetaData.NotificationChannelId"
-            android:value="my_notification_channel"/>
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -27,9 +27,9 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+                />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
