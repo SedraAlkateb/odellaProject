@@ -44,7 +44,7 @@ class _MessageList extends State<MessageList> {
             ),
             itemCount: Provider.of<Not>(context).getMessageL(),
             itemBuilder: (context, index) {
-              RemoteMessage message = Provider.of<Not>(context,listen: false).getMessageIndex(index);
+              RemoteMessage message = Provider.of<Not>(context).getMessageIndex(index);
               return ListTile(
                 title: Text(message.notification?.title ?? 'N/D',style:const TextStyle(fontWeight: FontWeight.bold),),
                 subtitle:
@@ -52,9 +52,10 @@ class _MessageList extends State<MessageList> {
                 trailing:
                 const Icon(Icons.circle,color: Colors.red,),
                 onTap: () {
-                    if( Provider.of<Not>(context).getCount()!=0) {
-                      Provider.of<Not>(context, listen: false).updateDec();
-                    }
+                    // if( Provider.of<Not>(context,listen: false).getCount()!=0) {
+                    //   Provider.of<Not>(context, listen: false).updateDec();
+                    // }
+                  Provider.of<Not>(context, listen: false).updateDec();
                   Navigator.pushNamed(context, Routes.notMessageRealTime,
                     arguments: MessageArguments(message, false),);
                 },

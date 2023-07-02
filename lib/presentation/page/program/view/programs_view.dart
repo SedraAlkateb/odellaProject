@@ -34,7 +34,7 @@ class _ProgramsViewState extends State<ProgramsView>
 
   @override
   void dispose() {
-  //  viewModel.dispose();
+    //  viewModel.dispose();
     super.dispose();
   }
 
@@ -42,92 +42,92 @@ class _ProgramsViewState extends State<ProgramsView>
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return
-            Scaffold(
-              appBar: AppBar(
-                actions: [
-                  notificationIcon(context)
-                ],
-                title: Text(LocaleKeys.Program.tr(),
-                    style: getBoldStyle(
-                        color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-              ),
-              drawer:  NavBar(),
-              body:
-              Provider.of<ProgramsViewModel>(context).getStateScreen() == 0
-                  ? SafeArea(child:
-              orientation == Orientation.portrait
-                  ? _screenWedgit1()
-                  : _screenWedgit2()
-              )
-                  :Provider.of<ProgramsViewModel>(context).getStateScreen()==1
-                  ?StateRenderer(
-                  stateRendererType: StateRendererType.fullScreenLoadingState,
-                  message: "Loading",
-                  retryActionFunction: () {})
-                  : StateRenderer(
-                  stateRendererType: StateRendererType.fullScreenErrorState,
-                  message: "something wrong",
-                  retryActionFunction: () {})
-            );
+        Scaffold(
+            appBar: AppBar(
+              actions: [
+                notificationIcon(context)
+              ],
+              title: Text(LocaleKeys.Program.tr(),
+                  style: getBoldStyle(
+                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+            ),
+            drawer:  NavBar(),
+            body:
+            Provider.of<ProgramsViewModel>(context).getStateScreen() == 0
+                ? SafeArea(child:
+            orientation == Orientation.portrait
+                ? _screenWedgit1()
+                : _screenWedgit2()
+            )
+                :Provider.of<ProgramsViewModel>(context).getStateScreen()==1
+                ?StateRenderer(
+                stateRendererType: StateRendererType.fullScreenLoadingState,
+                message: "Loading",
+                retryActionFunction: () {})
+                : StateRenderer(
+                stateRendererType: StateRendererType.fullScreenErrorState,
+                message: "something wrong",
+                retryActionFunction: () {})
+        );
     }
     );
   }
- Widget _screenWedgit1(){
-   return Consumer<ProgramsViewModel>(
-     builder: (context, model, child) => Column(
-       children: [
-         Container(
-           height: 10.h,
-           color: ColorManager.sidBar,
-           child: Row(
-             children: List.generate(
-               model.getWeekDays().length,
-                   (index) => Expanded(
-                 child: GestureDetector(
-                   onTap: () {
-                     model.setSelectedDay(index);
-                   },
-                   child: Container(
-                     decoration: BoxDecoration(
-                       border: Border(
-                         right: BorderSide(
-                           color: index == model.getWeekDays().length - 1
-                               ? Colors.transparent
-                               : ColorManager.sidBar,
-                         ),
-                       ),
-                     ),
-                     alignment: Alignment.center,
-                     child: Text(
-                       model.getDay(index),
-                       style: TextStyle(
-                         color: model.getSelectedDay() == model.getDay(index)
-                             ? Colors.white
-                             : ColorManager.sidBar,
-                         fontWeight: FontWeight.bold,
-                       ),
-                     ),
-                   ),
-                 ),
-               ),
-             ),
-           ),
-         ),
-         Expanded(
-           child: model.getProgramDay().isEmpty
-               ? Center(
-             child:
-             StateRenderer(
-                 stateRendererType: StateRendererType.fullScreenEmptyState,
-                 message: LocaleKeys.notrip.tr(),
-                 retryActionFunction: () {})
+  Widget _screenWedgit1(){
+    return Consumer<ProgramsViewModel>(
+      builder: (context, model, child) => Column(
+        children: [
+          Container(
+            height: 10.h,
+            color: ColorManager.sidBar,
+            child: Row(
+              children: List.generate(
+                model.getWeekDays().length,
+                    (index) => Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      model.setSelectedDay(index);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            color: index == model.getWeekDays().length - 1
+                                ? Colors.transparent
+                                : ColorManager.sidBar,
+                          ),
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        model.getDay(index),
+                        style: TextStyle(
+                          color: model.getSelectedDay() == model.getDay(index)
+                              ? Colors.white
+                              : ColorManager.sidBar,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: model.getProgramDay().isEmpty
+                ? Center(
+                child:
+                StateRenderer(
+                    stateRendererType: StateRendererType.fullScreenEmptyState,
+                    message: LocaleKeys.notrip.tr(),
+                    retryActionFunction: () {})
 
-           ) : TripStudentWidget(trip: model.getProgramDay()[0]),
-         ),
+            ) : TripStudentWidget(trip: model.getProgramDay()[0]),
+          ),
 
-       ],
-     ),
-   );
+        ],
+      ),
+    );
   }
   Widget _screenWedgit2(){
     return Consumer<ProgramsViewModel>(
@@ -178,10 +178,10 @@ class _ProgramsViewState extends State<ProgramsView>
                   child: Expanded(
                     child: model.getProgramDay().isEmpty
                         ?  Center(
-                      child:  StateRenderer(
-                          stateRendererType: StateRendererType.fullScreenEmptyState,
-                          message: LocaleKeys.notrip.tr(),
-                          retryActionFunction: () {})
+                        child:  StateRenderer(
+                            stateRendererType: StateRendererType.fullScreenEmptyState,
+                            message: LocaleKeys.notrip.tr(),
+                            retryActionFunction: () {})
                     )
                         : Padding(
                       padding:  EdgeInsets.symmetric(vertical: 16.sp),
@@ -212,124 +212,142 @@ class TripStudentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // height: 50.h,
+      // width: 100.w,
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.access_time_filled,
-                color: ColorManager.sidBar,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                '${LocaleKeys.Gotime.tr()} ${trip.start}',
-                style:  TextStyle(
-                  fontSize: 20,
-                  color: ColorManager.sidBar,
-                  fontWeight: FontWeight.bold,
+            SizedBox(height: 15.h,),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Icon(
+                    Icons.access_time_filled,
+                    color: ColorManager.sidBarIcon,
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.access_time_filled,
-                color: ColorManager.sidBar,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                '${LocaleKeys.Returntime.tr()} ${trip.end}',
-                style:  TextStyle(
-                  fontSize: 20,
-                  color: ColorManager.sidBar,
-                  fontWeight: FontWeight.bold,
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    '${LocaleKeys.Gotime.tr()} ${trip.start}',
+                    style:  TextStyle(
+                      fontSize: 18,
+                      color: ColorManager.sidBarIcon,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Icon(
-                Icons.access_time_filled,
-                color: ColorManager.sidBar,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                '${LocaleKeys.Position.tr()} ${trip.dataTransferPositions?.name}',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: ColorManager.sidBar,
-                  fontWeight: FontWeight.bold,
+            SizedBox(height: 2.h,),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Icon(
+                    Icons.access_time_filled,
+                    color: ColorManager.sidBarIcon,
+                  ),
                 ),
-              ),
-
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    '${LocaleKeys.Returntime.tr()} ${trip.end}',
+                    style:  TextStyle(
+                      fontSize: 18,
+                      color: ColorManager.sidBarIcon,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        Row(
-          children: [
-            Text(LocaleKeys.GoingConfirm.tr(),
-    style: TextStyle(fontSize: 15,color: ColorManager.grey1),
+            SizedBox(height: 2.h,),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Icon(
+                    Icons.location_on,
+                    color: ColorManager.sidBarIcon,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    '${LocaleKeys.Position.tr()} ${trip.dataTransferPositions?.name}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: ColorManager.sidBarIcon,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
 
-    ),
-            Checkbox(
-              value: trip.confirmAttendance1,
-              onChanged: (bool? value) {
-                Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false)
-                    .setConfirm1( Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false).getIndexDay(), value ?? false);
-                Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false)
-                    .confirmStudent();
-              },
+                ),
+              ],
             ),
-            Text(
-              LocaleKeys.Returningconfirm.tr(),
-              style: TextStyle(fontSize: 15,color: ColorManager.grey1),
+            SizedBox(height: 2.h,),
+            Row(
+              children: [
+                Text(LocaleKeys.GoingConfirm.tr(),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: ColorManager.sidBarIcon,
+                    fontWeight: FontWeight.bold,
+                  ),
+
+                ),
+                Checkbox(
+                  value: trip.confirmAttendance1,
+                  onChanged: (bool? value) {
+                    Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false)
+                        .setConfirm1( Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false).getIndexDay(), value ?? false);
+                    Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false)
+                        .confirmStudent();
+                  },
+
+                  activeColor: ColorManager.sidBar ,
+                ),
+                Text(
+                  LocaleKeys.Returningconfirm.tr(),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: ColorManager.sidBarIcon,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Checkbox(
+                  value:  trip.confirmAttendance2,
+
+                  onChanged: (bool? value) {
+                    Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false)
+                        .setConfirm2( Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false).getIndexDay(), value ??false);
+                    Provider.of<ProgramsViewModel>(
+                        context,
+                        listen: false)
+                        .confirmStudent();
+                  },
+                  activeColor: ColorManager.sidBar ,
+                ),
+              ],
             ),
-            Checkbox(
-              value:  trip.confirmAttendance2,
-              onChanged: (bool? value) {
-                Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false)
-                    .setConfirm2( Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false).getIndexDay(), value ??false);
-                Provider.of<ProgramsViewModel>(
-                    context,
-                    listen: false)
-                    .confirmStudent();
-              },
-            ),
-          ],
-        ),
 
 
-      ]),
+          ]),
     );
   }
 }
