@@ -157,6 +157,12 @@ flutter:
     - assets/images/splash_screen.png
     - assets/images/gray.png
     - assets/lang/
+    - assets/images/pngwing.com.png
+    - assets/images/pngwing.com1.png
+    - assets/images/pngwing.com2.png
+    - assets/images/pngwing.com3.png
+    - assets/images/pngwing.com4.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

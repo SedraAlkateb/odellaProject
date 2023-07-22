@@ -55,6 +55,16 @@ class _HomeViewState extends State<HomeView> {
       });
     }
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.selectTimes);
+          },
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.check,
+            color: ColorManager.button,
+          ),
+        ),
         drawer: NavBar(),
         appBar: AppBar(
           title: Text(
@@ -91,227 +101,236 @@ class _HomeViewState extends State<HomeView> {
 
   }
   Widget contentWidget() {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(
-            left: AppPadding.p20,
-            right: AppPadding.p20,
-            bottom: AppPadding.p20),
-        child: TextFormField(
-          onChanged: (value) {
-            try {
-              Provider.of<HomeViewModel>(context, listen: false)
-                  .setSearch(value);
-            } catch (e, s) {
-              print(s);
-            }
-          },
-          decoration: InputDecoration(
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Colors.grey.shade300, width: AppSize.s1_5),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(AppSize.s16),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/pngwing.com1.png'),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1), BlendMode.dstATop),
+        ),
+      ),
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.only(
+              left: AppPadding.p20,
+              right: AppPadding.p20,
+              bottom: AppPadding.p20),
+          child: TextFormField(
+            onChanged: (value) {
+              try {
+                Provider.of<HomeViewModel>(context, listen: false)
+                    .setSearch(value);
+              } catch (e, s) {
+                print(s);
+              }
+            },
+            decoration: InputDecoration(
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Colors.grey.shade300, width: AppSize.s1_5),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(AppSize.s16),
+                ),
               ),
-            ),
-            // fillColor: ColorManager.white,
-            border: OutlineInputBorder(
-              //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
-              borderSide:
-                  BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
-            ),
-            hintStyle: getRegularStyle(
-                color: ColorManager.icon, fontSize: FontSize.s16),
-            hintText: LocaleKeys.search.tr(),
-            //       hintStyle:Theme.of(context).textTheme.bodySmall,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: AppPadding.p8),
-              child: Icon(
-                Icons.search,
-                color: ColorManager.button,
+              // fillColor: ColorManager.white,
+              border: OutlineInputBorder(
+                //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
+                borderSide:
+                    BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
+              ),
+              hintStyle: getRegularStyle(
+                  color: ColorManager.icon, fontSize: FontSize.s16),
+              hintText: LocaleKeys.search.tr(),
+              //       hintStyle:Theme.of(context).textTheme.bodySmall,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: AppPadding.p8),
+                child: Icon(
+                  Icons.search,
+                  color: ColorManager.button,
+                ),
               ),
             ),
           ),
         ),
-      ),
-      Expanded(
-          child: Provider.of<HomeViewModel>(context, listen: false)
-                      .dataTransportationLinesSearch
-                      .length ==
-                  0
-              ?
-          Center(
-                  child: StateRenderer(
-                      stateRendererType: StateRendererType.fullScreenEmptyState,
-                      message: "Not found any transmission line",
-                      retryActionFunction: () {}),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(
-                      left: AppPadding.p28,
-                      right: AppPadding.p28,
-                      bottom: AppPadding.p28),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: double.infinity,
-                      height: AppSize.s20,
-                      // color: Color,
-                    ),
-                    itemCount:
-                        Provider.of<HomeViewModel>(context, listen: false)
-                            .dataTransportationLinesSearch
-                            .length,
-                    itemBuilder: (context, index) => Container(
-                      height: AppSize.s150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(AppSize.s30)),
-                        //        color: ColorManager.card,
+        Expanded(
+            child: Provider.of<HomeViewModel>(context, listen: false)
+                        .dataTransportationLinesSearch
+                        .length ==
+                    0
+                ? Center(
+                    child: StateRenderer(
+                        stateRendererType: StateRendererType.fullScreenEmptyState,
+                        message: "Not found any transmission line",
+                        retryActionFunction: () {}),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(
+                        left: AppPadding.p28,
+                        right: AppPadding.p28,
+                        bottom: AppPadding.p28),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: double.infinity,
+                        height: AppSize.s20,
+                        // color: Color,
                       ),
-                      child: InkWell(
-                        onTap: (() {
+                      itemCount:
                           Provider.of<HomeViewModel>(context, listen: false)
-                              .setLine(Provider.of<HomeViewModel>(context,
-                                      listen: false)
-                                  .dataTransportationLines[index]);
-                          Provider.of<HomeViewModel>(context, listen: false)
-                              .getPositionLineData(Provider.of<HomeViewModel>(
-                                      context,
-                                      listen: false)
-                                  .dataTransportationLines[index]
-                                  .id);
-                        }),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: AppPadding.p16),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: SvgPicture.asset(
-                                      ImageAssets.bus,
-                                      height: 40,
-                                      width: 40,
-                                      color: ColorManager.button,
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        Provider.of<HomeViewModel>(context,
-                                                listen: false)
-                                            .dataTransportationLinesSearch[
-                                                index]
-                                            .name,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
+                              .dataTransportationLinesSearch
+                              .length,
+                      itemBuilder: (context, index) => Container(
+                        height: AppSize.s150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(AppSize.s30)),
+                          //        color: ColorManager.card,
+                        ),
+                        child: InkWell(
+                          onTap: (() {
+                            Provider.of<HomeViewModel>(context, listen: false)
+                                .setLine(Provider.of<HomeViewModel>(context,
+                                        listen: false)
+                                    .dataTransportationLines[index]);
+                            Provider.of<HomeViewModel>(context, listen: false)
+                                .getPositionLineData(Provider.of<HomeViewModel>(
+                                        context,
+                                        listen: false)
+                                    .dataTransportationLines[index]
+                                    .id);
+                          }),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p16),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: SvgPicture.asset(
+                                        ImageAssets.bus,
+                                        height: 40,
+                                        width: 40,
+                                        color: ColorManager.button,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 2),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.gps_not_fixed,
-                                                      size: AppSize.s12,
-                                                      color:
-                                                          ColorManager.button,
-                                                    ),
-                                                    Text(
-                                                      Provider.of<HomeViewModel>(
-                                                              context,
-                                                              listen: false)
-                                                          .dataTransportationLinesSearch[
-                                                              index]
-                                                          .from!
-                                                          .name,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headlineMedium,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Icon(
-                                                  Icons
-                                                      .keyboard_arrow_down_sharp,
-                                                  size: AppSize.s12,
-                                                  color: ColorManager.button,
-                                                ),
-                                                Icon(
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Provider.of<HomeViewModel>(context,
+                                                  listen: false)
+                                              .dataTransportationLinesSearch[
+                                                  index]
+                                              .name,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 2),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.gps_not_fixed,
+                                                        size: AppSize.s12,
+                                                        color:
+                                                            ColorManager.button,
+                                                      ),
+                                                      Text(
+                                                        Provider.of<HomeViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .dataTransportationLinesSearch[
+                                                                index]
+                                                            .from!
+                                                            .name,
+                                                        maxLines: 1,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineMedium,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Icon(
                                                     Icons
                                                         .keyboard_arrow_down_sharp,
                                                     size: AppSize.s12,
-                                                    color: ColorManager.button),
-                                                //   Icon(Icons.circle_sharp,size: AppSize.s8,color: ColorManager.grey,),
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.gps_fixed,
+                                                    color: ColorManager.button,
+                                                  ),
+                                                  Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_sharp,
                                                       size: AppSize.s12,
-                                                      color:
-                                                          ColorManager.button,
-                                                    ),
-                                                    Text(
-                                                      Provider.of<HomeViewModel>(
-                                                              context,
-                                                              listen: false)
-                                                          .dataTransportationLinesSearch[
-                                                              index]
-                                                          .to!
-                                                          .name,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headlineMedium,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                      color: ColorManager.button),
+                                                  //   Icon(Icons.circle_sharp,size: AppSize.s8,color: ColorManager.grey,),
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.gps_fixed,
+                                                        size: AppSize.s12,
+                                                        color:
+                                                            ColorManager.button,
+                                                      ),
+                                                      Text(
+                                                        Provider.of<HomeViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .dataTransportationLinesSearch[
+                                                                index]
+                                                            .to!
+                                                            .name,
+                                                        maxLines: 1,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineMedium,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20.0,
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ))
-    ]);
+                  ))
+      ]),
+    );
   }
 }

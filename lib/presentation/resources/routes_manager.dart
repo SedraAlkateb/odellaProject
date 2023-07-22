@@ -8,6 +8,7 @@ import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
+import 'package:untitled/presentation/confirm_register_code/confirm_register_code.dart';
 import 'package:untitled/presentation/daily_reservition/view/daily_reservition_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
@@ -35,6 +36,8 @@ import 'package:untitled/presentation/splash/splash_view.dart';
 import 'package:untitled/presentation/subscription/view/subscription_view.dart';
 
 import '../../main.dart';
+import '../daily_reservition/view/daily_reservation_view1.dart';
+import '../page/select_times/select_times.dart';
 
 
 class Routes {
@@ -81,6 +84,10 @@ class Routes {
   static const String qrscan = "/qrscan";
   static const String compandrat = "/compandrat";
   static const String dailyReservation = "/dailyReservation";
+  static const String dailyReservation1 = "/dailyReservation1";
+  static const String selectTimes="/selectTimes";
+  static const String confirmReg="/confirmReg";
+
 
 
 
@@ -163,6 +170,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Polylinee());
       case Routes.compandrat:
         return MaterialPageRoute(builder: (_) => ComplaintsView());
+      case Routes.dailyReservation1:
+        return MaterialPageRoute(builder: (_) =>DailyReservationView1());
+      case Routes.selectTimes:
+        return MaterialPageRoute(builder: (_) =>SelectTimes());
+      case Routes.confirmReg:
+        return MaterialPageRoute(builder: (_) =>ConfirmRegister());
 
       case Routes.mmm:
         return MaterialPageRoute(builder: (_) =>  mmm());

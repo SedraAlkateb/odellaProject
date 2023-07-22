@@ -37,6 +37,7 @@ class _MessageList extends State<MessageList> {
       children: [
         ListView.separated(
             shrinkWrap: true,
+            scrollDirection: Axis.vertical,
             separatorBuilder: (context, index) => const SizedBox(
               width: double.infinity,
               height: AppSize.s20,
@@ -50,14 +51,15 @@ class _MessageList extends State<MessageList> {
                 subtitle:
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
                 trailing:
-                const Icon(Icons.circle,color: Colors.red,),
+                const Icon(Icons.notifications_active,color: Colors.red,),
                 onTap: () {
-                    // if( Provider.of<Not>(context,listen: false).getCount()!=0) {
-                    //   Provider.of<Not>(context, listen: false).updateDec();
-                    // }
+                    if( Provider.of<Not>(context,listen: false).getCount()==0) {
+                    Provider.of<Not>(context,listen: true).getCount()==0;
+                    }
                   Provider.of<Not>(context, listen: false).updateDec();
-                  Navigator.pushNamed(context, Routes.notMessageRealTime,
-                    arguments: MessageArguments(message, false),);
+                  Provider.of<Not>(context, listen: false).setIndex(index);
+                  Navigator.pushNamed(context, Routes.notMessageRealTime, arguments: MessageArguments(message, false),);
+
                 },
          //         leading:iconNotification(int.parse(message.))
 
