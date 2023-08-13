@@ -917,6 +917,33 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<TodayTripsResponse> todayTrips(time) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'time',
+      time,
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TodayTripsResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/trip/todayTrips',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TodayTripsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<TripsResponse> weeklyTrips() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -1263,6 +1290,56 @@ class _AppServiceClient implements AppServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = StudentPositionResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UserDailyReservationResponse> userDailyReservations(
+    id,
+    name,
+    phoneNumber,
+    transfer_position_id,
+    seatsNumber,
+    fcm_token,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'phoneNumber',
+      phoneNumber.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'transfer_position_id',
+      transfer_position_id.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'seatsNumber',
+      seatsNumber.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'fcm_token',
+      fcm_token,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UserDailyReservationResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/dailyReservations/trips/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UserDailyReservationResponse.fromJson(_result.data!);
     return value;
   }
 

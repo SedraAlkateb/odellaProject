@@ -41,6 +41,7 @@ import 'package:untitled/domain/usecase/student_attendence_usecase.dart';
 import 'package:untitled/domain/usecase/student_position_usecase.dart';
 import 'package:untitled/domain/usecase/subscriptions_usecase.dart';
 import 'package:untitled/domain/usecase/supervisor_update_position_usecase.dart';
+import 'package:untitled/domain/usecase/today_trips_usecase.dart';
 import 'package:untitled/domain/usecase/transfer_positions_usecase.dart';
 import 'package:untitled/domain/usecase/transportation_lines_usecase.dart';
 import 'package:untitled/domain/usecase/tt.dart';
@@ -52,6 +53,7 @@ import 'package:untitled/domain/usecase/update_supervisor_password_usecase.dart'
 import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
@@ -113,7 +115,14 @@ Future<void>initLoginModule() async{
   }
 
 }
+Future<void>initDailyReservation() async{
+  if(!GetIt.I.isRegistered<TodayTripsUseCase>()){
+    instance.registerFactory<TodayTripsUseCase>(() =>TodayTripsUseCase(instance()));
+    instance.registerFactory<DailyReservationViewModel>(() =>DailyReservationViewModel(instance()));
 
+  }
+
+}
 Future<void>initSubscriptionModule() async{
   if(!GetIt.I.isRegistered<SubscriptionsUseCase>()) {
     instance.registerFactory<SubscriptionsUseCase>(() =>

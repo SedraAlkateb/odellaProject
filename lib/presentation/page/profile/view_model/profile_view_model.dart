@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:untitled/app/constants.dart';
+import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
@@ -337,7 +338,15 @@ notifyListeners();
   student() async {
    setStateScreen(1);
     (await _profileUseCase.execute(null)).fold((failure) {
-      setStateScreen(2);
+      print(failure.massage);
+      if(failure.code==ResponseCode.UNAUTORISED)
+      {
+        setStateScreen(4);
+      }
+      else{
+        setStateScreen(2);
+
+      }
     }, (data) async {
       setStateScreen(0);
       setProfile(data);

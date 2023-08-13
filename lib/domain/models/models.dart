@@ -2,6 +2,27 @@ import 'dart:io';
 
 import 'package:flutter/rendering.dart';
 
+class DataAlgorithm{
+  int id;
+  String goTime;
+  String returnTime;
+  DataAlgorithm(this.id, this.goTime, this.returnTime);
+}
+
+class Algorithm{
+  List<DataAlgorithm>? alg;
+  Algorithm(this.alg);
+}
+class DataReservation{
+  String fcm_token;
+  int trip_id;
+  int id;
+  DataReservation(this.id,this.trip_id,this.fcm_token);
+}
+class Reservation{
+  DataReservation? reservation;
+  Reservation(this.reservation);
+}
 class Time{
   int id;
   String start;
@@ -50,6 +71,20 @@ class DataHomeSupervisor{
 
   DataHomeSupervisor(this.id, this.time, this.availableSeats,
       this.dataTransferPositions, this.lines, this.users);
+}
+class TodayTrips{
+  List<DataTodayTrips>? dayTrips;
+  TodayTrips(this.dayTrips);
+}
+class DataTodayTrips{
+  int id;
+  Time? time;
+  int availableSeats;
+  List<DataTransferPositions>? dataTransferPositions;
+  List<DataTransportationLines>? lines;
+
+  DataTodayTrips(this.id, this.time, this.availableSeats,
+      this.dataTransferPositions, this.lines);
 }
 class Counter{
   int count=0;

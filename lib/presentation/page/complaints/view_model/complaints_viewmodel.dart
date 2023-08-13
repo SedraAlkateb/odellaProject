@@ -115,7 +115,11 @@ Future<bool>  storeClaim( int trip) async {
       notifyListeners();
     });
   }
-
+  @override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
   @override
   void start() {
     getWeeklyTrip();

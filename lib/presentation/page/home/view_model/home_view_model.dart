@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:untitled/app/extentions.dart';
+import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/position_line_usecase.dart';
@@ -100,8 +101,14 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
     ( await _transportationLinesUseCase.execute(null))
         .fold(
             (failure)  {
-              setStateScreen(2);
-            },
+              print(failure.massage);
+          if(failure.code==ResponseCode.UNAUTORISED){
+            setStateScreen(4);
+          }else{
+            setStateScreen(2);
+          }
+          print(failure.massage);
+        },
             (data)  {
               if(data.dataTransportationLines==null){
                 setStateScreen(3);

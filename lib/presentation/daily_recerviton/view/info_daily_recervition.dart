@@ -2,22 +2,20 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
 import 'package:untitled/presentation/resources/style_manage.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 
-class DailyReservationView extends StatefulWidget {
-  const DailyReservationView({Key? key}) : super(key: key);
+class InfoDailyReservationView extends StatefulWidget {
+  const InfoDailyReservationView({Key? key}) : super(key: key);
 
   @override
-  _DailyReservationViewState createState() => _DailyReservationViewState();
+  _InfoDailyReservationViewState createState() => _InfoDailyReservationViewState();
 }
 
-class _DailyReservationViewState extends State<DailyReservationView> {
+class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
   final _forKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController seatsNumberController = TextEditingController();
@@ -28,40 +26,17 @@ class _DailyReservationViewState extends State<DailyReservationView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Daily reservation",
-          style: Theme
-              .of(context)
-              .textTheme
-              .labelLarge,
-        ),
+
       ),
-      body: Container(
-        color: ColorManager.profile,
+      body:
+      Card(
+        elevation: 3,
+        //color: ColorManager.profile,
         child: Stack(
             alignment: Alignment.center,
             children: [
 
-              // Positioned(
-              //   top: 0,
-              //   right: 0,
-              //   child: Image.asset(
-              //       "assets/images/top1.png",
-              //       width: size.width/2
-              //   ),
-              // ),
-
-              // Positioned(
-              //   bottom: 0,
-              //   right: 0,
-              //   child: Image.asset(
-              //       "assets/images/bottom1.png",
-              //       width: size.width,
-              //     height: null,
-              //   ),
-              // ),
-
-
-              SingleChildScrollView(
+    SingleChildScrollView(
                 child: Form(
                   key: _forKey,
                   child: Padding(

@@ -25,6 +25,45 @@ class LogOutResponse  extends BaseResponse{
       _$LogOutResponseToJson(this);
 
 }
+@JsonSerializable()
+class TodayTripsResponse  extends BaseResponse{
+  @JsonKey(name: "data")
+  List<DataTodayTrapsResponse>? data;
+
+  TodayTripsResponse(this.data);
+
+  factory TodayTripsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$TodayTripsResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$TodayTripsResponseToJson(this);
+
+}
+@JsonSerializable()
+class DataTodayTrapsResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "availableSeats")
+  int? availableSeats;
+  @JsonKey(name: "time")
+  TimeDailyResponse? time;
+  @JsonKey(name: "transferPositions")
+  List<DataTransferPositionsResponse>? transferPositions;
+  @JsonKey(name: "lines")
+  List<DataTransportationLinesResponse>? lines;
+
+  DataTodayTrapsResponse(this.id, this.availableSeats, this.time,
+      this.transferPositions, this.lines);
+
+  factory DataTodayTrapsResponse.fromJson(Map<String,dynamic> json ) =>
+      _$DataTodayTrapsResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$DataTodayTrapsResponseToJson(this);
+
+}
 
 @JsonSerializable()
 class PostResponse  extends BaseResponse{
@@ -1590,6 +1629,27 @@ class TimeResponse {
 
 }
 @JsonSerializable()
+class TimeDailyResponse {
+  @JsonKey(name: "id")
+  int ?id;
+  @JsonKey(name: "start")
+  String? start;
+  @JsonKey(name: "date")
+  String?date;
+  @JsonKey(name: "day")
+  String?day;
+
+  TimeDailyResponse(this.id, this.start, this.date,this.day);
+
+  factory TimeDailyResponse.fromJson(Map<String,dynamic> json ) =>
+      _$TimeDailyResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$TimeDailyResponseToJson(this);
+
+}
+@JsonSerializable()
 class LineResponse {
   @JsonKey(name: "name")
   String? name;
@@ -1808,8 +1868,7 @@ class AcceptAndDenyResponse extends BaseResponse {
 
 @JsonSerializable()
 class DataDailyReservationResponse {
- // @JsonKey(name:"position")
- // DataTransferPositionsResponse? position;
+
   @JsonKey(name:"id")
   int? id;
   @JsonKey(name:"name")
@@ -1841,6 +1900,62 @@ class DailyReservationResponse  extends BaseResponse {
       _$DailyReservationResponseToJson(this);
 
 }
+
+@JsonSerializable()
+class DataUserDailyReservationResponse {
+  @JsonKey(name:"name")
+  String? name;
+  @JsonKey(name:"phoneNumber")
+  String? phoneNumber;
+  @JsonKey(name:"seatsNumber")
+  String? seatsNumber;
+  @JsonKey(name:"transfer_position_id")
+  String? transfer_position_id;
+  @JsonKey(name:"fcm_token")
+  String? fcm_token;
+  @JsonKey(name:"guestRequestStatus")
+  int? guestRequestStatus;
+  @JsonKey(name:"trip_id")
+  int? trip_id;
+  @JsonKey(name:"updated_at")
+  String? updated_at;
+  @JsonKey(name:"created_at")
+  String? created_at;
+  @JsonKey(name:"id")
+  int? id;
+
+  DataUserDailyReservationResponse(
+      this.name,
+      this.phoneNumber,
+      this.seatsNumber,
+      this.transfer_position_id,
+      this.fcm_token,
+      this.guestRequestStatus,
+      this.trip_id,
+      this.updated_at,
+      this.created_at,
+      this.id);
+
+  factory DataUserDailyReservationResponse.fromJson(Map<String,dynamic>json)=>
+      _$DataUserDailyReservationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$DataUserDailyReservationResponseToJson(this);
+}
+@JsonSerializable()
+class UserDailyReservationResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  DataUserDailyReservationResponse? dailyReservation;
+  UserDailyReservationResponse(this.dailyReservation);
+  // from json
+  factory UserDailyReservationResponse.fromJson(Map<String,dynamic>json)=>
+      _$UserDailyReservationResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$UserDailyReservationResponseToJson(this);
+
+}
+
 
 
 @JsonSerializable()
@@ -1999,5 +2114,38 @@ class EvaluationInfoResponse {
   // to json
   Map<String,dynamic>toJson()=>
       _$EvaluationInfoResponseToJson(this);
+
+}
+
+@JsonSerializable()
+class DataAlgorithmResponse {
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"goTime")
+  String? goTime;
+  @JsonKey(name:"returnTime")
+  String? returnTime;
+  @JsonKey(name:"updated_at")
+  String? updated_at;
+  @JsonKey(name:"created_at")
+  TripEvaluationResponse?  created_at;
+  DataAlgorithmResponse(this.id, this.goTime, this.returnTime,this.updated_at,this.created_at);
+  factory DataAlgorithmResponse.fromJson(Map<String,dynamic>json)=>
+      _$DataAlgorithmResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$DataAlgorithmResponseToJson(this);
+
+}
+@JsonSerializable()
+class AlgorithmResponse  extends BaseResponse {
+  @JsonKey(name:"data")
+  List<DataAlgorithmResponse>? alg;
+  AlgorithmResponse(this.alg); // from json
+  factory AlgorithmResponse.fromJson(Map<String,dynamic>json)=>
+      _$AlgorithmResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$AlgorithmResponseToJson(this);
 
 }

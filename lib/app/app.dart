@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
+import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/map/view_model/polyLine_map_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
@@ -84,8 +86,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationsViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<Not>()),
         ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
-        // ChangeNotifierProvider(create: (_)=>instance<MapScreen>()),
-
+        ChangeNotifierProvider(create: (_)=>instance<DailyReservationViewModel>()),
+        ChangeNotifierProvider(create: (_)=>DailyReservationMap()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner:false,

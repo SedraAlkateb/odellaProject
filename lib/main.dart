@@ -1,13 +1,10 @@
 import 'dart:io';
-
-import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled/allNotificationDetail.dart';
 import 'package:untitled/app/app.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/codegen_loader.g.dart';
@@ -16,46 +13,13 @@ import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:untitled/config-firebase.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
-import 'package:untitled/presentation/resources/values_manager.dart';
 import 'notification_details.dart';
 import 'notification_list.dart';
-
-// void main() async{
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await EasyLocalization.ensureInitialized();
-//   await initAppModule();
-//   Provider.debugCheckInvalidValueType=null;
-//   ByteData  data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
-//   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
-//
-//   runApp(EasyLocalization(
-//       child: Phoenix(child: MyApp()),
-//       supportedLocales: const [ARABIC_LOCALE, ENGLISH_LOCALE],
-//       path: ASSET_PATH_LOCALISATION));
-// }
-
-//////////////////////////////////////////
-
-// import 'dart:async';
-//
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:untitled/config-firebase.dart';
-//
-// import 'notification_details.dart';
-// import 'notification_list.dart';
 
 /// Define a top-level named handler which background/terminated messages will
 /// call.

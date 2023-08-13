@@ -49,6 +49,7 @@ abstract class Repository{
   Future<  Either<Failure,String>>makeReadNotification(int id);
   Future<  Either<Failure,String>>readAllNot();
   Future<  Either<Failure,StudentPosition>>studentPosition(int trip,int position);
-
+  Future<  Either<Failure,Reservation>>userDailyReservations(DailyReservationRequest dailyReservationRequest);
+  Future< Either<Failure,TodayTrips>>todayTrips(String time);
 
 }

@@ -15,7 +15,6 @@ int isSucc=0;
 @override
   void dispose() {
   isSucc=0;
-    super.dispose();
   }
 bool isSuccess(){
     if(isSucc==1){

@@ -240,7 +240,9 @@ class _SettingsViewState extends State<SettingsView> {
                       Icons.logout,
                       color: ColorManager.sidBarIcon,
                     ),
-                    onTap: () async {}),
+                    onTap: () async {
+
+                    }),
               ],
             )
         ),

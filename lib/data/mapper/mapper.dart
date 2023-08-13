@@ -12,7 +12,42 @@ extension PostResponseMapper on PostResponse? {
         this?.body.orEmpty() ?? Constants.empty);
   }
 }
+extension DataReservationMapper on DataUserDailyReservationResponse? {
+  DataReservation toDomain() {
+    return DataReservation(
+        this?.id.orZero() ?? Constants.zero,
+        this?.trip_id.orZero() ?? Constants.zero,
+        this?.fcm_token.orEmpty() ?? Constants.empty,
+        );
+  }
+}
+extension ReservationMapper on UserDailyReservationResponse? {
+  Reservation toDomain() {
+    return Reservation(
+      this?.dailyReservation.toDomain()
+    );
+  }
+}
+extension DataAlgorithmMapper on DataAlgorithmResponse? {
+  DataAlgorithm toDomain() {
+    return DataAlgorithm(
+      this?.id.orZero() ?? Constants.zero,
+      this?.goTime.orEmpty() ?? Constants.empty,
+      this?.returnTime.orEmpty() ?? Constants.empty,
+    );
+  }
 
+}
+extension AlgorithmMapper on AlgorithmResponse? {
+  Algorithm toDomain() {
+    List<DataAlgorithm> roleModel =
+    (this?.alg?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataAlgorithm>()
+        .toList();
+    return Algorithm(roleModel);
+  }
+}
 //////////// time
 extension TimeResponseMapper on TimeResponse? {
   Time toDomain() {
@@ -20,6 +55,15 @@ extension TimeResponseMapper on TimeResponse? {
         this?.id.orZero() ?? Constants.zero,
         this?.start.orEmpty() ?? Constants.empty,
       this?.date.orEmpty() ?? Constants.empty
+    );
+  }
+}
+extension TodayTimeResponseMapper on TimeDailyResponse? {
+  Time toDomain() {
+    return Time(
+        this?.id.orZero() ?? Constants.zero,
+        this?.start.orEmpty() ?? Constants.empty,
+        this?.date.orEmpty() ?? Constants.empty
     );
   }
 }
@@ -66,6 +110,40 @@ extension HomeSupervisorMapper on HomeSupervisorResponse? {
   HomeSuperVisor toDomain() {
     return HomeSuperVisor(
         this?.dataHomeSupervisor.toDomain()
+    );
+  }
+}
+extension DataTodayTripsMapper on DataTodayTrapsResponse? {
+  DataTodayTrips toDomain() {
+    List<DataTransferPositions> transferPosition =
+    (this?.transferPositions?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTransferPositions>()
+        .toList();
+    List<DataTransportationLines> line =
+    (this?.lines?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTransportationLines>()
+        .toList();
+    return DataTodayTrips(
+        this?.id.orZero() ?? Constants.zero,
+        this?.time.toDomain(),
+        this?.availableSeats.orZero() ?? Constants.zero,
+        transferPosition,
+        line,
+    );
+  }
+}
+
+extension TodayTripsMapper on TodayTripsResponse? {
+  TodayTrips toDomain() {
+    List<DataTodayTrips> response =
+    (this?.data?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<DataTodayTrips>()
+        .toList();
+    return TodayTrips(
+        response
     );
   }
 }
