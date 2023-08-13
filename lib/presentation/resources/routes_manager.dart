@@ -8,6 +8,7 @@ import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
 import 'package:untitled/presentation/back_login/back_login.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
+import 'package:untitled/presentation/befor_signup/view/algorithem_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
 import 'package:untitled/presentation/daily_recerviton/view/info_daily_recervition.dart';
 import 'package:untitled/presentation/daily_recerviton/view/trip_daily_recervition_view.dart';
@@ -56,6 +57,7 @@ class Routes {
   static const String afterSignUp = "/afterSignUp";
   static const String homeScreen = "/homeScreen";
   static const String baseHomeScreen = "/baseHomeScreen";
+  static const String algorithem = "/algorithem";
 
   static const String pageScreen = "/pageScreen";
   static const String settingRoute = "/setting";
@@ -96,6 +98,8 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case Routes.algorithem:
+        return MaterialPageRoute(builder: (_) => const SelectTimes());
       case Routes.polyLineDailyView:
         return MaterialPageRoute(builder: (_) => const PolyLineDailyView());
       case Routes.backToLogin:

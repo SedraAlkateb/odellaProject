@@ -35,7 +35,6 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
         child: Stack(
             alignment: Alignment.center,
             children: [
-
     SingleChildScrollView(
                 child: Form(
                   key: _forKey,
@@ -47,9 +46,7 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                     child: Column(children: [
                       // Center(child: Image.asset(ImageAssets.logo4)),
 
-                      const SizedBox(
-                        height: 100,
-                      ),
+
                       Text("Enter your information",style: getBoldStyle(color: ColorManager.sidBarIcon,fontSize: FontSize.s18),),
                       const SizedBox(
                         height: 50,

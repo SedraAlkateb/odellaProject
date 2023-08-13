@@ -230,7 +230,7 @@ class _LoginViewState extends State<LoginView> {
                          Text(LocaleKeys.registerText.tr()),
                         TextButton(
                           onPressed: () {
-                              Navigator.pushNamed(context, Routes.signupRoute);
+                              Navigator.pushNamed(context, Routes.algorithem);
                           },
                           child: Text(
                             LocaleKeys.signUp.tr(),
