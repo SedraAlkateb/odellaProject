@@ -70,44 +70,54 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
       Padding(
         padding: const EdgeInsets.only(
             left: AppPadding.p20,
-            right: AppPadding.p20,
+            right: AppPadding.p18,
             bottom: AppPadding.p20),
-        child: TextFormField(
-          onChanged: (value) {
-            try {
-              Provider.of<DailyReservationViewModel>(context, listen: false)
-                  .setSearch(value);
-            } catch (e, s) {
-              print(s);
-            }
-          },
-          decoration: InputDecoration(
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-              BorderSide(color: Colors.grey.shade300, width: AppSize.s1_5),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(AppSize.s16),
-              ),
-            ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                onChanged: (value) {
+                  try {
+                    Provider.of<DailyReservationViewModel>(context, listen: false)
+                        .setSearch(value);
+                  } catch (e, s) {
+                    print(s);
+                  }
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: Colors.grey.shade300, width: AppSize.s1_5),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(AppSize.s16),
+                    ),
+                  ),
 // fillColor: ColorManager.white,
-            border: OutlineInputBorder(
+                  border: OutlineInputBorder(
 //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
-              borderSide:
-              BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
-            ),
-            hintStyle: getRegularStyle(
-                color: ColorManager.icon, fontSize: FontSize.s16),
-            hintText: LocaleKeys.search.tr(),
+                    borderSide:
+                    BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
+                  ),
+                  hintStyle: getRegularStyle(
+                      color: ColorManager.icon, fontSize: FontSize.s16),
+                  hintText: LocaleKeys.search.tr(),
 //       hintStyle:Theme.of(context).textTheme.bodySmall,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: AppPadding.p8),
-              child: Icon(
-                Icons.search,
-                color: ColorManager.button,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: AppPadding.p8),
+                    child: Icon(
+                      Icons.search,
+                      color: ColorManager.button,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            IconButton(onPressed: (){
+
+            }, icon: Icon(Icons.filter_list_outlined, color: ColorManager.icon,
+            ))
+          ],
         ),
       ),
       Expanded(
