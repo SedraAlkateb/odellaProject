@@ -93,8 +93,8 @@ Widget _getItemsColumn(List<Widget>children){
 }
 Widget _getAnimatedImage(String animationName){
     return SizedBox(
-      height: AppSize.s100,
-      width: AppSize.s100,
+      height: AppSize.s200,
+      width: AppSize.s200,
       child:Lottie.asset(animationName )
     );
 }

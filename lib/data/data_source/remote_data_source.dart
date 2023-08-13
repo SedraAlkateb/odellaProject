@@ -44,6 +44,8 @@ abstract class RemoteDataSource{
   Future<NotificationReadResponse> makeReadNotification(int id);
   Future<UpdatePositionResponse> readAllNot();
   Future<StudentPositionResponse> studentPosition(int trip,int position);
+  Future<UserDailyReservationResponse> userDailyReservations(DailyReservationRequest dailyReservationRequest);
+  Future<TodayTripsResponse> todayTrips(String time);
 
 }
 
@@ -360,5 +362,24 @@ street: supervisorRequest.street
 
   }
 
+  @override
+  Future<UserDailyReservationResponse> userDailyReservations(DailyReservationRequest dailyReservationRequest) async{
+    return await _appServiceClient.
+    userDailyReservations
+      (
+        dailyReservationRequest.trip,
+        dailyReservationRequest.name,
+        dailyReservationRequest.phoneNumber,
+        dailyReservationRequest.transfer_position_id,
+        dailyReservationRequest.seatsNumber,
+        dailyReservationRequest.fcm_token);
+
+  }
+
+  @override
+  Future<TodayTripsResponse> todayTrips(String time)  async{
+    return await _appServiceClient.todayTrips(time);
+
+  }
 
 }

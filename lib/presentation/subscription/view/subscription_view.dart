@@ -45,19 +45,7 @@ class _SubscriptionsViewState extends State<SubscriptionsView> {
           title: Text("Subscriptions",style: Theme
               .of(context)
               .textTheme.labelLarge,),
-          leading: IconButton(
-            onPressed: () {
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.popAndPushNamed(context,Routes.afterSplashRoute);
-              });
 
-            },
-            icon:  SvgPicture.asset(
-                ImageAssets.vector,
-                semanticsLabel: 'Acme Logo'
-            ),
-
-          ),
 
         ),
         key: _global,
@@ -101,48 +89,51 @@ class _SubscriptionsViewState extends State<SubscriptionsView> {
             padding: const EdgeInsets.symmetric(horizontal: AppPadding.p18, vertical: AppPadding.p18),
             child: Column(
               children: [
-                Container(
-                  height: AppSize.s50,
-                  decoration: BoxDecoration(
-                    color: ColorManager.card,
-                    borderRadius:
-                    BorderRadius.circular(AppSize.s18),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppPadding.p28),
+                  child: Container(
+                    height: AppSize.s50,
+                    decoration: BoxDecoration(
+                      color: ColorManager.card,
+                      borderRadius:
+                      BorderRadius.circular(AppSize.s18),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
 
-                      Expanded(
-                          child: Text(
-                            "Subscription",
-                            textAlign: TextAlign.center,
-                            style:
-                            Theme.of(context).textTheme.titleMedium,
-                          )),
-                      Container(
-                        width: 2.0,
-                        color: Colors.grey[200],
-                      ),
-                      Expanded(
-                          child: Text(
-                            "DayNumber",
-                            textAlign: TextAlign.center,
-                            style:
-                            Theme.of(context).textTheme.titleMedium,
-                          )),
-                      Container(
-                        width: 1.0,
-                        color: Colors.grey[200],
-                      ),
-                      Expanded(
-                          child: Text(
-                            "Price",
-                            textAlign: TextAlign.center,
-                            style:
-                            Theme.of(context).textTheme.titleMedium,
-                          )),
-                    ],
+                        Expanded(
+                            child: Text(
+                              "Subscription",
+                              textAlign: TextAlign.center,
+                              style:
+                              Theme.of(context).textTheme.titleMedium,
+                            )),
+                        Container(
+                          width: 2.0,
+                          color: Colors.grey[200],
+                        ),
+                        Expanded(
+                            child: Text(
+                              "DayNumber",
+                              textAlign: TextAlign.center,
+                              style:
+                              Theme.of(context).textTheme.titleMedium,
+                            )),
+                        Container(
+                          width: 1.0,
+                          color: Colors.grey[200],
+                        ),
+                        Expanded(
+                            child: Text(
+                              "Price",
+                              textAlign: TextAlign.center,
+                              style:
+                              Theme.of(context).textTheme.titleMedium,
+                            )),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

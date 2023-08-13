@@ -30,6 +30,51 @@ Map<String, dynamic> _$LogOutResponseToJson(LogOutResponse instance) =>
       'data': instance.data,
     };
 
+TodayTripsResponse _$TodayTripsResponseFromJson(Map<String, dynamic> json) =>
+    TodayTripsResponse(
+      (json['data'] as List<dynamic>?)
+          ?.map(
+              (e) => DataTodayTrapsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$TodayTripsResponseToJson(TodayTripsResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.data,
+    };
+
+DataTodayTrapsResponse _$DataTodayTrapsResponseFromJson(
+        Map<String, dynamic> json) =>
+    DataTodayTrapsResponse(
+      json['id'] as int?,
+      json['availableSeats'] as int?,
+      json['time'] == null
+          ? null
+          : TimeDailyResponse.fromJson(json['time'] as Map<String, dynamic>),
+      (json['transferPositions'] as List<dynamic>?)
+          ?.map((e) =>
+              DataTransferPositionsResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['lines'] as List<dynamic>?)
+          ?.map((e) => DataTransportationLinesResponse.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DataTodayTrapsResponseToJson(
+        DataTodayTrapsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'availableSeats': instance.availableSeats,
+      'time': instance.time,
+      'transferPositions': instance.transferPositions,
+      'lines': instance.lines,
+    };
+
 PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
       json['userId'] as int?,
       json['id'] as int?,
@@ -1331,6 +1376,22 @@ Map<String, dynamic> _$TimeResponseToJson(TimeResponse instance) =>
       'date': instance.date,
     };
 
+TimeDailyResponse _$TimeDailyResponseFromJson(Map<String, dynamic> json) =>
+    TimeDailyResponse(
+      json['id'] as int?,
+      json['start'] as String?,
+      json['date'] as String?,
+      json['day'] as String?,
+    );
+
+Map<String, dynamic> _$TimeDailyResponseToJson(TimeDailyResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'start': instance.start,
+      'date': instance.date,
+      'day': instance.day,
+    };
+
 LineResponse _$LineResponseFromJson(Map<String, dynamic> json) => LineResponse(
       json['name'] as String?,
     );
@@ -1572,6 +1633,55 @@ Map<String, dynamic> _$DailyReservationResponseToJson(
       'data': instance.dailyReservation,
     };
 
+DataUserDailyReservationResponse _$DataUserDailyReservationResponseFromJson(
+        Map<String, dynamic> json) =>
+    DataUserDailyReservationResponse(
+      json['name'] as String?,
+      json['phoneNumber'] as String?,
+      json['seatsNumber'] as String?,
+      json['transfer_position_id'] as String?,
+      json['fcm_token'] as String?,
+      json['guestRequestStatus'] as int?,
+      json['trip_id'] as int?,
+      json['updated_at'] as String?,
+      json['created_at'] as String?,
+      json['id'] as int?,
+    );
+
+Map<String, dynamic> _$DataUserDailyReservationResponseToJson(
+        DataUserDailyReservationResponse instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'phoneNumber': instance.phoneNumber,
+      'seatsNumber': instance.seatsNumber,
+      'transfer_position_id': instance.transfer_position_id,
+      'fcm_token': instance.fcm_token,
+      'guestRequestStatus': instance.guestRequestStatus,
+      'trip_id': instance.trip_id,
+      'updated_at': instance.updated_at,
+      'created_at': instance.created_at,
+      'id': instance.id,
+    };
+
+UserDailyReservationResponse _$UserDailyReservationResponseFromJson(
+        Map<String, dynamic> json) =>
+    UserDailyReservationResponse(
+      json['data'] == null
+          ? null
+          : DataUserDailyReservationResponse.fromJson(
+              json['data'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$UserDailyReservationResponseToJson(
+        UserDailyReservationResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.dailyReservation,
+    };
+
 QrConfirmResponse _$QrConfirmResponseFromJson(Map<String, dynamic> json) =>
     QrConfirmResponse(
       json['data'],
@@ -1743,4 +1853,44 @@ Map<String, dynamic> _$EvaluationInfoResponseToJson(
       'id': instance.id,
       'review': instance.review,
       'trip': instance.trip,
+    };
+
+DataAlgorithmResponse _$DataAlgorithmResponseFromJson(
+        Map<String, dynamic> json) =>
+    DataAlgorithmResponse(
+      json['id'] as int?,
+      json['goTime'] as String?,
+      json['returnTime'] as String?,
+      json['updated_at'] as String?,
+      json['created_at'] == null
+          ? null
+          : TripEvaluationResponse.fromJson(
+              json['created_at'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$DataAlgorithmResponseToJson(
+        DataAlgorithmResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'goTime': instance.goTime,
+      'returnTime': instance.returnTime,
+      'updated_at': instance.updated_at,
+      'created_at': instance.created_at,
+    };
+
+AlgorithmResponse _$AlgorithmResponseFromJson(Map<String, dynamic> json) =>
+    AlgorithmResponse(
+      (json['data'] as List<dynamic>?)
+          ?.map(
+              (e) => DataAlgorithmResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$AlgorithmResponseToJson(AlgorithmResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.alg,
     };

@@ -42,7 +42,13 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
     });
     super.initState();
   }
+@override
+  void didChangeDependencies() {
+  if( Provider.of<HomeSuperVisorViewModel>(context).getStateScreen() == 4){
+    Navigator.pushNamed(context, Routes.backToLogin);
 
+  }
+  }
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
@@ -83,6 +89,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                       listen: false)
                                   .getHomeSuperVisor();
                             })
+
                         : StateRenderer(
                             stateRendererType:
                                 StateRendererType.fullScreenEmptyState,

@@ -162,6 +162,8 @@ abstract class AppServiceClient {
       );
   @POST("/api/supervisor/trip")
   Future<HomeSupervisorResponse> homeSupervisor(@Part(name: "time")  String time);
+  @POST("/api/trip/todayTrips")
+  Future<TodayTripsResponse> todayTrips(@Part(name: "time")  String time);
 
   @GET("/api/trip/weeklyTrips")
   Future<TripsResponse> weeklyTrips();
@@ -226,5 +228,14 @@ abstract class AppServiceClient {
       @Path("position_id") int positionId,
 
 
+      );
+  @POST("/api/dailyReservations/trips/{id}")
+  Future<UserDailyReservationResponse> userDailyReservations(
+      @Path("id") int id,
+      @Part(name:"name") String name,
+      @Part(name:"phoneNumber") int phoneNumber,
+      @Part(name:"transfer_position_id") int transfer_position_id,
+      @Part(name:"seatsNumber") int seatsNumber,
+      @Part(name:"fcm_token") String fcm_token,
       );
 }

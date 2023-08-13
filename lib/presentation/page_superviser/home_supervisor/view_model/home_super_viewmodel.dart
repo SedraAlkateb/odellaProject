@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/domain/usecase/confirm_qr_usecase.dart';
 import 'package:untitled/domain/usecase/home_supervisor_usecase.dart';
@@ -157,7 +158,11 @@ bool studentPos=false;
     setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
             (failure)  {
-              setStateScreen(2);
+              if(failure.code==ResponseCode.UNAUTORISED){
+                setStateScreen(4);
+              }else{
+                setStateScreen(2);
+              }
               setSucc(false);
           print(failure.massage);
         },

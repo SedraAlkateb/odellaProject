@@ -22,7 +22,7 @@ class PageSupervisorViewModel  with ChangeNotifier {
     NavbarDTO(label: LocaleKeys.Home.tr(),widget: HomeSupervisorView(),iconData: Icons.home),
     NavbarDTO(label: LocaleKeys.profile.tr(),widget:SupervisorProfileView(),iconData: Icons.account_box_rounded),
     NavbarDTO(label: LocaleKeys.programmer.tr(),widget: SupervisorProgramView(),iconData: Icons.chrome_reader_mode),
-    NavbarDTO(label: 'daily receive',widget: QRScanScreen(),iconData: Icons.chrome_reader_mode),
+   // NavbarDTO(label: 'daily receive',widget: QRScanScreen(),iconData: Icons.chrome_reader_mode),
   ];
   int _selectedIndex = AppConstants.home;
   int get selectedIndex => _selectedIndex;

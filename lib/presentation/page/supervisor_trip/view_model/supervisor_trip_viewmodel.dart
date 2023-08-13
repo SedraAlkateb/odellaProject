@@ -97,6 +97,7 @@ late  GoogleMapController googleMapController;
           await channel.bind("client-tracking", (PusherEvent? event) {
             print(event?.data);
             if (event?.data != null) {
+
               updateMarker(event!.data.toString());
             }
           });

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
@@ -33,7 +34,12 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel profileViewModel = instance<ProfileViewModel>();
-
+  void didChangeDependencies() {
+    if( Provider.of<ProfileViewModel>(context).getStateScreen() == 4){
+      Navigator.pushNamed(context, Routes.backToLogin);
+    }
+    super.didChangeDependencies();
+  }
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -51,6 +57,12 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    RefreshController _refreshController =
+    RefreshController(initialRefresh: false);
+    void _onRefresh() async {
+      Provider.of<ProfileViewModel>(context,listen: false).start();
+      _refreshController.refreshCompleted();
+    }
     return Sizer(
       builder: (context, orientation, deviceType) =>
           Scaffold(
@@ -63,7 +75,10 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             body:
             Provider.of<ProfileViewModel>(context).getStateScreen() == 0
-                ? contentWidget()
+                ? SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                child: contentWidget())
                 :Provider.of<ProfileViewModel>(context).getStateScreen()==1
                 ?StateRenderer(
                 stateRendererType: StateRendererType.fullScreenLoadingState,

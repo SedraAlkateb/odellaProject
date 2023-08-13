@@ -33,224 +33,219 @@ class DrawerSupervisorView extends StatelessWidget {
     final AppPreferences _appPreferences =instance<AppPreferences>();
 
 
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(AppSize.s50),
-      ),
+    return Drawer(
 
-      child: Drawer(
-          //backgroundColor: ColorManager.side,
-          child: ListView(
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                    Provider.of<SupervisorProfileViewModel>(context)
-                        .getName() ?? ""),
-                accountEmail: Text(
-                    Provider.of<SupervisorProfileViewModel>(context)
-                        .getEmail()),
-                currentAccountPicture: CircleAvatar(
-                    child: Provider.of<SupervisorProfileViewModel>(context)
-                        .getIm() != null
-                    //  profile1.getDownload()
-                        ? Container(
-                      width: 160.0,
-                      height: 160.0,
+        //backgroundColor: ColorManager.side,
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(
+                  Provider.of<SupervisorProfileViewModel>(context)
+                      .getName() ?? ""),
+              accountEmail: Text(
+                  Provider.of<SupervisorProfileViewModel>(context)
+                      .getEmail()),
+              currentAccountPicture: CircleAvatar(
+                  child: Provider.of<SupervisorProfileViewModel>(context)
+                      .getIm() != null
+                  //  profile1.getDownload()
+                      ? Container(
+                    width: 160.0,
+                    height: 160.0,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey[300],
+                        image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image:
+                            FileImage(
+                                Provider.of<SupervisorProfileViewModel>(
+                                    context).getIm() ?? File("")
+                            )
+                        )
+                    ),
+
+
+                  )
+                      : Container(
+                      width: 160,
+                      height: 160,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey[300],
-                          image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image:
-                              FileImage(
-                                  Provider.of<SupervisorProfileViewModel>(
-                                      context).getIm() ?? File("")
-                              )
-                          )
+                        color: Colors.grey[300],
+                        shape: BoxShape.circle,
                       ),
+                      child: const Icon(Icons.add,
+                          size: 50, color: Color(0xFFFFFFFF)))
+                //:profile1.getLocalPath()!=null?
 
-
-                    )
-                        : Container(
-                        width: 160,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.add,
-                            size: 50, color: Color(0xFFFFFFFF)))
-                  //:profile1.getLocalPath()!=null?
-
-                ),
-
-                decoration: BoxDecoration(
-                  color: ColorManager.side,
-                ),
               ),
-              Divider(
+
+              decoration: BoxDecoration(
+                color: ColorManager.side,
+              ),
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+
+              title: Text(
+                LocaleKeys.Home.tr(),
+                style: TextStyle(color: ColorManager.sidBarIcon),
+              ),
+              leading: Icon(
+                Icons.home,
                 color: ColorManager.sidBarIcon,
-                height: 15,
               ),
-              ListTile(
 
-                title: Text(
-                  LocaleKeys.Home.tr(),
-                  style: TextStyle(color: ColorManager.sidBarIcon),
+              onTap: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Provider
+                      .of<PageSupervisorViewModel>(context, listen: false)
+                      .selectedIndex = AppConstants.home2;
+                });
+              },
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+              title: Text(LocaleKeys.profile.tr()),
+              leading: Icon(
+                Icons.person, color: ColorManager.sidBarIcon,),
+
+              onTap: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Provider
+                      .of<PageSupervisorViewModel>(context, listen: false)
+                      .selectedIndex = AppConstants.profile2;
+                });
+              },
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+              title: Text(LocaleKeys.programmer.tr()),
+              leading: Icon(
+                Icons.calendar_today, color: ColorManager.sidBarIcon,
+              ),
+
+              onTap: () {
+                Provider
+                    .of<PageSupervisorViewModel>(context, listen: false)
+                    .selectedIndex = AppConstants.program2;
+              },
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+              title: Text(LocaleKeys.dailyrecieve.tr()),
+              leading: Icon(Icons.location_on_outlined,
+                color: ColorManager.sidBarIcon,
+              ),
+
+              onTap: () {
+                Provider
+                    .of<PageSupervisorViewModel>(context, listen: false)
+                    .selectedIndex = AppConstants.dailyrecieve;
+              },
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+
+            ListTile(
+                title: Text(LocaleKeys.qrscan.tr()),
+                leading: Icon(Icons.qr_code_scanner,
+                  color: ColorManager.sidBarIcon,
+
                 ),
-                leading: Icon(
-                  Icons.home,
+
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.qrscan);
+                }
+
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+
+            ListTile(
+                title: Text(LocaleKeys.notification.tr()),
+                leading: Icon(Icons.notifications,
                   color: ColorManager.sidBarIcon,
                 ),
 
                 onTap: () {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Provider
-                        .of<PageSupervisorViewModel>(context, listen: false)
-                        .selectedIndex = AppConstants.home2;
-                  });
-                },
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
-              ListTile(
-                title: Text(LocaleKeys.profile.tr()),
-                leading: Icon(
-                  Icons.person, color: ColorManager.sidBarIcon,),
+                  Navigator.pushNamed(context, Routes.application);
+                }
 
-                onTap: () {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Provider
-                        .of<PageSupervisorViewModel>(context, listen: false)
-                        .selectedIndex = AppConstants.profile2;
-                  });
-                },
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
-              ListTile(
-                title: Text(LocaleKeys.programmer.tr()),
-                leading: Icon(
-                  Icons.calendar_today, color: ColorManager.sidBarIcon,
-                ),
+            ),
 
-                onTap: () {
-                  Provider
-                      .of<PageSupervisorViewModel>(context, listen: false)
-                      .selectedIndex = AppConstants.program2;
-                },
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
-              ListTile(
-                title: Text(LocaleKeys.dailyrecieve.tr()),
-                leading: Icon(Icons.location_on_outlined,
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+                title: Text(LocaleKeys.settings.tr()),
+                leading: Icon(Icons.settings,
                   color: ColorManager.sidBarIcon,
+
                 ),
 
                 onTap: () {
-                  Provider
-                      .of<PageSupervisorViewModel>(context, listen: false)
-                      .selectedIndex = AppConstants.dailyrecieve;
-                },
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
+                  Navigator.pushNamed(context, Routes.settingRoute);
+                }
 
-              ListTile(
-                  title: Text(LocaleKeys.qrscan.tr()),
-                  leading: Icon(Icons.qr_code_scanner,
-                    color: ColorManager.sidBarIcon,
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
+                title: Text(LocaleKeys.signOut.tr()),
+                leading: Icon(Icons.logout,
+                  color: ColorManager.sidBarIcon,
 
-                  ),
+                ),
 
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.qrscan);
+                onTap: () async {
+                    LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "Loading");
+                    await Provider.of<DrawerSupervisorViewModel>(context, listen: false).logout().then((value) {
+                      if(value){
+                          _appPreferences.signOut().then((value) {
+                            ContentState().dismissDialog(context);
+
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              Provider.of<HomeSuperVisorViewModel>(context,listen: false).stopTracking();
+                              Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
+                              Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
+
+                            });
+                                                      }
+                          );
+                      }
+                      else{
+                        ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
+                        ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
+                      }
+
+
                   }
+                  );
+                }
 
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
+            ),
 
-              ListTile(
-                  title: Text(LocaleKeys.notification.tr()),
-                  leading: Icon(Icons.notifications,
-                    color: ColorManager.sidBarIcon,
-                  ),
-
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.application);
-                  }
-
-              ),
-
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
-              ListTile(
-                  title: Text(LocaleKeys.settings.tr()),
-                  leading: Icon(Icons.settings,
-                    color: ColorManager.sidBarIcon,
-
-                  ),
-
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.settingRoute);
-                  }
-
-              ),
-              Divider(
-                color: ColorManager.sidBarIcon,
-                height: 15,
-              ),
-              ListTile(
-                  title: Text(LocaleKeys.signOut.tr()),
-                  leading: Icon(Icons.logout,
-                    color: ColorManager.sidBarIcon,
-
-                  ),
-
-                  onTap: () async {
-                      LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "Loading");
-                      await Provider.of<DrawerSupervisorViewModel>(context, listen: false).logout().then((value) {
-                        if(value){
-                            _appPreferences.signOut().then((value) {
-                              ContentState().dismissDialog(context);
-
-                              SchedulerBinding.instance.addPostFrameCallback((_) {
-                                Provider.of<HomeSuperVisorViewModel>(context,listen: false).stopTracking();
-                                Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
-                                Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
-
-                              });
-                                                        }
-                            );
-                        }
-                        else{
-                          ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
-                          ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
-                        }
-
-
-                    }
-                    );
-                  }
-
-              ),
-
-            ],
-          ),
+          ],
         ),
       );
 

@@ -19,6 +19,7 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
     tripID=id;
     notifyListeners();
   }
+
   setDailyReservations(List<DailyReservationsModel> dR){
     _dailyReservations= dR;
   //  notifyListeners();

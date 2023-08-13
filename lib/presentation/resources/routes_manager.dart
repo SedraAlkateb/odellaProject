@@ -6,13 +6,14 @@ import 'package:untitled/notification_details.dart';
 import 'package:untitled/notification_list.dart';
 import 'package:untitled/presentation/after_signup/view/after_signup.dart';
 import 'package:untitled/presentation/after_splash/view/after_splash_view.dart';
+import 'package:untitled/presentation/back_login/back_login.dart';
 import 'package:untitled/presentation/base_home/view/base_home_view.dart';
 import 'package:untitled/presentation/change_password/view/change_pass_view.dart';
-import 'package:untitled/presentation/daily_reservition/view/daily_reservition_view.dart';
+import 'package:untitled/presentation/daily_recerviton/view/info_daily_recervition.dart';
+import 'package:untitled/presentation/daily_recerviton/view/trip_daily_recervition_view.dart';
+import 'package:untitled/presentation/daily_reser_map/view/daily_reser_map_view.dart';
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
-import 'package:untitled/presentation/map/mapline.dart';
-import 'package:untitled/presentation/map_position/view/map_position_view.dart';
 import 'package:untitled/presentation/mm.dart';
 import 'package:untitled/presentation/page/add_lost_item/view/add_lost_item_view.dart';
 import 'package:untitled/presentation/page/complaints/view/complaints_view.dart';
@@ -65,6 +66,8 @@ class Routes {
   static const String resetPasswordRoute = "/resetPassword";
   static const String mmm = "/mmm";
   static const String addLostItemRoute = "/addLostItem";
+  static const String polyLineDailyView = "/polyLineDailyView";
+
 
   static const String polyLineRoute = "/PolyLine";
   static const String informationTrip = "/informationTripRoute";
@@ -81,6 +84,8 @@ class Routes {
   static const String qrscan = "/qrscan";
   static const String compandrat = "/compandrat";
   static const String dailyReservation = "/dailyReservation";
+  static const String dailyReservationInfo = "/dailyReservationInfo";
+  static const String backToLogin = "/backToLoginView";
 
 
 
@@ -91,9 +96,16 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
-      case Routes.dailyReservation:
-        return MaterialPageRoute(builder: (_) => const DailyReservationView());
+      case Routes.polyLineDailyView:
+        return MaterialPageRoute(builder: (_) => const PolyLineDailyView());
+      case Routes.backToLogin:
+        return MaterialPageRoute(builder: (_) => const BackLoginView());
 
+      case Routes.dailyReservation:
+        initDailyReservation();
+        return MaterialPageRoute(builder: (_) => const TripDailyReservationView());
+      case Routes.dailyReservationInfo:
+        return MaterialPageRoute(builder: (_) => const InfoDailyReservationView());
       case Routes.application:
         initNotificationModule();
         return MaterialPageRoute(builder: (_) => const Application());
