@@ -240,22 +240,37 @@ class _ProfileViewState extends State<ProfileView> {
                                 }, icon: Icon(Icons.qr_code_sharp,size: 25,)),
                               ],
                             ),
-                            SizedBox(height: 2.h,),
-                            Divider(height: 3.h,
-                              color: ColorManager.sidBarIcon,
-                              thickness: 1,),
                           ],
                         ),
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: EdgeInsets.only(right: 20.sp,left: 20.sp),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: AppSize.s8, left: 8),
+                                    child: Text(
+                                      "Personal Information",
+                                      style:
+                                      Theme.of(context).textTheme.titleLarge,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Divider(
+                                        height: 3.h,
+                                        color: ColorManager.sidBarIcon,
+                                        thickness: 1,
+                                      )),
+                                ],
+                              ),
                               SizedBox(
                                 height: 1.h,
                               ),
@@ -416,10 +431,24 @@ class _ProfileViewState extends State<ProfileView> {
                               SizedBox(
                                 height: 6.h,
                               ),
-                              Divider(
-                                height: 3.h,
-                                thickness: 1,
-                                color: ColorManager.sidBarIcon,
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: AppSize.s8, left: 8),
+                                    child: Text(
+                                      "Residence",
+                                      style:
+                                      Theme.of(context).textTheme.titleLarge,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Divider(
+                                        height: 3.h,
+                                        color: ColorManager.sidBarIcon,
+                                        thickness: 1,
+                                      )),
+                                ],
                               ),
                               SizedBox(
                                 height: 6.h,
@@ -468,7 +497,6 @@ class _ProfileViewState extends State<ProfileView> {
 
                                 ],
                               ),
-
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -511,65 +539,89 @@ class _ProfileViewState extends State<ProfileView> {
                                 ],
                               ),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 5.h,),
-                                      Icon(Icons.account_balance,size: AppSize.s25,),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: AppSize.s8, left: 8),
+                                    child: Text(LocaleKeys.university.tr()
+                                      ,
+                                      style:
+                                      Theme.of(context).textTheme.titleLarge,
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 6.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("   ${LocaleKeys.university.tr()} "),
-                                      SizedBox(
-                                        height: 14.h,
-                                        width: 72.w,
-                                        child: DropdownButtonFormField(
-                                            icon:
-                                            const Icon(Icons.keyboard_arrow_down),
-                                            hint: Text(model.getProfileUni()),
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return LocaleKeys.universities.tr();
-                                              }
-                                              return null;
-                                            },
-                                            items: model
-                                                .getUniversities()
-                                                .map((e) =>
-                                                DropdownMenuItem(
-                                                  value: e.id,
-                                                  child: Text(" ${e.name}",
-                                                    overflow: TextOverflow.ellipsis,),
-                                                ))
-                                                .toList(),
-                                            onChanged: (val) {
-                                              model.setUniversityId(val!);
-                                            }),
-                                      ),
-                                    ],
-                                  ),
+                                  Expanded(
+                                      child: Divider(
+                                        height: 3.h,
+                                        color: ColorManager.sidBarIcon,
+                                        thickness: 1,
+                                      )),
                                 ],
                               ),
-                              Divider(
-                                height: 3.h,
-                                thickness: 1,
-                                color: ColorManager.sidBarIcon,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.account_balance,size: AppSize.s25,),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
+                                    Text(model.getProfileUni())
+
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: AppSize.s8, left: 8),
+                                    child: Text(
+                                      "Payment Information",
+                                      style:
+                                      Theme.of(context).textTheme.titleLarge,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Divider(
+                                        height: 3.h,
+                                        color: ColorManager.sidBarIcon,
+                                        thickness: 1,
+                                      )),
+                                ],
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
-                                  Text("${LocaleKeys.subscription.tr()} : ${model.getStudentSub()?.name ??""} "),
-                                  Text("${LocaleKeys.daysNumber.tr()} :  ${model.getStudentSub()?.daysNumber??""}"),
-                                  Text("${LocaleKeys.price.tr()} :  ${model.getStudentSub()?.price??""}"),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
+                                    child: Row(
+                                      children: [
+                                        Text("${LocaleKeys.subscription.tr()} :"),
+                                        Text(" ${model.getStudentSub()?.name ??""} ")
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
+                                    child: Row(
+                                      children: [
+                                        Text("${LocaleKeys.daysNumber.tr()} :"),
+                                        Text("${model.getStudentSub()?.daysNumber??""}")
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
+                                    child: Row(
+                                      children: [
+                                        Text("${LocaleKeys.price.tr()} :"),
+                                        Text(" ${model.getStudentSub()?.price??""}")
+                                      ],
+                                    ),
+                                  ),
                                 ],),
 
                               Column(
@@ -741,12 +793,26 @@ class _ProfileViewState extends State<ProfileView> {
                               ],
                             ),
                           ),
-                          Container(
-                            width: 200.w,
-                            child: Divider(height: 2.h,
-                              color: ColorManager.sidBarIcon,
-                              thickness: 1,),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: AppSize.s8, left: 8),
+                                child: Text(
+                                  "Personal Informatio",
+                                  style:
+                                  Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                              Expanded(
+                                  child: Divider(
+                                    height: 3.h,
+                                    color: ColorManager.sidBarIcon,
+                                    thickness: 1,
+                                  )),
+                            ],
                           ),
+
                           Expanded(
                             child: SingleChildScrollView(
 
@@ -1097,9 +1163,26 @@ class _ProfileViewState extends State<ProfileView> {
                               ],
                             ),
 
-                            Divider(height: 2.h,
-                              color: ColorManager.sidBarIcon,
-                              thickness: 1,),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: AppSize.s8, left: 8),
+                                  child: Text(
+                                    "Residence",
+                                    style:
+                                    Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Divider(
+                                      height: 3.h,
+                                      color: ColorManager.sidBarIcon,
+                                      thickness: 1,
+                                    )),
+                              ],
+                            ),
+
                             SizedBox(height: 4.h,),
                             Text("${LocaleKeys.subscription.tr()} : ${model.getStudentSub()?.name} "),
                             Text("${LocaleKeys.daysNumber.tr()} :  ${model.getStudentSub()?.daysNumber}"),

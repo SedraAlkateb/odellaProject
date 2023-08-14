@@ -171,9 +171,10 @@ Widget screenWidget(BuildContext context){
                     Row(
                       children: [
                         SizedBox(width: 4.w,),
-                        Text("${"data"} : ${Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].time?.date}",style: getBoldStyle(color: Colors.black,fontSize: FontSize.s16),),
+                        Text("${"data"} : ${Provider.of<ComplaintsViewModel>(context,listen: false).date(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].time?.date??"")}",style: getBoldStyle(color: Colors.black,fontSize: FontSize.s16),),
                       ],
                     ),
+
                     SizedBox(height: 1.h,),
                     Row(
                       children: [
