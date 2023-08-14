@@ -26,6 +26,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
   TextEditingController textEditingController = TextEditingController();
   int dropdownTransportationLine = 0;
   var viewModel;
+
 @override
   void initState() {
   viewModel=Provider.of<AddLostItemViewModel>(context,listen: false);
@@ -163,7 +164,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                                 .map((e) => DropdownMenuItem(
                               value: e.id,
                               child: Text(
-                                "${e.time!.date} ${e.time!.start}",
+                                "${model.data( e.time!.date)} ${e.time!.start}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: AppSize.s15),
@@ -175,18 +176,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 2.h),
-                    const Text(
-                      "data 1",
-                      style: TextStyle(
-                          fontSize: AppSize.s15, color: Colors.grey),
-                    ),
-                    SizedBox(height: 2.h),
-                    const Text(
-                      "data 2",
-                      style: TextStyle(
-                          fontSize: AppSize.s15, color: Colors.grey),
-                    ),
+
                     SizedBox(height: 2.h),
                     ElevatedButton(
                       onPressed: () {
@@ -290,7 +280,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                                       .map((e) => DropdownMenuItem(
                                     value: e.id,
                                     child: Text(
-                                      "${e.time!.date} ${e.time!.start}",
+                                      "${model.data( e.time!.date)} ${ e.time!.start}",
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                           fontSize: AppSize.s15),
@@ -303,21 +293,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          const Text(
-                            "data 1",
-                            style: TextStyle(
-                                fontSize: AppSize.s15, color: Colors.grey),
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          const Text("data 2",
-                              style: TextStyle(
-                                  fontSize: AppSize.s15,
-                                  color: Colors.grey)),
+
                           SizedBox(
                             height: 1.h,
                           ),

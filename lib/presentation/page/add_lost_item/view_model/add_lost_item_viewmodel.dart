@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/app/app_preferences.dart';
+import 'package:untitled/app/di.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/domain/usecase/store_lost_usecase.dart';
 import 'package:untitled/presentation/common/freezed_data.dart';
 import 'package:untitled/presentation/common/image/image.dart';
+import 'package:untitled/presentation/resources/language_manager.dart';
 
 class AddLostItemViewModel extends BaseViewModel with ChangeNotifier{
   @override
@@ -16,6 +20,8 @@ class AddLostItemViewModel extends BaseViewModel with ChangeNotifier{
   String massage="";
   var lostItem=LostItemObject(0,"",null);
   List<DataTrips> _trip=[];
+  AppPreferences _appPreferences =instance<AppPreferences>();
+
   setImageFromGallory()async{
     lostItem= lostItem.copyWith(image: await pickImage());
     notifyListeners();
@@ -37,7 +43,19 @@ setTrip(List<DataTrips> trip){
     lostItem= lostItem.copyWith(description:d);
     notifyListeners();
   }
+  String lang="";
+  String data(String d){
+    if(lang== LanguageType.ENGLISH.getValue()){
+      DateTime date = DateTime.parse(d);
+      String formattedDate = DateFormat('EEEE, MMMM d, y', 'en_US').format(date);
+      return formattedDate;
+    }else{
+      DateTime date = DateTime.parse(d);
+      String formattedDate = DateFormat('EEEE, d MMMM, y', 'ar').format(date);
+      return formattedDate;
+    }
 
+  }
   int getTripId(){
     return lostItem.tripId;
   }
@@ -74,6 +92,7 @@ setTrip(List<DataTrips> trip){
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
       print("data.dataTrips![0].availableSeats ??0");
+      lang =await _appPreferences.getAppLanguage();
 
       print(data.weeklyTrip!.trips[0].availableSeats);
           setTrip(data.weeklyTrip!.trips);

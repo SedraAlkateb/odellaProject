@@ -49,8 +49,8 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     tripId=id;
     notifyListeners();
   }
-  String lang=LanguageType.ENGLISH.getValue();
- Future<String> date(String d)async{
+  String lang="";
+String date(String d){
     if(lang== LanguageType.ENGLISH.getValue()){
       DateTime date = DateTime.parse(d);
       String formattedDate = DateFormat('EEEE, MMMM d, y', 'en_US').format(date);
@@ -60,6 +60,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
       String formattedDate = DateFormat('EEEE, d MMMM, y', 'ar').format(date);
       return formattedDate;
     }
+
 
   }
   time(String d){
@@ -108,10 +109,9 @@ Future<bool>  storeClaim( int trip) async {
       print("failer");
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
+      lang =await _appPreferences.getAppLanguage();
       setTrip(data.weeklyTrip!.trips);
       setEval(data.weeklyTrip?.evaluation??[]);
-
-      lang =await _appPreferences.getAppLanguage();
       notifyListeners();
     });
   }
