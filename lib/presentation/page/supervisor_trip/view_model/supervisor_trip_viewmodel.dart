@@ -28,6 +28,16 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
       snippet: 'Google Headquarters',
     ),
   );
+
+  void moveCameraToTargetLocation(LatLng targetLocation,GoogleMapController controller) async {
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: targetLocation,
+        zoom: 10.0,
+      ),
+    ));
+  }
+
   LatLng _latLng = LatLng(32.7132038, 36.566874);
   Marker getMarker() {
     return _marker;
@@ -91,14 +101,15 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
           //  googleMapController=await _controller.future;
           setStateScreen(0);
           setTripId(data.dataHomeSupervisor?.id ?? 0);
+          final GoogleMapController controller = await _controller.future;
+
           pusherClient = await _pusherTrip.createPusherClient();
           channel = await pusherClient!
               .subscribe("private-tracking.${data.dataHomeSupervisor?.id}");
           await channel.bind("client-tracking", (PusherEvent? event) {
             print(event?.data);
             if (event?.data != null) {
-
-              updateMarker(event!.data.toString());
+              updateMarker(event!.data.toString(), controller);
             }
           });
         } else {
@@ -129,8 +140,8 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
     }
   }
 
-
-  void updateMarker(String data) async{
+int m=0;
+  void updateMarker(String data,GoogleMapController controller) async{
     Position position;
     Map<String, dynamic> resultMap;
     resultMap = jsonDecode(data)  ;
@@ -138,6 +149,10 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
     print(position.lng);
     print(position.lat);
     LatLng latLng = LatLng(position.lat , position.lng);
+if(m==0){
+  moveCameraToTargetLocation(latLng,controller);
+m++;
+}
     MarkerId markerId = MarkerId('location');
     Marker marker = Marker(
       markerId: markerId,

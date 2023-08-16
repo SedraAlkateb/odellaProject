@@ -45,6 +45,7 @@ class _TripSupervisorState extends State<TripSupervisor> {
             onMapCreated: (mapController){
               if(model.getController().isCompleted){
                 model.getController().complete(mapController);
+
               }
             },
             initialCameraPosition: CameraPosition(
@@ -52,6 +53,7 @@ class _TripSupervisorState extends State<TripSupervisor> {
               zoom: _zoom,
             ),
             markers: Set.of((model.getMarker() != null) ? [model.getMarker()] : []),
+
           )
               :Provider.of<SupervisorTripViewModel>(context).getStateScreen()==1
               ?StateRenderer(
@@ -62,7 +64,9 @@ class _TripSupervisorState extends State<TripSupervisor> {
               ? StateRenderer(
               stateRendererType: StateRendererType.fullScreenErrorState,
               message: "something wrong",
-              retryActionFunction: () {})
+              retryActionFunction: () {
+                Provider.of<SupervisorTripViewModel>(context,listen: false).start();
+              })
               : StateRenderer(
               stateRendererType: StateRendererType.fullScreenEmptyState,
               message: "Not found any transmission lines",
@@ -74,7 +78,6 @@ class _TripSupervisorState extends State<TripSupervisor> {
 
   }
  late SupervisorTripViewModel viewModel;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

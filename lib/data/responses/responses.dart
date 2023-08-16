@@ -1,5 +1,6 @@
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:untitled/domain/models/models.dart';
 part 'responses.g.dart';
 @JsonSerializable()
 class BaseResponse {
@@ -1510,6 +1511,45 @@ class UserLAFResponse {
 }
 
 @JsonSerializable()
+class UserConfResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "firstName")
+  String? firstName;
+  @JsonKey(name: "lastName")
+  String? lastName;
+  @JsonKey(name: "email")
+  String? email;
+  @JsonKey(name: "phoneNumber")
+  String? phoneNumber;
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "expiredSubscriptionDate")
+  String? expiredSubscriptionDate;
+  @JsonKey(name: "tripUsers")
+  List<TripUserResponse>? tripUser;
+
+  UserConfResponse(
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.image,
+      this.expiredSubscriptionDate,
+      this.tripUser);
+
+  factory UserConfResponse.fromJson(Map<String,dynamic> json ) =>
+      _$UserConfResponseFromJson(json);
+
+//to json
+  Map<String,dynamic> toJson()=>
+      _$UserConfResponseToJson(this);
+
+}
+
+
+@JsonSerializable()
 class ClaimsDataResponse {
   @JsonKey(name: "id")
   int? id;
@@ -1594,7 +1634,7 @@ class DataHomeSupervisorResponse {
   @JsonKey(name: "lines")
   List<LineResponse>? lines;
   @JsonKey(name: "users")
-  List<UserLAFResponse>? users;
+  List<UserConfResponse>? users;
 
 
   DataHomeSupervisorResponse(this.id, this.time, this.availableSeats,
@@ -2062,6 +2102,7 @@ class UpdatePositionResponse  extends BaseResponse {
       _$UpdatePositionResponseToJson(this);
 
 }
+
 @JsonSerializable()
 class Position   {
   double lat;
@@ -2077,7 +2118,7 @@ class Position   {
 @JsonSerializable()
 class StudentPositionResponse  extends BaseResponse {
   @JsonKey(name:"data")
-List<UserLAFResponse>? users;
+List<UserConfResponse>? users;
   StudentPositionResponse(this.users); // from json
   factory StudentPositionResponse.fromJson(Map<String,dynamic>json)=>
       _$StudentPositionResponseFromJson(json);
@@ -2147,5 +2188,24 @@ class AlgorithmResponse  extends BaseResponse {
   // to json
   Map<String,dynamic>toJson()=>
       _$AlgorithmResponseToJson(this);
+
+}
+@JsonSerializable()
+class TripUserResponse{
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"user_id")
+  String? user_id;
+  @JsonKey(name:"trip_id")
+  String? trip_id;
+  @JsonKey(name:"studentAttendance")
+  String? studentAttendance;
+
+  TripUserResponse(this.id, this.user_id, this.trip_id, this.studentAttendance);
+  factory TripUserResponse.fromJson(Map<String,dynamic>json)=>
+      _$TripUserResponseFromJson(json);
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$TripUserResponseToJson(this);
 
 }

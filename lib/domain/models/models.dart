@@ -31,7 +31,7 @@ class Time{
   Time(this.id, this.start, this.date);
 }
 class StudentPosition{
-  List<User> users;
+  List<UserConf> users;
 
   StudentPosition(this.users);
 }
@@ -67,7 +67,7 @@ class DataHomeSupervisor{
   int availableSeats;
   List<DataTransferPositions>? dataTransferPositions;
   List<Line>? lines;
-  List<User>? users;
+  List<UserConf>? users;
 
   DataHomeSupervisor(this.id, this.time, this.availableSeats,
       this.dataTransferPositions, this.lines, this.users);
@@ -387,6 +387,19 @@ class User{
   User(this.id, this.firstName, this.lastName, this.email, this.phoneNumber,
       this.image, this.expiredSubscriptionDate);
 }
+class UserConf{
+ User user;
+List<TripUsers> triUser;
+  UserConf(this.user,this.triUser);
+}
+class TripUsers{
+  int id;
+  String user_id;
+  String TripId;
+  String StudentAttendance;
+  TripUsers(this.id, this.user_id, this.TripId, this.StudentAttendance);
+}
+
 class LostAndFoundData{
   int id;
   String description;

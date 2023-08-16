@@ -21,7 +21,7 @@ class NavbarProvider  with ChangeNotifier {
     NavbarDTO(label: LocaleKeys.profile.tr(),widget: ProfileView(),iconData: Icons.account_box_rounded),
 
     NavbarDTO(label:LocaleKeys.programmer.tr(),widget: ProgramsView(),iconData: Icons.chrome_reader_mode),
-    NavbarDTO(label: LocaleKeys.programmer.tr(),widget: TripSupervisor(),iconData: Icons.chrome_reader_mode),
+    NavbarDTO(label: LocaleKeys.programmer.tr(),widget: TripSupervisor(),iconData: Icons.location_on),
   ];
   int _selectedIndex = AppConstants.home;
   int get selectedIndex => _selectedIndex;

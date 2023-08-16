@@ -28,7 +28,7 @@ class BackLoginView extends StatelessWidget {
             TextButton(onPressed: (){
               _appPreferences.signOut().then((value) {
                 SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
+                  Navigator.pushNamed(context,Routes.afterSplashRoute);
                 });
               }
               );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_phoenix/generated/i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:pusher_client/pusher_client.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/data/network/pusher.dart';
@@ -88,19 +89,27 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             retryActionFunction: () {
                               Provider.of<HomeSuperVisorViewModel>(context,
                                       listen: false)
-                                  .getHomeSuperVisor();
+                                  .homeSupervisor();
                             })
                         : StateRenderer(
                             stateRendererType:
                                 StateRendererType.fullScreenEmptyState,
                             message: LocaleKeys.supervisortransferNow.tr(),
-                            retryActionFunction: () {
-                            })),
+                            retryActionFunction: () {})),
       );
     });
   }
 
   Widget screen1() {
+    RefreshController _refreshController =
+        RefreshController(initialRefresh: false);
+
+    void _onRefresh() async {
+      Provider.of<HomeSuperVisorViewModel>(context, listen: false)
+          .homeSupervisor();
+      _refreshController.refreshCompleted();
+    }
+
     return Consumer<HomeSuperVisorViewModel>(
       builder: (context, model, child) => Column(
         children: [
@@ -155,13 +164,12 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextButton(
-                        child: Text(
-                            "Get All student",
+                        child: Text("Get All student",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: getBoldStyle(
-                                color: ColorManager.sidBarIcon, fontSize: FontSize.s16)
-                        ),
+                                color: ColorManager.sidBarIcon,
+                                fontSize: FontSize.s16)),
                         onPressed: () {
                           model.setAllUser();
                         },
@@ -174,15 +182,13 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             color: ColorManager.card,
                           ),
                           child: Center(
-                            child: Text(
-                                "${model.getUser().length}",
+                            child: Text("${model.getUser().length}",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: getBoldStyle(
-                                    color: ColorManager.sidBarIcon, fontSize: FontSize.s16)
-                            ),
+                                    color: ColorManager.sidBarIcon,
+                                    fontSize: FontSize.s16)),
                           )),
-
                     ],
                   ),
                 ),
@@ -220,7 +226,6 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                     .id);
                           },
                           icon: Icon(Icons.qr_code_scanner)),
-
                     ],
                   ),
                 ),
@@ -235,12 +240,13 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
               padding: const EdgeInsets.symmetric(horizontal: AppPadding.p14),
               child: Row(
                 children: [
-
                   Container(
                     width: 200,
                     child: DropdownButtonFormField(
                       icon: const Icon(Icons.keyboard_arrow_down),
-                      hint: Text(LocaleKeys.transferPositions.tr(),),
+                      hint: Text(
+                        LocaleKeys.transferPositions.tr(),
+                      ),
                       validator: (value) {
                         if (value == null) {
                           return LocaleKeys.transferPositions.tr();
@@ -287,18 +293,35 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                       },
                     ),
                   ),
-                  TextButton(onPressed: (){
-                    Provider.of<HomeSuperVisorViewModel>(context, listen: false).bind();
-                  }, child: Text("b")),
-                  TextButton(onPressed: (){
-                    Provider.of<HomeSuperVisorViewModel>(context, listen: false).triggerEvent();
-                  }, child: Text("c"))
+                  /*
+                  TextButton(
+                      onPressed: () {
+                        Provider.of<HomeSuperVisorViewModel>(context,
+                                listen: false)
+                            .setupLocationStream1();
+                      },
+                      child: Text("a")),
+                  TextButton(
+                      onPressed: () {
+                        Provider.of<HomeSuperVisorViewModel>(context,
+                                listen: false)
+                            .bind();
+                      },
+                      child: Text("b")),
+                  TextButton(
+                      onPressed: () {
+                        Provider.of<HomeSuperVisorViewModel>(context,
+                                listen: false)
+                            .triggerEvent();
+                      },
+                      child: Text("c"))
+                   */
                 ],
               ),
             ),
           ),
           SizedBox(height: 2.h),
-         /*
+          /*
           Row(children: [
             model.getLocationData() != null
                 ? Text(
@@ -316,81 +339,83 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
           SizedBox(height: 2.h),
 
           Expanded(
-            child: ListView.separated(
-              itemBuilder: (_, index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 15.sp),
-                padding: EdgeInsets.all(20.sp),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: CircleAvatar(
-                        radius: 28,
-                        backgroundColor: Colors.grey,
+            child: SmartRefresher(
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: ListView.separated(
+                itemBuilder: (_, index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15.sp),
+                  padding: EdgeInsets.all(20.sp),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
                         child: CircleAvatar(
                           radius: 28,
-                          backgroundColor: Colors.white,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(28),
+                          backgroundColor: Colors.grey,
+                          child: CircleAvatar(
+                            radius: 28,
+                            backgroundColor: Colors.white,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(28),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${model.getUser()[index].firstName} ${model.getUser()[index].lastName}",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${model.getUser()[index].user.firstName} ${model.getUser()[index].user.lastName}",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 0.5.h,
-                              ),
-                              Text(
-                                model.getUser()[index].email,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                SizedBox(
+                                  height: 0.5.h,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 0.3.h,
-                              ),
-                              Text(
-                                model.getUser()[index].phoneNumber,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                Text(
+                                  model.getUser()[index].user.email,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )),
-                    ),
-                    Checkbox(
-                        value: isChecked,
-                        onChanged: isLocked
-                            ? null
-                            : (value) {
-                                setState(() {
-                                  isChecked = value!;
-                                  if (isChecked) {
+                                SizedBox(
+                                  height: 0.3.h,
+                                ),
+                                Text(
+                                  model.getUser()[index].user.phoneNumber,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            )),
+                      ),
+                      Checkbox(
+                          value: model.getAttendent(index),
+                          onChanged: model.getAttendent(index)
+                              ? null
+                              : (value) {
+                                  model.setAtt(index, value ?? false);
+                                  if (model.getAttendent(index)) {
                                     LoadingState(
                                             stateRendererType: StateRendererType
                                                 .popupLoadingState)
@@ -399,7 +424,8 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                             StateRendererType.popupLoadingState,
                                             LocaleKeys.loading.tr());
                                     model
-                                        .confirmQr(model.getUser()[index].id)
+                                        .confirmQr(
+                                            model.getUser()[index].user.id)
                                         .then((value) {
                                       if (value) {
                                         SuccessState("success")
@@ -426,15 +452,15 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                     });
                                     isLocked = true;
                                   }
-                                });
-                              }),
-                  ],
+                                }),
+                    ],
+                  ),
                 ),
+                separatorBuilder: (_, index) => SizedBox(
+                  height: 2.h,
+                ),
+                itemCount: model.getUser().length,
               ),
-              separatorBuilder: (_, index) => SizedBox(
-                height: 2.h,
-              ),
-              itemCount: model.getUser().length,
             ),
           ),
         ],
@@ -443,6 +469,15 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
   }
 
   Widget screen2() {
+    RefreshController _refreshController =
+        RefreshController(initialRefresh: false);
+
+    void _onRefresh() async {
+      Provider.of<HomeSuperVisorViewModel>(context, listen: false)
+          .homeSupervisor();
+      _refreshController.refreshCompleted();
+    }
+
     return Consumer<HomeSuperVisorViewModel>(
       builder: (context, model, child) => Column(
         children: [
@@ -488,100 +523,105 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              itemBuilder: (_, index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 25.sp),
-                padding: EdgeInsets.all(20.sp),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: CircleAvatar(
-                        radius: 28,
-                        backgroundColor: Colors.grey,
+            child: SmartRefresher(
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: ListView.separated(
+                itemBuilder: (_, index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25.sp),
+                  padding: EdgeInsets.all(20.sp),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
                         child: CircleAvatar(
                           radius: 28,
-                          backgroundColor: Colors.white,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(28),
-                            ),
-                            child: FadeInImage.assetNetwork(
-                              placeholder: ImageAssets.gray, // الصورة المؤقتة
-                              image: ImageDownloader.getUrl(model
-                                      .getHomeSuperVisor()
-                                      .users?[index]
-                                      .image ??
-                                  ""), // الصورة الفعلية
-                              fit: BoxFit.contain,
-                              imageErrorBuilder: (BuildContext context,
-                                  Object exception, StackTrace? stackTrace) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey, // الخلفية البديلة
-                                  ),
-                                );
-                              },
-                              fadeInDuration: Duration(milliseconds: 500),
-                              fadeOutDuration: Duration(milliseconds: 500),
+                          backgroundColor: Colors.grey,
+                          child: CircleAvatar(
+                            radius: 28,
+                            backgroundColor: Colors.white,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(28),
+                              ),
+                              child: FadeInImage.assetNetwork(
+                                placeholder: ImageAssets.gray, // الصورة المؤقتة
+                                image: ImageDownloader.getUrl(model
+                                        .getHomeSuperVisor()
+                                        .users?[index]
+                                        .user
+                                        .image ??
+                                    ""), // الصورة الفعلية
+                                fit: BoxFit.contain,
+                                imageErrorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey, // الخلفية البديلة
+                                    ),
+                                  );
+                                },
+                                fadeInDuration: Duration(milliseconds: 500),
+                                fadeOutDuration: Duration(milliseconds: 500),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${model.getUser()[index].firstName} ${model.getUser()[index].lastName}",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${model.getUser()[index].user.firstName} ${model.getUser()[index].user.lastName}",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 0.5.h,
-                            ),
-                            Text(
-                              model.getUser()[index].email,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: AppSize.s12,
-                                fontWeight: FontWeight.bold,
+                              SizedBox(
+                                height: 0.5.h,
                               ),
-                            ),
-                            SizedBox(
-                              height: 0.3.h,
-                            ),
-                            Text(
-                              model.getUser()[index].phoneNumber,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: AppSize.s12,
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                model.getUser()[index].user.email,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: AppSize.s12,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 0.3.h,
+                              ),
+                              Text(
+                                model.getUser()[index].user.phoneNumber,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: AppSize.s12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                separatorBuilder: (_, index) => SizedBox(
+                  height: 2.h,
+                ),
+                itemCount: model.getUser().length,
               ),
-              separatorBuilder: (_, index) => SizedBox(
-                height: 2.h,
-              ),
-              itemCount: model.getUser().length,
             ),
           ),
         ],

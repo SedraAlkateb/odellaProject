@@ -203,8 +203,8 @@ class _LoginViewState extends State<LoginView> {
                                 );
 
                               }else{
-                                ErrorState(StateRendererType.popupErrorState, "unAuthentication").dismissDialog(context);
-                                ErrorState(StateRendererType.popupErrorState, "unAuthentication").showPopup(context, StateRendererType.popupErrorState, "anAuth");
+                                ErrorState(StateRendererType.popupErrorState, model.getMessage()).dismissDialog(context);
+                                ErrorState(StateRendererType.popupErrorState, model.getMessage()).showPopup(context, StateRendererType.popupErrorState, model.getMessage());
                               }
                             }
 

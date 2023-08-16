@@ -97,6 +97,16 @@ extension UserResponseMapper on UserResponse? {
   }
 }
 
+extension UserTripConfResponseMapper on TripUserResponse? {
+  TripUsers toDomain() {
+    return TripUsers(
+        this?.id.orZero() ?? Constants.zero,
+        this?.user_id.orEmpty() ?? Constants.empty,
+      this?.trip_id.orEmpty() ?? Constants.empty,
+      this?.studentAttendance.orEmpty() ?? Constants.empty,
+    );
+  }
+}
 
 extension RoleResponseMapper on RoleResponse? {
   RoleModel toDomain() {
@@ -147,6 +157,28 @@ extension TodayTripsMapper on TodayTripsResponse? {
     );
   }
 }
+extension UserConfTripMapper on UserConfResponse? {
+  UserConf toDomain() {
+    List<TripUsers> response =
+    (this?.tripUser ?.map((roleResponse) => roleResponse.toDomain()) ??
+        const Iterable.empty())
+        .cast<TripUsers>()
+        .toList();
+    User user=User(
+      this?.id ?? Constants.zero,
+      this?.firstName ?? Constants.empty,
+      this?.lastName ?? Constants.empty,
+      this?.email ?? Constants.empty,
+      this?.phoneNumber ?? Constants.empty,
+      this?.image ?? Constants.empty,
+      this?.expiredSubscriptionDate ?? Constants.empty,);
+    return UserConf(
+        user,
+        response
+    );
+  }
+}
+
 
 extension DataHomeSuperVisorMapper on DataHomeSupervisorResponse? {
   DataHomeSupervisor toDomain() {
@@ -160,10 +192,10 @@ extension DataHomeSuperVisorMapper on DataHomeSupervisorResponse? {
         const Iterable.empty())
         .cast<Line>()
         .toList();
-    List<User> user =
+    List<UserConf> user =
     (this?.users?.map((roleResponse) => roleResponse.toDomain()) ??
         const Iterable.empty())
-        .cast<User>()
+        .cast<UserConf>()
         .toList();
     return DataHomeSupervisor(
         this?.id.orZero() ?? Constants.zero,
@@ -603,7 +635,7 @@ extension StudentPositionResponseMapper on StudentPositionResponse? {
     return StudentPosition(
       (this?.users?.map((dataResponse) => dataResponse.toDomain()) ??
           const Iterable.empty())
-          .cast<User>()
+          .cast<UserConf>()
           .toList(),
     );
   }
