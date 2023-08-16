@@ -68,8 +68,10 @@ class _SignUpViewState extends State<SignUpView> {
                     ? StateRenderer(
                         stateRendererType:
                             StateRendererType.fullScreenErrorState,
-                        message: "Loading",
-                        retryActionFunction: () {})
+                        message:Provider.of<SignUpViewModel>(context).getMessage() ,
+                        retryActionFunction: () {
+                          Provider.of<SignUpViewModel>(context).start();
+                        })
                     : StateRenderer(
                         stateRendererType:
                             StateRendererType.fullScreenEmptyState,
@@ -339,29 +341,36 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppPadding.p28),
-                        child: InkWell(
-                          onTap: () {
-                            if (_globalKey.currentState!.validate()) {
-                              Provider.of<SignUpViewModel>(context,
-                                      listen: false)
-                                  .setNum(1);
-                            }
-                          },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: ColorManager.icon,
-                                child: Icon(
-                                  Icons.keyboard_arrow_right_rounded,
-                                  color: ColorManager.white,
-                                  size: 60,
-                                )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+
+                        children: [
+                          Text(Provider.of<SignUpViewModel>(context).getMessage()),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppPadding.p28),
+                            child: InkWell(
+                              onTap: () {
+                                if (_globalKey.currentState!.validate()) {
+                                  Provider.of<SignUpViewModel>(context,
+                                          listen: false)
+                                      .setNum(1);
+                                }
+                              },
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: ColorManager.icon,
+                                    child: Icon(
+                                      Icons.keyboard_arrow_right_rounded,
+                                      color: ColorManager.white,
+                                      size: 60,
+                                    )),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   )
@@ -585,6 +594,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 )),
                           ),
                         ),
+                        Text(Provider.of<SignUpViewModel>(context).getMessage()),
                         InkWell(
                           onTap: () {
                             if (_globalKey.currentState!.validate()) {

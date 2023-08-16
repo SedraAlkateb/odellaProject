@@ -71,12 +71,8 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
               print(failure.massage);
         },
             (data)  async{
-              if(data.dailyReservationsModel?.length==0){
-                setStateScreen(3);
-              }else{
-                setStateScreen(0);
-                setDailyReservations(data.dailyReservationsModel ??[]);
-              }
+              setStateScreen(0);
+              setDailyReservations(data.dailyReservationsModel ??[]);
         });
   }
 

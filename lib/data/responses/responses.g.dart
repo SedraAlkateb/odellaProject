@@ -1264,6 +1264,32 @@ Map<String, dynamic> _$UserLAFResponseToJson(UserLAFResponse instance) =>
       'expiredSubscriptionDate': instance.expiredSubscriptionDate,
     };
 
+UserConfResponse _$UserConfResponseFromJson(Map<String, dynamic> json) =>
+    UserConfResponse(
+      json['id'] as int?,
+      json['firstName'] as String?,
+      json['lastName'] as String?,
+      json['email'] as String?,
+      json['phoneNumber'] as String?,
+      json['image'] as String?,
+      json['expiredSubscriptionDate'] as String?,
+      (json['tripUsers'] as List<dynamic>?)
+          ?.map((e) => TripUserResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$UserConfResponseToJson(UserConfResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'email': instance.email,
+      'phoneNumber': instance.phoneNumber,
+      'image': instance.image,
+      'expiredSubscriptionDate': instance.expiredSubscriptionDate,
+      'tripUsers': instance.tripUser,
+    };
+
 ClaimsDataResponse _$ClaimsDataResponseFromJson(Map<String, dynamic> json) =>
     ClaimsDataResponse(
       json['id'] as int?,
@@ -1348,7 +1374,7 @@ DataHomeSupervisorResponse _$DataHomeSupervisorResponseFromJson(
           ?.map((e) => LineResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['users'] as List<dynamic>?)
-          ?.map((e) => UserLAFResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => UserConfResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -1808,7 +1834,7 @@ StudentPositionResponse _$StudentPositionResponseFromJson(
         Map<String, dynamic> json) =>
     StudentPositionResponse(
       (json['data'] as List<dynamic>?)
-          ?.map((e) => UserLAFResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => UserConfResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     )
       ..status = json['status'] as int?
@@ -1893,4 +1919,20 @@ Map<String, dynamic> _$AlgorithmResponseToJson(AlgorithmResponse instance) =>
       'status': instance.status,
       'message': instance.massage,
       'data': instance.alg,
+    };
+
+TripUserResponse _$TripUserResponseFromJson(Map<String, dynamic> json) =>
+    TripUserResponse(
+      json['id'] as int?,
+      json['user_id'] as String?,
+      json['trip_id'] as String?,
+      json['studentAttendance'] as String?,
+    );
+
+Map<String, dynamic> _$TripUserResponseToJson(TripUserResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.user_id,
+      'trip_id': instance.trip_id,
+      'studentAttendance': instance.studentAttendance,
     };

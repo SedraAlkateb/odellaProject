@@ -52,51 +52,59 @@ class _MessageList extends State<MessageList> {
                 trailing:
                 const Icon(Icons.circle,color: Colors.red,),
                 onTap: () {
-                    // if( Provider.of<Not>(context,listen: false).getCount()!=0) {
-                    //   Provider.of<Not>(context, listen: false).updateDec();
-                    // }
+                  // if( Provider.of<Not>(context,listen: false).getCount()!=0) {
+                  //   Provider.of<Not>(context, listen: false).updateDec();
+                  // }
+                  // Provider.of<Not>(context, listen: false).updateDec();
+                  // Navigator.pushNamed(context, Routes.notMessageRealTime,
+                  //   arguments: MessageArguments(message, false),);
+
+                  if( Provider.of<Not>(context,listen: false).getCount()==0) {
+                    Provider.of<Not>(context,listen: true).getCount()==0;
+                  }
                   Provider.of<Not>(context, listen: false).updateDec();
-                  Navigator.pushNamed(context, Routes.notMessageRealTime,
-                    arguments: MessageArguments(message, false),);
+                  Provider.of<Not>(context, listen: false).setIndex(index);
+                  Navigator.pushNamed(context, Routes.notMessageRealTime, arguments: MessageArguments(message, false),);
+
                 },
-         //         leading:iconNotification(int.parse(message.))
+                //         leading:iconNotification(int.parse(message.))
 
               );
             }),
         Consumer<Not>(
           builder: (context, model, child) =>
-           ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const SizedBox(
-                width: double.infinity,
-                height: AppSize.s20,
-                // color: Color,
-              ),
-              itemCount: model.getNotification().length,
-              itemBuilder: (context, index) {
-                NotificationModel message = model.getNotification()[index];
-                return
-                  Provider.of<Not>(context).getNotification()[index].isRead=="0"?
+              ListView.separated(
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: double.infinity,
+                    height: AppSize.s20,
+                    // color: Color,
+                  ),
+                  itemCount: model.getNotification().length,
+                  itemBuilder: (context, index) {
+                    NotificationModel message = model.getNotification()[index];
+                    return
+                      Provider.of<Not>(context).getNotification()[index].isRead=="0"?
                       ListTile(
-                    title: Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text(message.body),
-                    trailing: const Icon(Icons.notifications_active,color: Colors.red,),
-                onTap: () {
-                      model.getNotificationRead(model.getNotification()[index].id);
-                      Navigator.pushNamed(context, Routes.notMessage);
-                    },
+                          title: Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
+                          subtitle: Text(message.body),
+                          trailing: const Icon(Icons.notifications_active,color: Colors.red,),
+                          onTap: () {
+                            model.getNotificationRead(model.getNotification()[index].id);
+                            Navigator.pushNamed(context, Routes.notMessage);
+                          },
                           leading:iconNotification(int.parse(message.type))
-                ):
-                ListTile(
-                title: Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
-                subtitle: Text(message.body),
-                trailing: const Icon(Icons.notifications_active,color: Colors.blue),
-                onTap: () {
-                Navigator.pushNamed(context, Routes.notMessage);
-                },
-                    leading:iconNotification(int.parse(message.type))
-                );
-              }),
+                      ):
+                      ListTile(
+                          title: Text(message.title,style:const TextStyle(fontWeight: FontWeight.bold),),
+                          subtitle: Text(message.body),
+                          trailing: const Icon(Icons.notifications_active,color: Colors.blue),
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.notMessage);
+                          },
+                          leading:iconNotification(int.parse(message.type))
+                      );
+                  }),
         ),
 
       ],

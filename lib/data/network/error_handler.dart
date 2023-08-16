@@ -5,6 +5,7 @@ class ErrorHandler implements Exception{
 late Failure failure;
 ErrorHandler.handle(dynamic error){
   if(error is DioError){
+
     //dio error so its an error from response of the api or from dio itself
     failure=_handleError(error);
   }else{
@@ -25,18 +26,26 @@ Failure _handleError(DioError error){
    return   DataSource.RECIEVE_TIMEOUT.getFailure();
 
     case DioErrorType.response:
-    if(error.response!=null &&
-        error.response?.statusCode!=null &&
-        error.response?.statusMessage!=null){
-      return Failure(error.response?.statusCode ?? 0,error.response?.statusMessage?? "");
-    }else{
-      return DataSource.DEFAULT.getFailure();
-    }
+      final responseBody = error.response?.data;
+      String message="";
+      String errors="";
+      if (responseBody != null) {
+        message = responseBody['message'];
+        final errors = responseBody['errors'];
+
+        print('Error Message: $message');
+        return Failure(422, message);
+
+      }else{
+        return DataSource.DEFAULT.getFailure();
+
+      }
+
     case DioErrorType.cancel:
      return DataSource.CANCEL.getFailure();
 
     case DioErrorType.other:
-     return DataSource.DEFAULT.getFailure();
+      return DataSource.DEFAULT.getFailure();
   }
 }
 enum DataSource {
@@ -47,7 +56,7 @@ enum DataSource {
   UNAUTORISED,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
-  Unprocessable_Content,
+//  Unprocessable_Content,
 
   CONNECT_TIOMOUT,
   CANCEL,
@@ -101,9 +110,7 @@ Failure  getFailure(){
      case DataSource.DEFAULT:
        return Failure(ResponseCode.DEFAULT, ResponseMassage.DEFAULT);
 
-     case DataSource.Unprocessable_Content:
-       return Failure(ResponseCode.Unprocessable_Content, ResponseMassage.Unprocessable_Content);
-       break;
+
    }
   }
 }
@@ -114,7 +121,7 @@ class ResponseCode{
   static const int UNAUTORISED =401;//failure,user is not authorised
   static const int FORBIDDEN =403;//failure ,Api rejected request
   static const int NOT_FOUND=404;
-  static const int Unprocessable_Content =422;//success with no data (no content)
+ // static const int Unprocessable_Content =422;//success with no data (no content)
 
   static const int INTERNAL_SERVER_ERROR =500;//failure,crash in server side
 //local status code
@@ -135,7 +142,7 @@ class ResponseMassage{
   static const String FORBIDDEN ="Forbidden request ,Try again later";//failure ,Api rejected request
   static const String INTERNAL_SERVER_ERROR ="Some thing went wrong ,Try again later";//failure,crash in server side
   static const String NOT_FOUND="Forbidden request ,Try again later";
-  static const String Unprocessable_Content ="Unprocessable Content";//success with no data (no content)
+ // static const String Unprocessable_Content ="Unprocessable Content";//success with no data (no content)
 
 //local status code
 

@@ -121,7 +121,7 @@ class _ProfileViewState extends State<ProfileView> {
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: EdgeInsets.all(8.sp),
+                        padding: EdgeInsets.all(16.sp),
                         child: Column(
                           children: [
                             Row(
@@ -236,7 +236,9 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ],
                                 ),
-
+                                SizedBox(
+                                  width: 3.w,
+                                ),
                                 IconButton(onPressed: ()
                                 {
                                   Navigator.pushNamed(context, Routes.qrCodeViewRoute);
@@ -788,6 +790,9 @@ class _ProfileViewState extends State<ProfileView> {
                                           .bodyLarge,
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  width: 18.w,
                                 ),
                                 IconButton(onPressed: ()
                                 {

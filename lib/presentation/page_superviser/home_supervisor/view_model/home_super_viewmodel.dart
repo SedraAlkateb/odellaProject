@@ -25,12 +25,28 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   HomeSupervisorUseCase _homeSupervisorUseCase;
   StudentPositionUseCase _studentPositionUseCase;
   HomeSuperVisorViewModel(this._homeSupervisorUseCase,this._confirmQrUseCase,this._studentPositionUseCase);
-  List<User>search =[];
+  List<UserConf>search =[];
   int _position=0;
   bool _succ=false;
   bool getSucc(){
     return _succ;
   }
+ bool getAttendent(int index){
+    if(search[index].triUser.first.StudentAttendance == "0")
+    {
+      return  false;
+    }else
+      {
+        return true;
+      }
+ }
+ setAtt(int index,bool a){
+    if(a==true){
+      search[index] .triUser.first.StudentAttendance="1";
+    }else{
+      search[index] .triUser.first.StudentAttendance="0";
+    }
+ }
   setPosition(int position){
     _position=position;
     notifyListeners();
@@ -130,11 +146,24 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
         },
             (data)  async{
           studentPos=true;
-          search=data.users;
+          positionUser(data.users);
           notifyListeners();
         });
     return studentPos;
   }
+  positionUser(List<UserConf> user){
+   List<UserConf> s   =[];
+    user.forEach((element) {
+      element.triUser.forEach((value) {
+        if(value.TripId==_homeSuperVisor.id.toString()){
+          s.add(UserConf(element.user, [value]));
+        }
+      });
+    });
+    search=s;
+    notifyListeners();
+  }
+
 
   late DataHomeSupervisor _homeSuperVisor;
   List<DataTransferPositions> positions=[];
@@ -165,10 +194,10 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   setSearch( String value){
     search= _homeSuperVisor.users?.where(
             (element){
-          final fName=element.lastName.toLowerCase();
-          final lName=element.firstName.toLowerCase();
-          final phone=element.phoneNumber.toLowerCase();
-          final email =element.email.toLowerCase();
+          final fName=element.user.lastName.toLowerCase();
+          final lName=element.user.firstName.toLowerCase();
+          final phone=element.user.phoneNumber.toLowerCase();
+          final email =element.user.email.toLowerCase();
           final sear=value.toLowerCase();
           return fName.contains(sear) ||
               lName.contains(sear)  ||
@@ -178,7 +207,7 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
     notifyListeners();
 
   }
-  List<User> getUser(){
+  List<UserConf> getUser(){
     return search;
   }
   int getTimezoneOffset(String timezone) {
@@ -208,7 +237,7 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
             setStateScreen(0);
             await  setHomeSuperVisor(data.dataHomeSupervisor!);
             setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
-          //  _setupLocationStream(data.dataHomeSupervisor!.id);
+           _setupLocationStream(data.dataHomeSupervisor!.id);
           }else{
             setStateScreen(3);
           }
@@ -240,7 +269,7 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
     if (_locationSubscription != null) {
       _trackingLocation = false;
       _locationSubscription?.cancel();
-      //  _locationSubscription.pause();
+      _locationSubscription = null;
     }
     cancelTrip();
     notifyListeners();
@@ -296,7 +325,6 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
       pusherClient= await  _pusherTrip.createPusherClient();
       channel = pusherClient!.subscribe("private-tracking.${tripId}");
    //   pusherClientDaily= await  _pusherTrip.createPusherDailyReservation();
-
 
       channel.bind('pusher:subscription_succeeded', (event) {
         _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {

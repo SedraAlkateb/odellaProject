@@ -11,8 +11,6 @@ import 'package:untitled/domain/usecase/transportation_lines_usecase.dart';
 import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/common/freezed_data.dart';
 import 'package:untitled/presentation/common/image/image.dart';
-import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
-import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 
 import '../../../domain/usecase/areas_usecase.dart';
 
@@ -43,7 +41,6 @@ class SignUpViewModel extends BaseViewModel
   List<DataTransferPositions> _position=[];
   List<City> _cities=[];
   List<Area> _areas=[];
-
   var signUpObject=SignUpObject(2,1,"asddassad",0,"","","","","",0,0,null,0);
   var isLog=false;
   var isLin=false;
@@ -59,7 +56,16 @@ var nnum=0;
     notifyListeners();
     return super.setDialog(state);
   }
-@override
+  String message="";
+
+setMessage(String m){
+  message=m;
+  notifyListeners();
+}
+String getMessage(){
+  return message;
+}
+  @override
   setStateScreen(int state) {
 notifyListeners();
     return super.setStateScreen(state);
@@ -226,10 +232,10 @@ setNum(int n){
             (failure)  {
               setDialog(2);
               s=false;
+              setMessage(failure.massage);
               },
             (data)  {
               setDialog(0);
-
               isLog=true;
               s=true;
           notifyListeners();
