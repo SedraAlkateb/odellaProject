@@ -133,6 +133,9 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                 ),
               ),
               SizedBox(height: 4.h),
+              TextButton(onPressed: (){
+                model.triggerEvent();
+              }, child: Text("jkbbkb")),
               Expanded(
                 child: model.getDailyReservations().length == 0
                     ? Center(

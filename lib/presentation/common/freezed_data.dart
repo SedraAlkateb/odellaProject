@@ -75,3 +75,17 @@ class LostItemObject with _$LostItemObject{
       File? image,
   )=_LostItemObject;
 }
+
+@freezed
+
+class DailyReservationObject with _$DailyReservationObject{
+  factory DailyReservationObject(
+      int tripId,
+      String name,
+      int phone,
+ int transfer_position_id,
+      int seet,
+      String fcm_token
+
+      )=_DailyReservationObject;
+}

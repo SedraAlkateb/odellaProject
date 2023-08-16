@@ -17,7 +17,7 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 
 class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   AppPreferences _appPreferences = instance<AppPreferences>();
-   PusherClient? pusherClient;
+  PusherClient? pusherClient;
   late Channel channel;
   Completer<GoogleMapController> _controller=Completer();
   late Marker _marker = Marker(
@@ -34,7 +34,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   }
   Completer<GoogleMapController> getController(){
     return _controller;
-}
+  }
   getLatLng() {
     return _latLng;
   }
@@ -61,7 +61,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   Future<String> getLocalTime() async {
     String _time = await FlutterNativeTimezone.getLocalTimezone();
     DateTime now =
-        DateTime.now().toUtc().add(Duration(hours: getTimezoneOffset(_time)));
+    DateTime.now().toUtc().add(Duration(hours: getTimezoneOffset(_time)));
     final DateFormat formatter = DateFormat('HH:mm', 'en');
     final String formatted = formatter.format(now);
 
@@ -75,20 +75,20 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
     int hours = offset.inHours;
     return hours;
   }
-late  GoogleMapController googleMapController;
+  late  GoogleMapController googleMapController;
   tripSupervisor() async {
     setSucc(false);
     setStateScreen(1);
     (await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
-        (failure) {
-      setStateScreen(2);
-      setSucc(false);
-      print(failure.massage);
-    }, (data) async {
+            (failure) {
+          setStateScreen(2);
+          setSucc(false);
+          print(failure.massage);
+        }, (data) async {
       if (data != null) {
         if (data.dataHomeSupervisor != null &&
             data.dataHomeSupervisor?.id != 0) {
-        //  googleMapController=await _controller.future;
+          //  googleMapController=await _controller.future;
           setStateScreen(0);
           setTripId(data.dataHomeSupervisor?.id ?? 0);
           pusherClient = await _pusherTrip.createPusherClient();

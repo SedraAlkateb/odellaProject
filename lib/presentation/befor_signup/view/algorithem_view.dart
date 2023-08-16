@@ -54,9 +54,9 @@ class _SelectTimesState extends State<SelectTimes> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 1.h,),
+                        SizedBox(height: 1),
                         Text("day"),
-                        SizedBox(height: 1.h,),
+                        SizedBox(height: 1,),
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -67,21 +67,21 @@ class _SelectTimesState extends State<SelectTimes> {
                                 Column(
                                   children: [
                                     SizedBox(
-                                      height:3.h,
+                                      height:3,
                                     ),
                                     Text(LocaleKeys.Gotime.tr())
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 7.w,
+                                  width: 7,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     //Text("   ${LocaleKeys.university.tr()} "),
                                     SizedBox(
-                                      height: 10.h,
-                                      width: 65.w,
+                                      height: 10,
+                                      width: 65,
                                       child: DropdownButtonFormField(
                                           icon:
                                           const Icon(Icons.keyboard_arrow_down),
@@ -118,21 +118,21 @@ class _SelectTimesState extends State<SelectTimes> {
                                 Column(
                                   children: [
                                     SizedBox(
-                                      height: 3.h,
+                                      height: 3,
                                     ),
                                     Text(LocaleKeys.Returntime.tr())
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 1.w,
+                                  width: 1,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     //Text("   ${LocaleKeys.university.tr()} "),
                                     SizedBox(
-                                      height: 14.h,
-                                      width: 65.w,
+                                      height: 14,
+                                      width: 65,
                                       child: DropdownButtonFormField(
                                           icon:
                                           const Icon(Icons.keyboard_arrow_down),

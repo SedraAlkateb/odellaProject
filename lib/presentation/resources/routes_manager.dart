@@ -101,6 +101,7 @@ class RouteGenerator {
       case Routes.algorithem:
         return MaterialPageRoute(builder: (_) => const SelectTimes());
       case Routes.polyLineDailyView:
+        initDailyReservationMap();
         return MaterialPageRoute(builder: (_) => const PolyLineDailyView());
       case Routes.backToLogin:
         return MaterialPageRoute(builder: (_) => const BackLoginView());

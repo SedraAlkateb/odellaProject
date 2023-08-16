@@ -51,9 +51,11 @@ import 'package:untitled/domain/usecase/update_student_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_image_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_password_usecase.dart';
 import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
+import 'package:untitled/domain/usecase/user_daily_reservations_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
+import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/login/view_model/login_viewmodel.dart';
 import 'package:untitled/presentation/map_position/view_model/map_position_view_model.dart';
@@ -119,6 +121,14 @@ Future<void>initDailyReservation() async{
   if(!GetIt.I.isRegistered<TodayTripsUseCase>()){
     instance.registerFactory<TodayTripsUseCase>(() =>TodayTripsUseCase(instance()));
     instance.registerFactory<DailyReservationViewModel>(() =>DailyReservationViewModel(instance()));
+
+  }
+
+}
+Future<void>initDailyReservationMap() async{
+  if(!GetIt.I.isRegistered<UserDailyReservationsUseCase>()){
+    instance.registerFactory<UserDailyReservationsUseCase>(() =>UserDailyReservationsUseCase(instance()));
+    instance.registerFactory<DailyReservationMapViewModel>(() =>DailyReservationMapViewModel(instance()));
 
   }
 
