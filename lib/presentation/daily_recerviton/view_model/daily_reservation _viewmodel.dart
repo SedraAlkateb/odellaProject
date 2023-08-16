@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:pusher_client/pusher_client.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/data/network/pusher.dart';
+import 'package:untitled/data/responses/responses.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/position_line_usecase.dart';
 import 'package:untitled/domain/usecase/today_trips_usecase.dart';
@@ -20,6 +22,8 @@ class DailyReservationViewModel extends BaseViewModel with ChangeNotifier{
   DailyReservationViewModel(this._todayTripsUseCase);
  late TodayTrips? data;
   late List<DataTodayTrips> searchData=[];
+  late List<DataTransferPositions>? position=[];
+late DataTodayTrips today;
   int _lineID=0;
   setLine(int line){
     _lineID=line;
@@ -27,6 +31,9 @@ class DailyReservationViewModel extends BaseViewModel with ChangeNotifier{
   }
  int getLine(){
     return _lineID;
+  }
+  List<DataTransferPositions> getPosition(){
+    return position ??[];
   }
 @override
   setStateScreen(int state) {
@@ -36,6 +43,14 @@ class DailyReservationViewModel extends BaseViewModel with ChangeNotifier{
   @override
   void start() {
     homeSupervisor();
+  }
+  setTripId(DataTodayTrips trip){
+    today=trip;
+    position=trip.dataTransferPositions;
+    notifyListeners();
+  }
+ int getTripId(){
+    return today.id;
   }
   setSearch( String value){
     List<String>position=[];
@@ -126,30 +141,32 @@ class DailyReservationViewModel extends BaseViewModel with ChangeNotifier{
     cancelTrip();
     notifyListeners();
   }
+List<Position> pos=[];
+  int i=0;
+  String po="";
+  filterLine()async{
+    print("nkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkobject");
+    pusherClient = await _pusherTrip.createPusherClient();
+    data?.dayTrips?.forEach((element)async {
+      channel = await pusherClient!
+          .subscribe("tracking.${element.id}");
+      await channel.bind("client-tracking", (PusherEvent? event) {
+        print(event?.data);
+        if (event?.data != null) {
+          po= event!.data.toString();
+          Map<String, dynamic> resultMap;
+          resultMap = jsonDecode(po)  ;
+          Position position = Position.fromJson(resultMap);
+          pos.add(position);
+          pusherClient?.unsubscribe("tracking.${element.id}");
+        }
+      });
+      i++;
+    });
+
+  }
   //final location = loc.Location() ;
   loc.Location location = loc.Location();
-  Future<void> _setupLocationStream(int tripId) async {
-    //_locationData = await LocationService().getLocation();
-    try {
-      pusherClient= await  _pusherTrip.createPusherClient();
-      channel = pusherClient!.subscribe("private-tracking.${tripId}");
-      _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {
-        if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
-          print(newLocationData.longitude);
-          Map<String, double> eventData = {  'lng':newLocationData.longitude ??0.0,'lat':newLocationData.latitude ??0.0};
-
-          channel.trigger("tracking", eventData);
-          //newLocationData.longitude ///newLocationData.latitude
-        }//client-tracking
-        setLocation(newLocationData, null);
-      });
-    }on Exception catch (e) {
-      print(e);
-      print("_scaffoldKey.currentState?.showSnackBar("
-          " SnackBar(content: Text('Error refreshing location!')));");
-      setLocation(null, e.toString());
-    }
-  }
   cancelTrip(){
     if(pusherClient!=null){
       pusherClient?.disconnect();

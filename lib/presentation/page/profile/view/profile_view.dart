@@ -36,7 +36,10 @@ class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel profileViewModel = instance<ProfileViewModel>();
   void didChangeDependencies() {
     if( Provider.of<ProfileViewModel>(context).getStateScreen() == 4){
-      Navigator.pushNamed(context, Routes.backToLogin);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.pushReplacementNamed(context, Routes.backToLogin);
+
+      });
     }
     super.didChangeDependencies();
   }

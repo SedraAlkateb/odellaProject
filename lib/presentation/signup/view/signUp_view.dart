@@ -190,7 +190,8 @@ class _SignUpViewState extends State<SignUpView> {
                           right: AppPadding.p28,
                           bottom: AppPadding.p28,
                         ),
-                        child: TextFormField(
+                        child:
+                        TextFormField(
                           controller: _firstNameController,
                           validator: (value) {
                             if (value!.isEmpty) {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/app/extentions.dart';
 import 'package:untitled/lang/local_keys.g.dart';
+import 'package:untitled/presentation/common/freezed_data.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
 import 'package:untitled/presentation/map/poltline_map_view.dart';
@@ -27,7 +29,7 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
     });
     super.initState();
   }
-  final _forKey = GlobalKey<FormState>();
+  final _globalKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController seatsNumberController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
@@ -94,9 +96,9 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                       children: [
                                         RadioListTile(
                                           value: index,
-                                          groupValue: Provider.of<DailyReservationMap>(context).getSelectedValue(),
+                                          groupValue: Provider.of<DailyReservationMapViewModel>(context).getSelectedValue(),
                                           onChanged: (value) {
-                                            Provider.of<DailyReservationMap>(context,listen: false).setSelectedValue(value ??0);
+                                            Provider.of<DailyReservationMapViewModel>(context,listen: false).setSelectedValue( Provider.of<DailyReservationViewModel>(context).getPosition()[index].id);
                                           },
                                           title: Text(
                                             Provider.of<DailyReservationViewModel>(context).getTodayTrip()!.dataTransferPositions![index].name,
@@ -114,10 +116,11 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                       children: [
                                         RadioListTile(
                                           value: index,
-                                          groupValue: Provider.of<DailyReservationMap>(context).getSelectedValue(),
+                                          groupValue: Provider.of<DailyReservationMapViewModel>(context).getSelectedValue(),
                                           onChanged: (value) {
                                             setState(() {
-                                              Provider.of<DailyReservationMap>(context,listen: false).setSelectedValue(value??0);                                            });
+                                              Provider.of<DailyReservationMapViewModel>(context,listen: false).setSelectedValue(value??0);
+                                            });
                                           },
                                           title: Text(
                                             Provider.of<DailyReservationViewModel>(context).getTodayTrip()!.dataTransferPositions![index].name,
@@ -135,7 +138,7 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                 elevation: 2,
                                 //color: ColorManager.profile,
                                 child: Form(
-                                  key: _forKey,
+                                  key: _globalKey,
                                   child: Column(
                                     children: [
                                       Padding(
@@ -165,8 +168,6 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                             bottom: AppPadding.p20),
                                         child: Column(children: [
                                           // Center(child: Image.asset(ImageAssets.logo4)),
-
-
                                           const SizedBox(
                                             height: 50,
                                           ),
@@ -179,9 +180,9 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                                 if (value!.isEmpty) {
                                                   return LocaleKeys.errorFirstName.tr();
                                                 } else {
-                                                  // Provider.of<SignUpViewModel>(context,
-                                                  // listen: false)
-                                                  //     .setFirstName(value);
+                                                   Provider.of<DailyReservationMapViewModel>(context,
+                                                   listen: false)
+                                                      .setName(value);
                                                 }
                                                 return null;
                                               },
@@ -205,9 +206,9 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                                 if (value!.isEmpty) {
                                                   return LocaleKeys.errorPhoneNumber.tr();
                                                 } else {
-                                                  // Provider.of<SignUpViewModel>(context,
-                                                  // listen: false)
-                                                  //     .setFirstName(value);
+                                                  Provider.of<DailyReservationMapViewModel>(context,
+                                                      listen: false)
+                                                      .setPhone(int.tryParse(value)??0);
                                                 }
                                                 return null;
                                               },
@@ -221,34 +222,6 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 20,),
-                                          // Padding(
-                                          //   padding: const EdgeInsets.only(
-                                          //       left: AppPadding.p28, right: AppPadding.p28),
-                                          //   child: DropdownButtonFormField(
-                                          //     icon: const Icon(Icons.keyboard_arrow_down),
-                                          //     hint:
-                                          //     Text(LocaleKeys.transferPositions.tr()),
-                                          //     validator: (value) {
-                                          //       if (value == null) {
-                                          //         return LocaleKeys.transferPositions.tr();
-                                          //       }
-                                          //       return null;
-                                          //     },
-                                          //     items: _register1
-                                          //         .getPosition()
-                                          //         .map((e) => DropdownMenuItem(
-                                          //       value: e,
-                                          //       child: Text(" ${e.name}"),
-                                          //     ))
-                                          //         .toList(),
-                                          //     onChanged: (val) {
-                                          //       Provider.of<SignUpViewModel>(context,
-                                          //           listen: false)
-                                          //           .setTransferPositionId(val!.id);
-                                          //     },
-                                          //   ),
-                                          // ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: AppPadding.p20, right: AppPadding.p20),
@@ -258,9 +231,10 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                                 if (value!.isEmpty) {
                                                   return LocaleKeys.seat.tr();
                                                 } else {
-                                                  // Provider.of<SignUpViewModel>(context,
-                                                  // listen: false)
-                                                  //     .setFirstName(value);
+                                                  print( "${int.tryParse(value)??0}nsfnfsl");
+                                                  Provider.of<DailyReservationMapViewModel>(context,
+                                                  listen: false)
+                                                      .setSeat(int.tryParse(value)??0 );
                                                 }
                                                 return null;
                                               },
@@ -277,7 +251,22 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                           SizedBox(height: 90,),
                                           ElevatedButton(onPressed: ()
                                           {
-
+                                            if (_globalKey.currentState!.validate()) {
+                                              LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, " Loading");
+                                              Provider.of<DailyReservationMapViewModel>(context,
+                                                  listen: false).setTrip(Provider.of<DailyReservationViewModel>(context,listen: false).tripId);
+                                              Provider.of<DailyReservationMapViewModel>(context,
+                                                  listen: false)
+                                                  .getDailyReservation().then((value) {
+                                                if(value==false){
+                                                  ErrorState(StateRendererType.popupErrorState, "vf").dismissDialog(context);
+                                                  ErrorState(StateRendererType.popupErrorState, "vf").showPopup(context, StateRendererType.popupErrorState, "message");
+                                                }else{
+                                                  ContentState().dismissDialog(context);
+                                                }
+                                              }
+                                              );
+                                            }
                                           }, child: Text(LocaleKeys.send.tr()))
                                         ]),
                                       ),

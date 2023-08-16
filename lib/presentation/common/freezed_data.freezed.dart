@@ -1403,3 +1403,225 @@ abstract class _LostItemObject implements LostItemObject {
   _$$_LostItemObjectCopyWith<_$_LostItemObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$DailyReservationObject {
+  int get tripId => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  int get phone => throw _privateConstructorUsedError;
+  int get transfer_position_id => throw _privateConstructorUsedError;
+  int get seet => throw _privateConstructorUsedError;
+  String get fcm_token => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $DailyReservationObjectCopyWith<DailyReservationObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DailyReservationObjectCopyWith<$Res> {
+  factory $DailyReservationObjectCopyWith(DailyReservationObject value,
+          $Res Function(DailyReservationObject) then) =
+      _$DailyReservationObjectCopyWithImpl<$Res, DailyReservationObject>;
+  @useResult
+  $Res call(
+      {int tripId,
+      String name,
+      int phone,
+      int transfer_position_id,
+      int seet,
+      String fcm_token});
+}
+
+/// @nodoc
+class _$DailyReservationObjectCopyWithImpl<$Res,
+        $Val extends DailyReservationObject>
+    implements $DailyReservationObjectCopyWith<$Res> {
+  _$DailyReservationObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tripId = null,
+    Object? name = null,
+    Object? phone = null,
+    Object? transfer_position_id = null,
+    Object? seet = null,
+    Object? fcm_token = null,
+  }) {
+    return _then(_value.copyWith(
+      tripId: null == tripId
+          ? _value.tripId
+          : tripId // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as int,
+      transfer_position_id: null == transfer_position_id
+          ? _value.transfer_position_id
+          : transfer_position_id // ignore: cast_nullable_to_non_nullable
+              as int,
+      seet: null == seet
+          ? _value.seet
+          : seet // ignore: cast_nullable_to_non_nullable
+              as int,
+      fcm_token: null == fcm_token
+          ? _value.fcm_token
+          : fcm_token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DailyReservationObjectCopyWith<$Res>
+    implements $DailyReservationObjectCopyWith<$Res> {
+  factory _$$_DailyReservationObjectCopyWith(_$_DailyReservationObject value,
+          $Res Function(_$_DailyReservationObject) then) =
+      __$$_DailyReservationObjectCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int tripId,
+      String name,
+      int phone,
+      int transfer_position_id,
+      int seet,
+      String fcm_token});
+}
+
+/// @nodoc
+class __$$_DailyReservationObjectCopyWithImpl<$Res>
+    extends _$DailyReservationObjectCopyWithImpl<$Res,
+        _$_DailyReservationObject>
+    implements _$$_DailyReservationObjectCopyWith<$Res> {
+  __$$_DailyReservationObjectCopyWithImpl(_$_DailyReservationObject _value,
+      $Res Function(_$_DailyReservationObject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tripId = null,
+    Object? name = null,
+    Object? phone = null,
+    Object? transfer_position_id = null,
+    Object? seet = null,
+    Object? fcm_token = null,
+  }) {
+    return _then(_$_DailyReservationObject(
+      null == tripId
+          ? _value.tripId
+          : tripId // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == transfer_position_id
+          ? _value.transfer_position_id
+          : transfer_position_id // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == seet
+          ? _value.seet
+          : seet // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == fcm_token
+          ? _value.fcm_token
+          : fcm_token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DailyReservationObject implements _DailyReservationObject {
+  _$_DailyReservationObject(this.tripId, this.name, this.phone,
+      this.transfer_position_id, this.seet, this.fcm_token);
+
+  @override
+  final int tripId;
+  @override
+  final String name;
+  @override
+  final int phone;
+  @override
+  final int transfer_position_id;
+  @override
+  final int seet;
+  @override
+  final String fcm_token;
+
+  @override
+  String toString() {
+    return 'DailyReservationObject(tripId: $tripId, name: $name, phone: $phone, transfer_position_id: $transfer_position_id, seet: $seet, fcm_token: $fcm_token)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DailyReservationObject &&
+            (identical(other.tripId, tripId) || other.tripId == tripId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.transfer_position_id, transfer_position_id) ||
+                other.transfer_position_id == transfer_position_id) &&
+            (identical(other.seet, seet) || other.seet == seet) &&
+            (identical(other.fcm_token, fcm_token) ||
+                other.fcm_token == fcm_token));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, tripId, name, phone, transfer_position_id, seet, fcm_token);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DailyReservationObjectCopyWith<_$_DailyReservationObject> get copyWith =>
+      __$$_DailyReservationObjectCopyWithImpl<_$_DailyReservationObject>(
+          this, _$identity);
+}
+
+abstract class _DailyReservationObject implements DailyReservationObject {
+  factory _DailyReservationObject(
+      final int tripId,
+      final String name,
+      final int phone,
+      final int transfer_position_id,
+      final int seet,
+      final String fcm_token) = _$_DailyReservationObject;
+
+  @override
+  int get tripId;
+  @override
+  String get name;
+  @override
+  int get phone;
+  @override
+  int get transfer_position_id;
+  @override
+  int get seet;
+  @override
+  String get fcm_token;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DailyReservationObjectCopyWith<_$_DailyReservationObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

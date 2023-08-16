@@ -4,16 +4,38 @@ import 'package:untitled/app/app_preferences.dart';
 class PusherTrip{
   final AppPreferences _appPreferences;
   PusherTrip(this._appPreferences);
+  Future<PusherClient> createPusherDailyReservation()
+  async  {
+    PusherOptions options = PusherOptions(
+    //  host: PusherConfigration.hostEndPoint,
+     // wsPort: PusherConfigration.port,
+      cluster:  "mt1",
+    );
+    PusherClient pusherClient = PusherClient(
+      "73533acae2e494dbe929",
+      options,
+      //   autoConnect:true,
+      enableLogging: true,
+    );
+    pusherClient.connect();
+    pusherClient.onConnectionStateChange((state) {
+      print("previousState: ${state?.previousState??""}, currentState: ${state?.currentState}");
+    });
+    pusherClient.onConnectionError((error) {
+      print("error: ${error?.message} ${error?.code}${error?.exception}");
+    });
+    return pusherClient;
+  }
   Future<PusherClient> createPusherClient()
-async  {
-  String  token= await _appPreferences.getToken();
+  async  {
+    String  token= await _appPreferences.getToken();
     PusherOptions options = PusherOptions(
       host: PusherConfigration.hostEndPoint,
       auth: PusherAuth(PusherConfigration.hostAuthEndPoint
         , headers: {
           "Authorization": "Bearer $token",
-      //    "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",
-      //    "Accept-Encoding":"gzip, deflate, br",
+          //    "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",
+          //    "Accept-Encoding":"gzip, deflate, br",
           "Accept": "*/*"
         },
 
@@ -25,7 +47,7 @@ async  {
       PusherConfigration.key,
       options,
 
-   //   autoConnect:true,
+      //   autoConnect:true,
       enableLogging: true,
 
     );
@@ -39,6 +61,7 @@ async  {
     return pusherClient;
   }
 }
+
 class ChannelTrip{
 
 }
@@ -50,7 +73,7 @@ class LaravelEcho {
   LaravelEcho._({
     required this.token,
   }) {
-   // _echo   = createLaravelEcho(token);
+    // _echo   = createLaravelEcho(token);
   }
 
   factory LaravelEcho.init({
@@ -104,9 +127,9 @@ class PusherConfigration {
 
 
 Channel reciveEvent(PusherClient pusherClient,Function f, int id){
- Channel channel = pusherClient.subscribe("private-tracking.${id}");
+  Channel channel = pusherClient.subscribe("private-tracking.${id}");
   channel.bind("tracking", (PusherEvent? event) =>f);
-return channel;
+  return channel;
 }
 /*
 Echo createLaravelEcho(String token) {

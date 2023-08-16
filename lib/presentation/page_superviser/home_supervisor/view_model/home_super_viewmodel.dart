@@ -1,4 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,44 +28,44 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
   List<User>search =[];
   int _position=0;
   bool _succ=false;
- bool getSucc(){
+  bool getSucc(){
     return _succ;
   }
   setPosition(int position){
-   _position=position;
-   notifyListeners();
+    _position=position;
+    notifyListeners();
   }
- int getPosition(){
-   return _position;
+  int getPosition(){
+    return _position;
   }
   setSucc(bool s){
-   _succ=s;
+    _succ=s;
   }
-@override
+  @override
   setStateScreen(int state) {
-   notifyListeners();
+    notifyListeners();
     return super.setStateScreen(state);
   }
   @override
   void start() async{
     homeSupervisor();
   }
-cancelTrip(){
-   if(pusherClient!=null){
-     pusherClient?.disconnect();
-   }
+  cancelTrip(){
+    if(pusherClient!=null){
+      pusherClient?.disconnect();
+    }
 //  channel.cancelEventChannelStream();
-}
-@override
+  }
+  @override
   void dispose() {
-   super.dispose();
+    super.dispose();
   }
   String _time="";
   String getTime(){
     return _time;
   }
- bool confirm=false;
- Future<bool> confirmQr(int id) async{
+  bool confirm=false;
+  Future<bool> confirmQr(int id) async{
     print(id);
     confirm=false;
     ( await _confirmQrUseCase.execute(
@@ -70,32 +74,64 @@ cancelTrip(){
         ))).fold(
 
             (failure)  {
-              confirm=false;
+          confirm=false;
         },
             (data)  async{
-              confirm=true;
+          confirm=true;
         });
     return confirm;
   }
-setAllUser(){
+  setAllUser(){
     search=_homeSuperVisor.users??[];
     notifyListeners();
-}
-bool studentPos=false;
- Future<bool> studentPosition(int positionId) async{
-   studentPos=false;
+  }
+  Future<void> triggerEvent() async {
+    final String appKey = '73533acae2e494dbe929';
+    final String appSecret = '91e59dc74100f3750f98';
+    final String channelName = 'Public-trackingg';
+
+    final url = Uri.parse('https://api.pusher.com/apps/1652165/events');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${base64Encode(utf8.encode("$appKey:$appSecret"))}',
+    };
+    final data = {
+      'name': 'client-event',
+      'channels': [channelName],
+      'data': {
+        'message': 'Hello, Pusher!',
+      },
+    };
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+      encoding: Encoding.getByName('utf-8'),
+    );
+
+    if (response.statusCode == 200) {
+      print('تم إرسال الرسالة بنجاح.');
+    } else {
+      print('حدث خطأ أثناء إرسال الرسالة: ${response.body}');
+    }
+  }
+
+  bool studentPos=false;
+  Future<bool> studentPosition(int positionId) async{
+    studentPos=false;
     ( await _studentPositionUseCase.execute(
         StudentPositionUseCaseInput(
             _homeSuperVisor.id,positionId
         ))).fold(
 
             (failure)  {
-              studentPos=false;
+          studentPos=false;
         },
             (data)  async{
-              studentPos=true;
-              search=data.users;
-              notifyListeners();
+          studentPos=true;
+          search=data.users;
+          notifyListeners();
         });
     return studentPos;
   }
@@ -158,72 +194,121 @@ bool studentPos=false;
     setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
             (failure)  {
-              if(failure.code==ResponseCode.UNAUTORISED){
-                setStateScreen(4);
-              }else{
-                setStateScreen(2);
-              }
-              setSucc(false);
+          if(failure.code==ResponseCode.UNAUTORISED){
+            setStateScreen(4);
+          }else{
+            setStateScreen(2);
+          }
+          setSucc(false);
           print(failure.massage);
         },
             (data)  async{
-              if(data.dataHomeSupervisor!=null &&data.dataHomeSupervisor!.id!=0&&data.dataHomeSupervisor!.users!.isNotEmpty){
+          if(data.dataHomeSupervisor!=null &&data.dataHomeSupervisor!.id!=0&&data.dataHomeSupervisor!.users!.isNotEmpty){
 
-                setStateScreen(0);
-                await  setHomeSuperVisor(data.dataHomeSupervisor!);
-                setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
-                _setupLocationStream(data.dataHomeSupervisor!.id);
-              }else{
-                setStateScreen(3);
-              }
+            setStateScreen(0);
+            await  setHomeSuperVisor(data.dataHomeSupervisor!);
+            setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
+          //  _setupLocationStream(data.dataHomeSupervisor!.id);
+          }else{
+            setStateScreen(3);
+          }
         });
   }
   LocationData? _locationData;
   bool _trackingLocation = false;
- late StreamSubscription<LocationData>? _locationSubscription=null;
+  late StreamSubscription<LocationData>? _locationSubscription=null;
   String? _error;
   int tripId=0;
-setLocation(LocationData? newLocationData, String? error){
-  _locationData = newLocationData;
-  _error = error;
-  _trackingLocation=true;
-  notifyListeners();
-}
-LocationData? getLocationData(){
-  return _locationData;
-}
-String? getError(){
-  return _error;
-}
-PusherTrip _pusherTrip=instance<PusherTrip>();
- PusherClient? pusherClient;
+  setLocation(LocationData? newLocationData, String? error){
+    _locationData = newLocationData;
+    _error = error;
+    _trackingLocation=true;
+    notifyListeners();
+  }
+  LocationData? getLocationData(){
+    return _locationData;
+  }
+  String? getError(){
+    return _error;
+  }
+  PusherTrip _pusherTrip=instance<PusherTrip>();
+  PusherClient? pusherClient;
+
   late Channel channel;
+
   void stopTracking() {
     if (_locationSubscription != null) {
       _trackingLocation = false;
       _locationSubscription?.cancel();
-    //  _locationSubscription.pause();
+      //  _locationSubscription.pause();
     }
     cancelTrip();
     notifyListeners();
   }
-  //final location = loc.Location() ;
   loc.Location location = loc.Location();
+ late Channel channel1;
+   late PusherClient pusherClientDaily;
+  Future<void> setupLocationStream1() async {
+    pusherClientDaily= await  _pusherTrip.createPusherDailyReservation();
+    channel1 = pusherClientDaily.subscribe("Public-trackingg");
+
+  }
+  Future<void> streggr() async {
+
+    channel1.trigger("event", "jojjpjj");
+
+  }
+
+  void triggerEvent1() async {
+    var url = Uri.parse('https://api.pusher.com/apps/1652165/events');
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = jsonEncode({
+      'name': 'client-event',
+      'channels': ['Public-trackingg'],
+      'data': {'data': 'event-data'}
+    });
+
+    try {
+      var response = await http.post(url, headers: headers, body: body);
+      print('تم استدعاء الـ Trigger بنجاح. الاستجابة: ${response.body}');
+    } catch (e) {
+
+      print('حدث خطأ أثناء استدعاء الـ Trigger: $e');
+    }
+  }
+  Future<void> bind() async {
+
+    channel1.bind("client_event", (event) {
+      print(event?.data);
+    });
+  }
+  Future<void> unbindd() async {
+
+    channel1.unbind("event");
+    pusherClientDaily.disconnect();
+  }
+
   Future<void> _setupLocationStream(int tripId) async {
     //_locationData = await LocationService().getLocation();
     try {
       pusherClient= await  _pusherTrip.createPusherClient();
       channel = pusherClient!.subscribe("private-tracking.${tripId}");
-      _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {
+   //   pusherClientDaily= await  _pusherTrip.createPusherDailyReservation();
+
+
+      channel.bind('pusher:subscription_succeeded', (event) {
+        _locationSubscription ??= location.onLocationChanged.listen((LocationData newLocationData)async {
           if(newLocationData.longitude!=null && newLocationData.latitude!=null) {
             print(newLocationData.longitude);
             Map<String, double> eventData = {  'lng':newLocationData.longitude ??0.0,'lat':newLocationData.latitude ??0.0};
-
             channel.trigger("tracking", eventData);
-            //newLocationData.longitude ///newLocationData.latitude
+
           }//client-tracking
           setLocation(newLocationData, null);
         });
+      });
     }on Exception catch (e) {
       print(e);
       print("_scaffoldKey.currentState?.showSnackBar("
@@ -249,3 +334,5 @@ PusherTrip _pusherTrip=instance<PusherTrip>();
   }
 
  */
+
+

@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<Not>()),
         ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationViewModel>()),
-        ChangeNotifierProvider(create: (_)=>DailyReservationMap()),
+        ChangeNotifierProvider(create: (_)=>instance<DailyReservationMapViewModel>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner:false,

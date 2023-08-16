@@ -42,13 +42,14 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
     });
     super.initState();
   }
-@override
-  void didChangeDependencies() {
-  if( Provider.of<HomeSuperVisorViewModel>(context).getStateScreen() == 4){
-    Navigator.pushNamed(context, Routes.backToLogin);
 
+  @override
+  void didChangeDependencies() {
+    if (Provider.of<HomeSuperVisorViewModel>(context).getStateScreen() == 4) {
+      Navigator.pushNamed(context, Routes.backToLogin);
+    }
   }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
@@ -89,12 +90,12 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                       listen: false)
                                   .getHomeSuperVisor();
                             })
-
                         : StateRenderer(
                             stateRendererType:
                                 StateRendererType.fullScreenEmptyState,
                             message: LocaleKeys.supervisortransferNow.tr(),
-                            retryActionFunction: () {})),
+                            retryActionFunction: () {
+                            })),
       );
     });
   }
@@ -104,7 +105,7 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
       builder: (context, model, child) => Column(
         children: [
           Container(
-            height: 10.h,
+            height: 8.h,
             margin: EdgeInsets.symmetric(horizontal: 20.sp),
             child: TextFormField(
               onChanged: (value) {
@@ -143,117 +144,161 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                   contentPadding: EdgeInsets.symmetric(vertical: 1.h)),
             ),
           ),
-          SizedBox(height: 4.h),
-          Center(
+          //  SizedBox(height: 4.h),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p14),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                    width: 10.w,
-                    height: 10.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.redAccent,
-                    ),
-                    child: Center(
-                      child: Text(
-                       "${ model.getUser().length}",
-                        style: getBoldStyle(
-                            color: Colors.black54, fontSize: FontSize.s16),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        child: Text(
+                            "Get All student",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: getBoldStyle(
+                                color: ColorManager.sidBarIcon, fontSize: FontSize.s16)
+                        ),
+                        onPressed: () {
+                          model.setAllUser();
+                        },
                       ),
-                    )),
-                Container(
-                  width: 10.w,
-                  height: 10.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ColorManager.sidBar,
+                      Container(
+                          width: 6.w,
+                          height: 6.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorManager.card,
+                          ),
+                          child: Center(
+                            child: Text(
+                                "${model.getUser().length}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: getBoldStyle(
+                                    color: ColorManager.sidBarIcon, fontSize: FontSize.s16)
+                            ),
+                          )),
+
+                    ],
                   ),
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.informationTrip);
-                      },
-                      onLongPress: () {
-                        showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
-                      },
-                      child: Icon(Icons.question_mark_rounded)),
                 ),
-                IconButton(
-                    onPressed: () async {
-                      await Provider.of<ScanQrViewModel>(context, listen: false)
-                          .scanBarcode();
-                      Provider.of<ScanQrViewModel>(context, listen: false)
-                          .confirmQr(Provider.of<HomeSuperVisorViewModel>(
-                                  context,
-                                  listen: false)
-                              .getHomeSuperVisor()
-                              .id);
-                    },
-                    icon: Icon(Icons.qr_code_scanner)),
-                SizedBox(height: 4.h),
-                IconButton(
-                  icon: Icon(Icons.stop_circle_outlined),
-                  onPressed: () {
-                    model.stopTracking();
-                  },
-                )
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.stop_circle_outlined),
+                        onPressed: () {
+                          model.stopTracking();
+                        },
+                      ),
+                      Container(
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, Routes.informationTrip);
+                            },
+                            onLongPress: () {
+                              showDetailFunc(context, 27.h, 27.h, 25.w, 25.w);
+                            },
+                            child: Icon(Icons.info_outline)),
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            await Provider.of<ScanQrViewModel>(context,
+                                    listen: false)
+                                .scanBarcode();
+                            Provider.of<ScanQrViewModel>(context, listen: false)
+                                .confirmQr(Provider.of<HomeSuperVisorViewModel>(
+                                        context,
+                                        listen: false)
+                                    .getHomeSuperVisor()
+                                    .id);
+                          },
+                          icon: Icon(Icons.qr_code_scanner)),
+
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
+
           Container(
             height: 5.h,
             //  width: 10.w,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextButton(
-                    child: Text("Get All student"),
-                    onPressed: () {
-                      model.setAllUser();
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: DropdownButtonFormField(
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    hint: Text(LocaleKeys.transferPositions.tr()),
-                    validator: (value) {
-                      if (value == null) {
-                        return LocaleKeys.transferPositions.tr();
-                      }
-                      return null;
-                    },
-                    items: model
-                        .getPositions()
-                        .map((e) => e != []
-                        ? DropdownMenuItem(
-                      value: e,
-                      child: Text(" ${e.name}"),
-                    )
-                        : DropdownMenuItem(
-                      //  value: e,
-                      child: Text("no positions"),
-                    ))
-                        .toList(),
-                    onChanged: (val) {
-                      LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading.tr());
-                      model.studentPosition(val.id).then((value) {
-                        if(value){
-                          SuccessState("success").dismissDialog(context);
-                          SuccessState("success").showPopup(context,StateRendererType.popupSuccess , "Success");
-                        }else{
-                          ErrorState(StateRendererType.popupErrorState,"Something worng").dismissDialog(context);
-                          ErrorState(StateRendererType.popupErrorState,"Something worng").showPopup(context,StateRendererType.popupSuccess , "Something worng");
-                        }
-                        });
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p14),
+              child: Row(
+                children: [
 
-                    },
+                  Container(
+                    width: 200,
+                    child: DropdownButtonFormField(
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      hint: Text(LocaleKeys.transferPositions.tr(),),
+                      validator: (value) {
+                        if (value == null) {
+                          return LocaleKeys.transferPositions.tr();
+                        }
+                        return null;
+                      },
+                      items: model
+                          .getPositions()
+                          .map((e) => e != []
+                              ? DropdownMenuItem(
+                                  value: e,
+                                  child: Text(" ${e.name}"),
+                                )
+                              : DropdownMenuItem(
+                                  //  value: e,
+                                  child: Text("no positions"),
+                                ))
+                          .toList(),
+                      onChanged: (val) {
+                        LoadingState(
+                                stateRendererType:
+                                    StateRendererType.popupLoadingState)
+                            .showPopup(
+                                context,
+                                StateRendererType.popupLoadingState,
+                                LocaleKeys.loading.tr());
+                        model.studentPosition(val.id).then((value) {
+                          if (value) {
+                            SuccessState("success").dismissDialog(context);
+                            SuccessState("success").showPopup(context,
+                                StateRendererType.popupSuccess, "Success");
+                          } else {
+                            ErrorState(StateRendererType.popupErrorState,
+                                    "Something worng")
+                                .dismissDialog(context);
+                            ErrorState(StateRendererType.popupErrorState,
+                                    "Something worng")
+                                .showPopup(
+                                    context,
+                                    StateRendererType.popupSuccess,
+                                    "Something worng");
+                          }
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  TextButton(onPressed: (){
+                    Provider.of<HomeSuperVisorViewModel>(context, listen: false).bind();
+                  }, child: Text("b")),
+                  TextButton(onPressed: (){
+                    Provider.of<HomeSuperVisorViewModel>(context, listen: false).triggerEvent();
+                  }, child: Text("c"))
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 2.h),
+         /*
           Row(children: [
             model.getLocationData() != null
                 ? Text(
@@ -262,14 +307,22 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                     ? Text('Error: ${model.getError()}')
                     : CircularProgressIndicator(),
           ]),
+          */
+          Divider(
+            height: 3.h,
+            color: ColorManager.sidBarIcon,
+            thickness: 1,
+          ),
+          SizedBox(height: 2.h),
+
           Expanded(
             child: ListView.separated(
               itemBuilder: (_, index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 25.sp),
+                margin: EdgeInsets.symmetric(horizontal: 15.sp),
                 padding: EdgeInsets.all(20.sp),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey[300],
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 child: Row(
@@ -330,29 +383,51 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                             ],
                           )),
                     ),
-                    Checkbox( value: isChecked,
-                        onChanged: isLocked ? null : (value) {
-                          setState(() {
-                            isChecked = value!;
-                            if (isChecked) {
-                              LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading.tr());
-                              model.confirmQr( model.getUser()[index].id).then((value) {
-                                if(value){
-                                  SuccessState("success").dismissDialog(context);
-                                  SuccessState("success").showPopup(context,StateRendererType.popupSuccess , "Success");
-                                }else{
-                                  ErrorState(StateRendererType.popupErrorState,"Something worng").dismissDialog(context);
-                                  ErrorState(StateRendererType.popupErrorState,"Something worng").showPopup(context,StateRendererType.popupSuccess , "Something worng");
-                                }
-                              }
-
-                              );
-                              isLocked = true;
-                            }
-                          }
-                          );
-                        }
-                    ),
+                    Checkbox(
+                        value: isChecked,
+                        onChanged: isLocked
+                            ? null
+                            : (value) {
+                                setState(() {
+                                  isChecked = value!;
+                                  if (isChecked) {
+                                    LoadingState(
+                                            stateRendererType: StateRendererType
+                                                .popupLoadingState)
+                                        .showPopup(
+                                            context,
+                                            StateRendererType.popupLoadingState,
+                                            LocaleKeys.loading.tr());
+                                    model
+                                        .confirmQr(model.getUser()[index].id)
+                                        .then((value) {
+                                      if (value) {
+                                        SuccessState("success")
+                                            .dismissDialog(context);
+                                        SuccessState("success").showPopup(
+                                            context,
+                                            StateRendererType.popupSuccess,
+                                            "Success");
+                                      } else {
+                                        ErrorState(
+                                                StateRendererType
+                                                    .popupErrorState,
+                                                "Something worng")
+                                            .dismissDialog(context);
+                                        ErrorState(
+                                                StateRendererType
+                                                    .popupErrorState,
+                                                "Something worng")
+                                            .showPopup(
+                                                context,
+                                                StateRendererType.popupSuccess,
+                                                "Something worng");
+                                      }
+                                    });
+                                    isLocked = true;
+                                  }
+                                });
+                              }),
                   ],
                 ),
               ),
