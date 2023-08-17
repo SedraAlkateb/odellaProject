@@ -95,6 +95,7 @@ class _ProfileViewState extends State<ProfileView> {
                 })
 
 
+
           ),
     );
   }
@@ -647,6 +648,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           }else{
                                             ErrorState(StateRendererType.popupErrorState, profile1.getMessage1()).dismissDialog(context);
                                             ErrorState(StateRendererType.popupErrorState, profile1.getMessage1()).showPopup(context, StateRendererType.popupErrorState, profile1.getMessage1());
+
                                           }
                                         }
                                         );

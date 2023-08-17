@@ -65,6 +65,7 @@ class _MessageList extends State<MessageList> {
                   Provider.of<Not>(context, listen: false).updateDec();
                   Provider.of<Not>(context, listen: false).setIndex(index);
                   Navigator.pushNamed(context, Routes.notMessageRealTime, arguments: MessageArguments(message, false),);
+
                 },
                 //         leading:iconNotification(int.parse(message.))
 

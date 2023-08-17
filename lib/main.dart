@@ -188,14 +188,17 @@ Widget build(BuildContext context) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("make all as read",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)
-                ) ,
-                  onTap: (){
-                    Provider.of<Not>(context,listen: false).getAllNotificationRead();
-                  },
+                Container(
+                  color:Colors.grey.shade300,
+                  child: InkWell(child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("make all as read",
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)
+                  ) ,
+                    onTap: (){
+                      Provider.of<Not>(context,listen: false).getAllNotificationRead();
+                    },
+                  ),
                 ),
               ],
             ),
