@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/app/app_preferences.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/befor_signup/view_model/algorithem_viewmodel.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
@@ -88,6 +89,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationMapViewModel>()),
+        ChangeNotifierProvider(create: (_)=>AlgorithmViewModel()),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner:false,

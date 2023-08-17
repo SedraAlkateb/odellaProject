@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
@@ -69,6 +70,13 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
   }
 
   Widget contentWidget() {
+    RefreshController _refreshController =
+    RefreshController(initialRefresh: false);
+
+    void _onRefresh() async {
+      Provider.of<DailyReservationViewModel>(context,listen: false).start();
+      _refreshController.refreshCompleted();
+    }
     return Column(children: [
       Padding(
         padding: const EdgeInsets.only(
@@ -144,207 +152,211 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
                       left: AppPadding.p28,
                       right: AppPadding.p28,
                       bottom: AppPadding.p28),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: double.infinity,
-                      height: AppSize.s20,
+                  child:      SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: double.infinity,
+                        height: AppSize.s20,
 // color: Color,
-                    ),
-                    itemCount: Provider.of<DailyReservationViewModel>(context,
-                            listen: false)
-                        .getTodayTrips()
-                        .length,
-                    itemBuilder: (context, index) => Container(
-                      height: AppSize.s150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(AppSize.s30)),
-//        color: ColorManager.card,
                       ),
-                      child: InkWell(
-                        onTap: (() {
-                          Provider.of<DailyReservationViewModel>(context,
+                      itemCount: Provider.of<DailyReservationViewModel>(context,
                               listen: false)
-                              .setLine(index);
-                          Provider.of<DailyReservationViewModel>(context,
-                                  listen: false)
-                              .setTripId(Provider.of<DailyReservationViewModel>(
-                                          context,
-                                          listen: false)
-                                      .getTodayTrips()[index]);
-                          Provider.of<DailyReservationViewModel>(context,
-                              listen: false)
-                              .filterLine();
+                          .getTodayTrips()
+                          .length,
+                      itemBuilder: (context, index) => Container(
+                        height: AppSize.s150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(AppSize.s30)),
+//        color: ColorManager.card,
+                        ),
+                        child: InkWell(
+                          onTap: (() {
+                            Provider.of<DailyReservationViewModel>(context,
+                                listen: false)
+                                .setLine(index);
+                            Provider.of<DailyReservationViewModel>(context,
+                                    listen: false)
+                                .setTripId(Provider.of<DailyReservationViewModel>(
+                                            context,
+                                            listen: false)
+                                        .getTodayTrips()[index]);
+                            Provider.of<DailyReservationViewModel>(context,
+                                listen: false)
+                                .filterLine();
 
-                          Navigator.pushNamed(
-                              context, Routes.polyLineDailyView);
-                        }),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: AppPadding.p16),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: SvgPicture.asset(
-                                          ImageAssets.bus,
-                                          height: 40,
-                                          width: 40,
-                                          color: ColorManager.button,
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            Provider.of<DailyReservationViewModel>(
-                                                    context,
-                                                    listen: false)
-                                                .getTodayTrips()[index]
-                                                .lines!
-                                                .first
-                                                .name,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
+                            Navigator.pushNamed(
+                                context, Routes.polyLineDailyView);
+                          }),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: AppPadding.p16),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: SvgPicture.asset(
+                                            ImageAssets.bus,
+                                            height: 40,
+                                            width: 40,
+                                            color: ColorManager.button,
                                           ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 2),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.gps_not_fixed,
-                                                          size: AppSize.s12,
-                                                          color: ColorManager
-                                                              .button,
-                                                        ),
-                                                        Text(
-                                                          Provider.of<DailyReservationViewModel>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .getTodayTrips()[
-                                                                  index]
-                                                              .lines!
-                                                              .first
-                                                              .name,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .headlineMedium,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Icon(
-                                                      Icons
-                                                          .keyboard_arrow_down_sharp,
-                                                      size: AppSize.s12,
-                                                      color:
-                                                          ColorManager.button,
-                                                    ),
-                                                    Icon(
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              Provider.of<DailyReservationViewModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .getTodayTrips()[index]
+                                                  .lines!
+                                                  .first
+                                                  .name,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 2),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.gps_not_fixed,
+                                                            size: AppSize.s12,
+                                                            color: ColorManager
+                                                                .button,
+                                                          ),
+                                                          Text(
+                                                            Provider.of<DailyReservationViewModel>(
+                                                                    context,
+                                                                    listen: false)
+                                                                .getTodayTrips()[
+                                                                    index]
+                                                                .lines!
+                                                                .first
+                                                                .name,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headlineMedium,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Icon(
                                                         Icons
                                                             .keyboard_arrow_down_sharp,
                                                         size: AppSize.s12,
-                                                        color: ColorManager
-                                                            .button),
-//   Icon(Icons.circle_sharp,size: AppSize.s8,color: ColorManager.grey,),
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.gps_fixed,
+                                                        color:
+                                                            ColorManager.button,
+                                                      ),
+                                                      Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down_sharp,
                                                           size: AppSize.s12,
                                                           color: ColorManager
-                                                              .button,
-                                                        ),
-                                                        Text(
-                                                          Provider.of<DailyReservationViewModel>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .getTodayTrips()[
-                                                                  index]
-                                                              .lines!
-                                                              .first
-                                                              .to!
-                                                              .name,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .headlineMedium,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                                              .button),
+//   Icon(Icons.circle_sharp,size: AppSize.s8,color: ColorManager.grey,),
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.gps_fixed,
+                                                            size: AppSize.s12,
+                                                            color: ColorManager
+                                                                .button,
+                                                          ),
+                                                          Text(
+                                                            Provider.of<DailyReservationViewModel>(
+                                                                    context,
+                                                                    listen: false)
+                                                                .getTodayTrips()[
+                                                                    index]
+                                                                .lines!
+                                                                .first
+                                                                .to!
+                                                                .name,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headlineMedium,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Time"),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    Provider.of<DailyReservationViewModel>(
-                                            context,
-                                            listen: false)
-                                        .getTodayTrips()[index]
-                                        .time!
-                                        .start,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium,
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Time"),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      Provider.of<DailyReservationViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getTodayTrips()[index]
+                                          .time!
+                                          .start,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

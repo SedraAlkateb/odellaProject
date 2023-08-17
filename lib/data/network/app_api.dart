@@ -240,13 +240,10 @@ abstract class AppServiceClient {
       );
 
   @POST("/api/algorithmInput")
-  Future<UserDailyReservationResponse> algorithm(
+  Future<AlgorithmResponse> algorithm(
       @Path("day_ids") List<int> day_ids,
       @Part(name:"goTimes") List<String> goTimes,
-      @Part(name:"returnTimes") int phoneNumber,
-      @Part(name:"transfer_position_id") int transfer_position_id,
-      @Part(name:"seatsNumber") int seatsNumber,
-      @Part(name:"fcm_token") String fcm_token,
+      @Part(name:"returnTimes") List<String> returnTimes,
       );
 
 }

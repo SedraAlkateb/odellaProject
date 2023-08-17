@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:untitled/presentation/befor_signup/view_model/algorithem_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 
 import '../../../lang/local_keys.g.dart';
@@ -16,8 +18,7 @@ class SelectTimes extends StatefulWidget {
 }
 
 class _SelectTimesState extends State<SelectTimes> {
-  final List<String> _dropdownValues = ['9:00', '9:30', '10','10:30','11','11:30'];
-  final List<String> _dropdownValues2 = ['12:00', '12:30', '13:00','13:30','14:00','14,:30','15:00','15:30','16:00'];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,154 +27,155 @@ class _SelectTimesState extends State<SelectTimes> {
       ),
       body: Stack(
         children: [
+          Form(
+            key: _formKey,
+            child: ListView.separated(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                separatorBuilder: (context, index) => const SizedBox(
+                  width: double.infinity,
+                  height: AppSize.s20,
+                  // color: Color,
+                ),
+                itemCount: Provider.of<AlgorithmViewModel>(context,listen: false).getWeekDay().length,
+                itemBuilder: (context, index) {
+                  return
+                    Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Container(
+                      height: 250,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(AppSize.s30)),
+                        // color: Colors.redAccent,
 
-          ListView.separated(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              separatorBuilder: (context, index) => const SizedBox(
-                width: double.infinity,
-                height: AppSize.s20,
-                // color: Color,
-              ),
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return
-                  Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: Container(
-                    height: 250,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius:
-                      const BorderRadius.all(Radius.circular(AppSize.s30)),
-                      // color: Colors.redAccent,
+                        //        color: ColorManager.card,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 1),
+                                  Align(alignment: Alignment.topRight,child: Text(Provider.of<AlgorithmViewModel>(context,listen: false).getWeekDay()[index])),
+                                  SizedBox(height: 20,),
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height:3,
+                                        ),
+                                        Text(LocaleKeys.Gotime.tr()),
+                                        SizedBox(
+                                          height: 40,
+                                          width: 100,
+                                          child: DropdownButtonFormField(
+                                              icon:
+                                              const Icon(Icons.keyboard_arrow_down),
+                                              hint: Text(
+                                                  "Times"),
+                                              validator: (value) {
+                                                if (value == null) {
+                                                  return LocaleKeys.transportationLines
+                                                      .tr();
+                                                }
+                                                //  return null;
+                                              },
+                                              items: Provider.of<AlgorithmViewModel>(context).getGoTime()
+                                                  .map((value) => DropdownMenuItem(
+                                                value: value,
+                                                child: Text(value),
+                                              ))
+                                                  .toList(),
+                                              onChanged: (val) {
+                                                if( Provider.of<AlgorithmViewModel>(context).getIndex()==9){
+                                                  Provider.of<AlgorithmViewModel>(context,listen: false).setIndex(index);
+                                                  Provider.of<AlgorithmViewModel>(context,listen: false).setGoTime(val??"");
+                                                }else{
 
-                      //        color: ColorManager.card,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 1),
-                        Text("day"),
-                        SizedBox(height: 1,),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: AppPadding.p16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height:3,
+                                                }
+
+
+                                              }),
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+
+                                      ],
                                     ),
-                                    Text(LocaleKeys.Gotime.tr())
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //Text("   ${LocaleKeys.university.tr()} "),
-                                    SizedBox(
-                                      height: 10,
-                                      width: 65,
-                                      child: DropdownButtonFormField(
-                                          icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                          hint: Text(
-                                              "Times"),
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return LocaleKeys.transportationLines
-                                                  .tr();
-                                            }
-                                            //  return null;
-                                          },
-                                          items: _dropdownValues
-                                              .map((value) => DropdownMenuItem(
-                                            value: value,
-                                            child: Text(value),
-                                          ))
-                                              .toList(),
-                                          onChanged: (val) {}),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height:3,
+                                        ),
+                                        Text(LocaleKeys.Returntime.tr()),
+                                        SizedBox(
+                                          height: 40,
+                                          width: 100,
+                                          child: DropdownButtonFormField(
+                                              icon:
+                                              const Icon(Icons.keyboard_arrow_down),
+                                              hint: Text(
+                                                  "Times"),
+                                              validator: (value) {
+                                                if (value == null) {
+                                                  return LocaleKeys.transportationLines
+                                                      .tr();
+                                                }
+                                                //  return null;
+                                              },
+                                              items: Provider.of<AlgorithmViewModel>(context).getGoTime()
+                                                  .map((value) => DropdownMenuItem(
+                                                value: value,
+                                                child: Text(value),
+                                              ))
+                                                  .toList(),
+                                              onChanged: (val) {
+
+                                              }),
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: AppPadding.p16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(LocaleKeys.Returntime.tr())
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 1,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //Text("   ${LocaleKeys.university.tr()} "),
-                                    SizedBox(
-                                      height: 14,
-                                      width: 65,
-                                      child: DropdownButtonFormField(
-                                          icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                          hint: Text(
-                                              "Times"),
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return LocaleKeys.transportationLines
-                                                  .tr();
-                                            }
-                                            //  return null;
-                                          },
-                                          items: _dropdownValues2
-                                              .map((value) => DropdownMenuItem(
-                                            value: value,
-                                            child: Text(value),
-                                          ))
-                                              .toList(),
-                                          onChanged: (val) {}),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                          Expanded(
+                            child: IconButton(onPressed: (){
+
+                            }, icon: Icon(Icons.check_circle)),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }
-              ),
+                  );
+                }
+                ),
+          ),
       Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: AppPadding.p28),
-        child: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, Routes.signupRoute);
-          },
-          child: Align(
-            alignment: Alignment.bottomRight,
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.signupRoute);
+            },
             child: CircleAvatar(
                 radius: 30,
                 backgroundColor: ColorManager.icon,
