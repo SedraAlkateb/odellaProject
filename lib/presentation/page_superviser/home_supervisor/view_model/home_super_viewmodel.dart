@@ -63,6 +63,12 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
     return super.setStateScreen(state);
   }
   @override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
+
+  @override
   void start() async{
     homeSupervisor();
   }
@@ -90,7 +96,9 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
         ))).fold(
 
             (failure)  {
+
           confirm=false;
+          setMessage(failure.massage);
         },
             (data)  async{
           confirm=true;
@@ -142,7 +150,9 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
         ))).fold(
 
             (failure)  {
-          studentPos=false;
+              setMessage(failure.massage);
+
+              studentPos=false;
         },
             (data)  async{
           studentPos=true;
@@ -223,7 +233,9 @@ class HomeSuperVisorViewModel extends BaseViewModel with ChangeNotifier{
     setSucc(false);
     ( await _homeSupervisorUseCase.execute(await getLocalTime())).fold(
             (failure)  {
-          if(failure.code==ResponseCode.UNAUTORISED){
+              setMessage(failure.massage);
+
+              if(failure.code==ResponseCode.UNAUTORISED){
             setStateScreen(4);
           }else{
             setStateScreen(2);

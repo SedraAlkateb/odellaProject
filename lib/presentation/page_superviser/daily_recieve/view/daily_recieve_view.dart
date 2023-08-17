@@ -67,7 +67,7 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                 retryActionFunction: () {})
                 :StateRenderer(
                 stateRendererType: StateRendererType.fullScreenErrorState,
-                message: "something wrong",
+                message:  Provider.of<DailyReservationsViewModel>(context).getMessage1(),
                 retryActionFunction: () {
                   Provider.of<DailyReservationsViewModel>(context,listen: false).getDailyReservations();
                 })

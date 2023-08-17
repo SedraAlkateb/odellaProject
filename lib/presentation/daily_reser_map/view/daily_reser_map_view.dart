@@ -259,8 +259,8 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                                   listen: false)
                                                   .getDailyReservation().then((value) {
                                                 if(value==false){
-                                                  ErrorState(StateRendererType.popupErrorState, "vf").dismissDialog(context);
-                                                  ErrorState(StateRendererType.popupErrorState, "vf").showPopup(context, StateRendererType.popupErrorState, "message");
+                                                  ErrorState(StateRendererType.popupErrorState, Provider.of<DailyReservationViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                                                  ErrorState(StateRendererType.popupErrorState, Provider.of<DailyReservationViewModel>(context,listen: false).getMessage1()).showPopup(context, StateRendererType.popupErrorState, Provider.of<DailyReservationViewModel>(context,listen: false).getMessage1());
                                                 }else{
                                                   ContentState().dismissDialog(context);
                                                 }

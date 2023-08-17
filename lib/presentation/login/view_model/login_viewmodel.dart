@@ -21,11 +21,7 @@ class LoginViewModel extends BaseViewModel
   Authentication ?_authentication;
 var loginObject=LoginObject("","");
 int status=0;
-String message="";
-String getMessage()
-{
-  return message;
-}
+
 setAuth(Authentication authentication){
   _authentication=authentication;
   notifyListeners();
@@ -84,27 +80,23 @@ String? getRole(){
   String getFcmToken(){
     return fcmToken;
   }
-  setMessage(String m){
-    message=m;
+@override
+  setMessage(String m) {
     notifyListeners();
+    return super.setMessage(m);
   }
 bool s=false;
+
   //////////////////////////input////////////////////////
  Future<bool> login() async{
- //inputState.add(LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-
  ( await _loginUseCase.execute(
         LoginUseCaseInput(
             loginObject.userName, loginObject.password,fcmToken
         ))).fold(
 
             (failure)  {
-              if(failure.code==422){
-                print("object");
-              }
               s= false;
               setMessage(failure.massage);
-              //inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
         },
             (data)  async{
             //  setSuc(1);

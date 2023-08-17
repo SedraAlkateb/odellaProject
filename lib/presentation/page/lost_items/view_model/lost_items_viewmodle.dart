@@ -14,6 +14,11 @@ class LostItemsViewModel extends BaseViewModel with ChangeNotifier{
   List<LostAndFoundData>search =[];
   LostItemsViewModel(this._allLostUseCase);
   File? image;
+  @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
 @override
   setDialog(int state) {
   notifyListeners();
@@ -67,7 +72,7 @@ return image! ;
   setStateScreen(1);
     ( await _allLostUseCase.execute(null)).fold(
             (failure)  {
-
+              setMessage(failure.massage);
               setStateScreen(2);
             },
             (data)  async{

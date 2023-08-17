@@ -66,7 +66,8 @@ class _ProgramsViewState extends State<ProgramsView>
                   retryActionFunction: () {})
                   : StateRenderer(
                   stateRendererType: StateRendererType.fullScreenErrorState,
-                  message: "something wrong",
+                  message :Provider.of<ProgramsViewModel>(context,listen: false).getMessage1()
+                  ,
                   retryActionFunction: () {})
             );
     }

@@ -85,7 +85,8 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                         ? StateRenderer(
                             stateRendererType: StateRendererType
                                 .fullScreenErrorState,
-                            message: "something wrong",
+                            message:   Provider.of<HomeSuperVisorViewModel>(context,listen: false ).getMessage1(),
+
                             retryActionFunction: () {
                               Provider.of<HomeSuperVisorViewModel>(context,
                                       listen: false)
@@ -280,14 +281,14 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                 StateRendererType.popupSuccess, "Success");
                           } else {
                             ErrorState(StateRendererType.popupErrorState,
-                                    "Something worng")
+                                Provider.of<HomeSuperVisorViewModel>(context ,listen: false).getMessage1())
                                 .dismissDialog(context);
                             ErrorState(StateRendererType.popupErrorState,
-                                    "Something worng")
+                                Provider.of<HomeSuperVisorViewModel>(context,listen: false ).getMessage1())
                                 .showPopup(
                                     context,
                                     StateRendererType.popupSuccess,
-                                    "Something worng");
+                                Provider.of<HomeSuperVisorViewModel>(context,listen: false ).getMessage1());
                           }
                         });
                       },
@@ -438,16 +439,16 @@ class _HomeSupervisorViewState extends State<HomeSupervisorView> {
                                         ErrorState(
                                                 StateRendererType
                                                     .popupErrorState,
-                                                "Something worng")
+                                            Provider.of<HomeSuperVisorViewModel>(context,listen: false ).getMessage1())
                                             .dismissDialog(context);
                                         ErrorState(
                                                 StateRendererType
                                                     .popupErrorState,
-                                                "Something worng")
+                                            Provider.of<HomeSuperVisorViewModel>(context ,listen: false).getMessage1())
                                             .showPopup(
                                                 context,
-                                                StateRendererType.popupSuccess,
-                                                "Something worng");
+                                                StateRendererType.popupErrorState,
+                                            Provider.of<HomeSuperVisorViewModel>(context,listen: false ).getMessage1());
                                       }
                                     });
                                     isLocked = true;

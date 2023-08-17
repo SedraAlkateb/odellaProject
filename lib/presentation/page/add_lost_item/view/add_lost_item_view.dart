@@ -189,7 +189,7 @@ class _AddLostItemViewState extends State<AddLostItemView> {
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                            model.getMasege()
+                            model.getMessage1()
                         ),
                         SizedBox(height: 5.h),
                       ],

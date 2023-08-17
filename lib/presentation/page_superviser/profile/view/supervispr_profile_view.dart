@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page_superviser/profile/view_model/supervisor_profile_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
@@ -72,7 +73,7 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                       retryActionFunction: () {})
                   : StateRenderer(
                       stateRendererType: StateRendererType.fullScreenErrorState,
-                      message: "something wrong",
+                      message:   Provider.of<SupervisorProfileViewModel>(context,listen: false).getMessage1(),
                       retryActionFunction: () {
                         Provider.of<SupervisorProfileViewModel>(context,
                                 listen: false)
@@ -534,8 +535,19 @@ class _SupervisorProfileViewState extends State<SupervisorProfileView> {
                                         vertical: AppPadding.p28,
                                         horizontal: AppPadding.p50),
                                     child: ElevatedButton(
+
                                       onPressed: () {
-                                        model.updateSupervisor();
+                                        LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "loading");
+                                      model.updateSupervisor().then((value) {
+                                        if(value){
+                                          ContentState().dismissDialog(context);
+
+                                        }else{
+                                          ErrorState(StateRendererType.popupErrorState, model.getMessage1()).dismissDialog(context);
+                                          ErrorState(StateRendererType.popupErrorState, model.getMessage1()).showPopup(context, StateRendererType.popupErrorState, model.getMessage1());
+
+                                        }
+                                      });
                                       },
                                       child: Text(LocaleKeys.save.tr()),
                                     ),

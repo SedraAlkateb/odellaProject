@@ -22,6 +22,11 @@ bool _rest=false;
   void start() {
 
   }
+  @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
  String getEmail(){
     return _email;
   }
@@ -29,13 +34,7 @@ bool _rest=false;
     _email=e;
     notifyListeners();
   }
-  setStringMassage(String m){
-    _massage=m;
-    notifyListeners();
-  }
-  getMassage(){
-    return _massage;
-  }
+
  bool getRest(){
 return _rest;
   }
@@ -43,21 +42,23 @@ return _rest;
     _rest=rest;
     notifyListeners();
   }
+  bool b=false;
   @override
-  forgotPassword() async {
-
+ Future<bool> forgotPassword() async {
     (await _forgotPasswordUseCase.execute(getEmail())).fold((failure) {
       print(failure.massage);
-      setStringMassage(failure.massage+"LocaleKeys.forgetMessageError");
+      setMessage(failure.massage);
+      b=false;
     }, (supportMessage) {
       print(supportMessage);
-
-      setStringMassage(supportMessage+"LocaleKeys.forgetMessageError");
+      setMessage(supportMessage);
       notifyListeners();
       setRest(true);
+      b=true;
 
     // setStringMassage(supportMessage);
     });
+    return b;
   }
 
 

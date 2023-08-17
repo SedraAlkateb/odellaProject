@@ -17,7 +17,11 @@ class AddLostItemViewModel extends BaseViewModel with ChangeNotifier{
   StoreLostUseCase _storeLostUseCase;
   WeeklyTripUsecase _weeklyTripUsecase;
   AddLostItemViewModel(this._storeLostUseCase,this._weeklyTripUsecase);
-  String massage="";
+  @override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
   var lostItem=LostItemObject(0,"",null);
   List<DataTrips> _trip=[];
   AppPreferences _appPreferences =instance<AppPreferences>();
@@ -63,24 +67,17 @@ setTrip(List<DataTrips> trip){
     lostItem= lostItem.copyWith(tripId:d);
     notifyListeners();
   }
-  setMasege(String m){
-    massage=m;
-    notifyListeners();
-  }
-  getMasege(){
-   return massage;
-  }
+
   Future  storeClaim() async {
     // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-    setMasege("Loading...");
+    setMessage("Loading...");
     (await _storeLostUseCase.execute(LostUseCaseInput(
         lostItem.tripId, lostItem.description,image:  lostItem.image)))
         .fold((failure) {
-      setMasege(failure.massage);
+      setMessage(failure.massage);
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
-
-          setMasege(data);
+      setMessage(data);
       notifyListeners();
     });
   }
@@ -89,8 +86,9 @@ setTrip(List<DataTrips> trip){
 
     (await _weeklyTripUsecase.execute(null))
         .fold((failure) {
-      //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+          setMessage(failure.massage);
     }, (data)async {
+
       print("data.dataTrips![0].availableSeats ??0");
       lang =await _appPreferences.getAppLanguage();
 

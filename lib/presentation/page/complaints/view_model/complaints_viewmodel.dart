@@ -87,12 +87,18 @@ String date(String d){
     _description=d;
     notifyListeners();
   }
+  @override
+  setMessage(String m) {
+  notifyListeners();
+  return super.setMessage(m);
+  }
   bool calim=false;
 Future<bool>  storeClaim( int trip) async {
 
     (await _claimUseCase.execute(ClaimUseCaseInput(trip, getDescription())))
         .fold((failure) {
       calim=false;
+      setMessage(failure.massage);
    //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
           calim=true;
@@ -106,7 +112,7 @@ Future<bool>  storeClaim( int trip) async {
     (await _weeklyTripUsecase.execute(null))
         .fold((failure) 
     {
-      print("failer");
+      setMessage(failure.massage);
       //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
       lang =await _appPreferences.getAppLanguage();
@@ -130,9 +136,8 @@ Future<bool>  storeClaim( int trip) async {
 
     (await _evaluationUseCase.execute(EvaluationUseCaseInput(trip, r)))
         .fold((failure) {
-      //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data)async {
-
     });
   }
 }

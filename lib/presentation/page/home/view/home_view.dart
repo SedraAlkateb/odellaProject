@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
            : Provider.of<HomeViewModel>(context).getStateScreen()==2
            ? StateRenderer(
            stateRendererType: StateRendererType.fullScreenErrorState,
-           message: "something wrong",
+           message:  Provider.of<HomeViewModel>(context,listen: false).getMessage1(),
            retryActionFunction: () {
              Provider.of<HomeViewModel>(context,listen: false).getTransportationLinesData();
            })

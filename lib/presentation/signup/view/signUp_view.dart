@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled/app/di.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/language_manager.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
-import 'package:untitled/presentation/resources/strings_manager.dart';
 import 'package:untitled/presentation/resources/values_manager.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 import 'dart:math' as math;
@@ -28,8 +26,6 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-  SignUpViewModel _signUpViewModel = instance<SignUpViewModel>();
-
   GlobalKey<FormBuilderState> _fbKey1 = GlobalKey<FormBuilderState>();
   GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -68,7 +64,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ? StateRenderer(
                         stateRendererType:
                             StateRendererType.fullScreenErrorState,
-                        message:Provider.of<SignUpViewModel>(context).getMessage() ,
+                        message:Provider.of<SignUpViewModel>(context).getMessage1() ,
                         retryActionFunction: () {
                           Provider.of<SignUpViewModel>(context).start();
                         })
@@ -345,7 +341,10 @@ class _SignUpViewState extends State<SignUpView> {
                         mainAxisAlignment: MainAxisAlignment.end,
 
                         children: [
-                          Text(Provider.of<SignUpViewModel>(context).getMessage()),
+                          Expanded(
+                            child: Text(Provider.of<SignUpViewModel>(context).getMessage1()
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: AppPadding.p28),
@@ -594,7 +593,10 @@ class _SignUpViewState extends State<SignUpView> {
                                 )),
                           ),
                         ),
-                        Text(Provider.of<SignUpViewModel>(context).getMessage()),
+                        Expanded(child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+                          child: Text(Provider.of<SignUpViewModel>(context).getMessage1()),
+                        )),
                         InkWell(
                           onTap: () {
                             if (_globalKey.currentState!.validate()) {
@@ -916,7 +918,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             .getSignUp().then((value) {
                                               if(value==false){
                                                 ErrorState(StateRendererType.popupErrorState, "vf").dismissDialog(context);
-                                                ErrorState(StateRendererType.popupErrorState, "vf").showPopup(context, StateRendererType.popupErrorState, "message");
+                                                ErrorState(StateRendererType.popupErrorState, "vf").showPopup(context, StateRendererType.popupErrorState,Provider.of<SignUpViewModel>(context,listen: false).getMessage1());
                                               }else{
                                                 ContentState().dismissDialog(context);
                                               }

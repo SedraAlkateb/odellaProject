@@ -16,7 +16,6 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   Map<int, List<DataProgram> > program2={};
   String selectedDay = 'Sat';
   int indexDay=0;
-
   List<String> weekDays = ['${ LocaleKeys.Mon.tr()}', '${ LocaleKeys.Tus.tr()}', '${ LocaleKeys.Wed.tr()}', '${ LocaleKeys.Thu.tr()}','${ LocaleKeys.fri.tr()}','${ LocaleKeys.Sat.tr()}', '${ LocaleKeys.Sun.tr()}'];
   bool? b1=false;
   bool? b2=false;
@@ -27,6 +26,7 @@ class ProgramsViewModel extends BaseViewModel with ChangeNotifier{
   getDay(int i){
     return weekDays[i];
   }
+
   setSelectedDay(int i){
     selectedDay=weekDays[i];
     indexDay=i;
@@ -98,11 +98,16 @@ List<DataProgram> getProgramDay(){
   bool getBool(){
     return b;
   }
-
+@override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
   @override
   void start() {
 program();
   }
+
   setRating(double r){
     _rating=r;
 
@@ -116,7 +121,9 @@ program();
     setStateScreen(1);
     (await _programsUseCase.execute(null))
         .fold((failure) {
-setStateScreen(2);
+      setMessage(failure.massage);
+
+      setStateScreen(2);
     }, (data)async {
       setStateScreen(0);
          setMap(data.dataProgram);
@@ -134,6 +141,7 @@ setStateScreen(2);
             confirmAttendance1: b1,
             confirmAttendance2: b2 )))
         .fold((failure) {
+          setMessage(failure.massage);
       //  inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data)async {
 

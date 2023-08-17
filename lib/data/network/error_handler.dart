@@ -16,29 +16,30 @@ ErrorHandler.handle(dynamic error){
 }
 Failure _handleError(DioError error){
   switch(error.type){
-
     case DioErrorType.connectTimeout:
    return DataSource.CONNECT_TIOMOUT.getFailure();
     case DioErrorType.sendTimeout:
      return DataSource.SEND_TIMOUT.getFailure();
-
     case DioErrorType.receiveTimeout:
    return   DataSource.RECIEVE_TIMEOUT.getFailure();
 
     case DioErrorType.response:
-      final responseBody = error.response?.data;
-      String message="";
-      String errors="";
-      if (responseBody != null) {
-        message = responseBody['message'];
-        final errors = responseBody['errors'];
+      if(error.response?.statusCode==422){
+        final responseBody = error.response?.data;
+        String message="";
+        String errors="";
+        if (responseBody != null) {
+          message = responseBody['message'];
+          print('Error Message: $message');
+          return Failure(422, message);
 
-        print('Error Message: $message');
-        return Failure(422, message);
+        }else{
+          return DataSource.DEFAULT.getFailure();
 
-      }else{
-        return DataSource.DEFAULT.getFailure();
-
+        }
+      }
+      else{
+        return  Failure(error.response?.statusCode ?? 404, error.response?.statusMessage??"Failer");
       }
 
     case DioErrorType.cancel:

@@ -235,7 +235,7 @@ class DrawerSupervisorView extends StatelessWidget {
                       }
                       else{
                         ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
-                        ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
+                        ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, Provider.of<DrawerSupervisorViewModel>(context,listen: false).getMessage1());
                       }
 
 
