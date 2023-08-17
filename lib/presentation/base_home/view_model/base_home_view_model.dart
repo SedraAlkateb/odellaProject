@@ -15,6 +15,11 @@ class BaseHomeViewModel extends BaseViewModel with ChangeNotifier{
   var _line;
   bool _isLog=false;
   bool isPos=false;
+  @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
   void setIsLog(bool isLog1){
     _isLog =isLog1;
     notifyListeners();
@@ -78,8 +83,8 @@ class BaseHomeViewModel extends BaseViewModel with ChangeNotifier{
     ( await _transportationLinesUseCase.execute(null))
         .fold(
             (failure)  {
-          //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
-        },
+              setMessage(failure.massage);
+            },
             (data)  {
           dataTransportationLines=data.dataTransportationLines;
           dataTransportationLinesSearch=data.dataTransportationLines;

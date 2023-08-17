@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -103,9 +105,22 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+                            LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "loading");
                             Provider.of<ForgotPasswordViewModel>(context,
                                 listen: false)
-                                .forgotPassword();
+                                .forgotPassword().then((value) {
+                              if(value){
+                                ContentState().dismissDialog(context);
+                                Navigator.pushReplacementNamed(context,Routes.changepass);
+                              }else{
+                                ErrorState(StateRendererType.popupErrorState,  Provider.of<ForgotPasswordViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                                ErrorState(StateRendererType.popupErrorState, Provider.of<ForgotPasswordViewModel>(context,listen: false).getMessage1()).
+                                showPopup(context, StateRendererType.popupErrorState, Provider.of<ForgotPasswordViewModel>(context,listen: false).getMessage1());
+                              }
+                            }
+                            );
+
+
                           }
                         },
                         child: Text(LocaleKeys.save.tr()),

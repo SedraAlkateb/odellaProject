@@ -86,7 +86,7 @@ class _LostItemsViewState extends State<LostItemsView> {
             : Provider.of<LostItemsViewModel>(context).getStateScreen()==2
             ? StateRenderer(
             stateRendererType: StateRendererType.fullScreenErrorState,
-            message: "something wrong",
+            message: Provider.of<LostItemsViewModel>(context,listen: false).getMessage1(),
             retryActionFunction: () {})
             : StateRenderer(
             stateRendererType: StateRendererType.fullScreenEmptyState,

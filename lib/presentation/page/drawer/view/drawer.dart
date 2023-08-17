@@ -255,8 +255,8 @@ class NavBar extends StatelessWidget {
                       );
                     }
                     else{
-                      ErrorState(StateRendererType.popupErrorState, "Error").dismissDialog(context);
-                      ErrorState(StateRendererType.popupErrorState, "Error").showPopup(context,StateRendererType.popupErrorState, "Error");
+                      ErrorState(StateRendererType.popupErrorState, Provider.of<DrawerViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                      ErrorState(StateRendererType.popupErrorState, Provider.of<DrawerViewModel>(context,listen: false).getMessage1()).showPopup(context,StateRendererType.popupErrorState, Provider.of<DrawerViewModel>(context,listen: false).getMessage1());
                     }
 
 

@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/reset_password/view_model/reset_password_viewmodel.dart';
 import 'package:untitled/presentation/resources/assets_manager.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
@@ -140,9 +142,18 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+                            LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, "loading");
                             Provider.of<ResetPasswordViewModel>(context,
                                 listen: false)
-                                .resetPassword();
+                                .resetPassword().then((value) {
+                              if(value){
+                                ContentState().dismissDialog(context);
+                              }else{
+                                ErrorState(StateRendererType.popupErrorState, Provider.of<ResetPasswordViewModel>(context).getMessage1()).dismissDialog(context);
+                                ErrorState(StateRendererType.popupErrorState, Provider.of<ResetPasswordViewModel>(context).getMessage1()).showPopup(context, StateRendererType.popupErrorState, Provider.of<ResetPasswordViewModel>(context).getMessage1());
+                              }
+                            }
+                            );
                           }
                         },
 

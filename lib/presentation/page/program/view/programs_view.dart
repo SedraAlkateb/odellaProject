@@ -43,32 +43,33 @@ class _ProgramsViewState extends State<ProgramsView>
     return Sizer(builder: (context, orientation, deviceType) {
       return
         Scaffold(
-            appBar: AppBar(
-              actions: [
-                notificationIcon(context)
-              ],
-              title: Text(LocaleKeys.Program.tr(),
-                  style: getBoldStyle(
-                      color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
-            ),
-            drawer:  NavBar(),
-            body:
-            Provider.of<ProgramsViewModel>(context).getStateScreen() == 0
-                ? SafeArea(child:
-            orientation == Orientation.portrait
-                ? _screenWedgit1()
-                : _screenWedgit2()
-            )
-                :Provider.of<ProgramsViewModel>(context).getStateScreen()==1
-                ?StateRenderer(
-                stateRendererType: StateRendererType.fullScreenLoadingState,
-                message: "Loading",
-                retryActionFunction: () {})
-                : StateRenderer(
-                stateRendererType: StateRendererType.fullScreenErrorState,
-                message: "something wrong",
-                retryActionFunction: () {})
-        );
+              appBar: AppBar(
+                actions: [
+                  notificationIcon(context)
+                ],
+                title: Text(LocaleKeys.Program.tr(),
+                    style: getBoldStyle(
+                        color: ColorManager.sidBarIcon, fontSize: FontSize.s20)),
+              ),
+              drawer:  NavBar(),
+              body:
+              Provider.of<ProgramsViewModel>(context).getStateScreen() == 0
+                  ? SafeArea(child:
+              orientation == Orientation.portrait
+                  ? _screenWedgit1()
+                  : _screenWedgit2()
+              )
+                  :Provider.of<ProgramsViewModel>(context).getStateScreen()==1
+                  ?StateRenderer(
+                  stateRendererType: StateRendererType.fullScreenLoadingState,
+                  message: "Loading",
+                  retryActionFunction: () {})
+                  : StateRenderer(
+                  stateRendererType: StateRendererType.fullScreenErrorState,
+                  message :Provider.of<ProgramsViewModel>(context,listen: false).getMessage1()
+                  ,
+                  retryActionFunction: () {})
+            );
     }
     );
   }

@@ -8,6 +8,13 @@ abstract class  BaseViewModel extends BaseViewModelInputs
      with BaseViewModeOutputs{
 int stateScreen=0;
 int stateDialog=0;
+String message="";
+String getMessage1(){
+  return message;
+}
+setMessage(String m){
+  message=m;
+}
   //final StreamController _inputStreamController =BehaviorSubject<FlowState>();//BehaviorSubject
 @override
   void dispose() {

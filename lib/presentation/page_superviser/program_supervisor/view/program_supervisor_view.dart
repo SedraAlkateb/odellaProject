@@ -65,7 +65,7 @@ class _SupervisorProgramViewState extends State<SupervisorProgramView> {
                : Provider.of<ProgramsViewModel>(context).getStateScreen()==2
                ? StateRenderer(
                stateRendererType: StateRendererType.fullScreenErrorState,
-               message: "something wrong",
+               message: Provider.of<ProgramsViewModel>(context,listen: false).getMessage1(),
                retryActionFunction: () {
                  Provider.of<ProgramsViewModel>(context,listen: false).program();
                })

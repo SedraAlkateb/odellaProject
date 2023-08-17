@@ -46,7 +46,8 @@ class _TransportationLinesViewState extends State<TransportationLinesView> {
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
-        body: Provider.of<HomeViewModel>(context).getStateScreen() == 0
+        body:
+        Provider.of<HomeViewModel>(context).getStateScreen() == 0
             ? contentWidget()
             : Provider.of<HomeViewModel>(context).getStateScreen() == 1
                 ? StateRenderer(
@@ -57,7 +58,7 @@ class _TransportationLinesViewState extends State<TransportationLinesView> {
                     ? StateRenderer(
                         stateRendererType:
                             StateRendererType.fullScreenErrorState,
-                        message: "something wrong",
+                        message: Provider.of<HomeViewModel>(context,listen:  false).getMessage1(),
                         retryActionFunction: () {
                           Provider.of<HomeViewModel>(context, listen: false)
                               .getTransportationLinesData();

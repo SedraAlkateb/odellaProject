@@ -26,6 +26,9 @@ class Not extends BaseViewModel with ChangeNotifier {
       notifyListeners();
     });
   }
+  getMessage(){
+    return _messages;
+  }
   int getMessageL(){
     return  _messages.length;
   }
@@ -49,9 +52,6 @@ int getIndex(){
   int getCount() {
     return count;
   }
-NotificationModel getMessage(){
-   return _notifications[index];
-}
   updateInc() {
     count = count + 1;
   }

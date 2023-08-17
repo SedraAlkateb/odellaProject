@@ -15,6 +15,11 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
   List<DailyReservationsModel> _dailyReservations=[];
   int tripID=0;
   @override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
+  @override
   void start() {
   }
   setTripId(int id){
@@ -67,6 +72,7 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
     ( await _dailyReservationUseCase.execute(id)).fold(
 
             (failure)  {
+              setMessage(failure.massage);
               setStateScreen(2);
               print(failure.massage);
         },
@@ -82,7 +88,9 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
 
             (failure)  {
           print(failure.massage);
-        },
+          setMessage(failure.massage);
+
+            },
             (data)  async{
           print("succsec");
         });
@@ -92,7 +100,8 @@ class DailyReservationsViewModel extends BaseViewModel with ChangeNotifier{
     ( await _denyUseCase.execute(id)).fold(
 
             (failure)  {
-          print(failure.massage);
+              setMessage(failure.massage);
+              print(failure.massage);
         },
             (data)  async{
           print("succsec");

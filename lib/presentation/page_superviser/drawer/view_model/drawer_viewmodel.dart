@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:untitled/domain/usecase/logout_usecase.dart';
+import 'package:untitled/presentation/base/base_view_model.dart';
 
 
-class DrawerSupervisorViewModel  with ChangeNotifier{
+class DrawerSupervisorViewModel extends BaseViewModel with ChangeNotifier{
   LogoutUseCase _logoutUseCase;
 
   DrawerSupervisorViewModel(this._logoutUseCase);
@@ -28,6 +29,7 @@ bool s=false;
 
             (failure)  {
               s=false;
+              setMessage(failure.massage);
             },
             (data)  async{
               s=true;
@@ -35,5 +37,14 @@ bool s=false;
               notifyListeners();
            });
 return s;
+  }
+@override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
+  @override
+  void start() {
+    // TODO: implement start
   }
 }

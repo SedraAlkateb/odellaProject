@@ -56,15 +56,6 @@ var nnum=0;
     notifyListeners();
     return super.setDialog(state);
   }
-  String message="";
-
-setMessage(String m){
-  message=m;
-  notifyListeners();
-}
-String getMessage(){
-  return message;
-}
   @override
   setStateScreen(int state) {
 notifyListeners();
@@ -85,6 +76,11 @@ setNum(int n){
   }
   bool getIsLog(){
     return isLog;
+  }
+  @override
+  setMessage(String m) {
+  notifyListeners();
+  return super.setMessage(m);
   }
   @override
   void start() {
@@ -248,6 +244,7 @@ return s;
     ( await _positionLineUseCase.execute(id))
         .fold(
             (failure)  {
+              setMessage(failure.massage);
      //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
         },
             (data)  {
@@ -262,7 +259,7 @@ return s;
     ( await _universitiesUsecase.execute(null))
         .fold(
             (failure)  {
-        //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
               isUn=true;
@@ -274,7 +271,7 @@ return s;
     ( await _subscriptionsUseCase.execute(null))
         .fold(
             (failure)  {
-     //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
               isSub=true;
@@ -288,7 +285,7 @@ return s;
     ( await _transferPositionsUseCase.execute(null))
         .fold(
             (failure)  {
-     //     inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
        //   inputState.add(ContentState());
@@ -300,7 +297,7 @@ return s;
     ( await _transportationLinesUseCase.execute(null))
         .fold(
             (failure)  {
-         // inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
               isLin=true;
@@ -338,7 +335,7 @@ return s;
     ( await _areasUseCase.execute(id))
         .fold(
             (failure)  {
-      //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
              //inputState.add(ContentState());
@@ -352,7 +349,7 @@ return s;
     ( await _citiesUseCase.execute(null))
         .fold(
             (failure)  {
-      //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
           isCities=true;

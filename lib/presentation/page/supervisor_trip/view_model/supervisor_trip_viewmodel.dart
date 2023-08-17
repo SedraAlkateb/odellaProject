@@ -54,6 +54,11 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
   bool _succ = false;
   int tripId = 0;
   @override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
+  }
+  @override
   void start() {
 
     tripSupervisor();
@@ -94,6 +99,7 @@ class SupervisorTripViewModel extends BaseViewModel with ChangeNotifier {
           setStateScreen(2);
           setSucc(false);
           print(failure.massage);
+          setMessage(failure.massage);
         }, (data) async {
       if (data != null) {
         if (data.dataHomeSupervisor != null &&

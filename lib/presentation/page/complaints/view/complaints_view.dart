@@ -69,8 +69,10 @@ class _ComplaintsViewState extends State<ComplaintsView> {
             : Provider.of<ComplaintsViewModel>(context).getStateScreen()==2
             ? StateRenderer(
             stateRendererType: StateRendererType.fullScreenErrorState,
-            message: "something wrong",
-            retryActionFunction: () {})
+            message: Provider.of<ComplaintsViewModel>(context).getMessage1(),
+            retryActionFunction: () {
+              Provider.of<ComplaintsViewModel>(context,listen:false ).start();
+            })
             : StateRenderer(
             stateRendererType: StateRendererType.fullScreenEmptyState,
             message: "not found any item",
@@ -252,8 +254,8 @@ Widget screenWidget(BuildContext context){
                                           SuccessState("success").showPopup(context,StateRendererType.popupSuccess,"Success");
                                           Provider.of<ComplaintsViewModel>(context,listen: false).setDescription("");
                                         }else{
-                                          ErrorState(StateRendererType.popupErrorState, "somthing worng").dismissDialog(context);
-                                          ErrorState(StateRendererType.popupErrorState, "somthing worng").showPopup(context,StateRendererType.popupErrorState,"somthing worng");
+                                          ErrorState(StateRendererType.popupErrorState,Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                                          ErrorState(StateRendererType.popupErrorState, Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1()).showPopup(context,StateRendererType.popupErrorState,Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1());
                                           Provider.of<ComplaintsViewModel>(context,listen: false).setDescription("");
 
                                         }

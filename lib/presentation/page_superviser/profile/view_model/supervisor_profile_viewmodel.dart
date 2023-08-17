@@ -69,6 +69,11 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     return super.setStateScreen(state);
   }
   @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
+  @override
   void start() {
     student().then((value) =>
         getAreasByIdCity(_profile?.location?.city?.id ??0)
@@ -309,6 +314,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     (await _profileUseCase.execute(null))
         .fold((failure) {
       setStateScreen(2);
+      setMessage(failure.massage);
     }, (data)async {
       setStateScreen(0);
       setProfile(data);
@@ -328,8 +334,9 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
       return _profile?.location?.street ??"";
     }
   }
+  bool b=false;
   //////////////////////////////
-  updateSupervisor() async {
+Future<bool>  updateSupervisor() async {
     //  inputState.add(
     //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
     (await _updateSupervisorUseCase.execute(UpdateSupervisorUseCaseInput(
@@ -342,13 +349,16 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
       street: getStreet()
          )))
         .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+          b=false;
+      setMessage(failure.massage);
     }, (data) {
       // setProfile(data);
       //   inputState.add(ContentState());
+      b=true;
       print("object");
       notifyListeners();
     });
+    return b;
   }
   updatePassword() async {
     //  inputState.add(
@@ -360,7 +370,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
       studentUpdate.newPassword_confirmation??"" ,
     )))
         .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       // setProfile(data);
       //   inputState.add(ContentState());
@@ -376,7 +386,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
       studentUpdate.image ?? File(""),
     )))
         .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       // setProfile(data);
       //   inputState.add(ContentState());
@@ -418,7 +428,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     ( await _universitiesUsecase.execute(null))
         .fold(
             (failure)  {
-          //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
           setUniversities(data.dataModel);
@@ -430,7 +440,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     ( await _subscriptionsUseCase.execute(null))
         .fold(
             (failure)  {
-          //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
 
@@ -442,7 +452,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     ( await _citiesUseCase.execute(null))
         .fold(
             (failure)  {
-          //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+              setMessage(failure.massage);
         },
             (data)  {
           setCities(data.cities!);
@@ -453,7 +463,9 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     ( await _areasUseCase.execute(id))
         .fold(
             (failure)  {
-        },
+              setMessage(failure.massage);
+
+            },
             (data)  {
           setAreas(data.areas!);
           notifyListeners();

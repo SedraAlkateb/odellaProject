@@ -89,8 +89,11 @@ class _ProfileViewState extends State<ProfileView> {
                 retryActionFunction: () {})
                : StateRenderer(
                 stateRendererType: StateRendererType.fullScreenErrorState,
-                message: "something wrong",
-                retryActionFunction: () {})
+                message: Provider.of<ProfileViewModel>(context).getMessage1(),
+                retryActionFunction: () {
+                  Provider.of<ProfileViewModel>(context).start();
+                })
+
 
 
           ),
@@ -637,14 +640,15 @@ class _ProfileViewState extends State<ProfileView> {
                                         horizontal: AppPadding.p28),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, profile1.getMessage());
+                                        LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, profile1.getMessage1());
                                         profile.UpdateStudent().then((value) {
                                           if(value){
-                                            SuccessState(profile1.getMessage()).dismissDialog(context);
-                                            SuccessState(profile1.getMessage()).showPopup(context, StateRendererType.popupSuccess, profile1.getMessage());
+                                            SuccessState(profile1.getMessage1()).dismissDialog(context);
+                                            SuccessState(profile1.getMessage1()).showPopup(context, StateRendererType.popupSuccess, profile1.getMessage1());
                                           }else{
-                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage()).dismissDialog(context);
-                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage()).showPopup(context, StateRendererType.popupErrorState, profile1.getMessage());
+                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage1()).dismissDialog(context);
+                                            ErrorState(StateRendererType.popupErrorState, profile1.getMessage1()).showPopup(context, StateRendererType.popupErrorState, profile1.getMessage1());
+
                                           }
                                         }
                                         );

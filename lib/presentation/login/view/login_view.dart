@@ -203,8 +203,8 @@ class _LoginViewState extends State<LoginView> {
                                 );
 
                               }else{
-                                ErrorState(StateRendererType.popupErrorState, model.getMessage()).dismissDialog(context);
-                                ErrorState(StateRendererType.popupErrorState, model.getMessage()).showPopup(context, StateRendererType.popupErrorState, model.getMessage());
+                                ErrorState(StateRendererType.popupErrorState, model.getMessage1()).dismissDialog(context);
+                                ErrorState(StateRendererType.popupErrorState, model.getMessage1()).showPopup(context, StateRendererType.popupErrorState, model.getMessage1());
                               }
                             }
 

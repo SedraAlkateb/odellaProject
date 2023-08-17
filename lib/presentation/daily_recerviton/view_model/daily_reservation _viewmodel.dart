@@ -97,6 +97,7 @@ late DataTodayTrips today;
     setStateScreen(1);
     ( await _todayTripsUseCase.execute(await getLocalTime())).fold(
             (failure)  {
+              setMessage(failure.massage);
           if(failure.code==ResponseCode.UNAUTORISED){
             setStateScreen(4);
           }else{
@@ -128,6 +129,11 @@ late DataTodayTrips today;
   }
   String? getError(){
     return _error;
+  }
+  @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
   }
   PusherTrip _pusherTrip=instance<PusherTrip>();
   PusherClient? pusherClient;

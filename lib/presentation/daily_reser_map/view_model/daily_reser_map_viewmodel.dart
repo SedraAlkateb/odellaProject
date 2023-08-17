@@ -16,6 +16,11 @@ class DailyReservationMapViewModel extends BaseViewModel with ChangeNotifier{
     super.dispose();
   }
   @override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
+  @override
   setDialog(int state) {
 notifyListeners();
 return super.setDialog(state);
@@ -73,6 +78,7 @@ return super.setDialog(state);
             (failure)  {
           setDialog(2);
           s=false;
+          setMessage(failure.massage);
         },
             (data)  {
           setDialog(0);

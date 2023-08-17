@@ -7,7 +7,7 @@ import 'package:untitled/presentation/base/base_view_model.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 
-class DrawerViewModel  with ChangeNotifier{
+class DrawerViewModel extends BaseViewModel with ChangeNotifier {
   LogoutUseCase _logoutUseCase;
 
   DrawerViewModel(this._logoutUseCase);
@@ -32,13 +32,23 @@ Future<bool>  logout() async{
 
             (failure)  {
               s=false;
-          //        inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
-        },
+              setMessage(failure.massage);
+              },
             (data)  async{
               s=true;
               isSucc=data.status ?? 0;
               notifyListeners();
            });
 return s;
+  }
+  @override
+  setMessage(String m) {
+  notifyListeners();
+  return super.setMessage(m);
+  }
+
+  @override
+  void start() {
+    // TODO: implement start
   }
 }

@@ -347,6 +347,8 @@ notifyListeners();
         setStateScreen(2);
 
       }
+      setMessage(failure.massage);
+
     }, (data) async {
       setStateScreen(0);
       setProfile(data);
@@ -358,13 +360,10 @@ notifyListeners();
       notifyListeners();
     });
   }
-String message="";
-  setMessage(String m){
-    message=m;
+  @override
+  setMessage(String m) {
     notifyListeners();
-  }
- String getMessage(){
-    return message;
+    return super.setMessage(m);
   }
   bool update=false;
   //////////////////////////////
@@ -381,7 +380,7 @@ String message="";
             transportation_line_id: getTransportationLineId(),
             university_id: getUniversityId())))
         .fold((failure) {
-          setMessage(failure.massage);
+      setMessage(failure.massage);
           update=false;
       // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
     }, (data) {
@@ -405,7 +404,7 @@ String message="";
       studentUpdate.newPassword_confirmation ?? "",
     )))
         .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       // setProfile(data);
       //   inputState.add(ContentState());
@@ -422,7 +421,7 @@ String message="";
       studentUpdate.image ?? File(""),
     )))
         .fold((failure) {
-      // inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       // setProfile(data);
       //   inputState.add(ContentState());
@@ -473,7 +472,7 @@ String message="";
 
   getUniversitiesData() async {
     (await _universitiesUsecase.execute(null)).fold((failure) {
-      //  inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       setUniversities(data.dataModel);
     });
@@ -481,7 +480,7 @@ String message="";
 
   getSubscriptionsData() async {
     (await _subscriptionsUseCase.execute(null)).fold((failure) {
-      //     inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       setDataSubscriptions(data.dataSubscriptions);
     });
@@ -489,7 +488,7 @@ String message="";
 
   getCitiesData() async {
     (await _citiesUseCase.execute(null)).fold((failure) {
-      //    inputState.add(ErrorState(StateRendererType.fullScreenErrorState, failure.massage));
+      setMessage(failure.massage);
     }, (data) {
       setCities(data.cities!);
     });
@@ -524,7 +523,10 @@ String message="";
   }
 
   getAreasByIdCity(int id) async {
-    (await _areasUseCase.execute(id)).fold((failure) {}, (data) {
+    (await _areasUseCase.execute(id)).fold((failure) {
+      setMessage(failure.massage);
+
+    }, (data) {
       setAreas(data.areas!);
       notifyListeners();
     });

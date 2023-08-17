@@ -7,7 +7,6 @@ class ResetPasswordViewModel extends BaseViewModel with ChangeNotifier{
   ResetPasswordUseCase _resetPasswordUseCase;
 ResetPasswordViewModel(this._resetPasswordUseCase);
   var _resetPasswordObject=ResetPasswordObject("",0,"");
-String _message="input your code";
 bool _succ=false;
 bool getSuccses(){
   return  _succ;
@@ -28,14 +27,8 @@ setCode(int code){
   _resetPasswordObject= _resetPasswordObject.copyWith(code: code);
 
 }
-  setMessage(String message ){
-    _message=message;
-    notifyListeners();
-  }
-String  getMessage(){
-    return _message;
-  }
-  resetPassword() async{
+bool b=false;
+ Future<bool> resetPassword() async{
 
     ( await _resetPasswordUseCase.execute(
         RestPasswordUseCaseInput(
@@ -43,12 +36,20 @@ String  getMessage(){
         ))).fold(
 
             (failure)  {
+              b=false;
               setMessage(failure.massage);
         },
             (data)  async{
+              b=true;
               setMessage(data);
               setSuc(true);
         });
+    return b;
+  }
+  @override
+  setMessage(String m) {
+notifyListeners();
+return super.setMessage(m);
   }
   @override
   void start() {

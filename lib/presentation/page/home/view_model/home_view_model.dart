@@ -66,7 +66,11 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
 
   }
 
-
+@override
+  setMessage(String m) {
+    notifyListeners();
+    return super.setMessage(m);
+  }
 @override
   void dispose() {
     super.dispose();
@@ -95,6 +99,7 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
   List<DataTransferPositions> getPosition(){
     return _position;
   }
+
   /////////////////////////async
   getTransportationLinesData()async{
     setStateScreen(1);
@@ -107,6 +112,7 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
           }else{
             setStateScreen(2);
           }
+          setMessage(failure.massage);
           print(failure.massage);
         },
             (data)  {
@@ -130,7 +136,10 @@ class HomeViewModel extends BaseViewModel with ChangeNotifier{
     ( await _positionLineUseCase.execute(id))
         .fold(
             (failure)  {
+
               setStateScreen(2);
+              setMessage(failure.massage);
+
             },
             (data)  {
              // setStateScreen(0);
