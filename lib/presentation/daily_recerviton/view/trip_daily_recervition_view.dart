@@ -127,7 +127,7 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
             ),
             IconButton(
                 onPressed: () {
-                  Provider.of<DailyReservationViewModel>(context,listen: false).filterLine();
+             //     Provider.of<DailyReservationViewModel>(context,listen: false).filterLine();
                 },
                 icon: Icon(
                   Icons.filter_list_outlined,
@@ -142,10 +142,14 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
                       .length ==
                   0
               ? Center(
-                  child: StateRenderer(
-                      stateRendererType: StateRendererType.fullScreenEmptyState,
-                      message: "Not found any transmission line",
-                      retryActionFunction: () {}),
+                  child: SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    child: StateRenderer(
+                        stateRendererType: StateRendererType.fullScreenEmptyState,
+                        message: "Not found any transmission line",
+                        retryActionFunction: () {}),
+                  ),
                 )
               : Padding(
                   padding: const EdgeInsets.only(

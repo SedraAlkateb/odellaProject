@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/app/di.dart';
 import 'package:untitled/lang/locale_keys.g.dart';
+import 'package:untitled/presentation/back_login/back_login.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
@@ -34,12 +35,32 @@ class SupervisorProfileView extends StatefulWidget {
 class _SupervisorProfileViewState extends State<SupervisorProfileView> {
   SupervisorProfileViewModel profileViewModel =
       instance<SupervisorProfileViewModel>();
+  static const delayDuration = Duration(milliseconds: 3000);
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Provider.of<SupervisorProfileViewModel>(context, listen: false).start();
     });
     super.initState();
+  }
+  void didChangeDependencies() {
+    if( Provider.of<SupervisorProfileViewModel>(context).getStateScreen() == 4){
+        Future.delayed(delayDuration, () {
+          // Write your code here
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+            Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => BackLoginView()),
+                (route) => false,
+          );
+
+
+        });
+
+      });
+    }
+    super.didChangeDependencies();
   }
 
   @override

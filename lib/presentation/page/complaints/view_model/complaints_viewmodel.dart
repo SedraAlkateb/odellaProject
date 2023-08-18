@@ -23,6 +23,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
   AppPreferences _appPreferences =instance<AppPreferences>();
   setTrip(List<DataTrips> trip){
     _trip=trip;
+    search=trip;
     notifyListeners();
   }
  double ifEval(int tripIdd){
@@ -43,7 +44,7 @@ class ComplaintsViewModel extends BaseViewModel with ChangeNotifier{
     return _eval;
 }
   List<DataTrips> getTrip(){
-    return _trip;
+    return search;
   }
   setTripId(int id){
     tripId=id;
@@ -107,18 +108,19 @@ Future<bool>  storeClaim( int trip) async {
     return calim;
   }
   Future  getWeeklyTrip() async {
-    // inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-
+    setStateScreen(1);
     (await _weeklyTripUsecase.execute(null))
         .fold((failure) 
     {
       setMessage(failure.massage);
-      //   inputState.add(ErrorState(StateRendererType.popupErrorState, failure.massage));
+      setStateScreen(2);
     }, (data)async {
       lang =await _appPreferences.getAppLanguage();
       setTrip(data.weeklyTrip!.trips);
       setEval(data.weeklyTrip?.evaluation??[]);
       notifyListeners();
+      setStateScreen(0);
+
     });
   }
   @override
@@ -130,14 +132,34 @@ Future<bool>  storeClaim( int trip) async {
   void start() {
     getWeeklyTrip();
   }
-
-  evaluation(int r,int trip) async {
+bool b=false;
+ Future<bool> evaluation(int r,int trip) async {
     //  inputState.add(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
 
     (await _evaluationUseCase.execute(EvaluationUseCaseInput(trip, r)))
         .fold((failure) {
+          b=false;
       setMessage(failure.massage);
     }, (data)async {
+          b=true;
+
     });
+    return b;
   }
+  List<DataTrips> search =[];
+
+  setSearch( String value){
+    search= _trip.where(
+            (element){
+          final fName=element.time?.start.toLowerCase();
+          final lName=element.time?.date.toLowerCase();
+          final sear=value.toLowerCase();
+          return fName!.contains(sear) ||
+              lName!.contains(sear)  ;
+        }).toList();
+
+    notifyListeners();
+
+  }
+
 }

@@ -99,7 +99,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.algorithem:
-        return MaterialPageRoute(builder: (_) => const SelectTimes());
+        return MaterialPageRoute(builder: (_) =>  SelectTimes());
       case Routes.polyLineDailyView:
         initDailyReservationMap();
         return MaterialPageRoute(builder: (_) => const PolyLineDailyView());

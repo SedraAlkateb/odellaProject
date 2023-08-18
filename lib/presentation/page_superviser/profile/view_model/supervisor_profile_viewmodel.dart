@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
@@ -313,7 +314,14 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     setStateScreen(1);
     (await _profileUseCase.execute(null))
         .fold((failure) {
-      setStateScreen(2);
+      if(failure.code==ResponseCode.UNAUTORISED)
+      {
+        setStateScreen(4);
+      }
+      else{
+        setStateScreen(2);
+
+      }
       setMessage(failure.massage);
     }, (data)async {
       setStateScreen(0);

@@ -226,7 +226,7 @@ class DrawerSupervisorView extends StatelessWidget {
 
                             SchedulerBinding.instance.addPostFrameCallback((_) {
                               Provider.of<HomeSuperVisorViewModel>(context,listen: false).stopTracking();
-                              Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
+                        //      Provider.of<DrawerSupervisorViewModel>(context,listen: false).dispose();
                               Navigator.pushReplacementNamed(context,Routes.afterSplashRoute);
 
                             });

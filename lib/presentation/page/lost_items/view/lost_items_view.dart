@@ -87,8 +87,10 @@ class _LostItemsViewState extends State<LostItemsView> {
             ? StateRenderer(
             stateRendererType: StateRendererType.fullScreenErrorState,
             message: Provider.of<LostItemsViewModel>(context,listen: false).getMessage1(),
-            retryActionFunction: () {})
-            : StateRenderer(
+            retryActionFunction: () {
+              Provider.of<LostItemsViewModel>(context,listen: false).start();
+            })
+            :  StateRenderer(
             stateRendererType: StateRendererType.fullScreenEmptyState,
             message: "not found any item",
             retryActionFunction: () {})
@@ -156,10 +158,14 @@ Widget _screanWedgit1(){
             ?  Expanded(
             child: Center(
             child:
-            StateRenderer(
+            SmartRefresher(
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: StateRenderer(
   stateRendererType: StateRendererType.fullScreenEmptyState,
   message: "not found any item",
-  retryActionFunction: () {})
+  retryActionFunction: () {}),
+            )
               ,))
             : Expanded(
           child:
@@ -309,7 +315,9 @@ Widget _screanWedgit1(){
                         child: Container(
                           width: 80.w,
                           height: 80.w,
-                          child: FadeInImage.assetNetwork(
+                          child: Provider.of<LostItemsViewModel>(context).getListFound()![index].image==null ?
+                              Icon(Icons.signal_wifi_statusbar_null):
+                          FadeInImage.assetNetwork(
                             placeholder:
                             ImageAssets.gray, // الصورة المؤقتة
                             image: ImageDownloader.getUrl(

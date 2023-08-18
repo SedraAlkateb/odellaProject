@@ -76,7 +76,7 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 30,),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: AppPadding.p20, right: AppPadding.p20),
@@ -102,7 +102,7 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 30,),
                       // Padding(
                       //   padding: const EdgeInsets.only(
                       //       left: AppPadding.p28, right: AppPadding.p28),
@@ -131,8 +131,8 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                       //   ),
                       // ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: AppPadding.p20, right: AppPadding.p20),
+                        padding: const EdgeInsets.all(
+                            AppPadding.p28),
                         child: TextFormField(
                           controller: seatsNumberController,
                           validator: (value) {
@@ -144,7 +144,7 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                               //     .setFirstName(value);
                             }
                             return null;
-                          },
+                            },
                           decoration: InputDecoration(
                             hintText: LocaleKeys.seat.tr(),
                             labelText: LocaleKeys.seat.tr(),
@@ -155,7 +155,7 @@ class _InfoDailyReservationViewState extends State<InfoDailyReservationView> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 90,),
+                      SizedBox(height: 70,),
                       ElevatedButton(onPressed: ()
                       {
 

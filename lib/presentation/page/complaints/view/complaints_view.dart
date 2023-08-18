@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -32,7 +33,9 @@ class _ComplaintsViewState extends State<ComplaintsView> {
   @override
   void initState() {
     viewModel = Provider.of<ComplaintsViewModel>(context, listen: false);
-    viewModel.start();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      viewModel.start();
+    });
     //  Provider.of<ComplaintsViewModel>(context).start();
     super.initState();
   }
@@ -94,40 +97,38 @@ Widget screenWidget(BuildContext context){
             left: AppPadding.p20,
             right: AppPadding.p20,
             bottom: AppPadding.p20),
-        child: Expanded(
-          child: TextFormField(
-            onChanged: (value) {
-              try {
-                // Provider.of<HomeViewModel>(context,listen: false).setSearch(value);
-              } catch (e, s) {
-                print(s);
-              }
-            },
-            decoration: InputDecoration(
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.grey.shade300, width: AppSize.s1_5),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(AppSize.s16),
-                ),
+        child: TextFormField(
+          onChanged: (value) {
+            try {
+               Provider.of<ComplaintsViewModel>(context,listen: false).setSearch(value);
+            } catch (e, s) {
+              print(s);
+            }
+          },
+          decoration: InputDecoration(
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: Colors.grey.shade300, width: AppSize.s1_5),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(AppSize.s16),
               ),
-              // fillColor: ColorManager.white,
-              border: OutlineInputBorder(
-                //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
-                borderSide:
-                BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
-              ),
-              hintStyle: getRegularStyle(
-                  color: ColorManager.icon, fontSize: FontSize.s16),
-              hintText: "${LocaleKeys.searchtrip.tr()}",
-              //       hintStyle:Theme.of(context).textTheme.bodySmall,
-              prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: AppPadding.p8),
-                child: Icon(
-                  Icons.search,
-                  color: ColorManager.button,
-                ),
+            ),
+            // fillColor: ColorManager.white,
+            border: OutlineInputBorder(
+              //  borderRadius: BorderRadius.all(Radius.circular(AppSize.s20)),
+              borderSide:
+              BorderSide(color: ColorManager.shadow, width: AppSize.s1_5),
+            ),
+            hintStyle: getRegularStyle(
+                color: ColorManager.icon, fontSize: FontSize.s16),
+            hintText: "${LocaleKeys.searchtrip.tr()}",
+            //       hintStyle:Theme.of(context).textTheme.bodySmall,
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(left: AppPadding.p8),
+              child: Icon(
+                Icons.search,
+                color: ColorManager.button,
               ),
             ),
           ),
@@ -208,10 +209,20 @@ Widget screenWidget(BuildContext context){
                                     ),
 
                                     onRatingUpdate: (rating) {
-
+                                      LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading);
                                       Provider.of<ComplaintsViewModel>(context,
                                           listen: false)
-                                          .evaluation(rating.toInt(),Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id);
+                                          .evaluation(rating.toInt(),Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id). then((value) {
+                                        if(value){
+                                          SuccessState("success").dismissDialog(context);
+                                          SuccessState("success").showPopup(context,StateRendererType.popupSuccess,"Success");
+                                        }else{
+                                          ErrorState(StateRendererType.popupErrorState,Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                                          ErrorState(StateRendererType.popupErrorState, Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1()).showPopup(context,StateRendererType.popupErrorState,Provider.of<ComplaintsViewModel>(context,listen: false).getMessage1());
+                                        }
+                                      }
+
+                                      );
                                     },
                                   ),
                                 ],
@@ -248,7 +259,8 @@ Widget screenWidget(BuildContext context){
 
                                       LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading);
                                       Provider.of<ComplaintsViewModel>(context,listen: false).
-                                      storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id).then((value) {
+                                      storeClaim(Provider.of<ComplaintsViewModel>(context,listen: false).getTrip()[index].id).
+                                      then((value) {
                                         if(value){
                                           SuccessState("success").dismissDialog(context);
                                           SuccessState("success").showPopup(context,StateRendererType.popupSuccess,"Success");
