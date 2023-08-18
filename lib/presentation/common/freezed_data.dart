@@ -49,9 +49,6 @@ class UpdateStudentObject with _$UpdateStudentObject{
     String? firstName,
     String? lastName,
     String? email,
-    String? newPassword_confirmation,
-    String? oldPassword,
-    String? newPassword,
     String? phoneNumber,
     int? transportation_line_id,
     int? transfer_position_id,
@@ -88,4 +85,13 @@ class DailyReservationObject with _$DailyReservationObject{
       String fcm_token
 
       )=_DailyReservationObject;
+}
+@freezed
+
+class ChangePasswordObject with _$ChangePasswordObject {
+  factory ChangePasswordObject(
+      String newPassword_confirmation,
+      String oldPassword,
+      String newPassword,      )
+  =_ChangePasswordObject;
 }

@@ -660,9 +660,6 @@ mixin _$UpdateStudentObject {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  String? get newPassword_confirmation => throw _privateConstructorUsedError;
-  String? get oldPassword => throw _privateConstructorUsedError;
-  String? get newPassword => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   int? get transportation_line_id => throw _privateConstructorUsedError;
   int? get transfer_position_id => throw _privateConstructorUsedError;
@@ -689,9 +686,6 @@ abstract class $UpdateStudentObjectCopyWith<$Res> {
       String? firstName,
       String? lastName,
       String? email,
-      String? newPassword_confirmation,
-      String? oldPassword,
-      String? newPassword,
       String? phoneNumber,
       int? transportation_line_id,
       int? transfer_position_id,
@@ -720,9 +714,6 @@ class _$UpdateStudentObjectCopyWithImpl<$Res, $Val extends UpdateStudentObject>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
-    Object? newPassword_confirmation = freezed,
-    Object? oldPassword = freezed,
-    Object? newPassword = freezed,
     Object? phoneNumber = freezed,
     Object? transportation_line_id = freezed,
     Object? transfer_position_id = freezed,
@@ -761,18 +752,6 @@ class _$UpdateStudentObjectCopyWithImpl<$Res, $Val extends UpdateStudentObject>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      newPassword_confirmation: freezed == newPassword_confirmation
-          ? _value.newPassword_confirmation
-          : newPassword_confirmation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      oldPassword: freezed == oldPassword
-          ? _value.oldPassword
-          : oldPassword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      newPassword: freezed == newPassword
-          ? _value.newPassword
-          : newPassword // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
@@ -815,9 +794,6 @@ abstract class _$$_UpdateStudentObjectCopyWith<$Res>
       String? firstName,
       String? lastName,
       String? email,
-      String? newPassword_confirmation,
-      String? oldPassword,
-      String? newPassword,
       String? phoneNumber,
       int? transportation_line_id,
       int? transfer_position_id,
@@ -844,9 +820,6 @@ class __$$_UpdateStudentObjectCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
-    Object? newPassword_confirmation = freezed,
-    Object? oldPassword = freezed,
-    Object? newPassword = freezed,
     Object? phoneNumber = freezed,
     Object? transportation_line_id = freezed,
     Object? transfer_position_id = freezed,
@@ -886,18 +859,6 @@ class __$$_UpdateStudentObjectCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      newPassword_confirmation: freezed == newPassword_confirmation
-          ? _value.newPassword_confirmation
-          : newPassword_confirmation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      oldPassword: freezed == oldPassword
-          ? _value.oldPassword
-          : oldPassword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      newPassword: freezed == newPassword
-          ? _value.newPassword
-          : newPassword // ignore: cast_nullable_to_non_nullable
-              as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -933,9 +894,6 @@ class _$_UpdateStudentObject implements _UpdateStudentObject {
       this.firstName,
       this.lastName,
       this.email,
-      this.newPassword_confirmation,
-      this.oldPassword,
-      this.newPassword,
       this.phoneNumber,
       this.transportation_line_id,
       this.transfer_position_id,
@@ -959,12 +917,6 @@ class _$_UpdateStudentObject implements _UpdateStudentObject {
   @override
   final String? email;
   @override
-  final String? newPassword_confirmation;
-  @override
-  final String? oldPassword;
-  @override
-  final String? newPassword;
-  @override
   final String? phoneNumber;
   @override
   final int? transportation_line_id;
@@ -977,7 +929,7 @@ class _$_UpdateStudentObject implements _UpdateStudentObject {
 
   @override
   String toString() {
-    return 'UpdateStudentObject(studentId: $studentId, city_id: $city_id, area_id: $area_id, street: $street, subscription_id: $subscription_id, firstName: $firstName, lastName: $lastName, email: $email, newPassword_confirmation: $newPassword_confirmation, oldPassword: $oldPassword, newPassword: $newPassword, phoneNumber: $phoneNumber, transportation_line_id: $transportation_line_id, transfer_position_id: $transfer_position_id, image: $image, university_id: $university_id)';
+    return 'UpdateStudentObject(studentId: $studentId, city_id: $city_id, area_id: $area_id, street: $street, subscription_id: $subscription_id, firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, transportation_line_id: $transportation_line_id, transfer_position_id: $transfer_position_id, image: $image, university_id: $university_id)';
   }
 
   @override
@@ -997,13 +949,6 @@ class _$_UpdateStudentObject implements _UpdateStudentObject {
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(
-                    other.newPassword_confirmation, newPassword_confirmation) ||
-                other.newPassword_confirmation == newPassword_confirmation) &&
-            (identical(other.oldPassword, oldPassword) ||
-                other.oldPassword == oldPassword) &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.transportation_line_id, transportation_line_id) ||
@@ -1026,9 +971,6 @@ class _$_UpdateStudentObject implements _UpdateStudentObject {
       firstName,
       lastName,
       email,
-      newPassword_confirmation,
-      oldPassword,
-      newPassword,
       phoneNumber,
       transportation_line_id,
       transfer_position_id,
@@ -1052,9 +994,6 @@ abstract class _UpdateStudentObject implements UpdateStudentObject {
       final String? firstName,
       final String? lastName,
       final String? email,
-      final String? newPassword_confirmation,
-      final String? oldPassword,
-      final String? newPassword,
       final String? phoneNumber,
       final int? transportation_line_id,
       final int? transfer_position_id,
@@ -1077,12 +1016,6 @@ abstract class _UpdateStudentObject implements UpdateStudentObject {
   String? get lastName;
   @override
   String? get email;
-  @override
-  String? get newPassword_confirmation;
-  @override
-  String? get oldPassword;
-  @override
-  String? get newPassword;
   @override
   String? get phoneNumber;
   @override
@@ -1623,5 +1556,171 @@ abstract class _DailyReservationObject implements DailyReservationObject {
   @override
   @JsonKey(ignore: true)
   _$$_DailyReservationObjectCopyWith<_$_DailyReservationObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ChangePasswordObject {
+  String get newPassword_confirmation => throw _privateConstructorUsedError;
+  String get oldPassword => throw _privateConstructorUsedError;
+  String get newPassword => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ChangePasswordObjectCopyWith<ChangePasswordObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangePasswordObjectCopyWith<$Res> {
+  factory $ChangePasswordObjectCopyWith(ChangePasswordObject value,
+          $Res Function(ChangePasswordObject) then) =
+      _$ChangePasswordObjectCopyWithImpl<$Res, ChangePasswordObject>;
+  @useResult
+  $Res call(
+      {String newPassword_confirmation,
+      String oldPassword,
+      String newPassword});
+}
+
+/// @nodoc
+class _$ChangePasswordObjectCopyWithImpl<$Res,
+        $Val extends ChangePasswordObject>
+    implements $ChangePasswordObjectCopyWith<$Res> {
+  _$ChangePasswordObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newPassword_confirmation = null,
+    Object? oldPassword = null,
+    Object? newPassword = null,
+  }) {
+    return _then(_value.copyWith(
+      newPassword_confirmation: null == newPassword_confirmation
+          ? _value.newPassword_confirmation
+          : newPassword_confirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+      oldPassword: null == oldPassword
+          ? _value.oldPassword
+          : oldPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ChangePasswordObjectCopyWith<$Res>
+    implements $ChangePasswordObjectCopyWith<$Res> {
+  factory _$$_ChangePasswordObjectCopyWith(_$_ChangePasswordObject value,
+          $Res Function(_$_ChangePasswordObject) then) =
+      __$$_ChangePasswordObjectCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String newPassword_confirmation,
+      String oldPassword,
+      String newPassword});
+}
+
+/// @nodoc
+class __$$_ChangePasswordObjectCopyWithImpl<$Res>
+    extends _$ChangePasswordObjectCopyWithImpl<$Res, _$_ChangePasswordObject>
+    implements _$$_ChangePasswordObjectCopyWith<$Res> {
+  __$$_ChangePasswordObjectCopyWithImpl(_$_ChangePasswordObject _value,
+      $Res Function(_$_ChangePasswordObject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newPassword_confirmation = null,
+    Object? oldPassword = null,
+    Object? newPassword = null,
+  }) {
+    return _then(_$_ChangePasswordObject(
+      null == newPassword_confirmation
+          ? _value.newPassword_confirmation
+          : newPassword_confirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == oldPassword
+          ? _value.oldPassword
+          : oldPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ChangePasswordObject implements _ChangePasswordObject {
+  _$_ChangePasswordObject(
+      this.newPassword_confirmation, this.oldPassword, this.newPassword);
+
+  @override
+  final String newPassword_confirmation;
+  @override
+  final String oldPassword;
+  @override
+  final String newPassword;
+
+  @override
+  String toString() {
+    return 'ChangePasswordObject(newPassword_confirmation: $newPassword_confirmation, oldPassword: $oldPassword, newPassword: $newPassword)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangePasswordObject &&
+            (identical(
+                    other.newPassword_confirmation, newPassword_confirmation) ||
+                other.newPassword_confirmation == newPassword_confirmation) &&
+            (identical(other.oldPassword, oldPassword) ||
+                other.oldPassword == oldPassword) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, newPassword_confirmation, oldPassword, newPassword);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChangePasswordObjectCopyWith<_$_ChangePasswordObject> get copyWith =>
+      __$$_ChangePasswordObjectCopyWithImpl<_$_ChangePasswordObject>(
+          this, _$identity);
+}
+
+abstract class _ChangePasswordObject implements ChangePasswordObject {
+  factory _ChangePasswordObject(
+      final String newPassword_confirmation,
+      final String oldPassword,
+      final String newPassword) = _$_ChangePasswordObject;
+
+  @override
+  String get newPassword_confirmation;
+  @override
+  String get oldPassword;
+  @override
+  String get newPassword;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ChangePasswordObjectCopyWith<_$_ChangePasswordObject> get copyWith =>
       throw _privateConstructorUsedError;
 }

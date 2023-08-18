@@ -109,8 +109,6 @@ class RouteGenerator {
       case Routes.dailyReservation:
         initDailyReservation();
         return MaterialPageRoute(builder: (_) => const TripDailyReservationView());
-      case Routes.dailyReservationInfo:
-        return MaterialPageRoute(builder: (_) => const InfoDailyReservationView());
       case Routes.application:
         initNotificationModule();
         return MaterialPageRoute(builder: (_) => const Application());
@@ -173,6 +171,7 @@ class RouteGenerator {
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
       case Routes.changepass:
+        initChangePasswordModule();
         return MaterialPageRoute(builder: (_) =>  ChangePassView());
       case Routes.qrscan:
         return MaterialPageRoute(builder: (_) => QRScanScreen());

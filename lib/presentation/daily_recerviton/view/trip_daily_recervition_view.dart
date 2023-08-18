@@ -28,6 +28,7 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Provider.of<DailyReservationViewModel>(context, listen: false).start();
+
     });
     super.initState();
   }
@@ -127,7 +128,6 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
             ),
             IconButton(
                 onPressed: () {
-             //     Provider.of<DailyReservationViewModel>(context,listen: false).filterLine();
                 },
                 icon: Icon(
                   Icons.filter_list_outlined,
@@ -190,10 +190,6 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
                                             context,
                                             listen: false)
                                         .getTodayTrips()[index]);
-                            Provider.of<DailyReservationViewModel>(context,
-                                listen: false)
-                                .filterLine();
-
                             Navigator.pushNamed(
                                 context, Routes.polyLineDailyView);
                           }),

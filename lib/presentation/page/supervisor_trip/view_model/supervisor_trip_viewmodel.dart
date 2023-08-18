@@ -107,7 +107,7 @@ return super.setMessage(m);
           //  googleMapController=await _controller.future;
           setStateScreen(0);
           setTripId(data.dataHomeSupervisor?.id ?? 0);
-          final GoogleMapController controller = await _controller.future;
+        //  final GoogleMapController controller = await _controller.future;
 
           pusherClient = await _pusherTrip.createPusherClient();
           channel = await pusherClient!
@@ -115,7 +115,7 @@ return super.setMessage(m);
           await channel.bind("client-tracking", (PusherEvent? event) {
             print(event?.data);
             if (event?.data != null) {
-              updateMarker(event!.data.toString(), controller);
+              updateMarker(event!.data.toString());
             }
           });
         } else {
@@ -147,7 +147,7 @@ return super.setMessage(m);
   }
 
 int m=0;
-  void updateMarker(String data,GoogleMapController controller) async{
+  void updateMarker(String data) async{
     Position position;
     Map<String, dynamic> resultMap;
     resultMap = jsonDecode(data)  ;
@@ -156,7 +156,7 @@ int m=0;
     print(position.lat);
     LatLng latLng = LatLng(position.lat , position.lng);
 if(m==0){
-  moveCameraToTargetLocation(latLng,controller);
+ // moveCameraToTargetLocation(latLng,controller);
 m++;
 }
     MarkerId markerId = MarkerId('location');

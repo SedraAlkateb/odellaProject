@@ -256,6 +256,8 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                           ElevatedButton(onPressed: ()
                                           {
                                             if (_globalKey.currentState!.validate()) {
+                                              Provider.of<DailyReservationMapViewModel>(context,
+                                                  listen: false).setFcm(Provider.of<DailyReservationViewModel>(context,listen: false).getFcmToken());
                                               LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, " Loading");
                                               Provider.of<DailyReservationMapViewModel>(context,
                                                   listen: false).setTrip(Provider.of<DailyReservationViewModel>(context,listen: false).getTripId());
