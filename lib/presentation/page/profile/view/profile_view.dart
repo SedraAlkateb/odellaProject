@@ -5,10 +5,12 @@ import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:untitled/app/di.dart';
+import 'package:untitled/presentation/back_login/back_login.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
@@ -34,11 +36,19 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel profileViewModel = instance<ProfileViewModel>();
+  static const delayDuration = Duration(milliseconds: 3000);
+
   void didChangeDependencies() {
     if( Provider.of<ProfileViewModel>(context).getStateScreen() == 4){
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        Navigator.pushReplacementNamed(context, Routes.backToLogin);
-
+        Future.delayed(delayDuration, () {
+          // Write your code here
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => BackLoginView()),
+                (route) => false,
+          );
+        });
       });
     }
     super.didChangeDependencies();
@@ -60,6 +70,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+
     RefreshController _refreshController =
     RefreshController(initialRefresh: false);
     void _onRefresh() async {
@@ -101,6 +112,8 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget contentWidget() {
+    GlobalKey<FormBuilderState> _fbKey2 = GlobalKey<FormBuilderState>();
+
     var profile = Provider.of<ProfileViewModel>(context, listen: false);
     var profile1 = Provider.of<ProfileViewModel>(context);
     TextEditingController _firstNameController =
@@ -213,31 +226,33 @@ class _ProfileViewState extends State<ProfileView> {
                                 SizedBox(
                                   width: 1.w,
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      profile1.getName() ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeightManager.bold,
-                                          fontSize: FontSize.s18),
-                                    ),
-                                    Text(
-                                      profile1.getEmail(),
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .bodyLarge,
-                                    ),
-                                    Text(
-                                      profile1.getPhone(),
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .bodyLarge,
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        profile1.getName() ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeightManager.bold,
+                                            fontSize: FontSize.s18),
+                                      ),
+                                      Text(
+                                        profile1.getEmail(),
+                                        style: Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      Text(
+                                        profile1.getPhone(),
+                                        style: Theme
+                                            .of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 3.w,
@@ -264,7 +279,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        right: AppSize.s8, left: 8),
+                                        right: AppSize.s8, left: 8,top: 8),
                                     child: Text(
                                       "Personal Information",
                                       style:
@@ -482,23 +497,28 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
-                                        child: DropdownButtonFormField(
-                                            icon:
-                                            const Icon(Icons.keyboard_arrow_down),
-                                            hint: Text(model.getProfileCity()),
-                                            items: model
-                                                .getCities()
-                                                .map((e) =>
-                                                DropdownMenuItem(
-                                                  value: e.id,
-                                                  child: Text(" ${e.name}",
-                                                    overflow: TextOverflow.ellipsis,),
-                                                ))
-                                                .toList(),
-                                            onChanged: (val) {
-                                              model.setCityId(val!);
-                                              model.getAreasByIdCity(val);
-                                            }),
+                                        child: FormBuilder(
+                                          child: DropdownButtonFormField(
+                                              icon:
+                                              const Icon(Icons.keyboard_arrow_down),
+                                              hint: Text(model.getProfileCity()),
+                                              items: model
+                                                  .getCities()
+                                                  .map((e) =>
+                                                  DropdownMenuItem(
+                                                    value: e.id,
+                                                    child: Text(" ${e.name}",
+                                                      overflow: TextOverflow.ellipsis,),
+                                                  ))
+                                                  .toList(),
+                                              onChanged: (val) {
+                                                model.setCityId(val!);
+                                                model.getAreasByIdCity(val);
+                                                if (_fbKey2.currentState != null) {
+                                                  _fbKey2.currentState?.reset();
+                                                }
+                                              }),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -525,22 +545,26 @@ class _ProfileViewState extends State<ProfileView> {
                                       SizedBox(
                                         height: 14.h,
                                         width: 70.w,
-                                        child: DropdownButtonFormField(
-                                            icon:
-                                            const Icon(Icons.keyboard_arrow_down),
-                                            hint: Text(model.getProfileArea()),
-                                            items: model
-                                                .getAreas()
-                                                .map((e) =>
-                                                DropdownMenuItem(
-                                                  value: e.id,
-                                                  child: Text(" ${e.name}",
-                                                    overflow: TextOverflow.ellipsis,),
-                                                ))
-                                                .toList(),
-                                            onChanged: (val) {
-                                              model.setAreaId(val!);
-                                            }),
+                                        child: FormBuilder(
+                                          key: _fbKey2,
+                                          child: DropdownButtonFormField(
+                                              icon:
+                                              const Icon(Icons.keyboard_arrow_down),
+                                              hint: Text(model.getProfileArea()),
+                                              items: model
+                                                  .getAreas()
+                                                  .map((e) =>
+                                                  DropdownMenuItem(
+                                                    value: e.id,
+                                                    child: Text(" ${e.name}",
+                                                      overflow: TextOverflow.ellipsis,),
+                                                  ))
+                                                  .toList(),
+                                              onChanged: (val) {
+
+                                                model.setAreaId(val!);
+                                              }),
+                                        ),
                                       ),
                                     ],
                                   ),

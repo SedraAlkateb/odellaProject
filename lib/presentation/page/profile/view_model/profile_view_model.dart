@@ -29,7 +29,6 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
   //TODO
   final UpdateStudentUseCase _updateStudentUseCase;
   final UpdateStudenttUseCase _studenttUseCase;
-  final UpdatePasswordUseCase _updatePasswordUseCase;
   final CitiesUseCase _citiesUseCase;
   final AreasUseCase _areasUseCase;
   final SubscriptionsUseCase _subscriptionsUseCase;
@@ -38,7 +37,6 @@ class ProfileViewModel extends BaseViewModel with ChangeNotifier {
       this._profileUseCase,
       this._updateStudentUseCase,
       this._studenttUseCase,
-      this._updatePasswordUseCase,
       this._updateImageUseCase,
       this._citiesUseCase,
       this._areasUseCase,
@@ -257,17 +255,6 @@ DataSubscriptions? getStudentSub(){
     notifyListeners();
   }
 
-  setNewPassword(String string) {
-    studentUpdate = studentUpdate.copyWith(newPassword: string);
-  }
-
-  setOldPassword(String string) {
-    studentUpdate = studentUpdate.copyWith(oldPassword: string);
-  }
-
-  setNewPasswordConfirmation(String string) {
-    studentUpdate = studentUpdate.copyWith(newPassword_confirmation: string);
-  }
 
   updateTransportationLineId(int string) {
     studentUpdate = studentUpdate.copyWith(transportation_line_id: string);
@@ -394,24 +381,6 @@ notifyListeners();
     return update;
   }
 
-  updatePassword() async {
-    //  inputState.add(
-    //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _updatePasswordUseCase.execute(UpdatePasswordUseCaseInput(
-      getId() ?? 0,
-      studentUpdate.oldPassword ?? "",
-      studentUpdate.newPassword ?? "",
-      studentUpdate.newPassword_confirmation ?? "",
-    )))
-        .fold((failure) {
-      setMessage(failure.massage);
-    }, (data) {
-      // setProfile(data);
-      //   inputState.add(ContentState());
-      print("object");
-      notifyListeners();
-    });
-  }
 
   updateImage() async {
     //  inputState.add(

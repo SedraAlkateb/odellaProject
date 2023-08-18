@@ -25,6 +25,7 @@ class DailyReservationMapViewModel extends BaseViewModel with ChangeNotifier{
 notifyListeners();
 return super.setDialog(state);
   }
+
   @override
   setStateScreen(int state) {
    notifyListeners();
@@ -64,6 +65,7 @@ return super.setDialog(state);
     signUpObject= signUpObject.copyWith(tripId: trip);
 
   }
+
   setFcm(String fcm){
     signUpObject= signUpObject.copyWith(fcm_token: fcm);
   }
@@ -76,12 +78,10 @@ return super.setDialog(state);
     ))
         .fold(
             (failure)  {
-          setDialog(2);
           s=false;
           setMessage(failure.massage);
         },
             (data)  {
-          setDialog(0);
           s=true;
           notifyListeners();
         });

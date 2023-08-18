@@ -81,19 +81,21 @@ return super.setMessage(m);
               setDailyReservations(data.dailyReservationsModel ??[]);
         });
   }
-
-  approve(int id) async{
+bool b=false;
+ Future<bool> approve(int id) async{
 
     ( await _approveUseCase.execute(id)).fold(
 
             (failure)  {
           print(failure.massage);
           setMessage(failure.massage);
-
+          b=false;
             },
             (data)  async{
           print("succsec");
+          b=true;
         });
+    return b;
   }
   deny(int id) async{
 

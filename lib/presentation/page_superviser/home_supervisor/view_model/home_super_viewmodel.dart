@@ -193,6 +193,14 @@ return super.setMessage(m);
   DataHomeSupervisor getHomeSuperVisor(){
     return _homeSuperVisor;
   }
+  int s=0;
+  int getId(){
+    return s;
+  }
+  setS(){
+    s=1;
+    notifyListeners();
+  }
   Future<String> getLocalTime() async {
     String _time = await FlutterNativeTimezone.getLocalTimezone();
     DateTime now = DateTime.now().toUtc().add(Duration(hours: getTimezoneOffset(_time)));
@@ -250,7 +258,10 @@ return super.setMessage(m);
             await  setHomeSuperVisor(data.dataHomeSupervisor!);
             setPositions(data.dataHomeSupervisor?.dataTransferPositions ??[]);
            _setupLocationStream(data.dataHomeSupervisor!.id);
+          }else if(data.dataHomeSupervisor!.users!.isEmpty){
+            setStateScreen(3);
           }else{
+            setS();
             setStateScreen(3);
           }
         });
@@ -287,19 +298,9 @@ return super.setMessage(m);
     notifyListeners();
   }
   loc.Location location = loc.Location();
- late Channel channel1;
-   late PusherClient pusherClientDaily;
-  Future<void> setupLocationStream1() async {
-    pusherClientDaily= await  _pusherTrip.createPusherDailyReservation();
-    channel1 = pusherClientDaily.subscribe("Public-trackingg");
 
-  }
-  Future<void> streggr() async {
 
-    channel1.trigger("event", "jojjpjj");
-
-  }
-
+ /*
   void triggerEvent1() async {
     var url = Uri.parse('https://api.pusher.com/apps/1652165/events');
     var headers = {
@@ -319,7 +320,7 @@ return super.setMessage(m);
       print('حدث خطأ أثناء استدعاء الـ Trigger: $e');
     }
   }
-  Future<void> bind() async {
+    Future<void> bind() async {
 
     channel1.bind("client_event", (event) {
       print(event?.data);
@@ -330,6 +331,8 @@ return super.setMessage(m);
     channel1.unbind("event");
     pusherClientDaily.disconnect();
   }
+
+  */
 
   Future<void> _setupLocationStream(int tripId) async {
     //_locationData = await LocationService().getLocation();

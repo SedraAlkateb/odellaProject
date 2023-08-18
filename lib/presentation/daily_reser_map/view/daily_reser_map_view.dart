@@ -98,7 +98,8 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                           value: index,
                                           groupValue: Provider.of<DailyReservationMapViewModel>(context).getSelectedValue(),
                                           onChanged: (value) {
-                                            Provider.of<DailyReservationMapViewModel>(context,listen: false).setSelectedValue( Provider.of<DailyReservationViewModel>(context).getPosition()[index].id);
+                                            Provider.of<DailyReservationMapViewModel>(context,listen: false).setSelectedValue(
+                                                Provider.of<DailyReservationViewModel>(context,listen: false).getPosition()[index].id);
                                           },
                                           title: Text(
                                             Provider.of<DailyReservationViewModel>(context).getTodayTrip()!.dataTransferPositions![index].name,
@@ -172,8 +173,8 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                             height: 50,
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: AppPadding.p20, right: AppPadding.p20),
+                                            padding: const EdgeInsets.all(AppPadding.p20
+                                            ),
                                             child: TextFormField(
                                               controller: nameController,
                                               validator: (value) {
@@ -198,9 +199,11 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                           ),
                                           SizedBox(height: 20,),
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: AppPadding.p20, right: AppPadding.p20),
+                                            padding: const EdgeInsets.all(AppPadding.p20
+                                                ),
                                             child: TextFormField(
+                                              keyboardType: TextInputType.number,
+
                                               controller: phoneNumberController,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
@@ -222,11 +225,12 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                               ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: AppPadding.p20, right: AppPadding.p20),
+                                          Padding(padding: const EdgeInsets.all(AppPadding.p20
+                                          ),
                                             child: TextFormField(
+                                              keyboardType: TextInputType.number,
                                               controller: seatsNumberController,
+
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return LocaleKeys.seat.tr();
@@ -252,9 +256,11 @@ class _PolyLineDailyViewState extends State<PolyLineDailyView> {
                                           ElevatedButton(onPressed: ()
                                           {
                                             if (_globalKey.currentState!.validate()) {
+                                              Provider.of<DailyReservationMapViewModel>(context,
+                                                  listen: false).setFcm(Provider.of<DailyReservationViewModel>(context,listen: false).getFcmToken());
                                               LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, " Loading");
                                               Provider.of<DailyReservationMapViewModel>(context,
-                                                  listen: false).setTrip(Provider.of<DailyReservationViewModel>(context,listen: false).tripId);
+                                                  listen: false).setTrip(Provider.of<DailyReservationViewModel>(context,listen: false).getTripId());
                                               Provider.of<DailyReservationMapViewModel>(context,
                                                   listen: false)
                                                   .getDailyReservation().then((value) {

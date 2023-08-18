@@ -99,7 +99,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.algorithem:
-        return MaterialPageRoute(builder: (_) => const SelectTimes());
+        return MaterialPageRoute(builder: (_) =>  SelectTimes());
       case Routes.polyLineDailyView:
         initDailyReservationMap();
         return MaterialPageRoute(builder: (_) => const PolyLineDailyView());
@@ -109,8 +109,6 @@ class RouteGenerator {
       case Routes.dailyReservation:
         initDailyReservation();
         return MaterialPageRoute(builder: (_) => const TripDailyReservationView());
-      case Routes.dailyReservationInfo:
-        return MaterialPageRoute(builder: (_) => const InfoDailyReservationView());
       case Routes.application:
         initNotificationModule();
         return MaterialPageRoute(builder: (_) => const Application());
@@ -173,6 +171,7 @@ class RouteGenerator {
       case Routes.polyLineRoute:
         return MaterialPageRoute(builder: (_) =>  PolyLineView());
       case Routes.changepass:
+        initChangePasswordModule();
         return MaterialPageRoute(builder: (_) =>  ChangePassView());
       case Routes.qrscan:
         return MaterialPageRoute(builder: (_) => QRScanScreen());

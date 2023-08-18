@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:location/location.dart';
@@ -25,6 +26,30 @@ class DailyReservationViewModel extends BaseViewModel with ChangeNotifier{
   late List<DataTransferPositions>? position=[];
 late DataTodayTrips today;
   int _lineID=0;
+  init()
+  async {
+    String deviceToken = await getDeviceToken();
+    fcmToken=deviceToken;
+    print("***********************************************");
+    print(fcmToken);
+    print("//////////////////////////////////////////////////////");
+  }
+  String fcmToken="lkdnf";
+  setFcmToken(String fcmToken1){
+    fcmToken==fcmToken1;
+    notifyListeners();
+
+  }
+  String getFcmToken(){
+    return fcmToken;
+  }
+  Future getDeviceToken() async
+  {
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? deviceToken = await firebaseMessaging.getToken();
+    return (deviceToken == null) ? "" : deviceToken;
+  }
+
   setLine(int line){
     _lineID=line;
     notifyListeners();
@@ -42,6 +67,7 @@ late DataTodayTrips today;
   }
   @override
   void start() {
+    init();
     homeSupervisor();
   }
   setTripId(DataTodayTrips trip){

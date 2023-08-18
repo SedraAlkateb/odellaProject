@@ -54,6 +54,7 @@ import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/user_daily_reservations_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/change_password/view_model/change_pass_view_model.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
 import 'package:untitled/presentation/forget_password/view_model/forget_password_viewmodel.dart';
@@ -252,7 +253,6 @@ initProfileModule() {
   if (!GetIt.I.isRegistered<UpdateStudentUseCase>()) {
     instance.registerFactory<UpdateStudentUseCase>(() =>UpdateStudentUseCase(instance()));
     instance.registerFactory<UpdateStudenttUseCase>(() =>UpdateStudenttUseCase(instance()));
-    instance.registerFactory<UpdatePasswordUseCase>(() =>UpdatePasswordUseCase(instance()));
     instance.registerFactory<UpdateImageUseCase>(() =>UpdateImageUseCase(instance()));
     if (!GetIt.I.isRegistered<AreasUseCase>()){
       instance.registerFactory<AreasUseCase>(() =>AreasUseCase(instance()));
@@ -271,7 +271,7 @@ initProfileModule() {
 
     }
     instance.registerFactory<ProfileViewModel>(() => ProfileViewModel(instance(),instance(),instance(),instance(),
-        instance(),instance(),instance(),instance(),instance()));
+        instance(),instance(),instance(),instance()));
   }
 }
 //CitiesUseCase _citiesUseCase;
@@ -299,11 +299,18 @@ initProfileSupervisorModule() {
 
     }
       instance.registerFactory<UpdateSupervisorUseCase>(() =>UpdateSupervisorUseCase(instance()));
-    instance.registerFactory<UpdateSupervisorPasswordUseCase>(() =>UpdateSupervisorPasswordUseCase(instance()));
     instance.registerFactory<UpdateSupervisorImageUseCase>(() =>UpdateSupervisorImageUseCase(instance()));
-    instance.registerFactory<SupervisorProfileViewModel>(() => SupervisorProfileViewModel(instance(),instance(),instance(),instance(),instance(),instance(),instance(),instance()));
+    instance.registerFactory<SupervisorProfileViewModel>(() => SupervisorProfileViewModel(instance(),instance(),instance(),instance(),instance(),instance(),instance()));
   }
 }
+initChangePasswordModule() {
+  if (!GetIt.I.isRegistered<UpdatePasswordUseCase>()) {
+    instance.registerFactory<UpdatePasswordUseCase>(() => UpdatePasswordUseCase(instance()));
+    instance.registerFactory<ChangePasswordViewModel>(() => ChangePasswordViewModel(instance()));
+  }
+
+}
+
 initLogoutModule() {
   if (!GetIt.I.isRegistered<LogoutUseCase>()) {
     instance.registerFactory<LogoutUseCase>(() => LogoutUseCase(instance()));

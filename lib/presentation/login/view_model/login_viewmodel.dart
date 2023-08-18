@@ -71,7 +71,7 @@ String? getRole(){
     // view model should tell view please show content state
     //inputState.add(ContentState());
   }
-  String fcmToken="";
+  String fcmToken="lkdnf";
   setFcmToken(String fcmToken1){
     fcmToken==fcmToken1;
     notifyListeners();

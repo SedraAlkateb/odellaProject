@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
-import 'package:untitled/presentation/mm.dart';
 import 'package:untitled/presentation/page/supervisor_trip/view_model/supervisor_trip_viewmodel.dart';
-import 'package:untitled/presentation/resources/strings_manager.dart';
 
 class TripSupervisor extends StatefulWidget {
   const TripSupervisor({super.key});

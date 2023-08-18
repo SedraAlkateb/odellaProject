@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:untitled/data/network/error_handler.dart';
 import 'package:untitled/domain/models/models.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
@@ -21,7 +22,6 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   final ProfileUseCase _profileUseCase;
   final UpdateSupervisorImageUseCase _updateImageUseCase;
   final UpdateSupervisorUseCase _updateSupervisorUseCase;
-  final UpdateSupervisorPasswordUseCase _updatePasswordUseCase;
   final CitiesUseCase _citiesUseCase;
   final AreasUseCase _areasUseCase;
   final SubscriptionsUseCase _subscriptionsUseCase;
@@ -29,7 +29,6 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
   SupervisorProfileViewModel(
       this._profileUseCase,
       this._updateSupervisorUseCase,
-      this._updatePasswordUseCase,
       this._updateImageUseCase,
       this._citiesUseCase,
       this._areasUseCase,
@@ -240,15 +239,7 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     _profile!.phoneNumber=studentUpdate.phoneNumber!;
     notifyListeners();
   }
-  setNewPassword(String string){
-    studentUpdate=studentUpdate.copyWith(newPassword: string);
-  }
-  setOldPassword(String string){
-    studentUpdate=studentUpdate.copyWith(oldPassword: string);
-  }
-  setNewPasswordConfirmation(String string){
-    studentUpdate=studentUpdate.copyWith(newPassword_confirmation: string);
-  }
+
   updateTransportationLineId(int string){
     studentUpdate=studentUpdate.copyWith(transportation_line_id: string);
     _profile?.line?.id=string  ;
@@ -313,7 +304,14 @@ class SupervisorProfileViewModel extends BaseViewModel with ChangeNotifier {
     setStateScreen(1);
     (await _profileUseCase.execute(null))
         .fold((failure) {
-      setStateScreen(2);
+      if(failure.code==ResponseCode.UNAUTORISED)
+      {
+        setStateScreen(4);
+      }
+      else{
+        setStateScreen(2);
+
+      }
       setMessage(failure.massage);
     }, (data)async {
       setStateScreen(0);
@@ -359,24 +357,6 @@ Future<bool>  updateSupervisor() async {
       notifyListeners();
     });
     return b;
-  }
-  updatePassword() async {
-    //  inputState.add(
-    //      LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _updatePasswordUseCase.execute(UpdatePasswordUseCaseInput(
-      getId()?? 0,
-      studentUpdate.oldPassword ??"",
-      studentUpdate.newPassword??"",
-      studentUpdate.newPassword_confirmation??"" ,
-    )))
-        .fold((failure) {
-      setMessage(failure.massage);
-    }, (data) {
-      // setProfile(data);
-      //   inputState.add(ContentState());
-      print("object");
-      notifyListeners();
-    });
   }
   updateImage() async {
     //  inputState.add(

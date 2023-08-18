@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/page_superviser/daily_recieve/view_model/daily_recieve_viewmodel.dart';
 import 'package:untitled/presentation/page_superviser/drawer/view/drawer.dart';
@@ -83,12 +84,12 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
    RefreshController(initialRefresh: false);
 
    void _onRefresh() async {
-     if(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id!=0){
+     if (Provider.of<HomeSuperVisorViewModel>(context, listen: false).getId() == 0) {
        Provider.of<DailyReservationsViewModel>(context,listen: false).dailyReservation(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id);
+     }
 
-     }     _refreshController.refreshCompleted();
-   }
-    return Consumer<DailyReservationsViewModel>(
+     _refreshController.refreshCompleted();
+   }    return Consumer<DailyReservationsViewModel>(
       builder: (context, model, child) =>
           Column(
             children: [
@@ -139,9 +140,6 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                 ),
               ),
               SizedBox(height: 4.h),
-              TextButton(onPressed: (){
-                model.triggerEvent();
-              }, child: Text("jkbbkb")),
               Expanded(
                 child: model.getDailyReservations().length == 0
                     ? SmartRefresher(
@@ -217,7 +215,17 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
                                   onTap: ()
                                   {
                                     model.
-                                    approve(model.getDailyReservations()[index].id);
+                                    approve(model.getDailyReservations()[index].id).then((value) {
+                                      if(value){
+                                        SuccessState("success")
+                                            .dismissDialog(context);
+                                        SuccessState("success").showPopup(
+                                            context,
+                                            StateRendererType.popupSuccess,
+                                            "Success");
+                                      }
+                                    }
+                                    );
                                   },
                                   child: Container(
 
