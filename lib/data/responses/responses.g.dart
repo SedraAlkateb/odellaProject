@@ -636,6 +636,44 @@ Map<String, dynamic> _$UniversitiesDataResponseToJson(
       'links': instance.links,
     };
 
+PhoneResponse _$PhoneResponseFromJson(Map<String, dynamic> json) =>
+    PhoneResponse(
+      json['id'] as int?,
+      json['name'] as String?,
+      json['phoneNumber'] as int?,
+      json['transfer_position_id'] as int?,
+      json['trip_id'] as int?,
+      json['guestRequestStatus'] as int?,
+      json['seatsNumber'] as int?,
+    );
+
+Map<String, dynamic> _$PhoneResponseToJson(PhoneResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'phoneNumber': instance.phoneNumber,
+      'transfer_position_id': instance.transfer_position_id,
+      'trip_id': instance.trip_id,
+      'guestRequestStatus': instance.guestRequestStatus,
+      'seatsNumber': instance.seatsNumber,
+    };
+
+BasePhoneResponse _$BasePhoneResponseFromJson(Map<String, dynamic> json) =>
+    BasePhoneResponse(
+      json['data'] == null
+          ? null
+          : PhoneResponse.fromJson(json['data'] as Map<String, dynamic>),
+    )
+      ..status = json['status'] as int?
+      ..massage = json['message'] as String?;
+
+Map<String, dynamic> _$BasePhoneResponseToJson(BasePhoneResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.massage,
+      'data': instance.dataResponse,
+    };
+
 LinkResponse _$LinkResponseFromJson(Map<String, dynamic> json) => LinkResponse(
       json['url'] as String?,
       json['label'] as String?,

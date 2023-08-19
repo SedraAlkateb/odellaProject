@@ -84,15 +84,18 @@ setNum(int n){
   }
   @override
   void start() {
+    signUpObject= signUpObject.copyWith(image: null);
+
     getAllInf();
   }
   @override
   void dispose() {
     nnum=0;
-   //  signUpObject= SignUpObject(2,1,"asddassad",0,"","","","","",0,0,null,0);
+    signUpObject= signUpObject.copyWith(image: null);
     super.dispose();
 
   }
+
   var index1=100000;
   setC(int index,int id){
     index1=index;

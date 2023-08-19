@@ -193,6 +193,14 @@ return super.setMessage(m);
   DataHomeSupervisor getHomeSuperVisor(){
     return _homeSuperVisor;
   }
+  DataHomeSupervisor? getHome(){
+    if(search.isNotEmpty){
+      return _homeSuperVisor;
+    }
+    else{
+      return null;
+    }
+  }
   int s=0;
   int getId(){
     return s;

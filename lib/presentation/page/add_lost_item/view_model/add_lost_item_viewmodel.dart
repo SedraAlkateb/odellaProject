@@ -100,6 +100,8 @@ setTrip(List<DataTrips> trip){
 
   @override
   void start() {
+    lostItem= lostItem.copyWith(image: null);
+    setMessage("");
     getWeeklyTrip();
   }
 }

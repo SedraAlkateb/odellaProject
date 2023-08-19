@@ -12,6 +12,28 @@ extension PostResponseMapper on PostResponse? {
         this?.body.orEmpty() ?? Constants.empty);
   }
 }
+extension PhoneResponseMapper on PhoneResponse? {
+  Phone toDomain() {
+    return Phone(
+        this?.id.orZero() ?? Constants.zero,
+        this?.name.orEmpty() ?? Constants.empty,
+        this?.phoneNumber.orZero() ?? Constants.zero,
+      this?.transfer_position_id.orZero() ?? Constants.zero,
+      this?.trip_id.orZero() ?? Constants.zero,
+      this?.guestRequestStatus.orZero() ?? Constants.zero,
+      this?.seatsNumber.orZero() ?? Constants.zero,
+
+    );
+  }
+}
+extension BasePhoneResponseMapper on BasePhoneResponse? {
+  BasePhone toDomain() {
+    return BasePhone(
+      this?.dataResponse.toDomain()
+    );
+  }
+}
+
 extension DataReservationMapper on DataUserDailyReservationResponse? {
   DataReservation toDomain() {
     return DataReservation(

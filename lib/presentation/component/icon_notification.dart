@@ -18,7 +18,6 @@ Widget notificationIcon(BuildContext context){
       child: InkWell(
         child: Badge(
           badgeContent: Text("${ Provider.of<Not>(context).getCount()}",style: TextStyle(color: Colors.white),),
-
           child: Icon(Icons.notifications,size: AppSize.s30),
           badgeAnimation: BadgeAnimation.fade(animationDuration: Duration(milliseconds:250 )),
         ),

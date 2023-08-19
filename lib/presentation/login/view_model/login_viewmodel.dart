@@ -88,7 +88,8 @@ String? getRole(){
 bool s=false;
 
   //////////////////////////input////////////////////////
- Future<bool> login() async{
+ Future<bool> login()
+ async{
  ( await _loginUseCase.execute(
         LoginUseCaseInput(
             loginObject.userName, loginObject.password,fcmToken
@@ -104,7 +105,9 @@ bool s=false;
            //inputState.add(ContentState());
             setAuth(data);
             s= true;
-            });
+            }
+
+            );
  return s;
  }
  Future<String?> refresh() async{

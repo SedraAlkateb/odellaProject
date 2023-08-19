@@ -755,6 +755,53 @@ class UniversitiesDataResponse  {
       _$UniversitiesDataResponseToJson(this);
 
 }
+@JsonSerializable()
+class PhoneResponse {
+
+  @JsonKey(name:"id")
+  int? id;
+  @JsonKey(name:"name")
+  String? name;
+  @JsonKey(name:"phoneNumber")
+  int? phoneNumber;
+  @JsonKey(name:"transfer_position_id")
+  int? transfer_position_id;
+  @JsonKey(name:"trip_id")
+  int? trip_id;
+  @JsonKey(name:"guestRequestStatus")
+  int? guestRequestStatus;
+  @JsonKey(name:"seatsNumber")
+  int? seatsNumber;
+
+
+  PhoneResponse(this.id, this.name, this.phoneNumber, this.transfer_position_id,
+      this.trip_id, this.guestRequestStatus, this.seatsNumber);
+
+  factory PhoneResponse.fromJson(Map<String,dynamic>json)=>
+      _$PhoneResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$PhoneResponseToJson(this);
+
+}
+@JsonSerializable()
+
+class BasePhoneResponse  extends BaseResponse{
+
+  @JsonKey(name:"data")
+  PhoneResponse? dataResponse;
+
+  BasePhoneResponse(this.dataResponse);
+  // from json
+  factory BasePhoneResponse.fromJson(Map<String,dynamic>json)=>
+      _$BasePhoneResponseFromJson(json);
+
+  // to json
+  Map<String,dynamic>toJson()=>
+      _$BasePhoneResponseToJson(this);
+
+}
 
 @JsonSerializable()
 class LinkResponse {

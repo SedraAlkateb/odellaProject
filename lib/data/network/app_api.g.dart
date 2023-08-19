@@ -194,6 +194,33 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<BasePhoneResponse> getNumber(phoneNumber) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'phoneNumber',
+      phoneNumber.toString(),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BasePhoneResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/dailyReservations/message',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BasePhoneResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<TransferPositionsResponse> getTransferPositions() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

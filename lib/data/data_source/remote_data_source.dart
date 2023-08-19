@@ -46,6 +46,7 @@ abstract class RemoteDataSource{
   Future<StudentPositionResponse> studentPosition(int trip,int position);
   Future<UserDailyReservationResponse> userDailyReservations(DailyReservationRequest dailyReservationRequest);
   Future<TodayTripsResponse> todayTrips(String time);
+  Future<BasePhoneResponse> phone(int phone);
 
 }
 
@@ -377,8 +378,16 @@ street: supervisorRequest.street
   }
 
   @override
-  Future<TodayTripsResponse> todayTrips(String time)  async{
+  Future<TodayTripsResponse> todayTrips(String time)
+  async{
     return await _appServiceClient.todayTrips(time);
+
+  }
+
+  @override
+  Future<BasePhoneResponse> phone(int phone)
+  async{
+    return await _appServiceClient.getNumber(phone);
 
   }
 
