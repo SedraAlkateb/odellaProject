@@ -43,6 +43,10 @@ abstract class AppServiceClient {
 
   @GET("/api/universities")
   Future<UniversitiesResponse> getUniversities();
+  @POST("/api/dailyReservations/message")
+  Future<BasePhoneResponse> getNumber(
+      @Part(name: "phoneNumber")  int phoneNumber,
+      );
 
   @GET("/api/transferPositions")
   Future<TransferPositionsResponse> getTransferPositions();

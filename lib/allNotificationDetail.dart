@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,38 +10,38 @@ class NotMessageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Not>(
       builder: (context, model, child) =>
-       Scaffold(
-        appBar: AppBar(
-          title: appbar(model.getMessage().body),
-        ),
-        body: Container(
-          alignment: Alignment.center,
+          Scaffold(
+            appBar: AppBar(
+              title: appbar(model.getNotification1().body),
+            ),
+            body: Container(
+              alignment: Alignment.center,
 
-          child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8,right: 8,left: 8,top: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    iconNotification(int.parse(model.getMessage().type)),
-                    const Text(
-                      'Notification Information :',
-                      style: TextStyle(fontSize: 18),
+              child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8,right: 8,left: 8,top: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        iconNotification(int.parse(model.getNotification1().type)),
+                        const Text(
+                          'Notification Information :',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        viewData(
+                          'Title',
+                          model.getNotification1().title,
+                        ),
+                        viewData(
+                          'Body',
+                          model.getNotification1().body,
+                        ),
+                      ],
                     ),
-                    viewData(
-                      'Title',
-                      model.getMessage().title,
-                    ),
-                    viewData(
-                      'Body',
-                      model.getMessage().body,
-                    ),
-                  ],
-                ),
-              )),
-        ),
-      ),
+                  )),
+            ),
+          ),
     );
   }
 

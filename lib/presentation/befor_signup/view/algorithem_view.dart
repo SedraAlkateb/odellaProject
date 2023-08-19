@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:untitled/presentation/befor_signup/view_model/algorithem_viewmodel.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
+import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
 
 import '../../../lang/local_keys.g.dart';
 import '../../resources/routes_manager.dart';

@@ -128,9 +128,10 @@ class _TripDailyReservationViewState extends State<TripDailyReservationView> {
             ),
             IconButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, Routes.phone);
                 },
                 icon: Icon(
-                  Icons.filter_list_outlined,
+                  Icons.phone,
                   color: ColorManager.icon,
                 ))
           ],

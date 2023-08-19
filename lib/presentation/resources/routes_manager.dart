@@ -16,6 +16,7 @@ import 'package:untitled/presentation/daily_reser_map/view/daily_reser_map_view.
 import 'package:untitled/presentation/forget_password/view/forget_password_view.dart';
 import 'package:untitled/presentation/login/view/login_view.dart';
 import 'package:untitled/presentation/mm.dart';
+import 'package:untitled/presentation/number/number_view.dart';
 import 'package:untitled/presentation/page/add_lost_item/view/add_lost_item_view.dart';
 import 'package:untitled/presentation/page/complaints/view/complaints_view.dart';
 import 'package:untitled/presentation/page/home/view/home_view.dart';
@@ -69,6 +70,7 @@ class Routes {
   static const String mmm = "/mmm";
   static const String addLostItemRoute = "/addLostItem";
   static const String polyLineDailyView = "/polyLineDailyView";
+  static const String phone = "/phone";
 
 
   static const String polyLineRoute = "/PolyLine";
@@ -98,8 +100,12 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+
+      case Routes.phone:
+        initPhone();
+        return MaterialPageRoute(builder: (_) => const NumberView());
       case Routes.algorithem:
-        return MaterialPageRoute(builder: (_) =>  SelectTimes());
+        return MaterialPageRoute(builder: (_) =>  const SelectTimes());
       case Routes.polyLineDailyView:
         initDailyReservationMap();
         return MaterialPageRoute(builder: (_) => const PolyLineDailyView());

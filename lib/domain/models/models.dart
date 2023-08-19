@@ -466,6 +466,23 @@ class NotificationModel{
 
   NotificationModel(this.id, this.title, this.type, this.body, this.isRead);
 }
+class BasePhone{
+  Phone? phone;
+
+  BasePhone(this.phone);
+}
+class Phone{
+  int id;
+  String name;
+  int phoneNumber;
+  int transfer_position_id;
+  int trip_id;
+  int guestRequestStatus;
+  int seatsNumber;
+
+  Phone(this.id, this.name, this.phoneNumber, this.transfer_position_id,
+      this.trip_id, this.guestRequestStatus, this.seatsNumber);
+}
 class Notification{
   List<NotificationModel>? notification;
   Notification(this.notification);

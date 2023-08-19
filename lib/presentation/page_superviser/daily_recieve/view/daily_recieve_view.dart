@@ -84,8 +84,8 @@ class _DailyReceiveViewState extends State<DailyReceiveView> {
    RefreshController(initialRefresh: false);
 
    void _onRefresh() async {
-     if (Provider.of<HomeSuperVisorViewModel>(context, listen: false).getId() == 0) {
-       Provider.of<DailyReservationsViewModel>(context,listen: false).dailyReservation(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHomeSuperVisor().id);
+     if (Provider.of<HomeSuperVisorViewModel>(context, listen: false).getId() == 0&&Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHome()!=null) {
+       Provider.of<DailyReservationsViewModel>(context,listen: false).dailyReservation(Provider.of<HomeSuperVisorViewModel>(context, listen: false).getHome()?.id??0);
      }
 
      _refreshController.refreshCompleted();

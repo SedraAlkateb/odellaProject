@@ -50,7 +50,7 @@ class _MessageList extends State<MessageList> {
                 subtitle:
                 Text(message.sentTime?.toString() ?? DateTime.now().toString()),
                 trailing:
-                const Icon(Icons.circle,color: Colors.red,),
+                 Icon(Icons.circle,color: Colors.red,),
                 onTap: () {
                   // if( Provider.of<Not>(context,listen: false).getCount()!=0) {
                   //   Provider.of<Not>(context, listen: false).updateDec();
