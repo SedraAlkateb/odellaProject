@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/domain/models/models.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
 import 'package:untitled/presentation/component/icon_notification.dart';
 import 'package:untitled/presentation/not_viewmodel.dart';
 import 'package:untitled/presentation/resources/routes_manager.dart';
@@ -33,7 +34,9 @@ class _MessageList extends State<MessageList> {
   @override
   Widget build(BuildContext context) {
 
-    return Column(
+    return
+      Provider.of<Not>(context).getStateScreen() == 0?
+    Column(
       children: [
         ListView.separated(
             shrinkWrap: true,
@@ -107,7 +110,23 @@ class _MessageList extends State<MessageList> {
         ),
 
       ],
-    );
+    )
+          :Provider.of<Not>(context).getStateScreen()==1
+          ?StateRenderer(
+          stateRendererType: StateRendererType.fullScreenLoadingState,
+          message: "Loading",
+          retryActionFunction: () {})
+          : Provider.of<Not>(context).getStateScreen()==2
+          ? StateRenderer(
+          stateRendererType: StateRendererType.fullScreenErrorState,
+          message:  Provider.of<Not>(context,listen: false).getMessage1(),
+          retryActionFunction: () {
+            Provider.of<Not>(context,listen: false).getAllNotificationsLogin();
+          })
+          : StateRenderer(
+          stateRendererType: StateRendererType.fullScreenEmptyState,
+          message: "Not found any transmission lines",
+          retryActionFunction: () {});
 
   }
 }

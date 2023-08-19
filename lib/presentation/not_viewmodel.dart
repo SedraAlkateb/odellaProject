@@ -26,6 +26,7 @@ class Not extends BaseViewModel with ChangeNotifier {
       notifyListeners();
     });
   }
+
   List<RemoteMessage>  getMessage(){
     return _messages;
   }
@@ -79,14 +80,18 @@ int getIndex(){
     return body;
   }
 
-   getAllNotificationsLogin() async{
+  getAllNotificationsLogin() async{
+    setStateScreen(1);
 
-     ( await _notificationUseCase.execute(null)).fold(
-             (failure)  {
-         },
-             (data)  async{
-     setNotification(data.notification!);
-     });
+    ( await _notificationUseCase.execute(null)).fold(
+            (failure)  {
+          setStateScreen(2);
+        },
+            (data)  async{
+          setStateScreen(0);
+
+          setNotification(data.notification!);
+        });
   }
   getNotificationRead(int id)
   async{
@@ -99,7 +104,6 @@ int getIndex(){
               return 1;
         });
     notifyListeners();
-
   }
   getAllNotificationRead()
   async{
@@ -113,7 +117,11 @@ int getIndex(){
 
   }
 
-
+@override
+  setStateScreen(int state) {
+    notifyListeners();
+    return super.setStateScreen(state);
+  }
   @override
   void start() {
     getAllNotificationsLogin();
