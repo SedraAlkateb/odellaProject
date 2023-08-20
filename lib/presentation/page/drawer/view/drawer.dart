@@ -233,6 +233,22 @@ class NavBar extends StatelessWidget {
               height: 15,
             ),
             ListTile(
+                title: Text("YourTripProgram"),
+                leading: Icon(Icons.trip_origin,
+                  color: ColorManager.sidBarIcon,
+
+                ),
+
+                onTap: () {
+                  Navigator.pushNamed(context,Routes.algorithem);
+                }
+
+            ),
+            Divider(
+              color: ColorManager.sidBarIcon,
+              height: 15,
+            ),
+            ListTile(
               title: Text(LocaleKeys.signOut.tr()),
               leading: Icon(Icons.logout,
                 color: ColorManager.sidBarIcon,

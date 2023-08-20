@@ -49,7 +49,6 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
       key: _scaffoldKey,
       //  backgroundColor: Colors.white,
@@ -230,7 +229,7 @@ class _LoginViewState extends State<LoginView> {
                          Text(LocaleKeys.registerText.tr()),
                         TextButton(
                           onPressed: () {
-                              Navigator.pushNamed(context, Routes.algorithem);
+                              Navigator.pushNamed(context, Routes.signupRoute);
                           },
                           child: Text(
                             LocaleKeys.signUp.tr(),

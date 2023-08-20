@@ -11,6 +11,14 @@ class DailyReservationRequest {
       this.trip, this.name, this.phoneNumber,
       this.transfer_position_id, this.seatsNumber, this.fcm_token);
 }
+class AlgorithmRequest{
+ List<int> day_ids;
+  List<String> goTimes;
+ List<String> returnTimes;
+
+ AlgorithmRequest(this.day_ids, this.goTimes, this.returnTimes);
+}
+
 class PositionMap {
   int tripId;
   double lng;

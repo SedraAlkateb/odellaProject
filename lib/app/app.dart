@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_)=>instance<SupervisorTripViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<DailyReservationMapViewModel>()),
-        ChangeNotifierProvider(create: (_)=>AlgorithmViewModel()),
+        ChangeNotifierProvider(create: (_)=>instance<AlgorithmViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<ChangePasswordViewModel>()),
         ChangeNotifierProvider(create: (_)=>instance<NumberViewModel>()),
 

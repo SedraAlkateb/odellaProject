@@ -1371,21 +1371,12 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<AlgorithmResponse> algorithm(
-    day_ids,
-    goTimes,
-    returnTimes,
-  ) async {
+  Future<AlgorithmResponse> algorithm(requestBody) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    goTimes.forEach((i) {
-      _data.fields.add(MapEntry('goTimes', i));
-    });
-    returnTimes.forEach((i) {
-      _data.fields.add(MapEntry('returnTimes', i));
-    });
+    final _data = <String, dynamic>{};
+    _data.addAll(requestBody);
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<AlgorithmResponse>(Options(
       method: 'POST',

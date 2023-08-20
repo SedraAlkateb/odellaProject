@@ -13,6 +13,7 @@ import 'package:untitled/data/network/pusher.dart';
 import 'package:untitled/data/repository/repository.dart';
 import 'package:untitled/domain/repostitory/repository.dart';
 import 'package:untitled/domain/usecase/Universities_usecase.dart';
+import 'package:untitled/domain/usecase/algorithm_usecas.dart';
 import 'package:untitled/domain/usecase/approve_usecase.dart';
 import 'package:untitled/domain/usecase/areas_usecase.dart';
 import 'package:untitled/domain/usecase/cities_usecase.dart';
@@ -55,6 +56,7 @@ import 'package:untitled/domain/usecase/update_supervisor_usecase.dart';
 import 'package:untitled/domain/usecase/user_daily_reservations_usecase.dart';
 import 'package:untitled/domain/usecase/weekly_trips_usecase.dart';
 import 'package:untitled/presentation/base_home/view_model/base_home_view_model.dart';
+import 'package:untitled/presentation/befor_signup/view_model/algorithem_viewmodel.dart';
 import 'package:untitled/presentation/change_password/view_model/change_pass_view_model.dart';
 import 'package:untitled/presentation/daily_recerviton/view_model/daily_reservation%20_viewmodel.dart';
 import 'package:untitled/presentation/daily_reser_map/view_model/daily_reser_map_viewmodel.dart';
@@ -326,6 +328,12 @@ initLogoutModule() {
   }
   if (!GetIt.I.isRegistered<DrawerViewModel>()){
     instance.registerFactory<DrawerViewModel>(() => DrawerViewModel(instance()));
+  }
+}
+initAlgorithmModule() {
+  if (!GetIt.I.isRegistered<AlgorithmUseCase>()) {
+    instance.registerFactory<AlgorithmUseCase>(() => AlgorithmUseCase(instance()));
+    instance.registerFactory<AlgorithmViewModel>(() => AlgorithmViewModel(instance()));
   }
 }
 initLogoutSupervisorModule() {
