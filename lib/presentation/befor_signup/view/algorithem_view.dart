@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:untitled/presentation/befor_signup/view_model/algorithem_viewmodel.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer.dart';
+import 'package:untitled/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:untitled/presentation/resources/color_manager.dart';
 import 'package:untitled/presentation/resources/font_manager.dart';
 import 'package:untitled/presentation/signup/view_model/signup_view_model.dart';
@@ -86,14 +88,8 @@ class _SelectTimesState extends State<SelectTimes> {
                                               child: Text(value),
                                             )).toList(),
                                             onChanged: (val) {
-                                              /*
-                          if(Provider.of<AlgorithmViewModel>(context).getIndex() == 9) {
-                            Provider.of<AlgorithmViewModel>(context, listen: false).setIndex(index);
-                            Provider.of<AlgorithmViewModel>(context, listen: false).setGoTime(val ?? "");
-                          } else {
-                            // Other logic
-                          }
-                          */
+                                              Provider.of<AlgorithmViewModel>(context, listen: false).setIndex(index);
+                                              Provider.of<AlgorithmViewModel>(context, listen: false).setGoTime(val ??"");
                                             },
                                           ),
                                         ),
@@ -122,6 +118,7 @@ class _SelectTimesState extends State<SelectTimes> {
                                               child: Text(value),
                                             )).toList(),
                                             onChanged: (val) {
+                                              Provider.of<AlgorithmViewModel>(context, listen: false).setReturnTime(val??"");
                                               /*
                           if(Provider.of<AlgorithmViewModel>(context).getIndex() == 9) {
                             Provider.of<AlgorithmViewModel>(context, listen: false).setIndex(index);
@@ -139,7 +136,10 @@ class _SelectTimesState extends State<SelectTimes> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: IconButton(onPressed: (){}, icon: Icon(Icons.check_circle)),
+                                  child: IconButton(onPressed: (){
+                                    Provider.of<AlgorithmViewModel>(context, listen: false).setDayInput();
+
+                                  }, icon: Icon(Icons.check_circle)),
                                 )
                               ],
                             ),
@@ -157,7 +157,18 @@ class _SelectTimesState extends State<SelectTimes> {
           alignment: Alignment.bottomRight,
           child: InkWell(
             onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.signupRoute);
+              LoadingState(stateRendererType: StateRendererType.popupLoadingState).showPopup(context, StateRendererType.popupLoadingState, LocaleKeys.loading);
+
+              Provider.of<AlgorithmViewModel>(context, listen: false).algorithm().then((value) {
+                if(value){
+                  SuccessState("success").dismissDialog(context);
+                  SuccessState("success").showPopup(context,StateRendererType.popupSuccess,"Success");
+                }else{
+                  ErrorState(StateRendererType.popupErrorState,Provider.of<AlgorithmViewModel>(context,listen: false).getMessage1()).dismissDialog(context);
+                  ErrorState(StateRendererType.popupErrorState, Provider.of<AlgorithmViewModel>(context,listen: false).getMessage1()).showPopup(context,StateRendererType.popupErrorState,Provider.of<AlgorithmViewModel>(context,listen: false).getMessage1());
+                }
+              });
+
             },
             child: CircleAvatar(
                 radius: 30,

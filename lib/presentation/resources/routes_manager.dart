@@ -100,11 +100,11 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
-
       case Routes.phone:
         initPhone();
         return MaterialPageRoute(builder: (_) => const NumberView());
       case Routes.algorithem:
+        initAlgorithmModule();
         return MaterialPageRoute(builder: (_) =>  const SelectTimes());
       case Routes.polyLineDailyView:
         initDailyReservationMap();

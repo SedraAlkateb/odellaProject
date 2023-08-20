@@ -2,6 +2,7 @@
 import 'package:untitled/data/network/app_api.dart';
 import 'package:untitled/data/network/requests/requsets.dart';
 import 'package:untitled/data/responses/responses.dart';
+import 'package:untitled/domain/models/models.dart';
 
 abstract class RemoteDataSource{
   Future<PostResponse > posts();
@@ -47,6 +48,7 @@ abstract class RemoteDataSource{
   Future<UserDailyReservationResponse> userDailyReservations(DailyReservationRequest dailyReservationRequest);
   Future<TodayTripsResponse> todayTrips(String time);
   Future<BasePhoneResponse> phone(int phone);
+  Future<AlgorithmResponse> algorithm(Map<String, dynamic> requestBody);
 
 }
 
@@ -388,6 +390,17 @@ street: supervisorRequest.street
   Future<BasePhoneResponse> phone(int phone)
   async{
     return await _appServiceClient.getNumber(phone);
+
+  }
+
+
+
+  @override
+  Future<AlgorithmResponse> algorithm(Map<String, dynamic> requestBody )
+  async{
+    return await _appServiceClient.algorithm(
+    requestBody
+    );
 
   }
 

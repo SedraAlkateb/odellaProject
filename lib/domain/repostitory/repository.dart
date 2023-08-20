@@ -52,5 +52,6 @@ abstract class Repository{
   Future<  Either<Failure,Reservation>>userDailyReservations(DailyReservationRequest dailyReservationRequest);
   Future< Either<Failure,TodayTrips>>todayTrips(String time);
   Future< Either<Failure,BasePhone>>phone(int phone);
+  Future< Either<Failure,Algorithm>>algorithm( Map<String, dynamic> requestBody);
 
 }
